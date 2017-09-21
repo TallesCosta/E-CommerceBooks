@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <dbURL>jdbc:h2:file:${basedir}/src/main/resources/data/crud-drinks</dbURL>
+        <dbURL>jdbc:h2:file:${basedir}/src/main/resources/data/ecommerce-books</dbURL>
     </properties>
     
     <dependencies>
