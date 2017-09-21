@@ -18,11 +18,13 @@ public class Facade implements IFacade {
     private Map<String, IDao> persistence;
     private Result result;
     
-    private static final String SELECT = "SELECT";
+    private static final String SELECT = "LIST";
     private static final String SAVE = "SAVE";
     private static final String DELETE = "DELETE";
     private static final String FIND = "FIND";
     private static final String UPDATE = "UPDATE";
+	private static final String CREATE = "CREATE";
+	private static final String FILTERS = "FILTERS";
 	
 	 public Facade() {
         String book = Book.class.getSimpleName();
@@ -38,11 +40,19 @@ public class Facade implements IFacade {
         
         List<IStrategy> updateBook = new ArrayList();
 		
+		
+		List<IStrategy> createBook = new ArrayList();
+		
+		
+		List<IStrategy> filtersBook = new ArrayList();
         
+		
         Map<String, List<IStrategy>> contextBook = new HashMap();
         contextBook.put(SAVE, saveBook);
 		contextBook.put(DELETE, deleteBook);
         contextBook.put(UPDATE, updateBook);
+        contextBook.put(CREATE, createBook);
+        contextBook.put(FILTERS, filtersBook);
 		
         requirements = new HashMap();
         requirements.put(book, contextBook);
@@ -54,7 +64,7 @@ public class Facade implements IFacade {
     }
 	 
 	@Override
-	public Result select(Entity entity) {
+	public Result list(Entity entity) {
         this.result = new Result();
 		
 		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getName());
@@ -150,10 +160,20 @@ public class Facade implements IFacade {
         return result;
     }
 	
+	@Override
+	public Result create(Entity entity){
+		this.result = new Result();
+		
+		// TODO: Aqui vem meu lindo código c:
+		
+		return result;
+	}
+	
 	public Result executeValidations(Entity entity, List<IStrategy> validations) {
         
         for(IStrategy validation : validations){
-            result.addMsg(validation.process(entity));
+			// TODO: USAR ESTE CÓDIGO NAS STRATEGIES!!!
+            //result.addMsg(validation.process(entity));
             if(result.hasMsg()){
                 result.setEntity(entity);
                 return result;

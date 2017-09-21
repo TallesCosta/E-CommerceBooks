@@ -2,34 +2,37 @@ package br.com.talles.ecommercebooks.controll;
 
 import br.com.talles.ecommercebooks.domain.Entity;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Result {
     
-    private List<Entity> entities;
+    private Map<String, List<Entity>> entities;
     private String msg;
     
 	public Result() {
-        entities = new ArrayList();
+        entities = new HashMap<>();
         msg = "";
     }
 	
-    public List<Entity> getEntities() {
+    public Map<String, List<Entity>> getEntities() {
         return entities;
     }
 
     public void setEntities(List<Entity> entities) {
-        this.entities = entities;
+        this.entities.clear();
+        this.entities.put(entities.getClass().getSimpleName(), entities);
     }
 
-    public Entity getEntity(int i){
-        return entities.get(i);
+    public List<Entity> getEntity(String key){
+        return entities.get(key);
     }
     
     public void setEntity(Entity entity) {
         this.entities.clear();
-        this.entities.add(entity);
+		this.entities.put(entities.getClass().getSimpleName(), Arrays.asList(entity));
     }
     
     public String getMsg() {

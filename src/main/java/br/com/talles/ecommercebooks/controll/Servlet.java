@@ -1,17 +1,18 @@
 package br.com.talles.ecommercebooks.controll;
 
+import br.com.talles.ecommercebooks.controll.command.CreateCmd;
 import br.com.talles.ecommercebooks.controll.viewHelper.BookVh;
 import br.com.talles.ecommercebooks.controll.viewHelper.IViewHelper;
 import br.com.talles.ecommercebooks.controll.command.ICommand;
-import br.com.talles.ecommercebooks.controll.command.SelectCmd;
+import br.com.talles.ecommercebooks.controll.command.ListCmd;
 import br.com.talles.ecommercebooks.controll.command.SaveCmd;
 import br.com.talles.ecommercebooks.controll.command.DeleteCmd;
 import br.com.talles.ecommercebooks.controll.command.FindCmd;
 import br.com.talles.ecommercebooks.controll.command.UpdateCmd;
 import br.com.talles.ecommercebooks.domain.Entity;
+
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,17 +30,19 @@ public class Servlet extends HttpServlet {
 	public Servlet() {
 		viewHelpers = new HashMap();
 		viewHelpers.put("/E-CommerceBooks/books", new BookVh());
-		viewHelpers.put("/E-CommerceBooks/books/create", new BookVh());
+		viewHelpers.put("/E-CommerceBooks/books/save", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/delete", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/find", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/update", new BookVh());
+		viewHelpers.put("/E-CommerceBooks/books/create", new BookVh());
 
 		commands = new HashMap();
-		commands.put("SELECT", new SelectCmd());
+		commands.put("LIST", new ListCmd());
 		commands.put("SAVE", new SaveCmd());
 		commands.put("DELETE", new DeleteCmd());
 		commands.put("FIND", new FindCmd());
 		commands.put("UPDATE", new UpdateCmd());
+		commands.put("CREATE", new CreateCmd());
 	}
 	
 	@Override

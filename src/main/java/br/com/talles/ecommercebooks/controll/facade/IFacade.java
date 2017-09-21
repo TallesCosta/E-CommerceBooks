@@ -5,7 +5,7 @@ import br.com.talles.ecommercebooks.domain.Entity;
 
 public interface IFacade {
     
-    public Result select(Entity entity);
+    public Result list(Entity entity);
     
     public Result save(Entity entity);
     
@@ -14,5 +14,7 @@ public interface IFacade {
     public Result find(Entity entity);
     
     public Result update(Entity entity);
+	
+    public Result create(Entity entity);
     
 }
