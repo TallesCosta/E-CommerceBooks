@@ -1,63 +1,51 @@
 package br.com.talles.ecommercebooks.domain;
 
-import java.util.Date;
-import java.util.Objects;
-
 public class Entity {
-    
-    private Long id;
-    private Date createdDate;
-    private Date updatedDate;
 
-	public Entity() {}
+	private long id;
+	private boolean enabled;
 
-	public Entity(Long id) {
+	public Entity() {
+	}
+
+	public Entity(long id) {
 		this.id = id;
 	}
+
+	public Entity(boolean enabled) {
+		this.enabled = enabled;
+	}
 	
-    public Entity(Long id, Date createdDate, Date updatedDate) {
+	public Entity(long id, boolean enabled) {
 		this.id = id;
-        this.createdDate = createdDate;
-        this.updatedDate = updatedDate;
-    }
-	
-    public Long getId() {
-        return id;
-    }
+		this.enabled = enabled;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public Date getCreateDate() {
-        return createdDate;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public void setCreateDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
+	public boolean isEnabled() {
+		return enabled;
+	}
 
-    public Date getUpdateDate() {
-        return updatedDate;
-    }
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
-    public void setUpdateDate(Date updatedDate) {
-        this.updatedDate = updatedDate;
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null || getClass() != obj.getClass())
+			return false;
 		
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-        
-        final Entity other = (Entity) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
-    }
-    
+		final Entity other = (Entity) obj;
+		return this.id != other.id;
+	}
+	
 }
