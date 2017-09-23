@@ -1,3 +1,4 @@
+<%@page import="br.com.talles.ecommercebooks.domain.PriceGroup"%>
 <%@page import="br.com.talles.ecommercebooks.domain.PublishingCompany"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Author"%>
 <%@page import="java.util.List"%>
@@ -128,12 +129,17 @@
 				<fieldset>
 					<legend>Grupor de Precificação</legend>
 					<div>
-						<label for=""></label>
-						<select name="" id="">
-							<option value="">selecione...</option>
-							<option value="1">P1</option>
-							<option value="2">P2</option>
-							<option value="3">P3</option>
+						<label for="priceGroup"></label>
+						<select name="priceGroup" id="priceGroup">
+							<%
+								if(result != null){
+									List<Entity> priceGroups = result.getEntities(PriceGroup.class.getSimpleName());
+									for(Entity entity : priceGroups){
+										PriceGroup priceGroup = (PriceGroup) entity;
+										out.println("<option value='" + priceGroup.getId() + "'>" + priceGroup.getMarkup() + " %</option>");
+									}
+								}
+							%>
 						</select>
 					</div>      
 				</fieldset>
