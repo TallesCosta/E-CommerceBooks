@@ -1,3 +1,4 @@
+<%@page import="br.com.talles.ecommercebooks.domain.PublishingCompany"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Author"%>
 <%@page import="java.util.List"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
@@ -65,12 +66,17 @@
 						</select>
 					</div>
 					<div>
-						<label for="">Editora</label>
-						<select name="" id="">
-							<option value="">selecione...</option>
-							<option value="1">Editora 34</option>
-							<option value="2">Novatec</option>
-							<option value="3">Cada do código</option>
+						<label for="publishingCompany">Editora</label>
+						<select name="publishingCompany" id="publishingCompany">
+							<%
+								if(result != null){
+									List<Entity> publishingCompanies = result.getEntities(PublishingCompany.class.getSimpleName());
+									for(Entity entity : publishingCompanies){
+										PublishingCompany publishingCompany = (PublishingCompany) entity;
+										out.println("<option value='" + publishingCompany.getId() + "'>" + publishingCompany.getName() + "</option>");
+									}
+								}
+							%>
 						</select>
 					</div>
 					<div>
