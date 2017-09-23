@@ -2,16 +2,16 @@ package br.com.talles.ecommercebooks.business;
 
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
-import br.com.talles.ecommercebooks.persistence.dao.CategoryDao;
+import br.com.talles.ecommercebooks.persistence.dao.AuthorDao;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 
-public class SelectCategory implements IStrategy {
-
+public class SelectAuthor implements IStrategy {
+	
 	@Override
 	public Result process(Entity entity, Result result) {
-		IDao categoryDao = new CategoryDao();
+		IDao authorDao = new AuthorDao();
 		
-		result.addEntities(categoryDao.select());
+		result.addEntities(authorDao.select());
 		
 		return result;
 	}

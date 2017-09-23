@@ -1,6 +1,7 @@
 package br.com.talles.ecommercebooks.controll.facade;
 
 import br.com.talles.ecommercebooks.business.IStrategy;
+import br.com.talles.ecommercebooks.business.SelectAuthor;
 import br.com.talles.ecommercebooks.business.SelectCategory;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Book;
@@ -32,6 +33,7 @@ public class Facade implements IFacade {
         
         // All Strategies
         IStrategy selectCategory = new SelectCategory();
+		IStrategy selectAuthor = new SelectAuthor();
                 
         List<IStrategy> saveBook = new ArrayList();
 		
@@ -44,6 +46,7 @@ public class Facade implements IFacade {
 		
 		List<IStrategy> createBook = new ArrayList();
 		createBook.add(selectCategory);
+		createBook.add(selectAuthor);
 		
 		List<IStrategy> filtersBook = new ArrayList();
         

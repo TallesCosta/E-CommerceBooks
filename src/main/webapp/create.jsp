@@ -1,3 +1,4 @@
+<%@page import="br.com.talles.ecommercebooks.domain.Author"%>
 <%@page import="java.util.List"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
@@ -36,12 +37,17 @@
 						<input name="title" id="title" type="text">
 					</div>
 					<div>
-						<label for="">Autor</label>
-						<select name="" id="">
-							<option value="">selecione...</option>
-							<option value="1">DOSTOIEVSKI, Fiodor</option>
-							<option value="2">GOGÓL, Nikolai</option>
-							<option value="3">TOLSTÓI, Liev</option>
+						<label for="author">Autor</label>
+						<select name="author" id="author">
+							<%
+								if(result != null){
+									List<Entity> authors = result.getEntities(Author.class.getSimpleName());
+									for(Entity entity : authors){
+										Author author = (Author) entity;
+										out.println("<option value='" + author.getId() + "'>" + author.getName() + "</option>");
+									}
+								}
+							%>
 						</select>
 					</div>
 					<div>

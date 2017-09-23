@@ -29,8 +29,16 @@ public class Result {
     public void setEntities(List<Entity> entities) {
         this.entities.clear();
         this.entities.put(entities.get(0).getClass().getSimpleName(), entities);
-    }    
+    }
     
+	public void addEntity(Entity entity) {
+		this.entities.put(entity.getClass().getSimpleName(), Arrays.asList(entity));
+    }
+	
+    public void addEntities(List<Entity> entities) {
+        this.entities.put(entities.get(0).getClass().getSimpleName(), entities);
+    }
+	
     public String getMsg() {
         return msg;
     }
