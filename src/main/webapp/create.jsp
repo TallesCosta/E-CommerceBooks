@@ -1,3 +1,8 @@
+<%@page import="java.util.List"%>
+<%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
+<%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
+<%@page import="br.com.talles.ecommercebooks.domain.Category"%>
+<%@page import="br.com.talles.ecommercebooks.controll.Result"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -8,6 +13,21 @@
 	<body>
 		<div id="app">
 			<h1>Criação de Livro</h1>
+			<%
+				Result result = new Result();
+				result = (Result) request.getAttribute("result");
+				
+				if(result != null){
+					if(result.hasMsg()){
+						String[] msgs = result.getMsg().split("\n");
+						out.println("<p>");
+						for(String msg : msgs)
+							out.println("<i class='fa fa-times' aria-hidden='true' style='color: #FF0000;'></i> " + msg + "<br/>");
+						out.println("</p>");
+					}
+				}
+			%>
+			
 			<form action="books/save" method="POST">
 				<fieldset>
 					<legend>Dados básicos</legend>
@@ -25,11 +45,17 @@
 						</select>
 					</div>
 					<div>
-						<label for="">Categoria</label>
-						<select name="listBox" id="listBox" multiple>
-							<option value="1">Romance</option>
-							<option value="2">Suspense</option>
-							<option value="3">Terror</option>
+						<label for="categories">Categoria</label>						
+						<select name="categories" id="categories" multiple>
+							<%
+								if(result != null){
+									List<Entity> categories = result.getEntities(Category.class.getSimpleName());
+									for(Entity entity : categories){
+										Category category = (Category) entity;
+										out.println("<option value='" + category.getId() + "'>" + category.getName() + "</option>");
+									}
+								}
+							%>
 						</select>
 					</div>
 					<div>
@@ -122,5 +148,7 @@
 				<button type="submit">Salvar</button>
 			</form>
 		</div>
+		
+		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
 	</body>
 </html>

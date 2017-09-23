@@ -17,8 +17,9 @@ public class ConnectionFactory {
 
     public Connection getConnection() {
         try {
+			Class.forName("org.h2.Driver");
             return DriverManager.getConnection(DBURL, "sa", "");
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

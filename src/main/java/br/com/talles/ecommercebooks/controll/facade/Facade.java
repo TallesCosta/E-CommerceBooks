@@ -1,6 +1,7 @@
 package br.com.talles.ecommercebooks.controll.facade;
 
 import br.com.talles.ecommercebooks.business.IStrategy;
+import br.com.talles.ecommercebooks.business.SelectCategory;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Book;
 import br.com.talles.ecommercebooks.domain.Entity;
@@ -30,7 +31,7 @@ public class Facade implements IFacade {
         String book = Book.class.getSimpleName();
         
         // All Strategies
-        // ...
+        IStrategy selectCategory = new SelectCategory();
                 
         List<IStrategy> saveBook = new ArrayList();
 		
@@ -42,7 +43,7 @@ public class Facade implements IFacade {
 		
 		
 		List<IStrategy> createBook = new ArrayList();
-		
+		createBook.add(selectCategory);
 		
 		List<IStrategy> filtersBook = new ArrayList();
         
@@ -164,8 +165,10 @@ public class Facade implements IFacade {
 	public Result create(Entity entity){
 		this.result = new Result();
 		
-		// TODO: Aqui vem meu lindo código c:
+		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
+        List<IStrategy> validations = reqs.get(CREATE);
 		
+		result = executeValidations(entity, validations);		
 		return result;
 	}
 	
@@ -173,7 +176,9 @@ public class Facade implements IFacade {
         
         for(IStrategy validation : validations){
 			// TODO: USAR ESTE CÓDIGO NAS STRATEGIES!!!
-            //result.addMsg(validation.process(entity));
+            //result.addMsg();
+			
+			validation.process(entity, result);
             if(result.hasMsg()){
                 result.setEntity(entity);
                 return result;

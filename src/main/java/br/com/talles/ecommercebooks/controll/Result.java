@@ -17,23 +17,19 @@ public class Result {
         msg = "";
     }
 	
-    public Map<String, List<Entity>> getEntities() {
-        return entities;
-    }
-
-    public void setEntities(List<Entity> entities) {
-        this.entities.clear();
-        this.entities.put(entities.getClass().getSimpleName(), entities);
-    }
-
-    public List<Entity> getEntity(String key){
+    public List<Entity> getEntities(String key){
         return entities.get(key);
     }
-    
+
     public void setEntity(Entity entity) {
         this.entities.clear();
-		this.entities.put(entities.getClass().getSimpleName(), Arrays.asList(entity));
+		this.entities.put(entity.getClass().getSimpleName(), Arrays.asList(entity));
     }
+	
+    public void setEntities(List<Entity> entities) {
+        this.entities.clear();
+        this.entities.put(entities.get(0).getClass().getSimpleName(), entities);
+    }    
     
     public String getMsg() {
         return msg;
