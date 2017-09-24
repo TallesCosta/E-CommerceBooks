@@ -159,11 +159,11 @@ public class BookVh implements IViewHelper {
 		try {
 			switch(request.getParameter("operation")) {
 				case "SAVE":
-					response.sendRedirect("/E-CommerceBooks/books?operation=LIST");
+					response.sendRedirect("/E-CommerceBooks/books/list?operation=LIST");
 					break;
 
 				case "LIST":
-					dispatcher = request.getRequestDispatcher("/index.jsp");
+					dispatcher = request.getRequestDispatcher("/list.jsp");
 					dispatcher.forward(request, response);
 					break;
 

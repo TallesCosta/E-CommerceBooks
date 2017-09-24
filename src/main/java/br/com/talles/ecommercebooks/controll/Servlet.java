@@ -29,7 +29,7 @@ public class Servlet extends HttpServlet {
 
 	public Servlet() {
 		viewHelpers = new HashMap();
-		viewHelpers.put("/E-CommerceBooks/books", new BookVh());
+		viewHelpers.put("/E-CommerceBooks/books/list", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/save", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/delete", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/find", new BookVh());

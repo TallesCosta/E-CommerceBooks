@@ -1,12 +1,15 @@
 package br.com.talles.ecommercebooks.persistence.dao;
 
 import br.com.talles.ecommercebooks.domain.Book;
+import br.com.talles.ecommercebooks.domain.Book;
 import br.com.talles.ecommercebooks.domain.Dimension;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.SaleParameterization;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,7 +18,39 @@ public class BookDao extends AbstractDao {
 
 	@Override
 	public List<Entity> select() {
-		return null;
+		List<Entity> books = new ArrayList();
+        String sql = "SELECT * FROM Books";
+        
+        try{
+			openConnection();
+			
+            PreparedStatement statement = conn.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                Book book = new Book();
+                
+                book.setId(result.getLong("id"));
+                book.setEnabled(result.getBoolean("enabled"));
+                book.setTitle(result.getString("title"));
+                book.setPublicationYear(result.getInt("publicationYear"));
+                book.setNumberOfPages(result.getInt("numberOfPages"));
+                book.setEdition(result.getString("edition"));
+                book.setIsbn(result.getString("isbn"));
+                book.setEan13(result.getString("ean13"));
+                
+                books.add(book);
+            }
+            
+            result.close();
+            statement.close();
+            
+            return  books;
+        }catch(SQLException e){
+            throw new RuntimeException(e);   
+        } finally {
+			closeConnection();
+		}
 	}
 
 	@Override

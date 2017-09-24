@@ -22,7 +22,7 @@ public class Facade implements IFacade {
     private Map<String, IDao> persistence;
     private Result result;
     
-    private static final String SELECT = "LIST";
+    private static final String LIST = "LIST";
     private static final String SAVE = "SAVE";
     private static final String DELETE = "DELETE";
     private static final String FIND = "FIND";
@@ -39,6 +39,9 @@ public class Facade implements IFacade {
 		IStrategy selectPublishingCompany = new SelectPublishingCompany();
 		IStrategy selectPriceGroup = new SelectPriceGroup();		
                 
+        List<IStrategy> listBook = new ArrayList();
+		
+		
         List<IStrategy> saveBook = new ArrayList();
 		
 		
@@ -58,7 +61,8 @@ public class Facade implements IFacade {
         
 		
         Map<String, List<IStrategy>> contextBook = new HashMap();
-        contextBook.put(SAVE, saveBook);
+        contextBook.put(LIST, listBook);
+		contextBook.put(SAVE, saveBook);
 		contextBook.put(DELETE, deleteBook);
         contextBook.put(UPDATE, updateBook);
         contextBook.put(CREATE, createBook);
@@ -78,7 +82,7 @@ public class Facade implements IFacade {
         this.result = new Result();
 		
 		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
-        List<IStrategy> validations = reqs.get(SELECT);
+        List<IStrategy> validations = reqs.get(LIST);
 		
 		result = executeValidations(entity, validations);
         if(result.hasMsg())

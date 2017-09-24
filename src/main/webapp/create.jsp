@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="br.com.talles.ecommercebooks.domain.PriceGroup"%>
 <%@page import="br.com.talles.ecommercebooks.domain.PublishingCompany"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Author"%>
@@ -9,13 +10,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Criação de Livro</title>
+		<title>CriaÃ§Ã£o de Livro</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
 	<body>
 		<div id="app">
-			<h1>Criação de Livro</h1>
+			<h1>CriaÃ§Ã£o de Livro</h1>
 			<%
 				Result result = new Result();
 				result = (Result) request.getAttribute("result");
@@ -33,13 +34,13 @@
 			
 			<form action="save" method="POST">
 				<fieldset>
-					<legend>Dados básicos</legend>
+					<legend>Dados bÃ¡sicos</legend>
 					<div>
 						<label for="title">Titulo</label>
 						<input name="title" id="title" type="text">
 					</div>
 					<div>
-						<label for="synopsis">Sinópse</label>
+						<label for="synopsis">SinÃ³pse</label>
 						<textarea name="synopsis" id="synopsis" maxlength="255"></textarea>
 					</div>
 					<div>
@@ -89,7 +90,7 @@
 						</select>
 					</div>
 					<div>
-						<label for="edition">Edição</label>
+						<label for="edition">EdiÃ§Ã£o</label>
 						<input name="edition" id="edition" type="text">
 					</div>
 					<div>
@@ -97,13 +98,13 @@
 						<input name="publicationYear" id="publicationYear" type="number" min="1889" max="2017">
 					</div>
 					<div>
-						<label for="numberOfPages">Número de páginas</label>
+						<label for="numberOfPages">NÃºmero de pÃ¡ginas</label>
 						<input name="numberOfPages" id="numberOfPages" type="number">
 					</div>
 				</fieldset>
 				
 				<fieldset>
-					<legend>Dimensões</legend>
+					<legend>DimensÃµes</legend>
 					<div>
 						<label for="height">Altura</label>
 						<input name="height" id="height" type="number" step="0.01" min="0.01" max="100"> cm
@@ -123,19 +124,19 @@
 				</fieldset>
 				
 				<fieldset>
-					<legend>Identificação</legend>
+					<legend>IdentificaÃ§Ã£o</legend>
 					<div>
 						<label for="isbn">ISBN</label>
 						<input name="isbn" for="isbn" type="text">
 					</div>
 					<div>
-						<label for="ean13">Código de barras</label>
+						<label for="ean13">CÃ³digo de barras</label>
 						<input name="ean13" id="ean13" type="text">
 					</div>
 				</fieldset>
 				
 				<fieldset>
-					<legend>Grupor de Precificação</legend>
+					<legend>Grupor de PrecificaÃ§Ã£o</legend>
 					<div>
 						<label for="priceGroup"></label>
 						<select name="priceGroup" id="priceGroup">
@@ -153,19 +154,19 @@
 				</fieldset>
 				
 				<fieldset>
-					<legend>Parâmetro de venda</legend>
+					<legend>ParÃ¢metro de venda</legend>
 					<div>
-						<label for="minSaleLimit">Limite mínimo de vendas</label>
+						<label for="minSaleLimit">Limite mÃ­nimo de vendas</label>
 						<input name="minSaleLimit" id="minSaleLimit" type="number" min="1">
 					</div>
 					<div>
-						<label for="periodicity">Período</label>
+						<label for="periodicity">PerÃ­odo</label>
 						<input name="periodicity" id="periodicity" type="number" min="1">
 						<select name="classifierPeriod">
 							<option value="m">Minuto</option>
 							<option value="H">Hora</option>
 							<option value="D">Dia</option>
-							<option value="M">Mês</option>
+							<option value="M">MÃªs</option>
 							<option value="Y">Ano</option>
 						  </select>
 					</div>
