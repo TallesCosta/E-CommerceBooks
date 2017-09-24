@@ -40,7 +40,10 @@ public class Facade implements IFacade {
 		IStrategy selectPriceGroup = new SelectPriceGroup();		
                 
         List<IStrategy> listBook = new ArrayList();
-		
+		listBook.add(selectCategory);
+		listBook.add(selectAuthor);
+		listBook.add(selectPublishingCompany);
+		listBook.add(selectPriceGroup);
 		
         List<IStrategy> saveBook = new ArrayList();
 		
@@ -89,7 +92,7 @@ public class Facade implements IFacade {
             return result;
 		
 		IDao dao = persistence.get(entity.getClass().getSimpleName());
-        result.setEntities(dao.select());
+        result.addEntities(dao.select());
         
         return result;
 	}

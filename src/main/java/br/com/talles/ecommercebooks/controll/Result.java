@@ -38,7 +38,8 @@ public class Result {
     }
 	
     public void addEntities(List<Entity> entities) {
-        this.entities.put(entities.get(0).getClass().getSimpleName(), entities);
+		if (!entities.isEmpty())
+			this.entities.put(entities.get(0).getClass().getSimpleName(), entities);
     }
 	
     public String getMsg() {

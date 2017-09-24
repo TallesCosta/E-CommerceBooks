@@ -10,5 +10,7 @@
         <h1>Página Inicial</h1>
 		
 		<a href="<% out.print(request.getContextPath().concat("/books/list?operation=LIST")); %>">Listagem de Livros</a>
+		
+		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
     </body>
 </html>
