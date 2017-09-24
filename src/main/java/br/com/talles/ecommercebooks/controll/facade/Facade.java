@@ -77,14 +77,14 @@ public class Facade implements IFacade {
 	public Result list(Entity entity) {
         this.result = new Result();
 		
-		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getName());
+		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
         List<IStrategy> validations = reqs.get(SELECT);
 		
 		result = executeValidations(entity, validations);
         if(result.hasMsg())
             return result;
 		
-		IDao dao = persistence.get(entity.getClass().getName());
+		IDao dao = persistence.get(entity.getClass().getSimpleName());
         result.setEntities(dao.select());
         
         return result;
@@ -94,14 +94,14 @@ public class Facade implements IFacade {
 	public Result save(Entity entity) {
         this.result = new Result();
 		
-		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getName());
+		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
         List<IStrategy> validations = reqs.get(SAVE);
 		
         result = executeValidations(entity, validations);
         if(result.hasMsg())
             return result;
 		
-        IDao dao = persistence.get(entity.getClass().getName());
+        IDao dao = persistence.get(entity.getClass().getSimpleName());
         boolean resultDao = dao.save(entity);
         
         if(!resultDao)
@@ -115,14 +115,14 @@ public class Facade implements IFacade {
 	public Result delete(Entity entity) {
 		this.result = new Result();
 		
-		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getName());
+		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
         List<IStrategy> validations = reqs.get(DELETE);
 		
 		result = executeValidations(entity, validations);
         if(result.hasMsg())
             return result;
 		
-		IDao dao = persistence.get(entity.getClass().getName());        
+		IDao dao = persistence.get(entity.getClass().getSimpleName());        
         boolean resultDao = dao.delete(entity);
 		
         if(!resultDao)
@@ -136,14 +136,14 @@ public class Facade implements IFacade {
 	public Result find(Entity entity) {
 		this.result = new Result();
 		
-        Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getName());
+        Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
         List<IStrategy> validations = reqs.get(FIND);
 		
 		result = executeValidations(entity, validations);
         if(result.hasMsg())
             return result;
 				
-	    IDao dao = persistence.get(entity.getClass().getName());
+	    IDao dao = persistence.get(entity.getClass().getSimpleName());
 	    result.setEntity(dao.find(entity));
 		
 	    return result;
@@ -153,7 +153,7 @@ public class Facade implements IFacade {
     public Result update(Entity entity) {
         this.result = new Result();
         
-		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getName());
+		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
         List<IStrategy> validations = reqs.get(UPDATE);
 		
         //result.setEntity(entity);
@@ -161,7 +161,7 @@ public class Facade implements IFacade {
         if(result.hasMsg())
             return result;
 
-        IDao dao = persistence.get(entity.getClass().getName());
+        IDao dao = persistence.get(entity.getClass().getSimpleName());
         boolean resultDao = dao.update(entity);
         if(!resultDao)
             result.addMsg("An error has occurred in the process of your operation, "

@@ -1,9 +1,14 @@
-
 package br.com.talles.ecommercebooks.controll.viewHelper;
 
 import br.com.talles.ecommercebooks.controll.Result;
+import br.com.talles.ecommercebooks.domain.Author;
 import br.com.talles.ecommercebooks.domain.Book;
+import br.com.talles.ecommercebooks.domain.Category;
+import br.com.talles.ecommercebooks.domain.Dimension;
 import br.com.talles.ecommercebooks.domain.Entity;
+import br.com.talles.ecommercebooks.domain.PriceGroup;
+import br.com.talles.ecommercebooks.domain.PublishingCompany;
+import br.com.talles.ecommercebooks.domain.SaleParameterization;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -20,67 +25,104 @@ public class BookVh implements IViewHelper {
 	public Entity getEntity(HttpServletRequest request) {
 		// Book datas
 		String idS = request.getParameter("id");
-		Long id;
-		if(idS != null)
-			id = new Long(idS);
+		long id = 0;
+		if (!(idS == null || idS.equals("")))
+			id = Long.valueOf(idS);
 		
         String title = request.getParameter("title");
+        String synopsis = request.getParameter("synopsis");
 		
 		String publicationYearS = request.getParameter("publicationYear");
 		int publicationYear = 0;
-		if (publicationYearS != null)
-			publicationYear = Integer.valueOf("publicationYearS");
+		if (!(publicationYearS == null || publicationYearS.equals("")))
+			publicationYear = Integer.valueOf(publicationYearS);
 		
-		String	numberOfPagesS = request.getParameter("numberOfPages");
+		String numberOfPagesS = request.getParameter("numberOfPages");
 		int numberOfPages = 0;
-		if (numberOfPagesS != null)
-			numberOfPages = Integer.valueOf("numberOfPagesS");
+		if (!(numberOfPagesS == null || numberOfPagesS.equals("")))
+			numberOfPages = Integer.valueOf(numberOfPagesS);
 		
         String edition = request.getParameter("edition");
-        String synopsis = request.getParameter("synopsis");
         String isbn = request.getParameter("isbn");
         String ean13 = request.getParameter("ean13");
 		
 		// Dimension datas
 		String heightS = request.getParameter("height");
 		double height = 0.0;
-		if(heightS != null)
+		if (!(heightS == null || heightS.equals("")))
 			height = Double.valueOf(heightS);
 			
 		String widhtS = request.getParameter("widht");
 		double widht = 0.0;
-		if(widhtS != null)
+		if (!(widhtS == null || widhtS.equals("")))
 			widht = Double.valueOf(widhtS);
 		
 		String weightS = request.getParameter("weight");
 		double weight = 0.0;
-		if(weightS != null)
+		if (!(weightS == null || weightS.equals("")))
 			weight = Double.valueOf(weightS);
 		
 		String depthS = request.getParameter("depth");
 		double depth = 0.0;
-		if(depthS != null)
+		if (!(depthS == null || depthS.equals("")))
 			depth = Double.valueOf(depthS);
 		
-		// SaleParameterization
+		// SaleParameterization datas
 		String minSaleLimitS = request.getParameter("minSaleLimit");
 		int minSaleLimit = 0;
-		if (minSaleLimitS != null)
-			minSaleLimit = Integer.valueOf("minSaleLimitS");
+		if (!(minSaleLimitS == null || minSaleLimitS.equals("")))
+			minSaleLimit = Integer.valueOf(minSaleLimitS);
 		
 		String periodicityS = request.getParameter("periodicity");
 		int periodicity = 0;
-		if (periodicityS != null)
-			periodicity = Integer.valueOf("periodicityS");
+		if (!(periodicityS == null || periodicityS.equals(""))){
+			periodicity = Integer.valueOf(periodicityS);
+			
+			// Convert any time to minute
+			periodicity = convertToMinute(periodicity, request.getParameter("classifierPeriod"));
+		}
 		
-		// Convert any time to minute
-		periodicity = convertToMinute(periodicity, request.getParameter("classifierPeriod"));
+		// Author data
+		String idAuthorS = request.getParameter("author");
+		long idAuthor = 0;
+		if (!(idAuthorS == null || idAuthorS.equals("")))
+			idAuthor = Long.valueOf(idAuthorS);
+		
+		// PublishingCompany data
+		String idPublishingCompanyS = request.getParameter("publishingCompany");
+		long idPublishingCompany = 0;
+		if (!(idPublishingCompanyS == null || idPublishingCompanyS.equals("")))
+			idPublishingCompany = Long.valueOf(idPublishingCompanyS);
+		
+		// PriceGroup data
+		String idPriceGroupS = request.getParameter("priceGroup");
+		long idPriceGroup = 0;
+		if (!(idPriceGroupS == null || idPriceGroupS.equals("")))
+			idPriceGroup = Long.valueOf(idPriceGroupS);
+		
+		// Category data
+		String idCategoryS = request.getParameter("categories");
+		long idCategory = 0;
+		if (!(idCategoryS == null || idCategoryS.equals("")))
+			idCategory = Long.valueOf(idCategoryS);
 		
 		Book book = new Book();
 		
 		switch(request.getParameter("operation")) {
 			case "SAVE":
-
+				book.setTitle(title);
+				book.setSynopsis(synopsis);
+				book.setPublicationYear(publicationYear);
+				book.setNumberOfPages(numberOfPages);
+				book.setEdition(edition);
+				book.setIsbn(isbn);
+				book.setEan13(ean13);
+				book.setDimension(new Dimension(height, widht, weight, depth));
+				book.setSaleParameterization(new SaleParameterization(minSaleLimit, periodicity));
+				book.setAuthor(new Author(idAuthor));
+				book.setPublishingCompany(new PublishingCompany(idPublishingCompany));
+				book.setPriceGroup(new PriceGroup(idPriceGroup));
+				book.addCategory(new Category(idCategory));
 				break;
 
 			case "LIST":
@@ -117,11 +159,12 @@ public class BookVh implements IViewHelper {
 		try {
 			switch(request.getParameter("operation")) {
 				case "SAVE":
-
+					response.sendRedirect("/E-CommerceBooks/books?operation=LIST");
 					break;
 
 				case "LIST":
-
+					dispatcher = request.getRequestDispatcher("/index.jsp");
+					dispatcher.forward(request, response);
 					break;
 
 				case "DELETE":

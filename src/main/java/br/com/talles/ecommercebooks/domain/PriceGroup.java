@@ -7,8 +7,8 @@ public class PriceGroup extends Entity {
 	public PriceGroup() {
 	}
 
-	public PriceGroup(double markup) {
-		this.markup = markup;
+	public PriceGroup(long id) {
+		super(id);
 	}
 
 	public PriceGroup(double markup, long id, boolean enabled) {

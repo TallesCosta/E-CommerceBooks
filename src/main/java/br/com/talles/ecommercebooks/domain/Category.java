@@ -5,6 +5,10 @@ public class Category extends AbstractCategory {
 	public Category() {
 	}
 
+	public Category(long id) {
+		super(id);
+	}
+	
 	public Category(String name, String description) {
 		super(name, description);
 	}

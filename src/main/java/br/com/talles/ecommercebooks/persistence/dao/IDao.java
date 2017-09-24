@@ -14,5 +14,7 @@ public interface IDao {
     public Entity find(Entity entity);
     
     public boolean update(Entity entity);
+	
+	public Entity findLast();
     
 }

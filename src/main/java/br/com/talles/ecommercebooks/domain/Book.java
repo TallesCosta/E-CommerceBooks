@@ -1,5 +1,6 @@
 package br.com.talles.ecommercebooks.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Book extends Entity {
@@ -20,6 +21,7 @@ public class Book extends Entity {
 	private List<Category> categories;
 
 	public Book() {
+		this.categories = new ArrayList<>();
 	}
 
 	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, String isbn, String ean13) {
@@ -30,6 +32,7 @@ public class Book extends Entity {
 		this.synopsis = synopsis;
 		this.isbn = isbn;
 		this.ean13 = ean13;
+		this.categories = new ArrayList<>();
 	}
 
 	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, String isbn, 
@@ -48,6 +51,7 @@ public class Book extends Entity {
 		this.saleParameterization = saleParameterization;
 		this.changeStatus = changeStatus;
 		this.author = author;
+		this.categories = new ArrayList<>();
 	}
 
 	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, String isbn, 
@@ -66,6 +70,8 @@ public class Book extends Entity {
 		this.saleParameterization = saleParameterization;
 		this.changeStatus = changeStatus;
 		this.author = author;
+		
+		this.categories = new ArrayList<>();
 		this.categories = categories;
 	}
 
@@ -87,6 +93,8 @@ public class Book extends Entity {
 		this.saleParameterization = saleParameterization;
 		this.changeStatus = changeStatus;
 		this.author = author;
+		
+		this.categories = new ArrayList<>();
 		this.categories = categories;
 	}
 

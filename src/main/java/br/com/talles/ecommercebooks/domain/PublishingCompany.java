@@ -7,8 +7,8 @@ public class PublishingCompany extends Entity {
 	public PublishingCompany() {
 	}
 	
-	public PublishingCompany(String name) {
-		this.name = name;
+	public PublishingCompany(long id) {
+		super(id);
 	}
 
 	public PublishingCompany(String name, long id, boolean enabled) {

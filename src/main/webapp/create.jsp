@@ -31,12 +31,16 @@
 				}
 			%>
 			
-			<form action="books/save" method="POST">
+			<form action="save" method="POST">
 				<fieldset>
 					<legend>Dados básicos</legend>
 					<div>
 						<label for="title">Titulo</label>
 						<input name="title" id="title" type="text">
+					</div>
+					<div>
+						<label for="synopsis">Sinópse</label>
+						<textarea name="synopsis" id="synopsis" maxlength="255"></textarea>
 					</div>
 					<div>
 						<label for="author">Autor</label>
@@ -60,7 +64,11 @@
 									List<Entity> categories = result.getEntities(Category.class.getSimpleName());
 									for(Entity entity : categories){
 										Category category = (Category) entity;
-										out.println("<option value='" + category.getId() + "'>" + category.getName() + "</option>");
+										if(category.getId() == 1){
+											out.println("<option selected value='" + category.getId() + "'>" + category.getName() + "</option>");
+										}else{
+											out.println("<option value='" + category.getId() + "'>" + category.getName() + "</option>");
+										}
 									}
 								}
 							%>
@@ -98,19 +106,19 @@
 					<legend>Dimensões</legend>
 					<div>
 						<label for="height">Altura</label>
-						<input name="height" id="height" type="number">
+						<input name="height" id="height" type="number" step="0.01" min="0.01" max="100"> cm
 					</div>
 					<div>
 						<label for="widht">Largura</label>
-						<input name="widht" id="widht" type="text">
+						<input name="widht" id="widht" type="number" step="0.01" min="0.01" max="100"> cm
 					</div>
 					<div>
 						<label for="weight">Peso</label>
-						<input name="weight" id="weight" type="number">
+						<input name="weight" id="weight" type="number" step="0.001" min="0.001" max="10"> kg
 					</div>
 					<div>
 						<label for="depth">Profundidade</label>
-						<input name="depth" id="depth" type="text">
+						<input name="depth" id="depth" type="number" step="0.01" min="0.01" max="100"> cm
 					</div>
 				</fieldset>
 				
@@ -147,8 +155,8 @@
 				<fieldset>
 					<legend>Parâmetro de venda</legend>
 					<div>
-						<label for="minSaleLimitS">Limite mínimo de vendas</label>
-						<input name="minSaleLimitS" id="minSaleLimitS" type="number" min="1">
+						<label for="minSaleLimit">Limite mínimo de vendas</label>
+						<input name="minSaleLimit" id="minSaleLimit" type="number" min="1">
 					</div>
 					<div>
 						<label for="periodicity">Período</label>
@@ -163,7 +171,7 @@
 					</div>
 				</fieldset>
 				
-				<button type="submit">Salvar</button>
+				<button name="operation" value="SAVE" type="submit">Salvar</button>
 			</form>
 		</div>
 		

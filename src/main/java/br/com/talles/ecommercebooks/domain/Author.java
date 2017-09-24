@@ -7,8 +7,8 @@ public class Author extends Entity {
 	public Author() {
 	}
 
-	public Author(String name) {
-		this.name = name;
+	public Author(long id) {
+		super(id);
 	}
 
 	public Author(String name, long id, boolean enabled) {
