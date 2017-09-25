@@ -1,5 +1,6 @@
-package br.com.talles.ecommercebooks.business;
+package br.com.talles.ecommercebooks.business.view;
 
+import br.com.talles.ecommercebooks.business.IStrategy;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.persistence.dao.AuthorDao;

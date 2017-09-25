@@ -1,10 +1,17 @@
 package br.com.talles.ecommercebooks.controll.facade;
 
 import br.com.talles.ecommercebooks.SelectPublishingCompany;
+import br.com.talles.ecommercebooks.business.AuthorNotBlank;
+import br.com.talles.ecommercebooks.business.BookNotBlank;
+import br.com.talles.ecommercebooks.business.CategoryNotBlank;
+import br.com.talles.ecommercebooks.business.DimensionNotBlank;
 import br.com.talles.ecommercebooks.business.IStrategy;
-import br.com.talles.ecommercebooks.business.SelectAuthor;
-import br.com.talles.ecommercebooks.business.SelectCategory;
-import br.com.talles.ecommercebooks.business.SelectPriceGroup;
+import br.com.talles.ecommercebooks.business.PriceGroupNotBlank;
+import br.com.talles.ecommercebooks.business.PublishingCompanyNotBlank;
+import br.com.talles.ecommercebooks.business.SaleParameterizationNotBlank;
+import br.com.talles.ecommercebooks.business.view.SelectAuthor;
+import br.com.talles.ecommercebooks.business.view.SelectCategory;
+import br.com.talles.ecommercebooks.business.view.SelectPriceGroup;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Book;
 import br.com.talles.ecommercebooks.domain.Entity;
@@ -38,6 +45,13 @@ public class Facade implements IFacade {
 		IStrategy selectAuthor = new SelectAuthor();
 		IStrategy selectPublishingCompany = new SelectPublishingCompany();
 		IStrategy selectPriceGroup = new SelectPriceGroup();		
+		IStrategy bookNotBlank = new BookNotBlank();
+		IStrategy authorNotBlank = new AuthorNotBlank();
+		IStrategy priceGroupNotBlank = new PriceGroupNotBlank();
+		IStrategy categoryNotBlank = new CategoryNotBlank();
+		IStrategy publishingCompanyNotBlank = new PublishingCompanyNotBlank();
+		IStrategy dimensionNotBlank = new DimensionNotBlank();
+		IStrategy saleParameterizationNotBlank = new SaleParameterizationNotBlank();
                 
         List<IStrategy> listBook = new ArrayList();
 		listBook.add(selectCategory);
@@ -46,7 +60,13 @@ public class Facade implements IFacade {
 		listBook.add(selectPriceGroup);
 		
         List<IStrategy> saveBook = new ArrayList();
-		
+		saveBook.add(bookNotBlank);
+		saveBook.add(authorNotBlank);
+		saveBook.add(priceGroupNotBlank);
+		saveBook.add(categoryNotBlank);
+		saveBook.add(publishingCompanyNotBlank);
+		saveBook.add(dimensionNotBlank);
+		saveBook.add(saleParameterizationNotBlank);
 		
 		List<IStrategy> deleteBook = new ArrayList();
 		

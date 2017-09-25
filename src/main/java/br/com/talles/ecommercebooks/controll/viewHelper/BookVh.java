@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +28,7 @@ public class BookVh implements IViewHelper {
 	public Entity getEntity(HttpServletRequest request) {
 		// Book datas
 		String idS = request.getParameter("id");
-		long id = 0;
+		long id = 0L;
 		if (!(idS == null || idS.equals("")))
 			id = Long.valueOf(idS);
 		
@@ -88,19 +87,19 @@ public class BookVh implements IViewHelper {
 		
 		// Author data
 		String idAuthorS = request.getParameter("author");
-		long idAuthor = 0;
+		long idAuthor = 0L;
 		if (!(idAuthorS == null || idAuthorS.equals("")))
 			idAuthor = Long.valueOf(idAuthorS);
 		
 		// PublishingCompany data
 		String idPublishingCompanyS = request.getParameter("publishingCompany");
-		long idPublishingCompany = 0;
+		long idPublishingCompany = 0L;
 		if (!(idPublishingCompanyS == null || idPublishingCompanyS.equals("")))
 			idPublishingCompany = Long.valueOf(idPublishingCompanyS);
 		
 		// PriceGroup data
 		String idPriceGroupS = request.getParameter("priceGroup");
-		long idPriceGroup = 0;
+		long idPriceGroup = 0L;
 		if (!(idPriceGroupS == null || idPriceGroupS.equals("")))
 			idPriceGroup = Long.valueOf(idPriceGroupS);
 		
@@ -110,7 +109,7 @@ public class BookVh implements IViewHelper {
 			idCategoriesS = Arrays.asList(request.getParameterValues("category"));
 		
 		List<Category> categories = new ArrayList<>();
-		long idCategory = 0;
+		long idCategory = 0L;
 		for(String idCategoryS : idCategoriesS){
 			idCategory = Long.valueOf(idCategoryS);
 			categories.add(new Category(idCategory));
