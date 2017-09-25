@@ -21,6 +21,10 @@ public class Result {
         return entities.get(key);
     }
 
+	public List<Object> getKeys(){
+		return Arrays.asList(entities.keySet().toArray());
+	}
+	
     public void setEntity(Entity entity) {
         this.entities.clear();
 		this.entities.put(entity.getClass().getSimpleName(), Arrays.asList(entity));

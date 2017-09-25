@@ -58,8 +58,8 @@
 						</select>
 					</div>
 					<div>
-						<label for="categories">Categoria</label>						
-						<select name="categories" id="categories" multiple>
+						<label for="category">Categoria</label>						
+						<select name="category" id="category" multiple>
 							<%
 								if(result != null){
 									List<Entity> categories = result.getEntities(Category.class.getSimpleName());

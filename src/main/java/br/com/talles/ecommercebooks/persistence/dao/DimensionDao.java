@@ -61,6 +61,7 @@ public class DimensionDao extends AbstractDao {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 	
+	@Override
 	public Entity findLast(){
 		Dimension dimension = new Dimension();
 		

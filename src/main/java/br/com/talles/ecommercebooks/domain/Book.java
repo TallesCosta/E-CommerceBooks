@@ -205,9 +205,19 @@ public class Book extends Entity {
 	public Category getCategory(int index){
 		return this.categories.get(index);
 	}
-
+	
 	public List<Category> getCategories(){
 		return this.categories;
+	}
+	
+	public void setCategory(Category category){
+		this.categories.clear();
+		this.categories.add(category);
+	}
+	
+	public void setCategories(List<Category> categories){
+		this.categories.clear();
+		this.categories = categories;
 	}
 	
 	public void addCategory(Category category){
@@ -218,6 +228,10 @@ public class Book extends Entity {
 		for(Category category : categories){
 			this.categories.add(category);
 		}
+	}
+	
+	public int countCategories(){
+		return this.categories.size();
 	}
 	
 	public boolean containsCategory(Category category){

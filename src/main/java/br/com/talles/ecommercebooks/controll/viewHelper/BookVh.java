@@ -11,6 +11,10 @@ import br.com.talles.ecommercebooks.domain.PublishingCompany;
 import br.com.talles.ecommercebooks.domain.SaleParameterization;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -101,10 +105,21 @@ public class BookVh implements IViewHelper {
 			idPriceGroup = Long.valueOf(idPriceGroupS);
 		
 		// Category data
-		String idCategoryS = request.getParameter("categories");
+		List<String> idCategoriesS = new ArrayList<>();
+		if(request.getParameterValues("category") != null)
+			idCategoriesS = Arrays.asList(request.getParameterValues("category"));
+		
+		List<Category> categories = new ArrayList<>();
+		long idCategory = 0;
+		for(String idCategoryS : idCategoriesS){
+			idCategory = Long.valueOf(idCategoryS);
+			categories.add(new Category(idCategory));
+		}
+		
+		/*String idCategoryS = request.getParameter("category");
 		long idCategory = 0;
 		if (!(idCategoryS == null || idCategoryS.equals("")))
-			idCategory = Long.valueOf(idCategoryS);
+			idCategory = Long.valueOf(idCategoryS);*/
 		
 		Book book = new Book();
 		
@@ -122,7 +137,7 @@ public class BookVh implements IViewHelper {
 				book.setAuthor(new Author(idAuthor));
 				book.setPublishingCompany(new PublishingCompany(idPublishingCompany));
 				book.setPriceGroup(new PriceGroup(idPriceGroup));
-				book.addCategory(new Category(idCategory));
+				book.addCategories(categories);
 				break;
 
 			case "LIST":

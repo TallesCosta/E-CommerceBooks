@@ -1,7 +1,7 @@
 package br.com.talles.ecommercebooks.persistence.dao;
 
 import br.com.talles.ecommercebooks.domain.Book;
-import br.com.talles.ecommercebooks.domain.Book;
+import br.com.talles.ecommercebooks.domain.Category;
 import br.com.talles.ecommercebooks.domain.Dimension;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.SaleParameterization;
@@ -19,7 +19,9 @@ public class BookDao extends AbstractDao {
 	@Override
 	public List<Entity> select() {
 		List<Entity> books = new ArrayList();
-        String sql = "SELECT * FROM Books";
+        String sql = "SELECT * FROM Books b "
+				+ "INNER JOIN BooksCategories bc ON b.id = bc.id_book "
+				+ "INNER JOIN Categories c ON bc.id_category = c.id";
         
         try{
 			openConnection();
@@ -30,15 +32,26 @@ public class BookDao extends AbstractDao {
             while(result.next()){
                 Book book = new Book();
                 
-                book.setId(result.getLong("id"));
-                book.setEnabled(result.getBoolean("enabled"));
-                book.setTitle(result.getString("title"));
-                book.setPublicationYear(result.getInt("publicationYear"));
-                book.setNumberOfPages(result.getInt("numberOfPages"));
-                book.setEdition(result.getString("edition"));
-                book.setIsbn(result.getString("isbn"));
-                book.setEan13(result.getString("ean13"));
+                book.setId(result.getLong("books.id"));
+                book.setEnabled(result.getBoolean("books.enabled"));
+                book.setTitle(result.getString("books.title"));
+                book.setPublicationYear(result.getInt("books.publicationYear"));
+                book.setNumberOfPages(result.getInt("books.numberOfPages"));
+                book.setEdition(result.getString("books.edition"));
+                book.setIsbn(result.getString("books.isbn"));
+                book.setEan13(result.getString("books.ean13"));
                 
+				Long id;
+				String name;
+				do{
+					id = result.getLong("booksCategories.id_book");
+					name = result.getString("categories.name");
+					
+					Category category = new Category(id, name);
+					book.addCategory(category);
+					
+				}while(book.getId() == id && result.next());
+				
                 books.add(book);
             }
             
@@ -97,11 +110,17 @@ public class BookDao extends AbstractDao {
             statement.setLong(11, book.getDimension().getId());
 			statement.setLong(12, book.getPriceGroup().getId());
 			statement.setLong(13, book.getSaleParameterization().getId());
-            
+			
             statement.execute();
-            statement.close();
-            
-            return true;
+			statement.close();
+			            
+            // Find the last book register to get its id
+			Book lastBook = (Book) findLast();
+			book.setId(lastBook.getId());
+			
+			// Insert in books-categories association table
+			IDao booksCategoriesDao = new BooksCategoriesDao();
+			return booksCategoriesDao.save(book);					// If insert association is true, insert book is true.
         } catch (SQLException ex) {
             Logger.getLogger(BookDao.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -125,7 +144,29 @@ public class BookDao extends AbstractDao {
 
 	@Override
 	public Entity findLast() {
-		return null;
+		Book book = new Book();
+		
+		String query = "SELECT * FROM Books ORDER BY ID DESC LIMIT 1";
+		
+		try {
+			openConnection();
+			
+			PreparedStatement stmt = conn.prepareStatement(query);
+			ResultSet result;
+			
+			result = stmt.executeQuery();
+			result.first();
+
+			book.setId(result.getLong("id"));
+			
+			stmt.close();
+
+			return book;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
+		}
 	}
 	
 }

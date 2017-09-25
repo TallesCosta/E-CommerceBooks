@@ -31,49 +31,53 @@
 					} else if (result.hasEntities()) {
 			%>
 						<div>
-							<!-- select authors -->
-							<label for='author'>Autor: </label>
-							<select name='author' id='author'>
-							<%
-								for(Entity entity : result.getEntities(Author.class.getSimpleName())){
-									Author author = (Author) entity;
-									out.println("<option value='" + author.getId() + "'>" + author.getName() + "</option>");
-								}
-							%>
-							</select> <!-- end select authors -->
-						
-							<!-- select categoty -->
-							<label for='categoty'>Categoria: </label>
-							<select name='categoty' id='categoty'>
-							<%
-								for(Entity entity : result.getEntities(Category.class.getSimpleName())){
-									Category categoty = (Category) entity;
-									out.println("<option value='" + categoty.getId() + "'>" + categoty.getName() + "</option>");
-								}
-							%>
-							</select> <!-- end select categoty -->
+							<form action="" method="POST">
+								<!-- select authors -->
+								<label for='author'>Autor: </label>
+								<select name='author' id='author'>
+								<%
+									for(Entity entity : result.getEntities(Author.class.getSimpleName())){
+										Author author = (Author) entity;
+										out.println("<option value='" + author.getId() + "'>" + author.getName() + "</option>");
+									}
+								%>
+								</select> <!-- end select authors -->
 
-							<!-- select publishingCompany -->
-							<label for='publishingCompany'>Editora: </label>
-							<select name='publishingCompany' id='publishingCompany'>
-							<%
-								for(Entity entity : result.getEntities(PublishingCompany.class.getSimpleName())){
-									PublishingCompany publishingCompany = (PublishingCompany) entity;
-									out.println("<option value='" + publishingCompany.getId() + "'>" + publishingCompany.getName() + "</option>");
-								}
-							%>
-							</select> <!-- end select publishingCompany -->
+								<!-- select categoty -->
+								<label for='categoty'>Categoria: </label>
+								<select name='categoty' id='categoty'>
+								<%
+									for(Entity entity : result.getEntities(Category.class.getSimpleName())){
+										Category categoty = (Category) entity;
+										out.println("<option value='" + categoty.getId() + "'>" + categoty.getName() + "</option>");
+									}
+								%>
+								</select> <!-- end select categoty -->
 
-							<!-- select priceGroup -->
-							<label for='priceGroup'>Grupo de Precificação: </label>
-							<select name='priceGroup' id='priceGroup'>
-							<%
-								for(Entity entity : result.getEntities(PriceGroup.class.getSimpleName())){
-									PriceGroup priceGroup = (PriceGroup) entity;
-									out.println("<option value='" + priceGroup.getId() + "'>" + priceGroup.getMarkup() + "</option>");
-								}
-							%>
-							</select> <!-- end select priceGroup -->
+								<!-- select publishingCompany -->
+								<label for='publishingCompany'>Editora: </label>
+								<select name='publishingCompany' id='publishingCompany'>
+								<%
+									for(Entity entity : result.getEntities(PublishingCompany.class.getSimpleName())){
+										PublishingCompany publishingCompany = (PublishingCompany) entity;
+										out.println("<option value='" + publishingCompany.getId() + "'>" + publishingCompany.getName() + "</option>");
+									}
+								%>
+								</select> <!-- end select publishingCompany -->
+
+								<!-- select priceGroup -->
+								<label for='priceGroup'>Grupo de Precificação: </label>
+								<select name='priceGroup' id='priceGroup'>
+								<%
+									for(Entity entity : result.getEntities(PriceGroup.class.getSimpleName())){
+										PriceGroup priceGroup = (PriceGroup) entity;
+										out.println("<option value='" + priceGroup.getId() + "'>" + priceGroup.getMarkup() + "</option>");
+									}
+								%>
+								</select> <!-- end select priceGroup -->
+								
+								<button name="" value="">Filtrar</button>
+							</form>
 						</div>
 			
 			<%
@@ -90,6 +94,7 @@
 					out.println("<td>Nº de Páginas</td>");
 					out.println("<td>ISBN</td>");
 					out.println("<td>Código de Barras</td>");
+					out.println("<td>Categoria(s)</td>");
 					out.println("<td>Excluir</td>");
 					out.println("<td>Editar</td>");
 					out.println("</tr>");
@@ -97,9 +102,15 @@
 					out.println("<tbody>");
 
 					int i = 0;
-					if(result.hasEntities()){
+					if(result.hasEntities() && result.getKeys().contains(Book.class.getSimpleName())){
 						for(Entity entity : result.getEntities(Book.class.getSimpleName())){
 							Book book = (Book) entity;
+							
+							String categories = "";
+							for(Category category : book.getCategories()){
+								categories += category.getName() + ", ";
+							}
+
 							out.println("<tr>");
 							out.println("<td>" + book.getTitle() + "</td>");
 							out.println("<td>" + book.getEdition() + "</td>");
@@ -107,6 +118,7 @@
 							out.println("<td>" + book.getNumberOfPages() + "</td>");
 							out.println("<td>" + book.getIsbn() + "</td>");
 							out.println("<td>" + book.getEan13()+ "</td>");
+							out.println("<td>" + categories.substring(0, categories.length() - 2) + "</td>");
 							out.println("<td>"
 											+ "<a href='books/find?operation=FIND&id=" + book.getId() + "'>"
 												+ "<i class='fa fa-pencil' aria-hidden='true'></i>"
@@ -131,6 +143,7 @@
 					out.println("<td>Nº de Páginas</td>");
 					out.println("<td>ISBN</td>");
 					out.println("<td>Código de Barras</td>");
+					out.println("<td>Categoria(s)</td>");
 					out.println("<td>Editar</td>");
 					out.println("<td>Excluir</td>");
 					out.println("</tr>");

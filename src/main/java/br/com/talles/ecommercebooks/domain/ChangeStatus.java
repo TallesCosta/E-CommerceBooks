@@ -18,8 +18,8 @@ public class ChangeStatus extends AbstractCategory {
 
 	
 	
-	public ChangeStatus(String justification, String name, String description, long id, boolean enabled) {
-		super(name, description, id, enabled);
+	public ChangeStatus(long id, boolean enabled, String justification, String name, String description) {
+		super(id, enabled, name, description);
 		this.justification = justification;
 	}
 

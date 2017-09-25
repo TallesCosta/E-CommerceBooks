@@ -11,13 +11,18 @@ public abstract class AbstractCategory extends Entity {
 	public AbstractCategory(long id) {
 		super(id);
 	}
+
+	public AbstractCategory(long id, String name) {
+		super(id);
+		this.name = name;
+	}
 	
 	public AbstractCategory(String name, String description) {
 		this.name = name;
 		this.description = description;
 	}
 
-	public AbstractCategory(String name, String description, long id, boolean enabled) {
+	public AbstractCategory(long id, boolean enabled, String name, String description) {
 		super(id, enabled);
 		this.name = name;
 		this.description = description;
