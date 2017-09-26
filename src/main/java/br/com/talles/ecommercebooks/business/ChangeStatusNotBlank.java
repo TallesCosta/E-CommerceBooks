@@ -10,7 +10,7 @@ public class ChangeStatusNotBlank implements IStrategy {
 	public Result process(Entity entity, Result result) {
 		ChangeStatus changeStatus = (ChangeStatus) entity;
         
-        if (changeStatus.getId() == 0L) {
+        if (changeStatus.getStatusCategory().getId() == 0L) {
             result.addMsg("A escolha de uma Categoria é obrigatória!\n");
 		} if (changeStatus.getJustification() == null || changeStatus.getJustification().trim().isEmpty()) {
             result.addMsg("Justificativa é um campo obrigatório!\n");

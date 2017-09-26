@@ -17,7 +17,7 @@ public class Book extends Entity {
 	private Dimension dimension;
 	private PriceGroup priceGroup;
 	private SaleParameterization saleParameterization;
-	private ChangeStatus changeStatus;
+	private StatusCategory changeStatus;
 	private List<Category> categories;
 
 	public Book() {
@@ -59,7 +59,7 @@ public class Book extends Entity {
 	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, 
 			String isbn, String ean13, Dimension dimension, PriceGroup priceGroup, 
 			PublishingCompany publishingCompany, SaleParameterization saleParameterization, 
-			ChangeStatus changeStatus, Author author) {
+			StatusCategory changeStatus, Author author) {
 		super(true);
 		this.title = title;
 		this.edition = edition;
@@ -81,7 +81,7 @@ public class Book extends Entity {
 	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, 
 			String isbn, String ean13, Dimension dimension, PriceGroup priceGroup, 
 			PublishingCompany publishingCompany, SaleParameterization saleParameterization, 
-			ChangeStatus changeStatus, Author author, List<Category> categories) {
+			StatusCategory changeStatus, Author author, List<Category> categories) {
 		super(true);
 		this.title = title;
 		this.edition = edition;
@@ -103,9 +103,9 @@ public class Book extends Entity {
 
 	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, String isbn, 
 			String ean13, Dimension dimension, PriceGroup priceGroup, PublishingCompany publishingCompany, 
-			SaleParameterization saleParameterization, ChangeStatus changeStatus, Author author, 
-			List<Category> categories, long id, boolean enabled) {
-		super(id, enabled);
+			SaleParameterization saleParameterization, StatusCategory changeStatus, Author author, 
+			List<Category> categories, long id) {
+		super(id, true);
 		this.title = title;
 		this.edition = edition;
 		this.publicationYear = publicationYear;
@@ -220,11 +220,11 @@ public class Book extends Entity {
 		this.saleParameterization = saleParameterization;
 	}
 
-	public ChangeStatus getChangeStatus() {
+	public StatusCategory getChangeStatus() {
 		return changeStatus;
 	}
 
-	public void setChangeStatus(ChangeStatus changeStatus) {
+	public void setChangeStatus(StatusCategory changeStatus) {
 		this.changeStatus = changeStatus;
 	}
 	
