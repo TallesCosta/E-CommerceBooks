@@ -8,17 +8,19 @@ public class Dimension extends Entity {
 	private double depth;
 
 	public Dimension() {
+		super(true);
 	}
 
 	public Dimension(double height, double widht, double weight, double depth) {
+		super(true);
 		this.height = height;
 		this.widht = widht;
 		this.weight = weight;
 		this.depth = depth;
 	}
 
-	public Dimension(double height, double widht, double weight, double depth, long id, boolean enabled) {
-		super(id, enabled);
+	public Dimension(double height, double widht, double weight, double depth, long id) {
+		super(id, true);
 		this.height = height;
 		this.widht = widht;
 		this.weight = weight;

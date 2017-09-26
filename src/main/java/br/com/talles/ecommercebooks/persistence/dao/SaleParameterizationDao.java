@@ -28,7 +28,7 @@ public class SaleParameterizationDao extends AbstractDao {
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
 
-			statement.setBoolean(1, true);
+			statement.setBoolean(1, saleParameterization.isEnabled());
 			statement.setInt(2, saleParameterization.getMinSaleLimit());
 			statement.setInt(3, saleParameterization.getPeriodicity());
 			
@@ -63,7 +63,7 @@ public class SaleParameterizationDao extends AbstractDao {
 	public Entity findLast() {
 		SaleParameterization saleParameterization = new SaleParameterization();
 		
-		String query = "SELECT * FROM SaleParameterizations ORDER BY ID DESC LIMIT 1";
+		String query = "SELECT * FROM SaleParameterizations WHERE enabled = true ORDER BY ID DESC LIMIT 1";
 		
 		try {
 			openConnection();
@@ -87,6 +87,11 @@ public class SaleParameterizationDao extends AbstractDao {
 		} finally {
 			closeConnection();
 		}
+	}
+
+	@Override
+	public List<Entity> selectDisabled() {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 	
 }

@@ -13,16 +13,12 @@ public class Category extends AbstractCategory {
 		super(name);
 	}
 	
-	public Category(long id, String name){
-		super(id, name);
-	}
-			
 	public Category(String name, String description) {
 		super(name, description);
 	}
 
-	public Category(long id, boolean enabled, String name, String description) {
-		super(id, enabled, name, description);
+	public Category(long id, String name, String description) {
+		super(id, name, description);
 	}
 	
 }

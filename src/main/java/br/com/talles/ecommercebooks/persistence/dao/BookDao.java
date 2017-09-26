@@ -23,6 +23,7 @@ public class BookDao extends AbstractDao {
         String sql = "SELECT b.*, GROUP_CONCAT(c.name SEPARATOR '-') AS categories FROM Books b "
 				+ "INNER JOIN BooksCategories bc ON b.id = bc.id_book "
 				+ "INNER JOIN Categories c ON bc.id_category = c.id "
+				+ "WHERE b.enabled = true "
 				+ "GROUP BY bc.id_book";
         
         try {
@@ -48,12 +49,6 @@ public class BookDao extends AbstractDao {
 				for(String category : categories){
 					book.addCategory(new Category(category));
 				}
-				
-				/*Long id = result.getLong("booksCategories.id_book");
-				String name = result.getString("categories.name");
-
-				Category category = new Category(id, name);
-				book.addCategory(category);*/
 				
 				books.add(book);
             }
@@ -151,7 +146,7 @@ public class BookDao extends AbstractDao {
 	public Entity findLast() {
 		Book book = new Book();
 		
-		String query = "SELECT * FROM Books ORDER BY ID DESC LIMIT 1";
+		String query = "SELECT * FROM Books WHERE enabled = true ORDER BY ID DESC LIMIT 1";
 		
 		try {
 			openConnection();
@@ -172,6 +167,11 @@ public class BookDao extends AbstractDao {
 		} finally {
 			closeConnection();
 		}
+	}
+
+	@Override
+	public List<Entity> selectDisabled() {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 	
 }

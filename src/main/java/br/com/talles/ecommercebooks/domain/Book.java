@@ -21,10 +21,14 @@ public class Book extends Entity {
 	private List<Category> categories;
 
 	public Book() {
+		super(true);
+		
 		this.categories = new ArrayList<>();
 	}
 
-	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, String isbn, String ean13) {
+	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, 
+			String isbn, String ean13) {
+		super(true);
 		this.title = title;
 		this.edition = edition;
 		this.publicationYear = publicationYear;
@@ -32,10 +36,13 @@ public class Book extends Entity {
 		this.synopsis = synopsis;
 		this.isbn = isbn;
 		this.ean13 = ean13;
+		
 		this.categories = new ArrayList<>();
 	}
 
-	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, String isbn, String ean13, Dimension dimension, SaleParameterization saleParameterization) {
+	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, 
+			String isbn, String ean13, Dimension dimension, SaleParameterization saleParameterization) {
+		super(true);
 		this.title = title;
 		this.edition = edition;
 		this.publicationYear = publicationYear;
@@ -45,11 +52,15 @@ public class Book extends Entity {
 		this.ean13 = ean13;
 		this.dimension = dimension;
 		this.saleParameterization = saleParameterization;
+		
+		this.categories = new ArrayList<>();
 	}
 	
-	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, String isbn, 
-			String ean13, Dimension dimension, PriceGroup priceGroup, PublishingCompany publishingCompany, 
-			SaleParameterization saleParameterization, ChangeStatus changeStatus, Author author) {
+	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, 
+			String isbn, String ean13, Dimension dimension, PriceGroup priceGroup, 
+			PublishingCompany publishingCompany, SaleParameterization saleParameterization, 
+			ChangeStatus changeStatus, Author author) {
+		super(true);
 		this.title = title;
 		this.edition = edition;
 		this.publicationYear = publicationYear;
@@ -63,12 +74,15 @@ public class Book extends Entity {
 		this.saleParameterization = saleParameterization;
 		this.changeStatus = changeStatus;
 		this.author = author;
+		
 		this.categories = new ArrayList<>();
 	}
 
-	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, String isbn, 
-			String ean13, Dimension dimension, PriceGroup priceGroup, PublishingCompany publishingCompany, 
-			SaleParameterization saleParameterization, ChangeStatus changeStatus, Author author, List<Category> categories) {
+	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, 
+			String isbn, String ean13, Dimension dimension, PriceGroup priceGroup, 
+			PublishingCompany publishingCompany, SaleParameterization saleParameterization, 
+			ChangeStatus changeStatus, Author author, List<Category> categories) {
+		super(true);
 		this.title = title;
 		this.edition = edition;
 		this.publicationYear = publicationYear;

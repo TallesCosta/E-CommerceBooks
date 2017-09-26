@@ -13,7 +13,7 @@ public class CategoryDao extends AbstractDao {
 	@Override
 	public List<Entity> select() {
 		List<Entity> categories = new ArrayList();
-        String sql = "SELECT * FROM categories";
+        String sql = "SELECT * FROM categories WHERE enabled = true";
         
         try{
 			openConnection();
@@ -67,6 +67,11 @@ public class CategoryDao extends AbstractDao {
 
 	@Override
 	public Entity findLast() {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public List<Entity> selectDisabled() {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 	

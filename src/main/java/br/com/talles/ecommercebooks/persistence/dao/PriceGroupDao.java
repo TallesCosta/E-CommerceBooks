@@ -13,7 +13,7 @@ public class PriceGroupDao extends AbstractDao {
 	@Override
 	public List<Entity> select() {
 		List<Entity> priceGroups = new ArrayList();
-        String sql = "SELECT * FROM priceGroups";
+        String sql = "SELECT * FROM priceGroups WHERE enabled = true";
         
         try{
 			openConnection();
@@ -64,6 +64,11 @@ public class PriceGroupDao extends AbstractDao {
 
 	@Override
 	public Entity findLast() {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public List<Entity> selectDisabled() {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 	

@@ -5,14 +5,20 @@ public class PublishingCompany extends Entity {
 	private String name;
 
 	public PublishingCompany() {
-	}
-	
-	public PublishingCompany(long id) {
-		super(id);
+		super(true);
 	}
 
-	public PublishingCompany(String name, long id, boolean enabled) {
-		super(id, enabled);
+	public PublishingCompany(long id) {
+		super(id, true);
+	}
+	
+	public PublishingCompany(String name) {
+		super(true);
+		this.name = name;
+	}
+
+	public PublishingCompany(String name, long id) {
+		super(id, true);
 		this.name = name;
 	}
 	

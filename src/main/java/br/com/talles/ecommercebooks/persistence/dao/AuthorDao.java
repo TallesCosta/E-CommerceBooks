@@ -14,7 +14,7 @@ public class AuthorDao extends AbstractDao {
 	@Override
 	public List<Entity> select() {
 		List<Entity> authors = new ArrayList();
-        String sql = "SELECT * FROM authors";
+        String sql = "SELECT * FROM authors WHERE enabled = true";
         
         try{
 			openConnection();
@@ -65,6 +65,11 @@ public class AuthorDao extends AbstractDao {
 
 	@Override
 	public Entity findLast() {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public List<Entity> selectDisabled() {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 	

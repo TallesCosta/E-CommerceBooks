@@ -28,7 +28,7 @@ public class DimensionDao extends AbstractDao {
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
 
-			statement.setBoolean(1, true);
+			statement.setBoolean(1, dimension.isEnabled());
 			statement.setDouble(2, dimension.getHeight());
 			statement.setDouble(3, dimension.getWidht());
 			statement.setDouble(4, dimension.getWeight());
@@ -65,7 +65,7 @@ public class DimensionDao extends AbstractDao {
 	public Entity findLast(){
 		Dimension dimension = new Dimension();
 		
-		String query = "SELECT * FROM Dimensions ORDER BY ID DESC LIMIT 1";
+		String query = "SELECT * FROM Dimensions WHERE enabled = true ORDER BY ID DESC LIMIT 1";
 		
 		try {
 			openConnection();
@@ -91,6 +91,11 @@ public class DimensionDao extends AbstractDao {
 		} finally {
 			closeConnection();
 		}
+	}
+
+	@Override
+	public List<Entity> selectDisabled() {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 	
 }

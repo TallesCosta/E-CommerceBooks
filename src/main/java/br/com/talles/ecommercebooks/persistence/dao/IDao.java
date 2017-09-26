@@ -17,4 +17,6 @@ public interface IDao {
 	
 	public Entity findLast();
     
+    public List<Entity> selectDisabled();
+	
 }

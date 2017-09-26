@@ -5,14 +5,20 @@ public class PriceGroup extends Entity {
 	private double markup;
 
 	public PriceGroup() {
+		super(true);
 	}
 
 	public PriceGroup(long id) {
-		super(id);
+		super(id, true);
+	}
+	
+	public PriceGroup(double markup) {
+		super(true);
+		this.markup = markup;
 	}
 
-	public PriceGroup(double markup, long id, boolean enabled) {
-		super(id, enabled);
+	public PriceGroup(double markup, long id) {
+		super(id, true);
 		this.markup = markup;
 	}
 

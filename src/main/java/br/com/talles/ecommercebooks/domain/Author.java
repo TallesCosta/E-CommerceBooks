@@ -5,14 +5,19 @@ public class Author extends Entity {
 	private String name;
 
 	public Author() {
+		super(true);
 	}
 
 	public Author(long id) {
-		super(id);
+		super(id, true);
+	}
+	
+	public Author(String name) {
+		this.name = name;
 	}
 
-	public Author(String name, long id, boolean enabled) {
-		super(id, enabled);
+	public Author(String name, long id) {
+		super(id, true);
 		this.name = name;
 	}
 

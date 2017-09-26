@@ -6,28 +6,30 @@ public abstract class AbstractCategory extends Entity {
 	private String description;
 
 	public AbstractCategory() {
+		super(true);
 	}
 
 	public AbstractCategory(long id) {
-		super(id);
+		super(id, true);
 	}
 
-	public AbstractCategory(String name) {
-		this.name = name;
+	public AbstractCategory(boolean enabled) {
+		super(enabled);
 	}
 	
-	public AbstractCategory(long id, String name) {
-		super(id);
+	public AbstractCategory(String name) {
+		super(true);
 		this.name = name;
 	}
 	
 	public AbstractCategory(String name, String description) {
+		super(true);
 		this.name = name;
 		this.description = description;
 	}
 
-	public AbstractCategory(long id, boolean enabled, String name, String description) {
-		super(id, enabled);
+	public AbstractCategory(long id, String name, String description) {
+		super(id, true);
 		this.name = name;
 		this.description = description;
 	}
