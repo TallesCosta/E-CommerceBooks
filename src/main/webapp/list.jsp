@@ -1,9 +1,8 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="br.com.talles.ecommercebooks.domain.Author"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Category"%>
 <%@page import="br.com.talles.ecommercebooks.domain.PriceGroup"%>
 <%@page import="br.com.talles.ecommercebooks.domain.PublishingCompany"%>
-<%@page import="com.sun.org.apache.bcel.internal.generic.AALOAD"%>
-<%@page import="br.com.talles.ecommercebooks.domain.Author"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Book"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
 <%@page import="br.com.talles.ecommercebooks.controll.Result"%>

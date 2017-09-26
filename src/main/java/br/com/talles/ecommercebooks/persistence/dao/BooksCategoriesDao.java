@@ -41,7 +41,9 @@ public class BooksCategoriesDao extends AbstractDao {
         } catch (SQLException ex) {
             Logger.getLogger(BookDao.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        }
+        } finally {
+			closeConnection();
+		}
 	}
 
 	@Override

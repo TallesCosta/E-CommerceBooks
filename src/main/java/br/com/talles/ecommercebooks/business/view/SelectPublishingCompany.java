@@ -1,4 +1,4 @@
-package br.com.talles.ecommercebooks;
+package br.com.talles.ecommercebooks.business.view;
 
 import br.com.talles.ecommercebooks.business.IStrategy;
 import br.com.talles.ecommercebooks.controll.Result;

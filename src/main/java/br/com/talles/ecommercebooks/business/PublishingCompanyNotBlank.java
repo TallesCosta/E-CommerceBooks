@@ -8,7 +8,7 @@ public class PublishingCompanyNotBlank implements IStrategy {
 
 	@Override
 	public Result process(Entity entity, Result result) {
-		PublishingCompany publishingCompany = (PublishingCompany) new PublishingCompany();
+		PublishingCompany publishingCompany = (PublishingCompany) entity;
 		
 		if (publishingCompany.getId() == 0L) {
             result.addMsg("A escolha de uma Editora é obrigatória!\n");

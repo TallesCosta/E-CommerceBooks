@@ -8,7 +8,7 @@ public class PriceGroupNotBlank implements IStrategy {
 
 	@Override
 	public Result process(Entity entity, Result result) {
-		PriceGroup priceGroup = (PriceGroup) new PriceGroup();
+		PriceGroup priceGroup = (PriceGroup) entity;
 		
 		if (priceGroup.getId() == 0L) {
             result.addMsg("A escolha de um Grupo de Precificação é obrigatória!\n");

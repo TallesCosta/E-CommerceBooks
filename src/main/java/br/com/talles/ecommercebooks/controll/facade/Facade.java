@@ -1,14 +1,8 @@
 package br.com.talles.ecommercebooks.controll.facade;
 
-import br.com.talles.ecommercebooks.SelectPublishingCompany;
-import br.com.talles.ecommercebooks.business.AuthorNotBlank;
+import br.com.talles.ecommercebooks.business.view.SelectPublishingCompany;
 import br.com.talles.ecommercebooks.business.BookNotBlank;
-import br.com.talles.ecommercebooks.business.CategoryNotBlank;
-import br.com.talles.ecommercebooks.business.DimensionNotBlank;
 import br.com.talles.ecommercebooks.business.IStrategy;
-import br.com.talles.ecommercebooks.business.PriceGroupNotBlank;
-import br.com.talles.ecommercebooks.business.PublishingCompanyNotBlank;
-import br.com.talles.ecommercebooks.business.SaleParameterizationNotBlank;
 import br.com.talles.ecommercebooks.business.view.SelectAuthor;
 import br.com.talles.ecommercebooks.business.view.SelectCategory;
 import br.com.talles.ecommercebooks.business.view.SelectPriceGroup;
@@ -41,17 +35,12 @@ public class Facade implements IFacade {
         String book = Book.class.getSimpleName();
         
         // All Strategies
+		IStrategy selectPriceGroup = new SelectPriceGroup();		
         IStrategy selectCategory = new SelectCategory();
 		IStrategy selectAuthor = new SelectAuthor();
+		
 		IStrategy selectPublishingCompany = new SelectPublishingCompany();
-		IStrategy selectPriceGroup = new SelectPriceGroup();		
 		IStrategy bookNotBlank = new BookNotBlank();
-		IStrategy authorNotBlank = new AuthorNotBlank();
-		IStrategy priceGroupNotBlank = new PriceGroupNotBlank();
-		IStrategy categoryNotBlank = new CategoryNotBlank();
-		IStrategy publishingCompanyNotBlank = new PublishingCompanyNotBlank();
-		IStrategy dimensionNotBlank = new DimensionNotBlank();
-		IStrategy saleParameterizationNotBlank = new SaleParameterizationNotBlank();
                 
         List<IStrategy> listBook = new ArrayList();
 		listBook.add(selectCategory);
@@ -61,12 +50,6 @@ public class Facade implements IFacade {
 		
         List<IStrategy> saveBook = new ArrayList();
 		saveBook.add(bookNotBlank);
-		saveBook.add(authorNotBlank);
-		saveBook.add(priceGroupNotBlank);
-		saveBook.add(categoryNotBlank);
-		saveBook.add(publishingCompanyNotBlank);
-		saveBook.add(dimensionNotBlank);
-		saveBook.add(saleParameterizationNotBlank);
 		
 		List<IStrategy> deleteBook = new ArrayList();
 		
@@ -125,8 +108,16 @@ public class Facade implements IFacade {
         List<IStrategy> validations = reqs.get(SAVE);
 		
         result = executeValidations(entity, validations);
-        if(result.hasMsg())
-            return result;
+        if(result.hasMsg()){
+			String msg = result.getMsg();
+			
+			result = create(entity);
+			
+			result.addEntity(entity);
+			result.setMsg(msg);
+			
+			return result;
+		}
 		
         IDao dao = persistence.get(entity.getClass().getSimpleName());
         boolean resultDao = dao.save(entity);
@@ -214,7 +205,7 @@ public class Facade implements IFacade {
 			// TODO: USAR ESTE CÓDIGO NAS STRATEGIES!!!
             //result.addMsg();
 			
-			validation.process(entity, result);
+			result = validation.process(entity, result);
             if(result.hasMsg()){
                 result.setEntity(entity);
                 return result;

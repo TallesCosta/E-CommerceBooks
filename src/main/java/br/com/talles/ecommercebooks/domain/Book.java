@@ -35,6 +35,18 @@ public class Book extends Entity {
 		this.categories = new ArrayList<>();
 	}
 
+	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, String isbn, String ean13, Dimension dimension, SaleParameterization saleParameterization) {
+		this.title = title;
+		this.edition = edition;
+		this.publicationYear = publicationYear;
+		this.numberOfPages = numberOfPages;
+		this.synopsis = synopsis;
+		this.isbn = isbn;
+		this.ean13 = ean13;
+		this.dimension = dimension;
+		this.saleParameterization = saleParameterization;
+	}
+	
 	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, String isbn, 
 			String ean13, Dimension dimension, PriceGroup priceGroup, PublishingCompany publishingCompany, 
 			SaleParameterization saleParameterization, ChangeStatus changeStatus, Author author) {

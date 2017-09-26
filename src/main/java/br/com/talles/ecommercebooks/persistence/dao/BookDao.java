@@ -9,8 +9,8 @@ import br.com.talles.ecommercebooks.domain.SaleParameterization;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,44 +23,40 @@ public class BookDao extends AbstractDao {
 				+ "INNER JOIN BooksCategories bc ON b.id = bc.id_book "
 				+ "INNER JOIN Categories c ON bc.id_category = c.id";
         
-        try{
+        try {
 			openConnection();
 			
             PreparedStatement statement = conn.prepareStatement(sql);
             ResultSet result = statement.executeQuery();
             
-            while(result.next()){
-                Book book = new Book();
-                
-                book.setId(result.getLong("books.id"));
-                book.setEnabled(result.getBoolean("books.enabled"));
-                book.setTitle(result.getString("books.title"));
-                book.setPublicationYear(result.getInt("books.publicationYear"));
-                book.setNumberOfPages(result.getInt("books.numberOfPages"));
-                book.setEdition(result.getString("books.edition"));
-                book.setIsbn(result.getString("books.isbn"));
-                book.setEan13(result.getString("books.ean13"));
-                
-				Long id;
-				String name;
-				do{
-					id = result.getLong("booksCategories.id_book");
-					name = result.getString("categories.name");
-					
-					Category category = new Category(id, name);
-					book.addCategory(category);
-					
-				}while(book.getId() == id && result.next());
+			
+            while (result.next()) {
+				Book book = new Book();
 				
-                books.add(book);
+				book.setId(result.getLong("books.id"));
+				book.setEnabled(result.getBoolean("books.enabled"));
+				book.setTitle(result.getString("books.title"));
+				book.setPublicationYear(result.getInt("books.publicationYear"));
+				book.setNumberOfPages(result.getInt("books.numberOfPages"));
+				book.setEdition(result.getString("books.edition"));
+				book.setIsbn(result.getString("books.isbn"));
+				book.setEan13(result.getString("books.ean13"));
+
+				Long id = result.getLong("booksCategories.id_book");
+				String name = result.getString("categories.name");
+
+				Category category = new Category(id, name);
+				book.addCategory(category);
+				
+				books.add(book);
             }
             
             result.close();
             statement.close();
             
             return  books;
-        }catch(SQLException e){
-            throw new RuntimeException(e);   
+        } catch (SQLException e) {
+            throw new RuntimeException (e);   
         } finally {
 			closeConnection();
 		}
@@ -124,7 +120,9 @@ public class BookDao extends AbstractDao {
         } catch (SQLException ex) {
             Logger.getLogger(BookDao.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        }
+        } finally {
+			closeConnection();
+		}
 	}
 
 	@Override

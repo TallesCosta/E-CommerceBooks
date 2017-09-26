@@ -8,7 +8,7 @@ public class CategoryNotBlank implements IStrategy {
 
 	@Override
 	public Result process(Entity entity, Result result) {
-		Category category = (Category) new Category();
+		Category category = (Category) entity;
 		
 		if (category.getId() == 0L) {
             result.addMsg("A escolha de ao menos uma Categoria é obrigatória!\n");

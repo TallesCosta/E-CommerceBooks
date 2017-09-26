@@ -8,7 +8,7 @@ public class AuthorNotBlank implements IStrategy {
 
 	@Override
 	public Result process(Entity entity, Result result) {
-		Author author = (Author) new Author();
+		Author author = (Author) entity;
 		
 		if (author.getId() == 0L) {
             result.addMsg("A escolha de um Autor é obrigatória!\n");
