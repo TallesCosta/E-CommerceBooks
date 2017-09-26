@@ -202,10 +202,8 @@ public class Facade implements IFacade {
 	public Result executeValidations(Entity entity, List<IStrategy> validations) {
         
         for(IStrategy validation : validations){
-			// TODO: USAR ESTE CÓDIGO NAS STRATEGIES!!!
-            //result.addMsg();
-			
 			result = validation.process(entity, result);
+			
             if(result.hasMsg()){
                 result.setEntity(entity);
                 return result;

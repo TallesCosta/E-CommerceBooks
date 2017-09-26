@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,9 +20,10 @@ public class BookDao extends AbstractDao {
 	@Override
 	public List<Entity> select() {
 		List<Entity> books = new ArrayList();
-        String sql = "SELECT * FROM Books b "
+        String sql = "SELECT b.*, GROUP_CONCAT(c.name SEPARATOR '-') AS categories FROM Books b "
 				+ "INNER JOIN BooksCategories bc ON b.id = bc.id_book "
-				+ "INNER JOIN Categories c ON bc.id_category = c.id";
+				+ "INNER JOIN Categories c ON bc.id_category = c.id "
+				+ "GROUP BY bc.id_book";
         
         try {
 			openConnection();
@@ -41,12 +43,17 @@ public class BookDao extends AbstractDao {
 				book.setEdition(result.getString("books.edition"));
 				book.setIsbn(result.getString("books.isbn"));
 				book.setEan13(result.getString("books.ean13"));
-
-				Long id = result.getLong("booksCategories.id_book");
+				
+				List<String> categories = Arrays.asList(result.getString("categories").split("-"));
+				for(String category : categories){
+					book.addCategory(new Category(category));
+				}
+				
+				/*Long id = result.getLong("booksCategories.id_book");
 				String name = result.getString("categories.name");
 
 				Category category = new Category(id, name);
-				book.addCategory(category);
+				book.addCategory(category);*/
 				
 				books.add(book);
             }
