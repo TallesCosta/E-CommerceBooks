@@ -5,6 +5,7 @@ import br.com.talles.ecommercebooks.business.BookNotBlank;
 import br.com.talles.ecommercebooks.business.Ean13Unique;
 import br.com.talles.ecommercebooks.business.IStrategy;
 import br.com.talles.ecommercebooks.business.IsbnUnique;
+import br.com.talles.ecommercebooks.business.Logger;
 import br.com.talles.ecommercebooks.business.view.SelectAuthor;
 import br.com.talles.ecommercebooks.business.view.SelectCategory;
 import br.com.talles.ecommercebooks.business.view.SelectPriceGroup;
@@ -50,6 +51,7 @@ public class Facade implements IFacade {
 		IStrategy bookNotBlank = new BookNotBlank();
 		IStrategy isbnUnique = new IsbnUnique();
 		IStrategy ean13Unique = new Ean13Unique();
+                IStrategy logger = new Logger();
                 
         List<IStrategy> listBook = new ArrayList();
 		listBook.add(selectCategory);
@@ -62,6 +64,7 @@ public class Facade implements IFacade {
 		saveBook.add(bookNotBlank);
 		saveBook.add(isbnUnique);
 		saveBook.add(ean13Unique);
+                saveBook.add(logger);
 		
 		List<IStrategy> deleteBook = new ArrayList();
 		

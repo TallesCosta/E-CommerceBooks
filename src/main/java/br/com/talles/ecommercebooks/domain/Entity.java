@@ -1,5 +1,9 @@
 package br.com.talles.ecommercebooks.domain;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 public class Entity {
 
 	private long id;
@@ -47,5 +51,37 @@ public class Entity {
 		final Entity other = (Entity) obj;
 		return this.id != other.id;
 	}
+        
+        @Override
+        public String toString() {
+            StringBuilder builder = new StringBuilder();
+            
+            builder.append(getClass().getSimpleName())
+                   .append("(");
+            
+            Field[] fields = getClass().getDeclaredFields();
+            for(Field f : fields) {
+                builder.append(f.getName())
+                       .append("=");
+                
+                String value = "(xxx)";
+                
+                for(Method m : getClass().getMethods()) {
+                    if(!(m.getName().startsWith("get") && m.getName().length() == f.getName().length() + 3)
+                            || !(m.getName().toLowerCase().endsWith(f.getName().toLowerCase())))
+                        continue;
+                    try {
+                        value = m.invoke(this).toString();
+                    } catch(InvocationTargetException | IllegalAccessException e) { }
+                    break;
+                }
+                
+                builder.append(value)
+                      .append(",");
+            }
+            
+            builder.append(");");
+            return builder.toString();
+        }
 	
 }
