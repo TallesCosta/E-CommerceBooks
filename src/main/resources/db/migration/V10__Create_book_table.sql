@@ -9,8 +9,8 @@ CREATE TABLE Books (
     publicationYear INT NOT NULL,
     numberOfPages INT NOT NULL,
     synopsis VARCHAR(255) NOT NULL,
-    isbn VARCHAR(255) NOT NULL,
-    ean13 VARCHAR(255) NOT NULL,
+    isbn VARCHAR(255) NOT NULL UNIQUE,
+    ean13 VARCHAR(255) NOT NULL UNIQUE,
 	
 	id_author INT NOT NULL,
 	id_publishingCompany INT NOT NULL,

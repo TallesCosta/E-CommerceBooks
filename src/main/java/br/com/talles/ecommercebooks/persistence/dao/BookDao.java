@@ -193,7 +193,7 @@ public class BookDao extends AbstractDao {
 			
             PreparedStatement statement = conn.prepareStatement(sql);
             
-            statement.setBoolean(1, book.isEnabled());
+            statement.setBoolean(1, false);
             statement.setLong(2, book.getChangeStatus().getId());
             statement.setLong(3, book.getId());
             
@@ -212,6 +212,74 @@ public class BookDao extends AbstractDao {
 	@Override
 	public boolean enable(Entity entity) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+	
+	public Entity findIsbn(Entity entity){
+		Book book = (Book) entity;
+        String sql = "SELECT * FROM Books WHERE isbn = ?";
+        
+        try{
+			openConnection();
+			
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, book.getIsbn());
+            
+            ResultSet result = statement.executeQuery();
+            
+            if(result.first()){
+                book.setId(result.getLong("id"));
+				book.setEnabled(result.getBoolean("enabled"));
+				book.setTitle(result.getString("title"));
+				book.setPublicationYear(result.getInt("publicationYear"));
+				book.setNumberOfPages(result.getInt("numberOfPages"));
+				book.setEdition(result.getString("edition"));
+				book.setIsbn(result.getString("isbn"));
+				book.setEan13(result.getString("ean13"));
+            }
+            
+            result.close();
+            statement.close();
+            
+            return book;
+        }catch(SQLException e){
+            throw new RuntimeException(e);   
+        } finally {
+			closeConnection();
+		}
+	}
+	
+	public Entity findEan13(Entity entity){
+		Book book = (Book) entity;
+        String sql = "SELECT * FROM Books WHERE ean13 = ?";
+        
+        try{
+			openConnection();
+			
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, book.getEan13());
+            
+            ResultSet result = statement.executeQuery();
+            
+            if(result.first()){
+                book.setId(result.getLong("id"));
+				book.setEnabled(result.getBoolean("enabled"));
+				book.setTitle(result.getString("title"));
+				book.setPublicationYear(result.getInt("publicationYear"));
+				book.setNumberOfPages(result.getInt("numberOfPages"));
+				book.setEdition(result.getString("edition"));
+				book.setIsbn(result.getString("isbn"));
+				book.setEan13(result.getString("ean13"));
+            }
+            
+            result.close();
+            statement.close();
+            
+            return book;
+        }catch(SQLException e){
+            throw new RuntimeException(e);   
+        } finally {
+			closeConnection();
+		}
 	}
 	
 }

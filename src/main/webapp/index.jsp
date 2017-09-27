@@ -9,7 +9,14 @@
     <body>
         <h1>Página Inicial</h1>
 		
-		<a href="<% out.print(request.getContextPath().concat("/books/list?operation=LIST")); %>">Listagem de Livros</a>
+		<ul>
+			<li>
+				<a href="<% out.print(request.getContextPath().concat("/books/list?operation=LIST&enabled=true")); %>">Listagem de Livros</a>
+			</li>
+			<li>
+				<a href="<% out.print(request.getContextPath().concat("/books/list?operation=LIST&enabled=false")); %>">Listagem de Livros inativos</a>
+			</li>
+		</ul>
 		
 		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
     </body>

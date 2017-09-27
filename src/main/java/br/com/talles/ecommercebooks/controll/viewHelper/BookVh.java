@@ -125,6 +125,10 @@ public class BookVh implements IViewHelper {
 		if (!(idDeactivationCategoryS == null || idDeactivationCategoryS.equals("")))
 			idDeactivationCategory = Long.valueOf(idDeactivationCategoryS);
 		
+		// Enables two ways to list books
+		String enabledS = request.getParameter("enabled");
+		boolean enabled = Boolean.valueOf(enabledS);
+		
 		Book book = new Book();
 		
 		switch(request.getParameter("operation")) {
@@ -145,7 +149,7 @@ public class BookVh implements IViewHelper {
 				break;
 
 			case "LIST":
-
+				book.setEnabled(enabled);
 				break;
 
 			case "DELETE":
@@ -187,7 +191,7 @@ public class BookVh implements IViewHelper {
 			switch(request.getParameter("operation")) {
 				case "SAVE":
 					if (!result.hasMsg()) {
-						response.sendRedirect("/E-CommerceBooks/books/list?operation=LIST");
+						response.sendRedirect("/E-CommerceBooks/books/list?operation=LIST&enabled=true");
 					} else {
 						dispatcher = request.getRequestDispatcher("/create.jsp");
 						dispatcher.forward(request, response);
@@ -213,7 +217,7 @@ public class BookVh implements IViewHelper {
 
 				case "DISABLE":
 					if (!result.hasMsg()) {
-						response.sendRedirect("/E-CommerceBooks/books/list?operation=LIST");
+						response.sendRedirect("/E-CommerceBooks/books/list?operation=LIST&enabled=true");
 					} else {
 						dispatcher = request.getRequestDispatcher("/list.jsp");
 						dispatcher.forward(request, response);

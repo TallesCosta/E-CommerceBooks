@@ -119,7 +119,7 @@ public class Facade implements IFacade {
             return result;
 		
 		IDao dao = persistence.get(entity.getClass().getSimpleName());
-        result.addEntities(dao.select(true));
+        result.addEntities(dao.select(entity.isEnabled()));
         
         return result;
 	}
