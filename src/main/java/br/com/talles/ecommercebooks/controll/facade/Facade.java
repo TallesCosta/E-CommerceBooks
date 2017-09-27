@@ -30,6 +30,8 @@ public class Facade implements IFacade {
     private static final String DELETE = "DELETE";
     private static final String FIND = "FIND";
     private static final String UPDATE = "UPDATE";
+    private static final String DISABLE = "DISABLE";
+    private static final String ENABLE = "ENABLE";
 	private static final String CREATE = "CREATE";
 	private static final String FILTERS = "FILTERS";
 	
@@ -58,7 +60,16 @@ public class Facade implements IFacade {
 		List<IStrategy> deleteBook = new ArrayList();
 		
         
+		List<IStrategy> findBook = new ArrayList();
+		
+		
         List<IStrategy> updateBook = new ArrayList();
+		
+		
+		List<IStrategy> disableBook = new ArrayList();
+		
+		
+		List<IStrategy> enableBook = new ArrayList();
 		
 		
 		List<IStrategy> createBook = new ArrayList();
@@ -74,8 +85,11 @@ public class Facade implements IFacade {
         contextBook.put(LIST, listBook);
 		contextBook.put(SAVE, saveBook);
 		contextBook.put(DELETE, deleteBook);
+		contextBook.put(FIND, findBook);
         contextBook.put(UPDATE, updateBook);
         contextBook.put(CREATE, createBook);
+        contextBook.put(DISABLE, disableBook);
+        contextBook.put(ENABLE, enableBook);
         contextBook.put(FILTERS, filtersBook);
 		
         requirements = new HashMap();
@@ -132,26 +146,26 @@ public class Facade implements IFacade {
         
         return result;
 	}
-
+	
 	@Override
-	public Result delete(Entity entity) {
+	public Result delete(Entity entity){
 		this.result = new Result();
 		
-		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
+        Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
         List<IStrategy> validations = reqs.get(DELETE);
 		
 		result = executeValidations(entity, validations);
         if(result.hasMsg())
             return result;
+				
+	    IDao dao = persistence.get(entity.getClass().getSimpleName());
+	    boolean resultDao = dao.delete(entity);
 		
-		IDao dao = persistence.get(entity.getClass().getSimpleName());        
-        boolean resultDao = dao.delete(entity);
-		
-        if(!resultDao)
+		if(!resultDao)
             result.addMsg("An error has occurred in the process of your operation, "
 					+ "it has been noted and will be resolved soon!");
-        
-        return result;
+		
+	    return result;
 	}
 	
 	@Override
@@ -191,6 +205,48 @@ public class Facade implements IFacade {
 
         return result;
     }
+	
+	@Override
+	public Result disable(Entity entity) {
+		this.result = new Result();
+		
+		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
+        List<IStrategy> validations = reqs.get(DISABLE);
+		
+		result = executeValidations(entity, validations);
+        if(result.hasMsg())
+            return result;
+		
+		IDao dao = persistence.get(entity.getClass().getSimpleName());
+        boolean resultDao = dao.disable(entity);
+		
+        if(!resultDao)
+            result.addMsg("An error has occurred in the process of your operation, "
+					+ "it has been noted and will be resolved soon!");
+        
+        return result;
+	}
+	
+	@Override
+	public Result enable(Entity entity) {
+		this.result = new Result();
+		
+		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
+        List<IStrategy> validations = reqs.get(ENABLE);
+		
+		result = executeValidations(entity, validations);
+        if(result.hasMsg())
+            return result;
+		
+		IDao dao = persistence.get(entity.getClass().getSimpleName());        
+        boolean resultDao = dao.delete(entity);
+		
+        if(!resultDao)
+            result.addMsg("An error has occurred in the process of your operation, "
+					+ "it has been noted and will be resolved soon!");
+        
+        return result;
+	}
 	
 	@Override
 	public Result create(Entity entity){

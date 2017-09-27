@@ -9,11 +9,15 @@ public interface IFacade {
     
     public Result save(Entity entity);
     
-    public Result delete(Entity entity);
-    
+	public Result delete(Entity entity);
+	
     public Result find(Entity entity);
-    
+	
     public Result update(Entity entity);
+	
+    public Result disable(Entity entity);
+	
+    public Result enable(Entity entity);
 	
     public Result create(Entity entity);
     

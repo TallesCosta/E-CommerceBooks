@@ -1,8 +1,8 @@
 package br.com.talles.ecommercebooks.persistence.dao;
 
-import br.com.talles.ecommercebooks.domain.SaleParameterization;
+import br.com.talles.ecommercebooks.domain.ChangeStatus;
+import br.com.talles.ecommercebooks.domain.DeactivationCategory;
 import br.com.talles.ecommercebooks.domain.Entity;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SaleParameterizationDao extends AbstractDao {
+public class ChangeStatusDao extends AbstractDao {
 
 	@Override
 	public List<Entity> select() {
@@ -19,25 +19,25 @@ public class SaleParameterizationDao extends AbstractDao {
 
 	@Override
 	public boolean save(Entity entity) {
-		openConnection();
-
-		SaleParameterization saleParameterization = (SaleParameterization) entity;
-		String sql = "INSERT INTO SaleParameterizations(enabled, minSaleLimit, periodicity)"
+		ChangeStatus changeStatus = (ChangeStatus) entity;
+		String sql = "INSERT INTO ChangeStatus(enabled, justification, id_deactivationCategory)"
 				+ "VALUES(?, ?, ?)";
 
 		try {
+			openConnection();
+			
 			PreparedStatement statement = conn.prepareStatement(sql);
 
-			statement.setBoolean(1, saleParameterization.isEnabled());
-			statement.setInt(2, saleParameterization.getMinSaleLimit());
-			statement.setInt(3, saleParameterization.getPeriodicity());
+			statement.setBoolean(1, changeStatus.isEnabled());
+			statement.setString(2, changeStatus.getJustification());
+			statement.setLong(3, changeStatus.getStatusCategory().getId());
 			
 			statement.execute();
 			statement.close();
 
 			return true;
 		} catch (SQLException ex) {
-			Logger.getLogger(SaleParameterizationDao.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(ChangeStatusDao.class.getName()).log(Level.SEVERE, null, ex);
 			return false;
 		} finally {
 			closeConnection();
@@ -61,9 +61,9 @@ public class SaleParameterizationDao extends AbstractDao {
 
 	@Override
 	public Entity findLast() {
-		SaleParameterization saleParameterization = new SaleParameterization();
+		ChangeStatus changeStatus = new ChangeStatus();
 		
-		String query = "SELECT * FROM SaleParameterizations WHERE enabled = true ORDER BY ID DESC LIMIT 1";
+		String query = "SELECT * FROM ChangeStatus WHERE enabled = true ORDER BY ID DESC LIMIT 1";
 		
 		try {
 			openConnection();
@@ -74,24 +74,19 @@ public class SaleParameterizationDao extends AbstractDao {
 			result = stmt.executeQuery();
 			result.first();
 
-			saleParameterization.setId(result.getLong("id"));
-			saleParameterization.setEnabled(result.getBoolean("enabled"));
-			saleParameterization.setMinSaleLimit(result.getInt("minSaleLimit"));
-			saleParameterization.setPeriodicity(result.getInt("periodicity"));
+			changeStatus.setId(result.getLong("id"));
+			changeStatus.setEnabled(result.getBoolean("enabled"));
+			changeStatus.setJustification(result.getString("justification"));
+			changeStatus.setStatusCategory(new DeactivationCategory(result.getLong("id_deactivationCategory")));
 			
 			stmt.close();
 
-			return saleParameterization;
+			return changeStatus;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
 			closeConnection();
 		}
-	}
-
-	@Override
-	public List<Entity> selectDisabled() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
 	@Override
@@ -101,6 +96,11 @@ public class SaleParameterizationDao extends AbstractDao {
 
 	@Override
 	public boolean enable(Entity entity) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public List<Entity> selectDisabled() {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 	

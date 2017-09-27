@@ -2,6 +2,7 @@ package br.com.talles.ecommercebooks.persistence.dao;
 
 import br.com.talles.ecommercebooks.domain.Book;
 import br.com.talles.ecommercebooks.domain.Category;
+import br.com.talles.ecommercebooks.domain.ChangeStatus;
 import br.com.talles.ecommercebooks.domain.Dimension;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.SaleParameterization;
@@ -111,20 +112,20 @@ public class BookDao extends AbstractDao {
 			
             statement.execute();
 			statement.close();
-			            
-            // Find the last book register to get its id
-			Book lastBook = (Book) findLast();
-			book.setId(lastBook.getId());
-			
-			// Insert in books-categories association table
-			IDao booksCategoriesDao = new BooksCategoriesDao();
-			return booksCategoriesDao.save(book);					// If insert association is true, insert book is true.
         } catch (SQLException ex) {
             Logger.getLogger(BookDao.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         } finally {
 			closeConnection();
 		}
+		
+		// Find the last book register to get its id
+		Book lastBook = (Book) findLast();
+		book.setId(lastBook.getId());
+
+		// Insert in books-categories association table
+		IDao booksCategoriesDao = new BooksCategoriesDao();
+		return booksCategoriesDao.save(book);					// If insert association is true, insert book is true.
 	}
 
 	@Override
@@ -171,6 +172,48 @@ public class BookDao extends AbstractDao {
 
 	@Override
 	public List<Entity> selectDisabled() {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public boolean disable(Entity entity) {
+		 Book book = (Book) entity;
+        
+        // Persists the ChangeStatus
+        ChangeStatusDao changeStatusDao = new ChangeStatusDao();
+        if(!changeStatusDao.save(book.getChangeStatus())){
+            return false;
+        }
+        
+		book.setChangeStatus((ChangeStatus) changeStatusDao.findLast());
+		
+        String sql = "UPDATE Books "
+                + "SET enabled = ?, id_changeStatus = ? "
+                + "WHERE id = ?";
+        
+        try {
+			openConnection();
+			
+            PreparedStatement statement = conn.prepareStatement(sql);
+            
+            statement.setBoolean(1, false);
+            statement.setLong(2, book.getChangeStatus().getId());
+            statement.setLong(3, book.getId());
+            
+            statement.execute();
+            statement.close();
+            
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+			closeConnection();
+		}
+	}
+
+	@Override
+	public boolean enable(Entity entity) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 	

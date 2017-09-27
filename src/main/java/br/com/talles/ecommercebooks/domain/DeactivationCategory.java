@@ -6,6 +6,10 @@ public class DeactivationCategory extends StatusCategory {
 	public DeactivationCategory() {
 	}
 
+	public DeactivationCategory(long id) {
+		super(id);
+	}
+	
 	public DeactivationCategory(String name) {
 		super(name);
 	}

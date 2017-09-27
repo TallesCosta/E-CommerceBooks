@@ -100,7 +100,7 @@
 					</thead>
 					
 					<tbody>
-		<%
+			<%
 				int i = 0;
 				if(result.hasEntities() && result.getKeys().contains(Book.class.getSimpleName())){
 					for(Entity entity : result.getEntities(Book.class.getSimpleName())){
@@ -141,7 +141,7 @@
 					
 					out.println("</tr>");
 				}
-		%>
+			%>
 					</tbody>
 					
 					<tfooter>
@@ -161,15 +161,38 @@
 					
 				<p><% out.println(i); %> registros encontrados.</p>
 			</div>
-		<%
-				for (Entity entity : result.getEntities(DeactivationCategory.class.getSimpleName())) {
-					DeactivationCategory deactivationCategory = (DeactivationCategory) entity;
-					out.println(deactivationCategory.getName() + "\n");
-				}
-			}
-		%>
-
+			
 			<a href="<% out.print(request.getContextPath().concat("/books/create?operation=CREATE")); %>">Criar Livro</a>
+			
+			<br><br>
+			<div id="light-box">
+				<form action="disable" method="POST">
+					<input name="id" type="hidden" value="1">
+					
+					<fieldset>
+						<legend>Desativar Livro</legend>
+						<div>
+							<label for="justification">Justificativa*: </label>
+							<input name="justification" id="justification" type="text">
+						</div>
+						<div>
+							<!-- select categoty -->
+							<label for='deactivationCategory'>Categoria de Desativação*: </label>
+							<select name='deactivationCategory' id='deactivationCategory'>
+			<%
+					for (Entity entity : result.getEntities(DeactivationCategory.class.getSimpleName())) {
+						DeactivationCategory deactivationCategory = (DeactivationCategory) entity;
+						out.println("<option value='" + deactivationCategory.getId() + "'>" + deactivationCategory.getName() + "</option>");
+					}
+				}
+			%>
+							</select> <!-- end select categoty -->
+					</fieldset>
+							
+					<button name="operation" value="DISABLE" type="submit">Salvar</button>
+					<small>Todos os campos marcados com * são obrigatórios.</small>
+				</form>
+			</div>
 		</div>
 		
 		<script src="https://use.fontawesome.com/51922b6b29.js"></script>

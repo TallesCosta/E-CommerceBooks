@@ -6,6 +6,10 @@ public class ActivationCategory extends StatusCategory {
 	public ActivationCategory() {
 	}
 
+	public ActivationCategory(long id) {
+		super(id);
+	}
+	
 	public ActivationCategory(String name) {
 		super(name);
 	}

@@ -4,6 +4,8 @@ import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Author;
 import br.com.talles.ecommercebooks.domain.Book;
 import br.com.talles.ecommercebooks.domain.Category;
+import br.com.talles.ecommercebooks.domain.ChangeStatus;
+import br.com.talles.ecommercebooks.domain.DeactivationCategory;
 import br.com.talles.ecommercebooks.domain.Dimension;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.PriceGroup;
@@ -115,10 +117,13 @@ public class BookVh implements IViewHelper {
 			categories.add(new Category(idCategory));
 		}
 		
-		/*String idCategoryS = request.getParameter("category");
-		long idCategory = 0;
-		if (!(idCategoryS == null || idCategoryS.equals("")))
-			idCategory = Long.valueOf(idCategoryS);*/
+		// DeactivationCategory
+		String justification = request.getParameter("justification");
+		
+		String idDeactivationCategoryS = request.getParameter("deactivationCategory");
+		long idDeactivationCategory = 0;
+		if (!(idDeactivationCategoryS == null || idDeactivationCategoryS.equals("")))
+			idDeactivationCategory = Long.valueOf(idDeactivationCategoryS);
 		
 		Book book = new Book();
 		
@@ -155,7 +160,15 @@ public class BookVh implements IViewHelper {
 
 				break;
 
+			case "DISABLE":
+				book.setId(id);
+				book.setChangeStatus(new ChangeStatus(justification, new DeactivationCategory(idDeactivationCategory)));
+				break;
 
+			case "ENABLE":
+				
+				break;
+				
 			case "CREATE" :
 				
 				break;
@@ -173,9 +186,9 @@ public class BookVh implements IViewHelper {
 		try {
 			switch(request.getParameter("operation")) {
 				case "SAVE":
-					if(!result.hasMsg()){
+					if (!result.hasMsg()) {
 						response.sendRedirect("/E-CommerceBooks/books/list?operation=LIST");
-					}else{
+					} else {
 						dispatcher = request.getRequestDispatcher("/create.jsp");
 						dispatcher.forward(request, response);
 					}					
@@ -187,18 +200,30 @@ public class BookVh implements IViewHelper {
 					break;
 
 				case "DELETE":
-
+					
 					break;
 
 				case "FIND":
-
+					
 					break;
 
 				case "UPDATE":
-
+					
 					break;
 
+				case "DISABLE":
+					if (!result.hasMsg()) {
+						response.sendRedirect("/E-CommerceBooks/books/list?operation=LIST");
+					} else {
+						dispatcher = request.getRequestDispatcher("/list.jsp");
+						dispatcher.forward(request, response);
+					}
+					break;
 
+				case "ENABLE":
+					
+					break;					
+					
 				case "CREATE" :
 					dispatcher = request.getRequestDispatcher("/create.jsp");
 					dispatcher.forward(request, response);

@@ -17,6 +17,10 @@ public interface IDao {
 	
 	public Entity findLast();
     
+	public boolean disable(Entity entity);
+	
+	public boolean enable(Entity entity);
+	
     public List<Entity> selectDisabled();
 	
 }

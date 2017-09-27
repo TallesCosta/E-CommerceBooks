@@ -38,8 +38,6 @@ public class ActivationCategoryDao extends AbstractDao {
             return statusCategories;
         }catch(SQLException e){
             throw new RuntimeException(e);
-		}catch(Exception e){
-           throw e;
         } finally {
 			closeConnection();
 		}
@@ -72,6 +70,16 @@ public class ActivationCategoryDao extends AbstractDao {
 
 	@Override
 	public List<Entity> selectDisabled() {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public boolean disable(Entity entity) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public boolean enable(Entity entity) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 	
