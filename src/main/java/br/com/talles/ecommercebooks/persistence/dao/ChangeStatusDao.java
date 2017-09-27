@@ -1,8 +1,15 @@
 package br.com.talles.ecommercebooks.persistence.dao;
 
+import br.com.talles.ecommercebooks.domain.ActivationCategory;
+import br.com.talles.ecommercebooks.domain.Author;
+import br.com.talles.ecommercebooks.domain.Book;
 import br.com.talles.ecommercebooks.domain.ChangeStatus;
 import br.com.talles.ecommercebooks.domain.DeactivationCategory;
+import br.com.talles.ecommercebooks.domain.Dimension;
 import br.com.talles.ecommercebooks.domain.Entity;
+import br.com.talles.ecommercebooks.domain.PriceGroup;
+import br.com.talles.ecommercebooks.domain.PublishingCompany;
+import br.com.talles.ecommercebooks.domain.SaleParameterization;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,9 +27,16 @@ public class ChangeStatusDao extends AbstractDao {
 	@Override
 	public boolean save(Entity entity) {
 		ChangeStatus changeStatus = (ChangeStatus) entity;
-		String sql = "INSERT INTO ChangeStatus(enabled, justification, id_deactivationCategory)"
+		String sql;
+		
+		if (changeStatus.getStatusCategory() instanceof DeactivationCategory) {
+			sql = "INSERT INTO ChangeStatus(enabled, justification, id_deactivationCategory)"
 				+ "VALUES(?, ?, ?)";
-
+		} else {
+			sql = "INSERT INTO ChangeStatus(enabled, justification, id_activationCategory)"
+					+ "VALUES(?, ?, ?)";
+		}
+		
 		try {
 			openConnection();
 			
@@ -51,12 +65,81 @@ public class ChangeStatusDao extends AbstractDao {
 
 	@Override
 	public Entity find(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		ChangeStatus changeStatus = (ChangeStatus) entity;
+        String sql = "SELECT * FROM ChangeStatus "
+                + "WHERE id = ?";
+        
+        try {
+			openConnection();
+			
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setLong(1, changeStatus.getId());
+            
+            ResultSet result = statement.executeQuery();
+            
+            if(result.first()){
+                changeStatus.setId(result.getLong("id"));
+				changeStatus.setEnabled(result.getBoolean("enabled"));
+				changeStatus.setJustification(result.getString("justification"));
+				
+				if (result.getLong("id_activationCategory") != 0L) {
+					changeStatus.setStatusCategory(new ActivationCategory(
+							result.getString("id_activationCategory")));
+				} else {
+					changeStatus.setStatusCategory(new DeactivationCategory(
+							result.getString("id_deactivationCategory")));
+				}
+            }
+            
+            result.close();
+            statement.close();
+            
+            return  changeStatus;
+        } catch(SQLException e) {
+            throw new RuntimeException(e);   
+        } finally {
+			closeConnection();
+		}
 	}
 
 	@Override
 	public boolean update(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		ChangeStatus changeStatus = (ChangeStatus) entity;
+        
+		String sql;
+		
+        // Updates the AbstractCategory
+		if (changeStatus.getStatusCategory() instanceof DeactivationCategory) {
+			sql = "UPDATE ChangeStatus "
+                + "SET enabled = ?, justification = ?, id_deactivationCategory = ?, id_activationCategory = ? "
+                + "WHERE id = ?";
+		} else {
+			sql = "UPDATE ChangeStatus "
+                + "SET enabled = ?, justification = ?, id_activationCategory = ?, id_deactivationCategory = ? "
+                + "WHERE id = ?";
+		}
+        
+        try {
+			openConnection();
+			
+            PreparedStatement statement = conn.prepareStatement(sql);
+            
+            statement.setBoolean(1, changeStatus.isEnabled());
+            statement.setString(2, changeStatus.getJustification());
+            statement.setLong(3, changeStatus.getStatusCategory().getId());
+            statement.setLong(4, 0L);
+            statement.setLong(5, changeStatus.getId());
+            
+            statement.execute();
+            statement.close();
+            
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ChangeStatusDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+			closeConnection();
+		}
 	}
 
 	@Override

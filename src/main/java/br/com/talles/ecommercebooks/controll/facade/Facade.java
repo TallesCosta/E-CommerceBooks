@@ -2,6 +2,7 @@ package br.com.talles.ecommercebooks.controll.facade;
 
 import br.com.talles.ecommercebooks.business.view.SelectPublishingCompany;
 import br.com.talles.ecommercebooks.business.BookNotBlank;
+import br.com.talles.ecommercebooks.business.ChangeStatusNotBlank;
 import br.com.talles.ecommercebooks.business.Ean13Unique;
 import br.com.talles.ecommercebooks.business.IStrategy;
 import br.com.talles.ecommercebooks.business.IsbnUnique;
@@ -28,6 +29,7 @@ public class Facade implements IFacade {
     private Result result;
     
     private static final String LIST = "LIST";
+    private static final String LIST_DISABLE = "LIST-DISABLE";
     private static final String SAVE = "SAVE";
     private static final String DELETE = "DELETE";
     private static final String FIND = "FIND";
@@ -57,6 +59,13 @@ public class Facade implements IFacade {
 		listBook.add(selectPublishingCompany);
 		listBook.add(selectPriceGroup);
 		listBook.add(selectDeactivationCategory);
+		
+        List<IStrategy> listDisableBook = new ArrayList();
+		listDisableBook.add(selectCategory);
+		listDisableBook.add(selectAuthor);
+		listDisableBook.add(selectPublishingCompany);
+		listDisableBook.add(selectPriceGroup);
+		listDisableBook.add(selectActivationCategory);
 		
         List<IStrategy> saveBook = new ArrayList();
 		saveBook.add(bookNotBlank);
@@ -89,6 +98,7 @@ public class Facade implements IFacade {
 		
         Map<String, List<IStrategy>> contextBook = new HashMap();
         contextBook.put(LIST, listBook);
+        contextBook.put(LIST_DISABLE, listDisableBook);
 		contextBook.put(SAVE, saveBook);
 		contextBook.put(DELETE, deleteBook);
 		contextBook.put(FIND, findBook);
@@ -119,7 +129,24 @@ public class Facade implements IFacade {
             return result;
 		
 		IDao dao = persistence.get(entity.getClass().getSimpleName());
-        result.addEntities(dao.select(entity.isEnabled()));
+        result.addEntities(dao.select(true));
+        
+        return result;
+	}
+	
+	@Override
+	public Result listDisable(Entity entity) {
+        this.result = new Result();
+		
+		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
+        List<IStrategy> validations = reqs.get(LIST_DISABLE);
+		
+		result = executeValidations(entity, validations);
+        if(result.hasMsg())
+            return result;
+		
+		IDao dao = persistence.get(entity.getClass().getSimpleName());
+        result.addEntities(dao.select(false));
         
         return result;
 	}
@@ -245,7 +272,7 @@ public class Facade implements IFacade {
             return result;
 		
 		IDao dao = persistence.get(entity.getClass().getSimpleName());        
-        boolean resultDao = dao.delete(entity);
+        boolean resultDao = dao.enable(entity);
 		
         if(!resultDao)
             result.addMsg("An error has occurred in the process of your operation, "

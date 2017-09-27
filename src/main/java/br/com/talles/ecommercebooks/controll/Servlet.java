@@ -10,6 +10,7 @@ import br.com.talles.ecommercebooks.controll.command.DeleteCmd;
 import br.com.talles.ecommercebooks.controll.command.DisableCmd;
 import br.com.talles.ecommercebooks.controll.command.EnableCmd;
 import br.com.talles.ecommercebooks.controll.command.FindCmd;
+import br.com.talles.ecommercebooks.controll.command.ListDisableCmd;
 import br.com.talles.ecommercebooks.controll.command.UpdateCmd;
 import br.com.talles.ecommercebooks.domain.Entity;
 
@@ -32,6 +33,7 @@ public class Servlet extends HttpServlet {
 	public Servlet() {
 		viewHelpers = new HashMap();
 		viewHelpers.put("/E-CommerceBooks/books/list", new BookVh());
+		viewHelpers.put("/E-CommerceBooks/books/list-disable", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/save", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/delete", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/find", new BookVh());
@@ -42,6 +44,7 @@ public class Servlet extends HttpServlet {
 
 		commands = new HashMap();
 		commands.put("LIST", new ListCmd());
+		commands.put("LIST-DISABLE", new ListDisableCmd());
 		commands.put("SAVE", new SaveCmd());
 		commands.put("DELETE", new DeleteCmd());
 		commands.put("FIND", new FindCmd());

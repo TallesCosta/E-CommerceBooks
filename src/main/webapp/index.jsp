@@ -11,10 +11,10 @@
 		
 		<ul>
 			<li>
-				<a href="<% out.print(request.getContextPath().concat("/books/list?operation=LIST&enabled=true")); %>">Listagem de Livros</a>
+				<a href="<% out.print(request.getContextPath().concat("/books/list?operation=LIST")); %>">Listagem de Livros</a>
 			</li>
 			<li>
-				<a href="<% out.print(request.getContextPath().concat("/books/list?operation=LIST&enabled=false")); %>">Listagem de Livros inativos</a>
+				<a href="<% out.print(request.getContextPath().concat("/books/list-disable?operation=LIST-DISABLE")); %>">Listagem de Livros Inativos</a>
 			</li>
 		</ul>
 		

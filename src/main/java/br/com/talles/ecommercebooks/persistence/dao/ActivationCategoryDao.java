@@ -2,6 +2,7 @@ package br.com.talles.ecommercebooks.persistence.dao;
 
 import br.com.talles.ecommercebooks.domain.ActivationCategory;
 import br.com.talles.ecommercebooks.domain.Entity;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,8 +13,8 @@ public class ActivationCategoryDao extends AbstractDao {
 
 	@Override
 	public List<Entity> select(boolean enabled) {
-		List<Entity> statusCategories = new ArrayList();
-        String sql = "SELECT * FROM StatusCategories WHERE enabled = ?";
+		List<Entity> activationCategories = new ArrayList();
+        String sql = "SELECT * FROM ActivationCategories WHERE enabled = ?";
         
         try{
 			openConnection();
@@ -31,13 +32,13 @@ public class ActivationCategoryDao extends AbstractDao {
                 activationCategory.setName(result.getString("name"));
                 activationCategory.setDescription(result.getString("description"));
                 
-                statusCategories.add(activationCategory);
+                activationCategories.add(activationCategory);
             }
             
             result.close();
             statement.close();
             
-            return statusCategories;
+            return activationCategories;
         }catch(SQLException e){
             throw new RuntimeException(e);
         } finally {

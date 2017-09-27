@@ -1,10 +1,13 @@
 package br.com.talles.ecommercebooks.persistence.dao;
 
+import br.com.talles.ecommercebooks.domain.Author;
 import br.com.talles.ecommercebooks.domain.Book;
 import br.com.talles.ecommercebooks.domain.Category;
 import br.com.talles.ecommercebooks.domain.ChangeStatus;
 import br.com.talles.ecommercebooks.domain.Dimension;
 import br.com.talles.ecommercebooks.domain.Entity;
+import br.com.talles.ecommercebooks.domain.PriceGroup;
+import br.com.talles.ecommercebooks.domain.PublishingCompany;
 import br.com.talles.ecommercebooks.domain.SaleParameterization;
 
 import java.sql.PreparedStatement;
@@ -127,7 +130,7 @@ public class BookDao extends AbstractDao {
 
 		// Insert in books-categories association table
 		IDao booksCategoriesDao = new BooksCategoriesDao();
-		return booksCategoriesDao.save(book);					// If insert association is true, insert book is true.
+		return booksCategoriesDao.save(book);			// If insert association is true, insert book is true.
 	}
 
 	@Override
@@ -137,7 +140,45 @@ public class BookDao extends AbstractDao {
 
 	@Override
 	public Entity find(Entity entity) {
-		return null;
+		Book book = (Book) entity;
+        String sql = "SELECT * FROM Books "
+                + "WHERE id = ?";
+        
+        try {
+			openConnection();
+			
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setLong(1, book.getId());
+            
+            ResultSet result = statement.executeQuery();
+            
+            if(result.first()){
+                book.setId(result.getLong("id"));
+				book.setEnabled(result.getBoolean("enabled"));
+				book.setTitle(result.getString("title"));
+				book.setPublicationYear(result.getInt("publicationYear"));
+				book.setNumberOfPages(result.getInt("numberOfPages"));
+				book.setEdition(result.getString("edition"));
+				book.setIsbn(result.getString("isbn"));
+				book.setEan13(result.getString("ean13"));
+				
+				book.setAuthor(new Author(result.getLong("id_author")));
+				book.setPublishingCompany(new PublishingCompany(result.getLong("id_publishingCompany")));
+				book.setDimension(new Dimension(result.getLong("id_dimension")));
+				book.setPriceGroup(new PriceGroup(result.getLong("id_priceGroup")));
+				book.setSaleParameterization(new SaleParameterization(result.getLong("id_saleParameterization")));
+				book.setChangeStatus(new ChangeStatus(result.getLong("id_changeStatus")));
+            }
+            
+            result.close();
+            statement.close();
+            
+            return  book;
+        } catch(SQLException e) {
+            throw new RuntimeException(e);   
+        } finally {
+			closeConnection();
+		}
 	}
 
 	@Override
@@ -211,7 +252,51 @@ public class BookDao extends AbstractDao {
 
 	@Override
 	public boolean enable(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		Book book = (Book) entity;
+        
+		ChangeStatusDao changeStatusDao = new ChangeStatusDao();
+		Long idStatusCategory = 
+				((ChangeStatus) changeStatusDao.find(book.getChangeStatus())).getStatusCategory().getId();
+		
+		if (idStatusCategory == 0L) {
+			// Persists the ChangeStatus
+			if(!changeStatusDao.save(book.getChangeStatus())){
+				return false;
+			}
+			
+			book.setChangeStatus((ChangeStatus) changeStatusDao.findLast());
+		} else {
+			// Updates the ChangeStatus
+			if (!changeStatusDao.update(book.getChangeStatus())) {
+				return false;
+			}
+			
+			book.getChangeStatus().setId(idStatusCategory);
+		}
+		
+        String sql = "UPDATE Books "
+                + "SET enabled = ?, id_changeStatus = ? "
+                + "WHERE id = ?";
+        
+        try {
+			openConnection();
+			
+            PreparedStatement statement = conn.prepareStatement(sql);
+            
+            statement.setBoolean(1, true);
+            statement.setLong(2, book.getChangeStatus().getId());
+            statement.setLong(3, book.getId());
+            
+            statement.execute();
+            statement.close();
+            
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+			closeConnection();
+		}
 	}
 	
 	public Entity findIsbn(Entity entity){

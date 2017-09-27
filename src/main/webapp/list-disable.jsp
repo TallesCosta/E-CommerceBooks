@@ -6,11 +6,11 @@
 <%@page import="br.com.talles.ecommercebooks.domain.Book"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
 <%@page import="br.com.talles.ecommercebooks.controll.Result"%>
-<%@page import="br.com.talles.ecommercebooks.domain.DeactivationCategory"%>
+<%@page import="br.com.talles.ecommercebooks.domain.ActivationCategory"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Listagem de Livros</title>
+        <title>Listagem de Livros Inativos</title>
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -30,7 +30,7 @@
 		%>
 		
 		<div id="app">
-			<h1>Listagem de Livros</h1>
+			<h1>Listagem de Livros Inativos</h1>
 			
 			<div>
 				<form action="" method="POST">
@@ -125,8 +125,8 @@
 										+ "</a>"
 									+ "</td>");
 						out.println("<td>"
-										+ "<a onclick='setDisableId(" + book.getId() + ")' href='#'>"
-											+ "<i class='fa fa-trash' aria-hidden='true'></i>"
+										+ "<a onclick='setEnableId(" + book.getId() + ")' href='#'>"
+											+ "<i class='fa fa-plus' aria-hidden='true'></i>"
 										+ "</a>"
 									+ "</td>");
 						out.println("</tr>");
@@ -163,23 +163,23 @@
 			</div>
 			
 			<a href="<% out.print(request.getContextPath().concat("/books/create?operation=CREATE")); %>">Criar Livro</a>
-			<a href="<% out.print(request.getContextPath().concat("/books/list-disable?operation=LIST-DISABLE")); %>">Listar Inativos</a>
+			<a href="<% out.print(request.getContextPath().concat("/books/list?operation=LIST")); %>">Listar Ativos</a>
 			
 			<br><br><br><br><br>
 			<div id="light-box">
-				<form action="disable" method="POST">
+				<form action="enable" method="POST">
 					<input name="id" id="id" type="hidden">
 					
 					<fieldset>
-						<legend>Desativar Livro</legend>
+						<legend>Ativar Livro</legend>
 						<div>
 							<!-- select categoty -->
-							<label for='deactivationCategory'>Categoria de Desativação*: </label>
-							<select name='deactivationCategory' id='deactivationCategory'>
+							<label for='activationCategory'>Categoria de Ativação*: </label>
+							<select name='activationCategory' id='activationCategory'>
 			<%
-					for (Entity entity : result.getEntities(DeactivationCategory.class.getSimpleName())) {
-						DeactivationCategory deactivationCategory = (DeactivationCategory) entity;
-						out.println("<option value='" + deactivationCategory.getId() + "'>" + deactivationCategory.getName() + "</option>");
+					for (Entity entity : result.getEntities(ActivationCategory.class.getSimpleName())) {
+						ActivationCategory activationCategory = (ActivationCategory) entity;
+						out.println("<option value='" + activationCategory.getId() + "'>" + activationCategory.getName() + "</option>");
 					}
 				}
 			%>
@@ -191,7 +191,7 @@
 						</div>
 					</fieldset>
 							
-					<button name="operation" value="DISABLE" type="submit">Desativar</button>
+					<button name="operation" value="ENABLE" type="submit">Ativar</button>
 					<small>Todos os campos marcados com * são obrigatórios.</small>
 				</form>
 			</div>
@@ -205,7 +205,7 @@
 		</script>
 		
 		<script>
-			function setDisableId(id) {
+			function setEnableId(id) {
 				alert(id);
 				$("#id").val(id);
 			}
