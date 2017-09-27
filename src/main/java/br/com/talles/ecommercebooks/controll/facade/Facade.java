@@ -6,6 +6,8 @@ import br.com.talles.ecommercebooks.business.IStrategy;
 import br.com.talles.ecommercebooks.business.view.SelectAuthor;
 import br.com.talles.ecommercebooks.business.view.SelectCategory;
 import br.com.talles.ecommercebooks.business.view.SelectPriceGroup;
+import br.com.talles.ecommercebooks.business.view.SelectActivationCategory;
+import br.com.talles.ecommercebooks.business.view.SelectDeactivationCategory;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Book;
 import br.com.talles.ecommercebooks.domain.Entity;
@@ -38,7 +40,8 @@ public class Facade implements IFacade {
 		IStrategy selectPriceGroup = new SelectPriceGroup();		
         IStrategy selectCategory = new SelectCategory();
 		IStrategy selectAuthor = new SelectAuthor();
-		
+		IStrategy selectActivationCategory = new SelectActivationCategory();
+		IStrategy selectDeactivationCategory = new SelectDeactivationCategory();
 		IStrategy selectPublishingCompany = new SelectPublishingCompany();
 		IStrategy bookNotBlank = new BookNotBlank();
                 
@@ -47,6 +50,7 @@ public class Facade implements IFacade {
 		listBook.add(selectAuthor);
 		listBook.add(selectPublishingCompany);
 		listBook.add(selectPriceGroup);
+		listBook.add(selectDeactivationCategory);
 		
         List<IStrategy> saveBook = new ArrayList();
 		saveBook.add(bookNotBlank);

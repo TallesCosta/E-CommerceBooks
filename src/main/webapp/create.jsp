@@ -23,12 +23,8 @@
 			result = (Result) request.getAttribute("result");
 			
 			if (result != null) {
-				List<Entity> authors = result.getEntities(Author.class.getSimpleName());
-				List<Entity> categories = result.getEntities(Category.class.getSimpleName());
-				List<Entity> publishingCompanies = result.getEntities(PublishingCompany.class.getSimpleName());
-				List<Entity> priceGroups = result.getEntities(PriceGroup.class.getSimpleName());
-				
 				Book book = new Book("", "", 0, 0, "", "", "", new Dimension(0.0, 0.0, 0.0, 0.0), new SaleParameterization(0, 0));
+				
 				if (result.getKeys().contains(Book.class.getSimpleName())) {
 					book = (Book) result.getEntities(Book.class.getSimpleName()).get(0);
 				}
@@ -41,6 +37,7 @@
 					out.print("</p>");
 				}
 		%>
+		
 		<div id="app">
 			<h1>Criação de Livro</h1>
 			
@@ -59,7 +56,7 @@
 						<label for="author">Autor*: </label>
 						<select name="author" id="author">
 			<%	
-				for(Entity entity : authors){
+				for(Entity entity : result.getEntities(Author.class.getSimpleName())){
 					Author author = (Author) entity;
 					out.print("<option value='" + author.getId() + "'>" + author.getName() + "</option>");
 				}
@@ -70,7 +67,7 @@
 						<label for="category">Categoria*: </label>						
 						<select name="category" id="category" multiple>
 			<%
-				for(Entity entity : categories){
+				for(Entity entity : result.getEntities(Category.class.getSimpleName())){
 					Category category = (Category) entity;
 					if(category.getId() == 1){
 						out.print("<option selected value='" + category.getId() + "'>" + category.getName() + "</option>");
@@ -85,7 +82,7 @@
 						<label for="publishingCompany">Editora*: </label>
 						<select name="publishingCompany" id="publishingCompany">
 			<%
-				for(Entity entity : publishingCompanies){
+				for(Entity entity : result.getEntities(PublishingCompany.class.getSimpleName())){
 					PublishingCompany publishingCompany = (PublishingCompany) entity;
 					out.print("<option value='" + publishingCompany.getId() + "'>" + publishingCompany.getName() + "</option>");
 				}
@@ -144,7 +141,7 @@
 						<label for="priceGroup">Porcentagem*: </label>
 						<select name="priceGroup" id="priceGroup">
 			<%
-				for(Entity entity : priceGroups){
+				for(Entity entity : result.getEntities(PriceGroup.class.getSimpleName())){
 					PriceGroup priceGroup = (PriceGroup) entity;
 					out.print("<option value='" + priceGroup.getId() + "'>" + priceGroup.getMarkup() + " %</option>");
 				}

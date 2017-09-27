@@ -1,34 +1,29 @@
 package br.com.talles.ecommercebooks.domain;
 
 public class StatusCategory extends AbstractCategory {
-
-	private boolean activation;
 	
 	// All constructors in the AbstractCategory makes enabled attribute as true
 	public StatusCategory() {
 	}
 
-	public StatusCategory(String name, boolean activation) {
+	public StatusCategory(long id) {
+		super(id);
+	}
+
+	public StatusCategory(boolean enabled) {
+		super(enabled);
+	}
+	
+	public StatusCategory(String name) {
 		super(name);
-		this.activation = activation;
 	}
 	
-	public StatusCategory(String name, String description, boolean  activation) {
+	public StatusCategory(String name, String description) {
 		super(name, description);
-		this.activation = activation;
 	}
 	
-	public StatusCategory(long id, String name, String description, boolean activation) {
+	public StatusCategory(long id, String name, String description) {
 		super(id, name, description);
-		this.activation = activation;
-	}
-
-	public boolean isActivation() {
-		return activation;
-	}
-
-	public void setActivation(boolean activation) {
-		this.activation = activation;
 	}
 	
 }

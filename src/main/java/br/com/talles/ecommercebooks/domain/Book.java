@@ -17,7 +17,7 @@ public class Book extends Entity {
 	private Dimension dimension;
 	private PriceGroup priceGroup;
 	private SaleParameterization saleParameterization;
-	private StatusCategory changeStatus;
+	private ChangeStatus changeStatus;
 	private List<Category> categories;
 
 	public Book() {
@@ -59,7 +59,7 @@ public class Book extends Entity {
 	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, 
 			String isbn, String ean13, Dimension dimension, PriceGroup priceGroup, 
 			PublishingCompany publishingCompany, SaleParameterization saleParameterization, 
-			StatusCategory changeStatus, Author author) {
+			ChangeStatus changeStatus, Author author) {
 		super(true);
 		this.title = title;
 		this.edition = edition;
@@ -81,7 +81,7 @@ public class Book extends Entity {
 	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, 
 			String isbn, String ean13, Dimension dimension, PriceGroup priceGroup, 
 			PublishingCompany publishingCompany, SaleParameterization saleParameterization, 
-			StatusCategory changeStatus, Author author, List<Category> categories) {
+			ChangeStatus changeStatus, Author author, List<Category> categories) {
 		super(true);
 		this.title = title;
 		this.edition = edition;
@@ -103,7 +103,7 @@ public class Book extends Entity {
 
 	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, String isbn, 
 			String ean13, Dimension dimension, PriceGroup priceGroup, PublishingCompany publishingCompany, 
-			SaleParameterization saleParameterization, StatusCategory changeStatus, Author author, 
+			SaleParameterization saleParameterization, ChangeStatus changeStatus, Author author, 
 			List<Category> categories, long id) {
 		super(id, true);
 		this.title = title;
@@ -220,11 +220,11 @@ public class Book extends Entity {
 		this.saleParameterization = saleParameterization;
 	}
 
-	public StatusCategory getChangeStatus() {
+	public ChangeStatus getChangeStatus() {
 		return changeStatus;
 	}
 
-	public void setChangeStatus(StatusCategory changeStatus) {
+	public void setChangeStatus(ChangeStatus changeStatus) {
 		this.changeStatus = changeStatus;
 	}
 	
