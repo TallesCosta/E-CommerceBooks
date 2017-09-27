@@ -12,7 +12,7 @@ public class SelectPriceGroup implements IStrategy {
 	public Result process(Entity entity, Result result) {
 		IDao priceGroupDao = new PriceGroupDao();
 		
-		result.addEntities(priceGroupDao.select());
+		result.addEntities(priceGroupDao.select(true));
 		
 		return result;
 	}

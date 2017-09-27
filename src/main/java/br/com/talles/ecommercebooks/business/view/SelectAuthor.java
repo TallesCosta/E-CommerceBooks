@@ -12,7 +12,7 @@ public class SelectAuthor implements IStrategy {
 	public Result process(Entity entity, Result result) {
 		IDao authorDao = new AuthorDao();
 		
-		result.addEntities(authorDao.select());
+		result.addEntities(authorDao.select(true));
 		
 		return result;
 	}

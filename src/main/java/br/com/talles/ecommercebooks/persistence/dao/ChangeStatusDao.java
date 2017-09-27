@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 public class ChangeStatusDao extends AbstractDao {
 
 	@Override
-	public List<Entity> select() {
+	public List<Entity> select(boolean enabled) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
@@ -96,11 +96,6 @@ public class ChangeStatusDao extends AbstractDao {
 
 	@Override
 	public boolean enable(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public List<Entity> selectDisabled() {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 	

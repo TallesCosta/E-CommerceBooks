@@ -2,7 +2,9 @@ package br.com.talles.ecommercebooks.controll.facade;
 
 import br.com.talles.ecommercebooks.business.view.SelectPublishingCompany;
 import br.com.talles.ecommercebooks.business.BookNotBlank;
+import br.com.talles.ecommercebooks.business.Ean13Unique;
 import br.com.talles.ecommercebooks.business.IStrategy;
+import br.com.talles.ecommercebooks.business.IsbnUnique;
 import br.com.talles.ecommercebooks.business.view.SelectAuthor;
 import br.com.talles.ecommercebooks.business.view.SelectCategory;
 import br.com.talles.ecommercebooks.business.view.SelectPriceGroup;
@@ -46,6 +48,8 @@ public class Facade implements IFacade {
 		IStrategy selectDeactivationCategory = new SelectDeactivationCategory();
 		IStrategy selectPublishingCompany = new SelectPublishingCompany();
 		IStrategy bookNotBlank = new BookNotBlank();
+		IStrategy isbnUnique = new IsbnUnique();
+		IStrategy ean13Unique = new Ean13Unique();
                 
         List<IStrategy> listBook = new ArrayList();
 		listBook.add(selectCategory);
@@ -56,6 +60,8 @@ public class Facade implements IFacade {
 		
         List<IStrategy> saveBook = new ArrayList();
 		saveBook.add(bookNotBlank);
+		saveBook.add(isbnUnique);
+		saveBook.add(ean13Unique);
 		
 		List<IStrategy> deleteBook = new ArrayList();
 		
@@ -113,7 +119,7 @@ public class Facade implements IFacade {
             return result;
 		
 		IDao dao = persistence.get(entity.getClass().getSimpleName());
-        result.addEntities(dao.select());
+        result.addEntities(dao.select(true));
         
         return result;
 	}

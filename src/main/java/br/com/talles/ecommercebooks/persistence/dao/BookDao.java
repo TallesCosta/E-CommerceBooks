@@ -19,18 +19,20 @@ import java.util.logging.Logger;
 public class BookDao extends AbstractDao {
 
 	@Override
-	public List<Entity> select() {
+	public List<Entity> select(boolean enabled) {
 		List<Entity> books = new ArrayList();
         String sql = "SELECT b.*, GROUP_CONCAT(c.name SEPARATOR '-') AS categories FROM Books b "
 				+ "INNER JOIN BooksCategories bc ON b.id = bc.id_book "
 				+ "INNER JOIN Categories c ON bc.id_category = c.id "
-				+ "WHERE b.enabled = true "
+				+ "WHERE b.enabled = ? "
 				+ "GROUP BY bc.id_book";
         
         try {
 			openConnection();
 			
             PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setBoolean(1, enabled);
+			
             ResultSet result = statement.executeQuery();
             
 			
@@ -171,11 +173,6 @@ public class BookDao extends AbstractDao {
 	}
 
 	@Override
-	public List<Entity> selectDisabled() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
 	public boolean disable(Entity entity) {
 		 Book book = (Book) entity;
         
@@ -196,7 +193,7 @@ public class BookDao extends AbstractDao {
 			
             PreparedStatement statement = conn.prepareStatement(sql);
             
-            statement.setBoolean(1, false);
+            statement.setBoolean(1, book.isEnabled());
             statement.setLong(2, book.getChangeStatus().getId());
             statement.setLong(3, book.getId());
             

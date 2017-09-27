@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 public class SaleParameterizationDao extends AbstractDao {
 
 	@Override
-	public List<Entity> select() {
+	public List<Entity> select(boolean enabled) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
@@ -87,11 +87,6 @@ public class SaleParameterizationDao extends AbstractDao {
 		} finally {
 			closeConnection();
 		}
-	}
-
-	@Override
-	public List<Entity> selectDisabled() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
 	@Override

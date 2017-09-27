@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class BooksCategoriesDao extends AbstractDao {
 
 	@Override
-	public List<Entity> select() {
+	public List<Entity> select(boolean enabled) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
@@ -63,11 +63,6 @@ public class BooksCategoriesDao extends AbstractDao {
 
 	@Override
 	public Entity findLast() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public List<Entity> selectDisabled() {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 

@@ -12,7 +12,7 @@ public class SelectPublishingCompany implements IStrategy {
 	public Result process(Entity entity, Result result) {
 		IDao publishingCompanyDao = new PublishingCompanyDao();
 		
-		result.addEntities(publishingCompanyDao.select());
+		result.addEntities(publishingCompanyDao.select(true));
 		
 		return result;
 	}

@@ -12,7 +12,7 @@ public class SelectActivationCategory implements IStrategy {
 	public Result process(Entity entity, Result result) {
 		IDao activationCategoryDao = new ActivationCategoryDao();
 		
-		result.addEntities(activationCategoryDao.select());
+		result.addEntities(activationCategoryDao.select(true));
 		
 		return result;
 	}

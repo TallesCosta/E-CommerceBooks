@@ -11,14 +11,16 @@ import java.util.List;
 public class CategoryDao extends AbstractDao {
 
 	@Override
-	public List<Entity> select() {
+	public List<Entity> select(boolean enabled) {
 		List<Entity> categories = new ArrayList();
-        String sql = "SELECT * FROM categories WHERE enabled = true";
+        String sql = "SELECT * FROM categories WHERE enabled = ?";
         
         try{
 			openConnection();
 			
             PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setBoolean(1, enabled);
+			
             ResultSet result = statement.executeQuery();
             
             while(result.next()){
@@ -67,11 +69,6 @@ public class CategoryDao extends AbstractDao {
 
 	@Override
 	public Entity findLast() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public List<Entity> selectDisabled() {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 

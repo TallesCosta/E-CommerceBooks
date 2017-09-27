@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface IDao {
     
-    public List<Entity> select();
+    public List<Entity> select(boolean enabled);
     
     public boolean save(Entity entity);
     
@@ -20,7 +20,5 @@ public interface IDao {
 	public boolean disable(Entity entity);
 	
 	public boolean enable(Entity entity);
-	
-    public List<Entity> selectDisabled();
 	
 }

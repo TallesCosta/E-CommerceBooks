@@ -12,7 +12,7 @@ public class SelectDeactivationCategory implements IStrategy {
 	public Result process(Entity entity, Result result) {
 		IDao deactivationCategoryDao = new DeactivationCategoryDao();
 		
-		result.addEntities(deactivationCategoryDao.select());
+		result.addEntities(deactivationCategoryDao.select(true));
 		
 		return result;
 	}
