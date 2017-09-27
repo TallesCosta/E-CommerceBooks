@@ -125,7 +125,7 @@
 										+ "</a>"
 									+ "</td>");
 						out.println("<td>"
-										+ "<a href='books/delete?operation=DELETE&id=" + book.getId() + "'>"
+										+ "<a onclick='setDisableId(" + book.getId() + ")' href='#'>"
 											+ "<i class='fa fa-trash' aria-hidden='true'></i>"
 										+ "</a>"
 									+ "</td>");
@@ -164,10 +164,10 @@
 			
 			<a href="<% out.print(request.getContextPath().concat("/books/create?operation=CREATE")); %>">Criar Livro</a>
 			
-			<br><br>
+			<br><br><br><br><br>
 			<div id="light-box">
 				<form action="disable" method="POST">
-					<input name="id" type="hidden" value="1">
+					<input name="id" id="id" type="hidden">
 					
 					<fieldset>
 						<legend>Desativar Livro</legend>
@@ -189,12 +189,24 @@
 							</select> <!-- end select categoty -->
 					</fieldset>
 							
-					<button name="operation" value="DISABLE" type="submit">Salvar</button>
+					<button name="operation" value="DISABLE" type="submit">Desativar</button>
 					<small>Todos os campos marcados com * são obrigatórios.</small>
 				</form>
 			</div>
 		</div>
 		
 		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
+		
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			crossorigin="anonymous">
+		</script>
+		
+		<script>
+			function setDisableId(id) {
+				alert(id);
+				$("#id").val(id);
+			}
+		</script>
     </body>
 </html>
