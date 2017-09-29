@@ -1,16 +1,16 @@
 package br.com.talles.ecommercebooks.controll.viewHelper;
 
 import br.com.talles.ecommercebooks.controll.Result;
-import br.com.talles.ecommercebooks.domain.Author;
-import br.com.talles.ecommercebooks.domain.Book;
-import br.com.talles.ecommercebooks.domain.Category;
-import br.com.talles.ecommercebooks.domain.ChangeStatus;
-import br.com.talles.ecommercebooks.domain.DeactivationCategory;
-import br.com.talles.ecommercebooks.domain.Dimension;
+import br.com.talles.ecommercebooks.domain.book.Author;
+import br.com.talles.ecommercebooks.domain.book.Book;
+import br.com.talles.ecommercebooks.domain.book.Category;
+import br.com.talles.ecommercebooks.domain.book.ChangeStatus;
+import br.com.talles.ecommercebooks.domain.book.DeactivationCategory;
+import br.com.talles.ecommercebooks.domain.book.Dimension;
 import br.com.talles.ecommercebooks.domain.Entity;
-import br.com.talles.ecommercebooks.domain.PriceGroup;
-import br.com.talles.ecommercebooks.domain.PublishingCompany;
-import br.com.talles.ecommercebooks.domain.SaleParameterization;
+import br.com.talles.ecommercebooks.domain.book.PriceGroup;
+import br.com.talles.ecommercebooks.domain.book.PublishingCompany;
+import br.com.talles.ecommercebooks.domain.book.SaleParameterization;
 
 import java.io.IOException;
 import java.util.ArrayList;

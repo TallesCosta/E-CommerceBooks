@@ -1,19 +1,19 @@
 package br.com.talles.ecommercebooks.controll.facade;
 
-import br.com.talles.ecommercebooks.business.view.SelectPublishingCompany;
-import br.com.talles.ecommercebooks.business.BookNotBlank;
-import br.com.talles.ecommercebooks.business.Ean13Unique;
+import br.com.talles.ecommercebooks.business.book.view.SelectPublishingCompany;
+import br.com.talles.ecommercebooks.business.book.BookNotBlank;
+import br.com.talles.ecommercebooks.business.book.Ean13Unique;
 import br.com.talles.ecommercebooks.business.IStrategy;
-import br.com.talles.ecommercebooks.business.IsbnUnique;
-import br.com.talles.ecommercebooks.business.view.SelectAuthor;
-import br.com.talles.ecommercebooks.business.view.SelectCategory;
-import br.com.talles.ecommercebooks.business.view.SelectPriceGroup;
-import br.com.talles.ecommercebooks.business.view.SelectActivationCategory;
-import br.com.talles.ecommercebooks.business.view.SelectDeactivationCategory;
+import br.com.talles.ecommercebooks.business.book.IsbnUnique;
+import br.com.talles.ecommercebooks.business.book.view.SelectAuthor;
+import br.com.talles.ecommercebooks.business.book.view.SelectCategory;
+import br.com.talles.ecommercebooks.business.book.view.SelectPriceGroup;
+import br.com.talles.ecommercebooks.business.book.view.SelectActivationCategory;
+import br.com.talles.ecommercebooks.business.book.view.SelectDeactivationCategory;
 import br.com.talles.ecommercebooks.controll.Result;
-import br.com.talles.ecommercebooks.domain.Book;
+import br.com.talles.ecommercebooks.domain.book.Book;
 import br.com.talles.ecommercebooks.domain.Entity;
-import br.com.talles.ecommercebooks.persistence.dao.BookDao;
+import br.com.talles.ecommercebooks.persistence.dao.book.BookDao;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 
 import java.util.ArrayList;
