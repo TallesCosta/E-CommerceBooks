@@ -6,20 +6,20 @@ public class Address extends Entity {
 
 	private String alias;
 	private String observation;
+	private String publicPlaceType;
 	private String publicPlace;
 	private String number;
 	private String district;
 	private String postalCode;
-	private HomeType homeType;
-	private PublicPlaceType publicPlaceType;
+	private String homeType;
 	private City city;
 
 	public Address() {
 		super(true);
 	}
 
-	public Address(String alias, String observation, String publicPlace, String number, String district, 
-			String postalCode, HomeType homeType, PublicPlaceType publicPlaceType, City city) {
+	public Address(String alias, String observation, String publicPlaceType, String publicPlace, String number, String district, 
+			String postalCode, String homeType, City city) {
 		super(true);
 		this.alias = alias;
 		this.observation = observation;
@@ -32,8 +32,8 @@ public class Address extends Entity {
 		this.city = city;
 	}
 
-	public Address(String alias, String observation, String publicPlace, String number, String district, 
-			String postalCode, HomeType homeType, PublicPlaceType publicPlaceType, City city, long id) {
+	public Address(String alias, String observation, String publicPlaceType, String publicPlace, String number, String district, 
+			String postalCode, String homeType, City city, long id) {
 		super(id, true);
 		this.alias = alias;
 		this.observation = observation;
@@ -94,19 +94,19 @@ public class Address extends Entity {
 		this.postalCode = postalCode;
 	}
 
-	public HomeType getHomeType() {
+	public String getHomeType() {
 		return homeType;
 	}
 
-	public void setHomeType(HomeType homeType) {
+	public void setHomeType(String homeType) {
 		this.homeType = homeType;
 	}
 
-	public PublicPlaceType getPublicPlaceType() {
+	public String getPublicPlaceType() {
 		return publicPlaceType;
 	}
 
-	public void setPublicPlaceType(PublicPlaceType publicPlaceType) {
+	public void setPublicPlaceType(String publicPlaceType) {
 		this.publicPlaceType = publicPlaceType;
 	}
 

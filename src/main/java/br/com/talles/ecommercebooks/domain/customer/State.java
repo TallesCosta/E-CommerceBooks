@@ -5,22 +5,22 @@ import br.com.talles.ecommercebooks.domain.Entity;
 public class State extends Entity {
 
 	private String name;
-	private State state;
+	private Country country;
 
 	public State() {
 		super(true);
 	}
 
-	public State(String name, State state) {
+	public State(String name, Country country) {
 		super(true);
 		this.name = name;
-		this.state = state;
+		this.country = country;
 	}
 
-	public State(String name, State state, long id) {
+	public State(String name, Country country, long id) {
 		super(id, true);
 		this.name = name;
-		this.state = state;
+		this.country = country;
 	}
 
 	public String getName() {
@@ -31,12 +31,12 @@ public class State extends Entity {
 		this.name = name;
 	}
 
-	public State getState() {
-		return state;
+	public Country getCountry() {
+		return country;
 	}
 
-	public void setState(State state) {
-		this.state = state;
+	public void setCountry(Country country) {
+		this.country = country;
 	}
 	
 }

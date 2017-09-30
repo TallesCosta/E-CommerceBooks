@@ -1,6 +1,7 @@
 package br.com.talles.ecommercebooks.domain.customer;
 
 import br.com.talles.ecommercebooks.domain.Entity;
+import java.util.ArrayList;
 
 import java.util.Date;
 import java.util.List;
@@ -10,43 +11,46 @@ public class Customer extends Entity {
 	private String registry;
 	private String name;
 	private Date birthDate;
-	private List<DeliveryAddress> deliveryAddress;
-	private List<CreditCard> creditCard;
-	private List<ChargeAddress> chargeAddress;
 	private Gender gender;
 	private Phone phone;
 	private User user;
+	private List<DeliveryAddress> deliveryAddress;
+	private List<ChargeAddress> chargeAddress;
+	private List<CreditCard> creditCard;
 
 	public Customer() {
 		super(true);
+		this.deliveryAddress = new ArrayList<>();
+		this.chargeAddress = new ArrayList<>();
+		this.creditCard = new ArrayList<>();
 	}
 
-	public Customer(String registry, String name, Date birthDate, List<DeliveryAddress> deliveryAddress, 
-			List<CreditCard> creditCard, List<ChargeAddress> chargeAddress, Gender gender, Phone phone, User user) {
+	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
+			List<CreditCard> creditCard, List<DeliveryAddress> deliveryAddress, List<ChargeAddress> chargeAddress) {
 		super(true);
 		this.registry = registry;
 		this.name = name;
 		this.birthDate = birthDate;
-		this.deliveryAddress = deliveryAddress;
-		this.creditCard = creditCard;
-		this.chargeAddress = chargeAddress;
 		this.gender = gender;
 		this.phone = phone;
 		this.user = user;
+		this.deliveryAddress = deliveryAddress;
+		this.chargeAddress = chargeAddress;
+		this.creditCard = creditCard;
 	}
 
-	public Customer(String registry, String name, Date birthDate, List<DeliveryAddress> deliveryAddress, 
-			List<CreditCard> creditCard, List<ChargeAddress> chargeAddress, Gender gender, Phone phone, User user, long id) {
+	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
+			List<CreditCard> creditCard, List<DeliveryAddress> deliveryAddress, List<ChargeAddress> chargeAddress, long id) {
 		super(id, true);
 		this.registry = registry;
 		this.name = name;
 		this.birthDate = birthDate;
-		this.deliveryAddress = deliveryAddress;
-		this.creditCard = creditCard;
-		this.chargeAddress = chargeAddress;
 		this.gender = gender;
 		this.phone = phone;
 		this.user = user;
+		this.deliveryAddress = deliveryAddress;
+		this.chargeAddress = chargeAddress;
+		this.creditCard = creditCard;
 	}
 
 	public String getRegistry() {
@@ -73,29 +77,6 @@ public class Customer extends Entity {
 		this.birthDate = birthDate;
 	}
 
-	public List<DeliveryAddress> getDeliveryAddress() {
-		return deliveryAddress;
-	}
-
-	public void setDeliveryAddress(List<DeliveryAddress> deliveryAddress) {
-		this.deliveryAddress = deliveryAddress;
-	}
-
-	public List<CreditCard> getCreditCard() {
-		return creditCard;
-	}
-
-	public void setCreditCard(List<CreditCard> creditCard) {
-		this.creditCard = creditCard;
-	}
-
-	public List<ChargeAddress> getChargeAddress() {
-		return chargeAddress;
-	}
-
-	public void setChargeAddress(List<ChargeAddress> chargeAddress) {
-		this.chargeAddress = chargeAddress;
-	}
 
 	public Gender getGender() {
 		return gender;
@@ -119,6 +100,30 @@ public class Customer extends Entity {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public List<DeliveryAddress> getDeliveryAddress() {
+		return deliveryAddress;
+	}
+
+	public void setDeliveryAddress(List<DeliveryAddress> deliveryAddress) {
+		this.deliveryAddress = deliveryAddress;
+	}
+
+	public List<ChargeAddress> getChargeAddress() {
+		return chargeAddress;
+	}
+
+	public void setChargeAddress(List<ChargeAddress> chargeAddress) {
+		this.chargeAddress = chargeAddress;
+	}
+	
+	public List<CreditCard> getCreditCard() {
+		return creditCard;
+	}
+
+	public void setCreditCard(List<CreditCard> creditCard) {
+		this.creditCard = creditCard;
 	}
 	
 }

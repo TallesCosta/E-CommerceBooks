@@ -6,20 +6,20 @@ public class Phone extends Entity {
 
 	private String ddd;
 	private String number;
-	private PhoneType phoneType;
+	private String phoneType;
 
 	public Phone() {
 		super(true);
 	}
 
-	public Phone(String ddd, String number, PhoneType phoneType) {
+	public Phone(String ddd, String number, String phoneType) {
 		super(true);
 		this.ddd = ddd;
 		this.number = number;
 		this.phoneType = phoneType;
 	}
 
-	public Phone(String ddd, String number, PhoneType phoneType, long id) {
+	public Phone(String ddd, String number, String phoneType, long id) {
 		super(id, true);
 		this.ddd = ddd;
 		this.number = number;
@@ -42,11 +42,11 @@ public class Phone extends Entity {
 		this.number = number;
 	}
 
-	public PhoneType getPhoneType() {
+	public String getPhoneType() {
 		return phoneType;
 	}
 
-	public void setPhoneType(PhoneType phoneType) {
+	public void setPhoneType(String phoneType) {
 		this.phoneType = phoneType;
 	}
 	

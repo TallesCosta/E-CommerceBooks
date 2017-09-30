@@ -4,31 +4,31 @@ import br.com.talles.ecommercebooks.domain.Entity;
 
 public class CardCompany extends Entity {
 
-	private String numberId;
+	private String code;
 	private String name;
 
 	public CardCompany() {
 		super(true);
 	}
 
-	public CardCompany(String numberId, String name) {
+	public CardCompany(String code, String name) {
 		super(true);
-		this.numberId = numberId;
+		this.code = code;
 		this.name = name;
 	}
 
-	public CardCompany(String numberId, String name, long id) {
+	public CardCompany(String code, String name, long id) {
 		super(id, true);
-		this.numberId = numberId;
+		this.code = code;
 		this.name = name;
 	}
 	
 	public String getNumberId() {
-		return numberId;
+		return code;
 	}
 
-	public void setNumberId(String numberId) {
-		this.numberId = numberId;
+	public void setNumberId(String code) {
+		this.code = code;
 	}
 
 	public String getName() {

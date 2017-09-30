@@ -5,13 +5,13 @@ public class ChargeAddress extends Address {
 	public ChargeAddress() {
 	}
 
-	public ChargeAddress(String alias, String observation, String publicPlace, String number, String district, 
-			String postalCode, HomeType homeType, PublicPlaceType publicPlaceType, City city) {
+	public ChargeAddress(String alias, String observation, String publicPlaceType, String publicPlace, String number, String district, 
+			String postalCode, String homeType, City city) {
 		super(alias, observation, publicPlace, number, district, postalCode, homeType, publicPlaceType, city);
 	}
 
-	public ChargeAddress(String alias, String observation, String publicPlace, String number, String district, 
-			String postalCode, HomeType homeType, PublicPlaceType publicPlaceType, City city, long id) {
+	public ChargeAddress(String alias, String observation, String publicPlaceType, String publicPlace, String number, String district, 
+			String postalCode, String homeType, City city, long id) {
 		super(alias, observation, publicPlace, number, district, postalCode, homeType, publicPlaceType, city, id);
 	}
 	
