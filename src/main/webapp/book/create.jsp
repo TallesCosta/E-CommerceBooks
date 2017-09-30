@@ -1,14 +1,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
-<%@page import="br.com.talles.ecommercebooks.domain.SaleParameterization"%>
-<%@page import="br.com.talles.ecommercebooks.domain.Dimension"%>
-<%@page import="br.com.talles.ecommercebooks.domain.Book"%>
-<%@page import="br.com.talles.ecommercebooks.domain.PriceGroup"%>
-<%@page import="br.com.talles.ecommercebooks.domain.PublishingCompany"%>
-<%@page import="br.com.talles.ecommercebooks.domain.Author"%>
+<%@page import="br.com.talles.ecommercebooks.domain.book.Dimension"%>
+<%@page import="br.com.talles.ecommercebooks.domain.book.Author"%>
+<%@page import="br.com.talles.ecommercebooks.domain.book.PublishingCompany"%>
+<%@page import="br.com.talles.ecommercebooks.domain.book.PriceGroup"%>
+<%@page import="br.com.talles.ecommercebooks.domain.book.PriceGroup"%>
+<%@page import="br.com.talles.ecommercebooks.domain.book.Book"%>
+<%@page import="br.com.talles.ecommercebooks.domain.book.SaleParameterization"%>
+<%@page import="br.com.talles.ecommercebooks.domain.book.Category"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
-<%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
-<%@page import="br.com.talles.ecommercebooks.domain.Category"%>
 <%@page import="br.com.talles.ecommercebooks.controll.Result"%>
 <!DOCTYPE html>
 <html>

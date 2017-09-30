@@ -13,6 +13,10 @@ public class Dimension extends Entity {
 		super(true);
 	}
 
+	public Dimension(long id) {
+		super(id, true);
+	}
+	
 	public Dimension(double height, double widht, double weight, double depth) {
 		super(true);
 		this.height = height;

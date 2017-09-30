@@ -3,6 +3,7 @@ package br.com.talles.ecommercebooks.persistence.dao.book;
 import br.com.talles.ecommercebooks.domain.book.DeactivationCategory;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

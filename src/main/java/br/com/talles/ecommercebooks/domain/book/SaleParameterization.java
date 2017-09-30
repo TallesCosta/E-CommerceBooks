@@ -11,6 +11,10 @@ public class SaleParameterization extends Entity {
 		super(true);
 	}
 
+	public SaleParameterization(long id) {
+		super(id, true);
+	}
+	
 	public SaleParameterization(int minSaleLimit, int periodicity) {
 		super(true);
 		this.minSaleLimit = minSaleLimit;
