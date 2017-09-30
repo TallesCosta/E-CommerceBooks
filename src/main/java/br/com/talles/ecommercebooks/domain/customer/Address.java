@@ -23,12 +23,12 @@ public class Address extends Entity {
 		super(true);
 		this.alias = alias;
 		this.observation = observation;
+		this.publicPlaceType = publicPlaceType;
 		this.publicPlace = publicPlace;
 		this.number = number;
 		this.district = district;
 		this.postalCode = postalCode;
 		this.homeType = homeType;
-		this.publicPlaceType = publicPlaceType;
 		this.city = city;
 	}
 
@@ -37,12 +37,12 @@ public class Address extends Entity {
 		super(id, true);
 		this.alias = alias;
 		this.observation = observation;
+		this.publicPlaceType = publicPlaceType;
 		this.publicPlace = publicPlace;
 		this.number = number;
 		this.district = district;
 		this.postalCode = postalCode;
 		this.homeType = homeType;
-		this.publicPlaceType = publicPlaceType;
 		this.city = city;
 	}
 
