@@ -25,6 +25,19 @@ public class Customer extends Entity {
 		this.creditCard = new ArrayList<>();
 	}
 
+	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user) {
+		super(true);
+		this.registry = registry;
+		this.name = name;
+		this.birthDate = birthDate;
+		this.gender = gender;
+		this.phone = phone;
+		this.user = user;
+		this.deliveryAddress = new ArrayList<>();
+		this.chargeAddress = new ArrayList<>();
+		this.creditCard = new ArrayList<>();
+	}
+	
 	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
 			List<CreditCard> creditCard, List<DeliveryAddress> deliveryAddress, List<ChargeAddress> chargeAddress) {
 		super(true);
