@@ -11,6 +11,10 @@ public class ChangeStatus extends Entity {
 		super(true);
 	}
 
+	public ChangeStatus(long id) {
+		super(id, true);
+	}
+	
 	public ChangeStatus(String justification, StatusCategory statusCategory) {
 		super(true);
 		this.justification = justification;
