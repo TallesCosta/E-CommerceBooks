@@ -1,10 +1,10 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.Date"%>
 <%@page import="br.com.talles.ecommercebooks.domain.customer.CardCompany"%>
 <%@page import="br.com.talles.ecommercebooks.domain.customer.Country"%>
 <%@page import="br.com.talles.ecommercebooks.domain.customer.State"%>
 <%@page import="br.com.talles.ecommercebooks.domain.customer.City"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.Date"%>
 <%@page import="br.com.talles.ecommercebooks.domain.customer.User"%>
 <%@page import="br.com.talles.ecommercebooks.domain.customer.Phone"%>
 <%@page import="br.com.talles.ecommercebooks.domain.customer.Gender"%>
@@ -40,7 +40,7 @@
 		<div id="app">
 			<h1>Criação de Cliente</h1>
 			
-			<form action="#" method="POST">
+			<form action="save" method="POST">
 				<fieldset>
 					<legend>Dados básicos</legend>
 					<div>
@@ -78,7 +78,7 @@
 					</div>
 					<div>
 						<label for="phoneType">Tipo*: </label>
-						<input name="phoneType" id="phoneType" type="number">
+						<input name="phoneType" id="phoneType" type="text">
 					</div>
 				</fieldset>
 
@@ -267,7 +267,7 @@
 					</div>
 				</fieldset>
 
-				<button type="submit">Salvar</button>
+				<button name="operation" value="SAVE" type="submit">Salvar</button>
 				<small>Todos os campos marcados com * são obrigatórios.</small>
 			</form>
 		</div>
