@@ -1,20 +1,17 @@
 package br.com.talles.ecommercebooks.controll.facade;
 
-import br.com.talles.ecommercebooks.business.book.view.SelectPublishingCompany;
 import br.com.talles.ecommercebooks.business.book.BookNotBlank;
 import br.com.talles.ecommercebooks.business.book.Ean13Unique;
 import br.com.talles.ecommercebooks.business.IStrategy;
+import br.com.talles.ecommercebooks.business.CreateView;
 import br.com.talles.ecommercebooks.business.book.IsbnUnique;
-import br.com.talles.ecommercebooks.business.book.view.SelectAuthor;
-import br.com.talles.ecommercebooks.business.book.view.SelectCategory;
-import br.com.talles.ecommercebooks.business.book.view.SelectPriceGroup;
-import br.com.talles.ecommercebooks.business.book.view.SelectActivationCategory;
-import br.com.talles.ecommercebooks.business.book.view.SelectDeactivationCategory;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.book.Book;
 import br.com.talles.ecommercebooks.domain.Entity;
+import br.com.talles.ecommercebooks.domain.customer.Customer;
 import br.com.talles.ecommercebooks.persistence.dao.book.BookDao;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
+import br.com.talles.ecommercebooks.persistence.dao.customer.CustomerDao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,31 +37,18 @@ public class Facade implements IFacade {
 	
 	 public Facade() {
         String book = Book.class.getSimpleName();
+        String customer = Customer.class.getSimpleName();
         
         // All Strategies
-		IStrategy selectPriceGroup = new SelectPriceGroup();		
-        IStrategy selectCategory = new SelectCategory();
-		IStrategy selectAuthor = new SelectAuthor();
-		IStrategy selectActivationCategory = new SelectActivationCategory();
-		IStrategy selectDeactivationCategory = new SelectDeactivationCategory();
-		IStrategy selectPublishingCompany = new SelectPublishingCompany();
 		IStrategy bookNotBlank = new BookNotBlank();
 		IStrategy isbnUnique = new IsbnUnique();
 		IStrategy ean13Unique = new Ean13Unique();
                 
         List<IStrategy> listBook = new ArrayList();
-		listBook.add(selectCategory);
-		listBook.add(selectAuthor);
-		listBook.add(selectPublishingCompany);
-		listBook.add(selectPriceGroup);
-		listBook.add(selectDeactivationCategory);
+		listBook.add(new CreateView(LIST));
 		
         List<IStrategy> listDisableBook = new ArrayList();
-		listDisableBook.add(selectCategory);
-		listDisableBook.add(selectAuthor);
-		listDisableBook.add(selectPublishingCompany);
-		listDisableBook.add(selectPriceGroup);
-		listDisableBook.add(selectActivationCategory);
+		listDisableBook.add(new CreateView(LIST_DISABLE));
 		
         List<IStrategy> saveBook = new ArrayList();
 		saveBook.add(bookNotBlank);
@@ -87,13 +71,14 @@ public class Facade implements IFacade {
 		
 		
 		List<IStrategy> createBook = new ArrayList();
-		createBook.add(selectCategory);
-		createBook.add(selectAuthor);
-		createBook.add(selectPublishingCompany);
-		createBook.add(selectPriceGroup);
+		createBook.add(new CreateView(CREATE));
 		
 		List<IStrategy> filtersBook = new ArrayList();
-        
+        		
+		
+		List<IStrategy> createCustomer = new ArrayList();
+		createCustomer.add(new CreateView(CREATE));
+		
 		
         Map<String, List<IStrategy>> contextBook = new HashMap();
         contextBook.put(LIST, listBook);
@@ -107,11 +92,16 @@ public class Facade implements IFacade {
         contextBook.put(ENABLE, enableBook);
         contextBook.put(FILTERS, filtersBook);
 		
+		Map<String, List<IStrategy>> contextCustomer = new HashMap();
+        contextCustomer.put(CREATE, createCustomer);
+		
         requirements = new HashMap();
         requirements.put(book, contextBook);
+        requirements.put(customer, contextCustomer);
         
         persistence = new HashMap();
         persistence.put(book, new BookDao());
+        persistence.put(customer, new CustomerDao());
 
         this.result = new Result();
     }

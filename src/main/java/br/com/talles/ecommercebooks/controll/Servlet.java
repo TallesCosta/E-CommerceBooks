@@ -2,6 +2,7 @@ package br.com.talles.ecommercebooks.controll;
 
 import br.com.talles.ecommercebooks.controll.command.CreateCmd;
 import br.com.talles.ecommercebooks.controll.viewHelper.BookVh;
+import br.com.talles.ecommercebooks.controll.viewHelper.CustomerVh;
 import br.com.talles.ecommercebooks.controll.viewHelper.IViewHelper;
 import br.com.talles.ecommercebooks.controll.command.ICommand;
 import br.com.talles.ecommercebooks.controll.command.ListCmd;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "Servlet", urlPatterns = {"/books/*"})
+@WebServlet(name = "Servlet", urlPatterns = {"/books/*", "/customers/*"})
 public class Servlet extends HttpServlet {
 
 	private Map<String, IViewHelper> viewHelpers;
@@ -32,6 +33,7 @@ public class Servlet extends HttpServlet {
 
 	public Servlet() {
 		viewHelpers = new HashMap();
+		// Books Requests
 		viewHelpers.put("/E-CommerceBooks/books/list", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/list-disable", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/save", new BookVh());
@@ -41,6 +43,8 @@ public class Servlet extends HttpServlet {
 		viewHelpers.put("/E-CommerceBooks/books/disable", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/enable", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/create", new BookVh());
+		// Customers Request
+		viewHelpers.put("/E-CommerceBooks/customers/create", new CustomerVh());
 
 		commands = new HashMap();
 		commands.put("LIST", new ListCmd());

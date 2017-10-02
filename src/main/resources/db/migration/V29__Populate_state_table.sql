@@ -1,0 +1,31 @@
+/*
+	Create country table
+*/
+INSERT INTO States (enabled, name, acrony, id_country) VALUES 
+(true, 'Acre', 'AC', 1),
+(true, 'Alagoas', 'AL', 1),
+(true, 'Amazonas', 'AM', 1),
+(true, 'Amapá', 'AP', 1),
+(true, 'Bahia', 'BA', 1),
+(true, 'Ceará', 'CE', 1),
+(true, 'Distrito Federal', 'DF', 1),
+(true, 'Espírito Santo', 'ES', 1),
+(true, 'Goiás', 'GO', 1),
+(true, 'Maranhão', 'MA', 1),
+(true, 'Minas Gerais', 'MG', 1),
+(true, 'Mato Grosso do Sul', 'MS', 1),
+(true, 'Mato Grosso', 'MT', 1),
+(true, 'Pará', 'PA', 1),
+(true, 'Paraíba', 'PB', 1),
+(true, 'Pernambuco', 'PE', 1),
+(true, 'Piauí', 'PI', 1),
+(true, 'Paraná', 'PR', 1),
+(true, 'Rio de Janeiro', 'RJ', 1),
+(true, 'Rio Grande do Norte', 'RN', 1),
+(true, 'Rondônia', 'RO', 1),
+(true, 'Roraima', 'RR', 1),
+(true, 'Rio Grande do Sul', 'RS', 1),
+(true, 'Santa Catarina', 'SC', 1),
+(true, 'Sergipe', 'SE', 1),
+(true, 'São Paulo', 'SP', 1),
+(true, 'Tocantins', 'TO', 1);
