@@ -2,6 +2,7 @@ package br.com.talles.ecommercebooks.persistence.dao.customer;
 
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.customer.Customer;
+import br.com.talles.ecommercebooks.domain.customer.Gender;
 import br.com.talles.ecommercebooks.domain.customer.Phone;
 import br.com.talles.ecommercebooks.domain.customer.User;
 import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
@@ -10,6 +11,7 @@ import br.com.talles.ecommercebooks.persistence.dao.IDao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +20,40 @@ public class CustomerDao extends AbstractDao {
 
 	@Override
 	public List<Entity> select(boolean enabled) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		List<Entity> customers = new ArrayList();
+        String sql = "SELECT * FROM Customers WHERE enabled = ? ";
+        
+        try {
+			openConnection();
+			
+            PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setBoolean(1, enabled);
+			
+            ResultSet result = statement.executeQuery();
+            
+			
+            while (result.next()) {
+				Customer customer = new Customer();
+				
+				customer.setId(result.getLong("id"));
+				customer.setEnabled(result.getBoolean("enabled"));
+				customer.setRegistry(result.getString("registry"));
+				customer.setName(result.getString("name"));
+				customer.setBirthDate(result.getDate("birthDate"));
+				customer.setGender(new Gender(result.getString("gender")));
+				
+				customers.add(customer);
+            }
+            
+            result.close();
+            statement.close();
+            
+            return  customers;
+        } catch (SQLException e) {
+            throw new RuntimeException (e);   
+        } finally {
+			closeConnection();
+		}
 	}
 
 	@Override

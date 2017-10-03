@@ -11,7 +11,6 @@
 <html>
     <head>
         <title>Listagem de Livros</title>
-		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -94,8 +93,8 @@
 							<td>ISBN</td>
 							<td>Código de Barras</td>
 							<td>Categoria(s)</td>
-							<td>Excluir</td>
 							<td>Editar</td>
+							<td>Excluir</td>
 						</tr>
 					</thead>
 					

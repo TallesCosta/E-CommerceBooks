@@ -80,6 +80,9 @@ public class Facade implements IFacade {
 		createCustomer.add(new CreateView(CREATE));
 		
 		List<IStrategy> saveCustomer = new ArrayList();
+		
+		List<IStrategy> listCustomer = new ArrayList();
+		
 				
         Map<String, List<IStrategy>> contextBook = new HashMap();
         contextBook.put(LIST, listBook);
@@ -96,6 +99,7 @@ public class Facade implements IFacade {
 		Map<String, List<IStrategy>> contextCustomer = new HashMap();
         contextCustomer.put(CREATE, createCustomer);
         contextCustomer.put(SAVE, saveCustomer);
+        contextCustomer.put(LIST, listCustomer);
 		
         requirements = new HashMap();
         requirements.put(book, contextBook);
