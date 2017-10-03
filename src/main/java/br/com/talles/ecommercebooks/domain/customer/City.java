@@ -11,6 +11,15 @@ public class City extends Entity {
 		super(true);
 	}
 
+	public City(long id) {
+		super(id, true);
+	}
+
+	public City(long id, State state) {
+		super(id);
+		this.state = state;
+	}
+	
 	public City(String name, State state) {
 		super(true);
 		this.name = name;

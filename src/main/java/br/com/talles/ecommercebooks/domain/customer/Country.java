@@ -10,6 +10,10 @@ public class Country extends Entity {
 		super(true);
 	}
 
+	public Country(long id) {
+		super(id, true);
+	}
+	
 	public Country(String name) {
 		super(true);
 		this.name = name;

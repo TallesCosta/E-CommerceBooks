@@ -1,8 +1,8 @@
 package br.com.talles.ecommercebooks.domain.customer;
 
 import br.com.talles.ecommercebooks.domain.Entity;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -116,25 +116,37 @@ public class Customer extends Entity {
 	}
 	
 	public List<DeliveryAddress> getDeliveryAddress() {
-		return deliveryAddress;
+		return this.deliveryAddress;
 	}
 
+	public DeliveryAddress getDeliveryAddress(int index) {
+		return this.deliveryAddress.get(index);
+	}
+	
 	public void setDeliveryAddress(List<DeliveryAddress> deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
 	}
 
 	public List<ChargeAddress> getChargeAddress() {
-		return chargeAddress;
+		return this.chargeAddress;
 	}
 
+	public ChargeAddress getChargeAddress(int index) {
+		return this.chargeAddress.get(index);
+	}
+	
 	public void setChargeAddress(List<ChargeAddress> chargeAddress) {
 		this.chargeAddress = chargeAddress;
 	}
 	
 	public List<CreditCard> getCreditCard() {
-		return creditCard;
+		return this.creditCard;
 	}
 
+	public CreditCard getCreditCard(int index) {
+		return this.creditCard.get(index);
+	}
+	
 	public void setCreditCard(List<CreditCard> creditCard) {
 		this.creditCard = creditCard;
 	}

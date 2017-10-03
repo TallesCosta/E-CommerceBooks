@@ -80,20 +80,18 @@ public class BookDao extends AbstractDao {
         IDao dimensionDao = new DimensionDao();
         if(!dimensionDao.save(book.getDimension())){
             return false;
-        }
-		
+        }		
         book.setDimension((Dimension) dimensionDao.findLast());
         
 		// Persists the SaleParameterization
         IDao saleParameterizationDao = new SaleParameterizationDao();
         if(!saleParameterizationDao.save(book.getSaleParameterization())){
             return false;
-        }
-		
+        }		
 		book.setSaleParameterization((SaleParameterization) saleParameterizationDao.findLast());
 		
 		// SQL query
-        String sql = "INSERT INTO Books(enabled, title, edition, publicationYear, numberOfPages, synopsis, isbn, ean13, "
+        String sql = "INSERT INTO Books (enabled, title, edition, publicationYear, numberOfPages, synopsis, isbn, ean13, "
 				+ "id_author, id_publishingCompany, id_dimension, id_priceGroup, id_saleParameterization) "
 				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         

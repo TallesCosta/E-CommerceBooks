@@ -70,7 +70,7 @@
 					<legend>Telefone</legend>
 					<div>
 						<label for="ddd">DDD*: </label>
-						<input name="ddd" id="ddd" type="number">
+						<input name="ddd" id="ddd" type="text">
 					</div>
 					<div>
 						<label for="phoneNumber">Número*: </label>

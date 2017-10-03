@@ -11,6 +11,10 @@ public class CardCompany extends Entity {
 		super(true);
 	}
 
+	public CardCompany(long id) {
+		super(id, true);
+	}
+	
 	public CardCompany(String code, String name) {
 		super(true);
 		this.code = code;
