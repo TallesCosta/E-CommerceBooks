@@ -91,6 +91,9 @@ public class Facade implements IFacade {
 		List<IStrategy> listCustomer = new ArrayList();
 		
 		
+		List<IStrategy> listDisableCustomer = new ArrayList();
+		
+		
 		List<IStrategy> findCustomer = new ArrayList();
 		
 		
@@ -116,6 +119,7 @@ public class Facade implements IFacade {
         contextCustomer.put(CREATE, createCustomer);
         contextCustomer.put(SAVE, saveCustomer);
         contextCustomer.put(LIST, listCustomer);
+        contextCustomer.put(LIST_DISABLE, listDisableCustomer);
 		contextCustomer.put(FIND, findCustomer);
 		contextCustomer.put(UPDATE, updateCustomer);
 		contextCustomer.put(DISABLE, disableCustomer);

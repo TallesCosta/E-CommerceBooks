@@ -44,13 +44,14 @@ public class Servlet extends HttpServlet {
 		viewHelpers.put("/E-CommerceBooks/customers/create", new CustomerVh());
 		viewHelpers.put("/E-CommerceBooks/customers/save", new CustomerVh());
 		viewHelpers.put("/E-CommerceBooks/customers/list", new CustomerVh());
+		viewHelpers.put("/E-CommerceBooks/customers/list-disable", new CustomerVh());
 		viewHelpers.put("/E-CommerceBooks/customers/find", new CustomerVh());
 		viewHelpers.put("/E-CommerceBooks/customers/update", new CustomerVh());
 		viewHelpers.put("/E-CommerceBooks/customers/disable", new CustomerVh());
 
 		commands = new HashMap();
 		commands.put("LIST", new ListCmd());
-		commands.put("LIST-DISABLE", new UpdateCmd());
+		commands.put("LIST-DISABLE", new ListCmd());
 		commands.put("SAVE", new SaveCmd());
 		commands.put("DELETE", new DeleteCmd());
 		commands.put("FIND", new FindCmd());
