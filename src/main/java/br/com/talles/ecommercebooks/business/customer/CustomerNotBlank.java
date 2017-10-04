@@ -11,6 +11,9 @@ public class CustomerNotBlank implements IStrategy {
 	public Result process(Entity entity, Result result) {
 		Customer customer = (Customer) entity;
 		
+		IStrategy phoneNotBlank = new PhoneNotBlank();
+		IStrategy userNotBlank = new UserNotBlank();
+		
         if (customer.getRegistry() == null || customer.getRegistry().trim().isEmpty()) {
             result.addMsg("CPF é um campo obrigatório!\n");
 		} if (customer.getName() == null || customer.getName().trim().isEmpty()) {
@@ -20,6 +23,9 @@ public class CustomerNotBlank implements IStrategy {
 		} if (customer.getGender().getName() == null || customer.getGender().getName().trim().isEmpty()) {
             result.addMsg("Gênero é um campo obrigatório!\n");
 		}
+		
+		result = phoneNotBlank.process(customer.getPhone(), result);
+		result = userNotBlank.process(customer.getUser(), result);
 		
 		return result;
 	}
