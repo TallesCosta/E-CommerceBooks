@@ -203,7 +203,57 @@ public class CustomerDao extends AbstractDao {
 
 	@Override
 	public boolean update(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		Customer customer = (Customer) entity;
+        
+		// Updates the Phone
+        PhoneDao phoneDao = new PhoneDao();
+        if(!phoneDao.update(customer.getPhone())){
+            return false;
+        }
+		
+        // Updates the User
+        UserDao userDao = new UserDao();
+        if(!userDao.update(customer.getUser())){
+            return false;
+        }
+        
+        AddressDao addressDao = new AddressDao();
+		
+		// Updates the Home Address
+        if(!addressDao.update(customer.getHomeAddress())){
+            return false;
+        }
+		
+		// Updates the Charge Address
+        if(!addressDao.update(customer.getChargeAddress())){
+            return false;
+        }
+		
+        String sql = "UPDATE Customers "
+                + "SET enabled = ?, registry = ?, name = ?, birthDate = ?, gender = ? "
+                + "WHERE id = ?";
+        
+        try {
+			openConnection();
+			
+            PreparedStatement statement = conn.prepareStatement(sql);
+            
+            statement.setBoolean(1, customer.isEnabled());
+            statement.setString(2, customer.getRegistry());
+            statement.setString(3, customer.getName());
+            statement.setDate(4, new java.sql.Date(customer.getBirthDate().getTime()));
+            statement.setString(5, customer.getGender().getName());
+            statement.setLong(6, customer.getId());
+            
+            statement.execute();
+            statement.close();
+            
+            return true;
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+			closeConnection();
+		}
 	}
 
 	@Override

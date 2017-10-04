@@ -31,9 +31,9 @@
     </head>
     <body>
 		<%
-			Customer customer = new Customer("", "", new Date(0L), new Gender(""), new Phone("", "", ""), 
-					new User("", "", ""), new Address("", "", "", "", "", "", "", ""), 
-					Arrays.asList(new CreditCard("", "", "", new Date(0L), new CardCompany())));
+			Customer customer = new Customer("", "", new Date(0L), new Gender(""), new Phone("", "", "", 0L), 
+					new User("", "", "", 0L), new Address("", "", "", "", "", "", "", "", 0L), 
+					Arrays.asList(new CreditCard("", "", "", new Date(0L), new CardCompany(), 0L)), 0L);
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 			if (result.getKeys().contains(Customer.class.getSimpleName())) {
@@ -55,9 +55,15 @@
 				else if (result.getOperation().equals("FIND")) { out.print("Alteração de Cliente"); } %>
 			</h1>
 			
-			<form action="save" method="POST">
+			<form 
+				<% if (result.getOperation().equals("CREATE")) { out.print("action='save'"); }
+				else if (result.getOperation().equals("FIND")) { out.print("action='update'"); } %>
+				method="POST">
+				
 				<fieldset>
 					<legend>Dados básicos</legend>
+					<input type="hidden" name="id" id="id" 
+						   <% out.print("value='" + customer.getId() + "'"); %> >
 					<div>
 						<label for="registry">CPF*: </label>
 						<input name="registry" id="registry" type="text"
@@ -89,6 +95,8 @@
 
 				<fieldset>
 					<legend>Telefone</legend>
+					<input type="hidden" name="idPhone" id="idPhone" 
+						   <% out.print("value='" + customer.getPhone().getId() + "'"); %> >
 					<div>
 						<label for="ddd">DDD*: </label>
 						<input name="ddd" id="ddd" type="text" 
@@ -108,6 +116,8 @@
 
 				<fieldset>
 					<legend>Usuário</legend>
+					<input type="hidden" name="idUser" id="idUser" 
+						   <% out.print("value='" + customer.getUser().getId() + "'"); %> >
 					<div>
 						<label for="email">E-mail*: </label>
 						<input name="email" id="email" type="email" 
@@ -127,6 +137,8 @@
 				
 				<fieldset>
 					<legend>Endereço Residencial</legend>
+					<input type="hidden" name="idHome" id="idHome" 
+						   <% out.print("value='" + customer.getHomeAddress().getId() + "'"); %> >
 					<div>
 						<label for="homeAlias">Apelido*: </label>
 						<input name="homeAlias" id="homeAlias" type="text"
@@ -209,6 +221,8 @@
 		%>
 				<fieldset>
 					<legend>Endereço de Cobrança</legend>
+					<input type="hidden" name="idCharge" id="idCharge" 
+						   <% out.print("value='" + customer.getChargeAddress().getId() + "'"); %> >
 					<div>
 						<label for="chargeAlias">Apelido*: </label>
 						<input name="chargeAlias" id="chargeAlias" type="text"
@@ -328,7 +342,10 @@
 			}
 		%>
 
-				<button name="operation" value="SAVE" type="submit">Salvar</button>
+				<button name="operation"
+						<% if (result.getOperation().equals("CREATE")) { out.print("value='SAVE'"); }
+							else if (result.getOperation().equals("FIND")) { out.print("value='UPDATE'"); } %>
+						type="submit">Salvar</button>
 				<small>Todos os campos marcados com * são obrigatórios.</small>
 			</form>
 		</div>
