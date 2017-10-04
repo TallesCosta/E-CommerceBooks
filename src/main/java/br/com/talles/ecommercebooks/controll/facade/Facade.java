@@ -5,6 +5,7 @@ import br.com.talles.ecommercebooks.business.book.Ean13Unique;
 import br.com.talles.ecommercebooks.business.IStrategy;
 import br.com.talles.ecommercebooks.business.CreateView;
 import br.com.talles.ecommercebooks.business.book.IsbnUnique;
+import br.com.talles.ecommercebooks.business.customer.CustomerNotBlank;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.book.Book;
 import br.com.talles.ecommercebooks.domain.Entity;
@@ -40,9 +41,12 @@ public class Facade implements IFacade {
         String customer = Customer.class.getSimpleName();
         
         // All Strategies
+		// Books
 		IStrategy bookNotBlank = new BookNotBlank();
 		IStrategy isbnUnique = new IsbnUnique();
 		IStrategy ean13Unique = new Ean13Unique();
+		// Customers
+		IStrategy customerNotBlank = new CustomerNotBlank();
                 
         List<IStrategy> listBook = new ArrayList();
 		listBook.add(new CreateView(LIST));
@@ -80,6 +84,7 @@ public class Facade implements IFacade {
 		createCustomer.add(new CreateView(CREATE));
 		
 		List<IStrategy> saveCustomer = new ArrayList();
+		saveCustomer.add(customerNotBlank);
 		
 		List<IStrategy> listCustomer = new ArrayList();
 		

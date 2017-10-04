@@ -43,7 +43,7 @@ public class CustomerVh implements IViewHelper {
         String gender = request.getParameter("gender");
 		
 		String birthDateS = request.getParameter("birthDate");
-        Date birthDate = new Date();
+        Date birthDate = new Date(0L);
         try {
             birthDate = dateFormat.parse(birthDateS);
         } catch (ParseException | NullPointerException ex) {
@@ -116,7 +116,7 @@ public class CustomerVh implements IViewHelper {
 		String securityCode = request.getParameter("securityCode");
 		
 		String expirationDateS = request.getParameter("expirationDate");
-		Date expirationDate = new Date();
+		Date expirationDate = new Date(0L);
 		try {
             expirationDate = dateFormat.parse(expirationDateS);
         } catch (ParseException | NullPointerException ex) {

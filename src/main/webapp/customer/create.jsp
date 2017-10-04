@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>
 <%@page import="br.com.talles.ecommercebooks.domain.customer.CardCompany"%>
@@ -22,7 +23,8 @@
 			result = (Result) request.getAttribute("result");
 			
 			if (result != null) {
-				Customer customer = new Customer("", "", new Date(), new Gender(), new Phone("", "", ""), new User("", "", ""));
+				Customer customer = new Customer("", "", new Date(0L), new Gender(), new Phone("", "", ""), new User("", "", ""));
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 				
 				if (result.getKeys().contains(Customer.class.getSimpleName())) {
 					customer = (Customer) result.getEntities(Customer.class.getSimpleName()).get(0);
@@ -53,16 +55,16 @@
 					</div>
 					<div>
 						<label for="birthDate">Data Nasc.*: </label>
-						<input name="birthDate" id="birthDate" value="<% out.print(customer.getBirthDate()); %>" type="date">
+						<input name="birthDate" id="birthDate" value="<% out.print(dateFormat.format(customer.getBirthDate())); %>" type="date">
 					</div>
 					<div>
 						<label for="gender">Gênero*: </label>
-						<input name="gender" id="gender" value="Feminino" type="radio">
-						<label for="gender">Feminino</label>
-						<input name="gender" id="gender" value="Masculino" type="radio">
-						<label for="gender">Masculino</label>
-						<input name="gender" id="gender" value="Outro" type="radio">
-						<label for="gender">Outro</label>
+						<input <% if (customer.getGender().getName().equals("Feminino")) { out.print("checked"); } %> name="gender" id="female" value="Feminino" type="radio">
+						<label for="female">Feminino</label>
+						<input <% if (customer.getGender().getName().equals("Masculino")) { out.print("checked"); } %> name="gender" id="male" value="Masculino" type="radio">
+						<label for="male">Masculino</label>
+						<input <% if (customer.getGender().getName().equals("Outro")) { out.print("checked"); } %> name="gender" id="other" value="Outro" type="radio">
+						<label for="other">Outro</label>
 					</div>
 				</fieldset>
 
@@ -97,7 +99,11 @@
 						<input name="passwordVerify" id="passwordVerify" value="<% out.print(customer.getUser().getPasswordVerify()); %>" type="password">
 					</div>
 				</fieldset>
-
+				
+			<%
+				
+			%>
+				
 				<fieldset>
 					<legend>Endereço de Entrega</legend>
 					<div>
