@@ -103,6 +103,9 @@ public class Facade implements IFacade {
 		List<IStrategy> disableCustomer = new ArrayList();
 		disableCustomer.add(findCostumer);
 		
+		List<IStrategy> enableCustomer = new ArrayList();
+		enableCustomer.add(findCostumer);
+		
         Map<String, List<IStrategy>> contextBook = new HashMap();
         contextBook.put(LIST, listBook);
         contextBook.put(LIST_DISABLE, listDisableBook);
@@ -123,6 +126,7 @@ public class Facade implements IFacade {
 		contextCustomer.put(FIND, findCustomer);
 		contextCustomer.put(UPDATE, updateCustomer);
 		contextCustomer.put(DISABLE, disableCustomer);
+		contextCustomer.put(ENABLE, enableCustomer);
 		
         requirements = new HashMap();
         requirements.put(book, contextBook);

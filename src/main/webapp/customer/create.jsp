@@ -146,8 +146,7 @@
 					</div>
 					<div>
 						<label for="homeObservation">Observações: </label>
-						<textarea name="homeObservation" id="homeObservation">
-							<% out.print(customer.getHomeAddress().getObservation()); %></textarea>
+						<textarea name="homeObservation" id="homeObservation"><% out.print(customer.getHomeAddress().getObservation()); %></textarea>
 					</div>
 					<div>
 						<label for="homePublicPlaceType">Tipo de Logradouro*: </label>
@@ -230,8 +229,7 @@
 					</div>
 					<div>
 						<label for="chargeObservation">Observações: </label>
-						<textarea name="chargeObservation" id="chargeObservation">
-							<% out.print(customer.getChargeAddress().getObservation()); %></textarea>
+						<textarea name="chargeObservation" id="chargeObservation"><% out.print(customer.getChargeAddress().getObservation()); %></textarea>
 					</div>
 					<div>
 						<label for="chargePublicPlaceType">Tipo de Logradouro*: </label>

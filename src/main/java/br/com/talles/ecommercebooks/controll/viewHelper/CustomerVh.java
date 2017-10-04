@@ -209,6 +209,8 @@ public class CustomerVh implements IViewHelper {
 				break;
 
 			case "ENABLE":
+				customer.setEnabled(true);
+				customer.setId(id);
 				break;
 				
 			case "CREATE" :				
@@ -277,7 +279,7 @@ public class CustomerVh implements IViewHelper {
 						dispatcher = request.getRequestDispatcher("/customer/list-disable.jsp");
 						dispatcher.forward(request, response);
 					}
-					break;					
+					break;		
 					
 				case "CREATE" :
 					dispatcher = request.getRequestDispatcher("/customer/create.jsp");
