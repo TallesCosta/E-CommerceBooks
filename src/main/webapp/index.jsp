@@ -16,6 +16,14 @@
 			<li>
 				<a href="<% out.print(request.getContextPath().concat("/books/list-disable?operation=LIST-DISABLE")); %>">Listagem de Livros Inativos</a>
 			</li>
+			
+			<br><br>
+			<li>
+				<a href="<% out.print(request.getContextPath().concat("/customers/list?operation=LIST")); %>">Listagem de Clientes</a>
+			</li>
+			<li>
+				<a href="<% out.print(request.getContextPath().concat("/customers/list-disable?operation=LIST-DISABLE")); %>">Listagem de Clientes Inativos</a>
+			</li>
 		</ul>
 		
 		<script src="https://use.fontawesome.com/51922b6b29.js"></script>

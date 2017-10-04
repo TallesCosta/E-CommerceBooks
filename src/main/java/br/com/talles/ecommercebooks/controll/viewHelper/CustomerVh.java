@@ -137,7 +137,7 @@ public class CustomerVh implements IViewHelper {
 				customer.setName(name);
 				customer.setBirthDate(birthDate);
 				customer.setGender(new Gender(gender));
-				customer.setPhone(new Phone(ddd, name, phoneType));
+				customer.setPhone(new Phone(ddd, phoneNumber, phoneType));
 				customer.setUser(new User(email, password, passwordVerify));
 				customer.setDeliveryAddress(Arrays.asList(new DeliveryAddress(true, chargeAlias, chargeObservation, chargePublicPlaceType, chargePublicPlace, chargeNumber, chargeDistrict, chargePostalCode, chargeHomeType, new City(idDeliveryCity, new State(idDeliveryState, new Country(idDeliveryCountry))))));
 				customer.setChargeAddress(Arrays.asList(new ChargeAddress(deliveryAlias, deliveryObservation, deliveryPublicPlaceType, deliveryPublicPlace, deliveryNumber, deliveryDistrict, deliveryPostalCode, deliveryHomeType, new City(idChargeCity, new State(idChargeState, new Country(idChargeCountry))))));
@@ -154,6 +154,7 @@ public class CustomerVh implements IViewHelper {
 				break;
 
 			case "FIND":
+				customer.setId(id);
 				break;
 
 			case "UPDATE":
@@ -201,7 +202,9 @@ public class CustomerVh implements IViewHelper {
 				case "DELETE":
 					break;
 
-				case "FIND":					
+				case "FIND":
+					dispatcher = request.getRequestDispatcher("/customer/create.jsp");
+					dispatcher.forward(request, response);
 					break;
 
 				case "UPDATE":					

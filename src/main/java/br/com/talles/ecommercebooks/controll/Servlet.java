@@ -47,6 +47,7 @@ public class Servlet extends HttpServlet {
 		viewHelpers.put("/E-CommerceBooks/customers/create", new CustomerVh());
 		viewHelpers.put("/E-CommerceBooks/customers/save", new CustomerVh());
 		viewHelpers.put("/E-CommerceBooks/customers/list", new CustomerVh());
+		viewHelpers.put("/E-CommerceBooks/customers/find", new CustomerVh());
 
 		commands = new HashMap();
 		commands.put("LIST", new ListCmd());

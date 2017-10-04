@@ -45,15 +45,15 @@
 					<legend>Dados básicos</legend>
 					<div>
 						<label for="registry">CPF*: </label>
-						<input name="registry" id="registry" type="text">
+						<input name="registry" id="registry" value="<% out.print(customer.getRegistry()); %>" type="text">
 					</div>
 					<div>
 						<label for="name">Nome*: </label>
-						<input name="name" id="name" type="text">
+						<input name="name" id="name" value="<% out.print(customer.getName()); %>" type="text">
 					</div>
 					<div>
 						<label for="birthDate">Data Nasc.*: </label>
-						<input name="birthDate" id="birthDate" type="date">
+						<input name="birthDate" id="birthDate" value="<% out.print(customer.getBirthDate()); %>" type="date">
 					</div>
 					<div>
 						<label for="gender">Gênero*: </label>
@@ -70,15 +70,15 @@
 					<legend>Telefone</legend>
 					<div>
 						<label for="ddd">DDD*: </label>
-						<input name="ddd" id="ddd" type="text">
+						<input name="ddd" id="ddd" value="<% out.print(customer.getPhone().getDdd()); %>" type="text">
 					</div>
 					<div>
 						<label for="phoneNumber">Número*: </label>
-						<input name="phoneNumber" id="phoneNumber" type="text">
+						<input name="phoneNumber" id="phoneNumber" value="<% out.print(customer.getPhone().getNumber()); %>" type="text">
 					</div>
 					<div>
 						<label for="phoneType">Tipo*: </label>
-						<input name="phoneType" id="phoneType" type="text">
+						<input name="phoneType" id="phoneType" value="<% out.print(customer.getPhone().getPhoneType()); %>" type="text">
 					</div>
 				</fieldset>
 
@@ -86,15 +86,15 @@
 					<legend>Usuário</legend>
 					<div>
 						<label for="email">E-mail*: </label>
-						<input name="email" id="email" type="email">
+						<input name="email" id="email" value="<% out.print(customer.getUser().getEmail()); %>" type="email">
 					</div>
 					<div>
 						<label for="password">Senha*: </label>
-						<input name="password" id="password" type="password">
+						<input name="password" id="password" value="<% out.print(customer.getUser().getPassword()); %>" type="password">
 					</div>
 					<div>
 						<label for="passwordVerify">Confirmaçãoo da Senha*: </label>
-						<input name="passwordVerify" id="passwordVerify" type="password">
+						<input name="passwordVerify" id="passwordVerify" value="<% out.print(customer.getUser().getPasswordVerify()); %>" type="password">
 					</div>
 				</fieldset>
 

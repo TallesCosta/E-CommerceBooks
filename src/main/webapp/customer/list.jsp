@@ -42,6 +42,8 @@
 							<td>Nome</td>
 							<td>Data de Nasc.</td>
 							<td>Gênero</td>
+							<td>Telefone</td>
+							<td>E-mail</td>
 							<td>Editar</td>
 							<td>Excluir</td>
 						</tr>
@@ -59,8 +61,10 @@
 						out.println("<td>" + customer.getName() + "</td>");
 						out.println("<td>" + customer.getBirthDate() + "</td>");
 						out.println("<td>" + customer.getGender().getName() + "</td>");
+						out.println("<td>" + customer.getPhone().toString() + "</td>");
+						out.println("<td>" + customer.getUser().getEmail() + "</td>");
 						out.println("<td>"
-										+ "<a href='customers/find?operation=FIND&id=" + customer.getId() + "'>"
+										+ "<a href='" + request.getContextPath() + "/customers/find?operation=FIND&id=" + customer.getId() + "'>"
 											+ "<i class='fa fa-pencil' aria-hidden='true'></i>"
 										+ "</a>"
 									+ "</td>");
@@ -75,7 +79,7 @@
 				} else {
 					out.println("<tr>");
 					
-					for(int j = 0; j <= 5; j++){
+					for(int j = 0; j <= 7; j++){
 						out.println("<td> - </td>");
 					}
 					
@@ -90,6 +94,8 @@
 							<td>Nome</td>
 							<td>Data de Nasc.</td>
 							<td>Gênero</td>
+							<td>Telefone</td>
+							<td>E-mail</td>
 							<td>Editar</td>
 							<td>Excluir</td>
 						</tr>

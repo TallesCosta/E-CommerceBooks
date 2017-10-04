@@ -21,7 +21,10 @@ public class CustomerDao extends AbstractDao {
 	@Override
 	public List<Entity> select(boolean enabled) {
 		List<Entity> customers = new ArrayList();
-        String sql = "SELECT * FROM Customers WHERE enabled = ? ";
+        String sql = "SELECT * FROM Customers c "
+				+ "INNER JOIN Phones p ON c.id_phone = p.id "
+				+ "INNER JOIN Users u ON c.id_user = u.id "
+				+ "WHERE c.enabled = ? ";
         
         try {
 			openConnection();
@@ -30,17 +33,20 @@ public class CustomerDao extends AbstractDao {
 			statement.setBoolean(1, enabled);
 			
             ResultSet result = statement.executeQuery();
-            
-			
+            			
             while (result.next()) {
 				Customer customer = new Customer();
 				
-				customer.setId(result.getLong("id"));
-				customer.setEnabled(result.getBoolean("enabled"));
-				customer.setRegistry(result.getString("registry"));
-				customer.setName(result.getString("name"));
-				customer.setBirthDate(result.getDate("birthDate"));
-				customer.setGender(new Gender(result.getString("gender")));
+				customer.setId(result.getLong("customers.id"));
+				customer.setEnabled(result.getBoolean("customers.enabled"));
+				customer.setRegistry(result.getString("customers.registry"));
+				customer.setName(result.getString("customers.name"));
+				customer.setBirthDate(result.getDate("customers.birthDate"));
+				customer.setGender(new Gender(result.getString("customers.gender")));
+				customer.setPhone(new Phone(result.getString("phones.ddd"), result.getString("phones.number"), 
+						result.getString("phones.phoneType"), result.getLong("phones.id")));
+				customer.setUser(new User(result.getString("users.email"), result.getString("users.password"),
+						result.getString("users.password"), result.getLong("users.id")));
 				
 				customers.add(customer);
             }
@@ -124,7 +130,44 @@ public class CustomerDao extends AbstractDao {
 
 	@Override
 	public Entity find(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		Customer customer = (Customer) entity;
+		
+		String query = "SELECT * FROM Customers c "
+				+ "INNER JOIN Phones p ON c.id_phone = p.id "
+				+ "INNER JOIN Users u ON c.id_user = u.id "
+				/*+ "INNER JOIN DeliveryAddresses da ON c.id = da.id_customer "
+				+ "INNER JOIN ChargeAddresses ca ON c.id = ca.id_customer "
+				+ "INNER JOIN CreditCards cc ON c.id = cc.id_customer "*/
+				+ "WHERE c.enabled = true AND c.id = ?";
+		
+		try {
+			openConnection();
+			
+			PreparedStatement stmt = conn.prepareStatement(query);
+			stmt.setLong(1, customer.getId());
+			
+			ResultSet result = stmt.executeQuery();
+			
+			if(result.first()){
+				customer.setId(result.getLong("customers.id"));
+				customer.setRegistry(result.getString("customers.registry"));
+				customer.setName(result.getString("customers.name"));
+				customer.setBirthDate(result.getDate("customers.birthDate"));
+				customer.setGender(new Gender(result.getString("customers.gender")));
+				customer.setPhone(new Phone(result.getString("phones.ddd"), result.getString("phones.number"), 
+						result.getString("phones.phoneType"), result.getLong("phones.id")));
+				customer.setUser(new User(result.getString("users.email"), result.getString("users.password"),
+						result.getString("users.password"), result.getLong("users.id")));
+			}
+			
+			stmt.close();
+
+			return customer;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
+		}
 	}
 
 	@Override
@@ -142,11 +185,10 @@ public class CustomerDao extends AbstractDao {
 			openConnection();
 			
 			PreparedStatement stmt = conn.prepareStatement(query);
-			ResultSet result;
 			
-			result = stmt.executeQuery();
+			ResultSet result = stmt.executeQuery();
 			result.first();
-
+			
 			customer.setId(result.getLong("id"));
 			
 			stmt.close();

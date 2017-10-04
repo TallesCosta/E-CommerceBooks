@@ -49,7 +49,10 @@ public class Phone extends Entity {
 	public void setPhoneType(String phoneType) {
 		this.phoneType = phoneType;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "(" + ddd + ") " + number;
+	}
 
 }

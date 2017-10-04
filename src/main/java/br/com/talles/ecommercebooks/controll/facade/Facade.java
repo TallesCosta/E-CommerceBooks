@@ -83,6 +83,9 @@ public class Facade implements IFacade {
 		
 		List<IStrategy> listCustomer = new ArrayList();
 		
+		
+		List<IStrategy> findCustomer = new ArrayList();
+		
 				
         Map<String, List<IStrategy>> contextBook = new HashMap();
         contextBook.put(LIST, listBook);
@@ -100,6 +103,7 @@ public class Facade implements IFacade {
         contextCustomer.put(CREATE, createCustomer);
         contextCustomer.put(SAVE, saveCustomer);
         contextCustomer.put(LIST, listCustomer);
+		contextCustomer.put(FIND, findCustomer);
 		
         requirements = new HashMap();
         requirements.put(book, contextBook);
@@ -206,9 +210,12 @@ public class Facade implements IFacade {
 		result = executeValidations(entity, validations);
         if(result.hasMsg())
             return result;
-				
+		
+		// Loads create view datas
+		result = create(entity);
+		
 	    IDao dao = persistence.get(entity.getClass().getSimpleName());
-	    result.setEntity(dao.find(entity));
+	    result.addEntity(dao.find(entity));
 		
 	    return result;
 	}
