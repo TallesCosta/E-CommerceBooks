@@ -1,8 +1,8 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="br.com.talles.ecommercebooks.domain.customer.Customer"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
 <%@page import="br.com.talles.ecommercebooks.controll.Result"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,6 +15,8 @@
 			result = (Result) request.getAttribute("result");
 
 			if (result != null) {
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+				
 				if (result.hasMsg()) {
 					String[] msgs = result.getMsg().split("\n");
 					out.println("<p>");
@@ -44,6 +46,8 @@
 							<td>Gênero</td>
 							<td>Telefone</td>
 							<td>E-mail</td>
+							<td>End. Residencial</td>
+							<td>End. Cobrança</td>
 							<td>Editar</td>
 							<td>Excluir</td>
 						</tr>
@@ -59,10 +63,12 @@
 						out.println("<tr>");
 						out.println("<td>" + customer.getRegistry() + "</td>");
 						out.println("<td>" + customer.getName() + "</td>");
-						out.println("<td>" + customer.getBirthDate() + "</td>");
+						out.println("<td>" + dateFormat.format(customer.getBirthDate()) + "</td>");
 						out.println("<td>" + customer.getGender().getName() + "</td>");
 						out.println("<td>" + customer.getPhone().toString() + "</td>");
 						out.println("<td>" + customer.getUser().getEmail() + "</td>");
+						out.println("<td>" + customer.getHomeAddress().getAlias() + "</td>");
+						out.println("<td>" + customer.getChargeAddress().getAlias() + "</td>");
 						out.println("<td>"
 										+ "<a href='" + request.getContextPath() + "/customers/find?operation=FIND&id=" + customer.getId() + "'>"
 											+ "<i class='fa fa-pencil' aria-hidden='true'></i>"
@@ -79,7 +85,7 @@
 				} else {
 					out.println("<tr>");
 					
-					for(int j = 0; j <= 7; j++){
+					for(int j = 0; j <= 9; j++){
 						out.println("<td> - </td>");
 					}
 					
@@ -96,6 +102,8 @@
 							<td>Gênero</td>
 							<td>Telefone</td>
 							<td>E-mail</td>
+							<td>End. Residencial</td>
+							<td>End. Cobrança</td>
 							<td>Editar</td>
 							<td>Excluir</td>
 						</tr>

@@ -1,7 +1,7 @@
 /*
-	Create charge-address table
+	Create address table
 */
-CREATE TABLE ChargeAddresses (
+CREATE TABLE Addresses (
     id INT NOT NULL AUTO_INCREMENT,
 	enabled BOOLEAN NOT NULL,
     alias VARCHAR(255) NOT NULL,
@@ -14,10 +14,8 @@ CREATE TABLE ChargeAddresses (
     homeType VARCHAR(255) NOT NULL,
 
 	id_city INT NOT NULL,
-	id_customer INT NOT NULL,
 	
-	CONSTRAINT PK_ChargeAddress PRIMARY KEY (id)
+	CONSTRAINT PK_Address PRIMARY KEY (id)
 );
 
-ALTER TABLE ChargeAddresses ADD FOREIGN KEY (id_city) REFERENCES Cities(id);
-ALTER TABLE ChargeAddresses ADD FOREIGN KEY (id_customer) REFERENCES Customers(id);
+ALTER TABLE Addresses ADD FOREIGN KEY (id_city) REFERENCES Cities(id);

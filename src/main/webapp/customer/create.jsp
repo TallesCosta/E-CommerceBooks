@@ -1,6 +1,6 @@
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="br.com.talles.ecommercebooks.domain.customer.Address"%>
 <%@page import="br.com.talles.ecommercebooks.domain.customer.CardCompany"%>
 <%@page import="br.com.talles.ecommercebooks.domain.customer.Country"%>
 <%@page import="br.com.talles.ecommercebooks.domain.customer.State"%>
@@ -11,36 +11,46 @@
 <%@page import="br.com.talles.ecommercebooks.domain.customer.Gender"%>
 <%@page import="br.com.talles.ecommercebooks.domain.customer.Customer"%>
 <%@page import="br.com.talles.ecommercebooks.controll.Result"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+	<%
+		Result result = new Result();
+		result = (Result) request.getAttribute("result");
+			
+		if (result != null) {
+	%>
     <head>
-        <title>Criação de Cliente</title>
+        <title>
+			<% if (result.getOperation().equals("CREATE")) { out.print("Criação de Cliente"); }
+			else if (result.getOperation().equals("FIND")) { out.print("Alteração de Cliente"); } %>
+		</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
 		<%
-			Result result = new Result();
-			result = (Result) request.getAttribute("result");
-			
-			if (result != null) {
-				Customer customer = new Customer("", "", new Date(0L), new Gender(), new Phone("", "", ""), new User("", "", ""));
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-				
-				if (result.getKeys().contains(Customer.class.getSimpleName())) {
-					customer = (Customer) result.getEntities(Customer.class.getSimpleName()).get(0);
-				}
-				
-				if (result.hasMsg()) {
-					String[] msgs = result.getMsg().split("\n");
-					out.print("<p>");
-					for(String msg : msgs)
-						out.print("<i class='fa fa-times' aria-hidden='true' style='color: #FF0000;'></i> " + msg + "<br/>");
-					out.print("</p>");
-				}
+			Customer customer = new Customer("", "", new Date(0L), new Gender(""), new Phone("", "", ""), 
+					new User("", "", ""), new Address("", "", "", "", "", "", "", ""));
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+			if (result.getKeys().contains(Customer.class.getSimpleName())) {
+				customer = (Customer) result.getEntities(Customer.class.getSimpleName()).get(0);
+			}
+
+			if (result.hasMsg()) {
+				String[] msgs = result.getMsg().split("\n");
+				out.print("<p>");
+				for(String msg : msgs)
+					out.print("<i class='fa fa-times' aria-hidden='true' style='color: #FF0000;'></i> " + msg + "<br/>");
+				out.print("</p>");
+			}
 		%>
 		
 		<div id="app">
-			<h1>Criação de Cliente</h1>
+			<h1>
+				<% if (result.getOperation().equals("CREATE")) { out.print("Criação de Cliente"); }
+				else if (result.getOperation().equals("FIND")) { out.print("Alteração de Cliente"); } %>
+			</h1>
 			
 			<form action="save" method="POST">
 				<fieldset>
@@ -55,15 +65,19 @@
 					</div>
 					<div>
 						<label for="birthDate">Data Nasc.*: </label>
-						<input name="birthDate" id="birthDate" value="<% out.print(dateFormat.format(customer.getBirthDate())); %>" type="date">
+						<input name="birthDate" id="birthDate" 
+							   value="<% out.print(dateFormat.format(customer.getBirthDate())); %>" type="date">
 					</div>
 					<div>
 						<label for="gender">Gênero*: </label>
-						<input <% if (customer.getGender().getName().equals("Feminino")) { out.print("checked"); } %> name="gender" id="female" value="Feminino" type="radio">
+						<input <% if (customer.getGender().getName().equals("Feminino")) { out.print("checked"); } %> 
+							name="gender" id="female" value="Feminino" type="radio">
 						<label for="female">Feminino</label>
-						<input <% if (customer.getGender().getName().equals("Masculino")) { out.print("checked"); } %> name="gender" id="male" value="Masculino" type="radio">
+						<input <% if (customer.getGender().getName().equals("Masculino")) { out.print("checked"); } %> 
+							name="gender" id="male" value="Masculino" type="radio">
 						<label for="male">Masculino</label>
-						<input <% if (customer.getGender().getName().equals("Outro")) { out.print("checked"); } %> name="gender" id="other" value="Outro" type="radio">
+						<input <% if (customer.getGender().getName().equals("Outro")) { out.print("checked"); } %> 
+							name="gender" id="other" value="Outro" type="radio">
 						<label for="other">Outro</label>
 					</div>
 				</fieldset>
@@ -76,11 +90,13 @@
 					</div>
 					<div>
 						<label for="phoneNumber">Número*: </label>
-						<input name="phoneNumber" id="phoneNumber" value="<% out.print(customer.getPhone().getNumber()); %>" type="text">
+						<input name="phoneNumber" id="phoneNumber" 
+							   value="<% out.print(customer.getPhone().getNumber()); %>" type="text">
 					</div>
 					<div>
 						<label for="phoneType">Tipo*: </label>
-						<input name="phoneType" id="phoneType" value="<% out.print(customer.getPhone().getPhoneType()); %>" type="text">
+						<input name="phoneType" id="phoneType" 
+							   value="<% out.print(customer.getPhone().getPhoneType()); %>" type="text">
 					</div>
 				</fieldset>
 
@@ -92,120 +108,141 @@
 					</div>
 					<div>
 						<label for="password">Senha*: </label>
-						<input name="password" id="password" value="<% out.print(customer.getUser().getPassword()); %>" type="password">
+						<input name="password" id="password" 
+							   value="<% out.print(customer.getUser().getPassword()); %>" type="password">
 					</div>
 					<div>
 						<label for="passwordVerify">Confirmaçãoo da Senha*: </label>
-						<input name="passwordVerify" id="passwordVerify" value="<% out.print(customer.getUser().getPasswordVerify()); %>" type="password">
+						<input name="passwordVerify" id="passwordVerify" 
+							   value="<% out.print(customer.getUser().getPasswordVerify()); %>" type="password">
 					</div>
 				</fieldset>
 				
-			<%
-				
-			%>
-				
 				<fieldset>
-					<legend>Endereço de Entrega</legend>
+					<legend>Endereço Residencial</legend>
 					<div>
-						<label for="deliveryAlias">Apelido*: </label>
-						<input name="deliveryAlias" id="deliveryAlias" type="text">
+						<label for="homeAlias">Apelido*: </label>
+						<input name="homeAlias" id="homeAlias" 
+							   value="<% out.print(customer.getHomeAddress().getAlias()); %>" type="text">
 					</div>
 					<div>
-						<label for="deliveryObservation">Observações: </label>
-						<textarea name="deliveryObservation" id="deliveryObservation"></textarea>
+						<label for="homeObservation">Observações: </label>
+						<textarea name="homeObservation" id="homeObservation">
+							<% out.print(customer.getHomeAddress().getObservation()); %></textarea>
 					</div>
 					<div>
-						<label for="deliveryPublicPlaceType">Tipo de Logradouro*: </label>
-						<input name="deliveryPublicPlaceType" id="deliveryPublicPlaceType" type="text" placeholder="Rua, Av., Tr., etc.">
+						<label for="homePublicPlaceType">Tipo de Logradouro*: </label>
+						<input name="homePublicPlaceType" id="homePublicPlaceType" 
+							   value="<% out.print(customer.getHomeAddress().getPublicPlaceType()); %>" type="text" 
+							   placeholder="Rua, Av., Tr., etc.">
 					</div>
 					<div>
-						<label for="deliveryPublicPlace">Logradouro*: </label>
-						<input name="deliveryPublicPlace" id="deliveryPublicPlace" type="text">
+						<label for="homePublicPlace">Logradouro*: </label>
+						<input name="homePublicPlace" id="homePublicPlace" 
+							   value="<% out.print(customer.getHomeAddress().getPublicPlace()); %>" type="text">
 					</div>
 					<div>
-						<label for="deliveryNumber">Número*: </label>
-						<input name="deliveryNumber" id="deliveryNumber" type="text">
+						<label for="homeNumber">Número*: </label>
+						<input name="homeNumber" id="homeNumber" 
+							   value="<% out.print(customer.getHomeAddress().getNumber()); %>" type="text">
 					</div>
 					<div>
-						<label for="deliveryDistrict">Bairro*: </label>
-						<input name="deliveryDistrict" id="deliveryDistrict" type="text">
+						<label for="homeDistrict">Bairro*: </label>
+						<input name="homeDistrict" id="homeDistrict" 
+							   value="<% out.print(customer.getHomeAddress().getDistrict()); %>" type="text">
 					</div>
 					<div>
-						<label for="deliveryPostalCode">CEP*: </label>
-						<input name="deliveryPostalCode" id="deliveryPostalCode" type="text">
+						<label for="homePostalCode">CEP*: </label>
+						<input name="homePostalCode" id="homePostalCode" 
+							   value="<% out.print(customer.getHomeAddress().getPostalCode()); %>" type="text">
 					</div>
 					<div>
-						<label for="deliveryHomeType">Tipo de Residência*: </label>
-						<input name="deliveryHomeType" id="deliveryHomeType" type="text" placeholder="Casa, Apartamento, etc.">
+						<label for="homeHomeType">Tipo de Residência*: </label>
+						<input name="homeHomeType" id="homeHomeType" 
+							   value="<% out.print(customer.getHomeAddress().getHomeType()); %>" type="text" 
+							   placeholder="Casa, Apartamento, etc.">
 					</div>
 					<div>
-						<label for="deliveryCity">Cidade*: </label>
-						<select name="deliveryCity" id="deliveryCity">
-			<%	
-				for(Entity entity : result.getEntities(City.class.getSimpleName())){
-					City city = (City) entity;
-					out.print("<option value='" + city.getId() + "'>" + city.getName() + "</option>");
-				}
-			%>
+						<label for="homeCity">Cidade*: </label>
+						<select name="homeCity" id="homeCity">
+		<%	
+			for(Entity entity : result.getEntities(City.class.getSimpleName())){
+				City city = (City) entity;
+				out.print("<option value='" + city.getId() + "'>" + city.getName() + "</option>");
+			}
+		%>
 						<select>
 					</div>
 					<div>
-						<label for="deliveryState">Estado*: </label>
-						<select name="deliveryState" id="deliveryState">
-			<%	
-				for(Entity entity : result.getEntities(State.class.getSimpleName())){
-					State state = (State) entity;
-					out.print("<option value='" + state.getId() + "'>" + state.getName() + "</option>");
-				}
-			%>
+						<label for="homeState">Estado*: </label>
+						<select name="homeState" id="homeState">
+		<%	
+			for(Entity entity : result.getEntities(State.class.getSimpleName())){
+				State state = (State) entity;
+				out.print("<option value='" + state.getId() + "'>" + state.getName() + "</option>");
+			}
+		%>
 						<select>
 					</div>
 					<div>
-						<label for="deliveryCountry">País*: </label>
-						<select name="deliveryCountry" id="deliveryCountry">
-			<%	
-				for(Entity entity : result.getEntities(Country.class.getSimpleName())){
-					Country country = (Country) entity;
-					out.print("<option value='" + country.getId() + "'>" + country.getName() + "</option>");
-				}
-			%>
+						<label for="homeCountry">País*: </label>
+						<select name="homeCountry" id="homeCountry">
+		<%	
+			for(Entity entity : result.getEntities(Country.class.getSimpleName())){
+				Country country = (Country) entity;
+				out.print("<option value='" + country.getId() + "'>" + country.getName() + "</option>");
+			}
+		%>
 						<select>
 						</div>
 				</fieldset>
-
+				
+		<%
+			if (result.getOperation().equals("FIND")) {
+		%>
 				<fieldset>
 					<legend>Endereço de Cobrança</legend>
 					<div>
 						<label for="chargeAlias">Apelido*: </label>
-						<input name="chargeAlias" id="chargeAlias" type="text">
+						<input name="chargeAlias" id="chargeAlias" 
+							   value="<% out.print(customer.getChargeAddress().getAlias()); %>" type="text">
 					</div>
 					<div>
 						<label for="chargeObservation">Observações: </label>
-						<textarea name="chargeObservation" id="chargeObservation"></textarea>
+						<textarea name="chargeObservation" id="chargeObservation">
+							<% out.print(customer.getChargeAddress().getObservation()); %></textarea>
 					</div>
 					<div>
 						<label for="chargePublicPlaceType">Tipo de Logradouro*: </label>
-						<input name="chargePublicPlaceType" id="chargePublicPlaceType" type="text" placeholder="Rua, Av., Tr., etc.">
+						<input name="chargePublicPlaceType" id="chargePublicPlaceType" 
+							   value="<% out.print(customer.getChargeAddress().getPublicPlaceType()); %>" type="text" 
+							   placeholder="Rua, Av., Tr., etc.">
 					</div>
 					<div>
 						<label for="chargePublicPlace">Logradouro*: </label>
-						<input name="chargePublicPlace" id="chargePublicPlace" type="text">
+						<input name="chargePublicPlace" id="chargePublicPlace" 
+							   value="<% out.print(customer.getChargeAddress().getPublicPlace()); %>" type="text">
 					</div>
 					<div>
 						<label for="chargeNumber">Número*: </label>
-						<input name="chargeNumber" id="chargeNumber" type="text">
+						<input name="chargeNumber" id="chargeNumber" 
+							   value="<% out.print(customer.getChargeAddress().getNumber()); %>" type="text">
 					</div>
 					<div>
 						<label for="chargeDistrict">Bairro*: </label>
-						<input name="chargeDistrict" id="chargeDistrict" type="text">
+						<input name="chargeDistrict" id="chargeDistrict" 
+							   value="<% out.print(customer.getChargeAddress().getDistrict()); %>" type="text">
 					</div>
 					<div>
 						<label for="chargePostalCode">CEP*: </label>
-						<input name="chargePostalCode" id="chargePostalCode" type="text">
+						<input name="chargePostalCode" id="chargePostalCode" 
+							   value="<% out.print(customer.getChargeAddress().getPostalCode()); %>" type="text">
 					</div>
 					<div>
 						<label for="chargeHomeType">Tipo de Residência*: </label>
-						<input name="chargeHomeType" id="chargeHomeType" type="text" placeholder="Casa, Apartamento, etc.">
+						<input name="chargeHomeType" id="chargeHomeType" 
+							   value="<% out.print(customer.getChargeAddress().getHomeType()); %>" type="text" 
+							   placeholder="Casa, Apartamento, etc.">
 					</div>
 					<div>
 						<label for="chargeCity">Cidade*: </label>
@@ -239,9 +276,13 @@
 				}
 			%>
 						<select>
-					</div>
+						</div>
 				</fieldset>
+		<%
+			}
 
+			if (result.getOperation().equals("CREATE")) {
+		%>				
 				<fieldset>
 					<legend>Cartão de Crédito</legend>
 					<div>
@@ -272,14 +313,17 @@
 						<select>
 					</div>
 				</fieldset>
+		<%
+			}
+		%>
 
 				<button name="operation" value="SAVE" type="submit">Salvar</button>
 				<small>Todos os campos marcados com * são obrigatórios.</small>
 			</form>
 		</div>
-		<%
-			}
-		%>
+	<%
+		}
+	%>
 		
 		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
     </body>

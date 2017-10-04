@@ -49,10 +49,10 @@ public class Facade implements IFacade {
 		IStrategy customerNotBlank = new CustomerNotBlank();
                 
         List<IStrategy> listBook = new ArrayList();
-		listBook.add(new CreateView(LIST));
+		listBook.add(new CreateView());
 		
         List<IStrategy> listDisableBook = new ArrayList();
-		listDisableBook.add(new CreateView(LIST_DISABLE));
+		listDisableBook.add(new CreateView());
 		
         List<IStrategy> saveBook = new ArrayList();
 		saveBook.add(bookNotBlank);
@@ -75,13 +75,13 @@ public class Facade implements IFacade {
 		
 		
 		List<IStrategy> createBook = new ArrayList();
-		createBook.add(new CreateView(CREATE));
+		createBook.add(new CreateView());
 		
 		List<IStrategy> filtersBook = new ArrayList();
         
 		
 		List<IStrategy> createCustomer = new ArrayList();
-		createCustomer.add(new CreateView(CREATE));
+		createCustomer.add(new CreateView());
 		
 		List<IStrategy> saveCustomer = new ArrayList();
 		saveCustomer.add(customerNotBlank);
@@ -128,6 +128,7 @@ public class Facade implements IFacade {
 		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
         List<IStrategy> validations = reqs.get(LIST);
 		
+		result.setOperation(LIST);
 		result = executeValidations(entity, validations);
         if(result.hasMsg())
             return result;
@@ -145,6 +146,7 @@ public class Facade implements IFacade {
 		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
         List<IStrategy> validations = reqs.get(LIST_DISABLE);
 		
+		result.setOperation(LIST_DISABLE);
 		result = executeValidations(entity, validations);
         if(result.hasMsg())
             return result;
@@ -162,6 +164,7 @@ public class Facade implements IFacade {
 		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
         List<IStrategy> validations = reqs.get(SAVE);
 		
+		result.setOperation(SAVE);
         result = executeValidations(entity, validations);
         if(result.hasMsg()){
 			String msg = result.getMsg();
@@ -191,6 +194,7 @@ public class Facade implements IFacade {
         Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
         List<IStrategy> validations = reqs.get(DELETE);
 		
+		result.setOperation(DELETE);
 		result = executeValidations(entity, validations);
         if(result.hasMsg())
             return result;
@@ -212,12 +216,14 @@ public class Facade implements IFacade {
         Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
         List<IStrategy> validations = reqs.get(FIND);
 		
+		result.setOperation(FIND);
 		result = executeValidations(entity, validations);
         if(result.hasMsg())
             return result;
 		
 		// Loads create view datas
 		result = create(entity);
+		result.setOperation(FIND);
 		
 	    IDao dao = persistence.get(entity.getClass().getSimpleName());
 	    result.addEntity(dao.find(entity));
@@ -228,11 +234,12 @@ public class Facade implements IFacade {
 	@Override
     public Result update(Entity entity) {
         this.result = new Result();
-        
+		
 		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
         List<IStrategy> validations = reqs.get(UPDATE);
 		
         //result.setEntity(entity);
+        result.setOperation(UPDATE);
 		result = executeValidations(entity, validations);
         if(result.hasMsg())
             return result;
@@ -253,6 +260,7 @@ public class Facade implements IFacade {
 		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
         List<IStrategy> validations = reqs.get(DISABLE);
 		
+		result.setOperation(DISABLE);		
 		result = executeValidations(entity, validations);
         if(result.hasMsg())
             return result;
@@ -274,6 +282,7 @@ public class Facade implements IFacade {
 		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
         List<IStrategy> validations = reqs.get(ENABLE);
 		
+		result.setOperation(ENABLE);
 		result = executeValidations(entity, validations);
         if(result.hasMsg())
             return result;
@@ -295,7 +304,9 @@ public class Facade implements IFacade {
 		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getSimpleName());
         List<IStrategy> validations = reqs.get(CREATE);
 		
-		result = executeValidations(entity, validations);		
+		result.setOperation(CREATE);
+		result = executeValidations(entity, validations);
+		
 		return result;
 	}
 	

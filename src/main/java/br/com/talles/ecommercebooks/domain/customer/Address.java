@@ -18,6 +18,24 @@ public class Address extends Entity {
 		super(true);
 	}
 
+	public Address(String alias, long id) {
+		super(id, true);
+		this.alias = alias;
+	}
+	
+	public Address(String alias, String observation, String publicPlaceType, String publicPlace, String number, String district, 
+			String postalCode, String homeType) {
+		super(true);
+		this.alias = alias;
+		this.observation = observation;
+		this.publicPlaceType = publicPlaceType;
+		this.publicPlace = publicPlace;
+		this.number = number;
+		this.district = district;
+		this.postalCode = postalCode;
+		this.homeType = homeType;
+	}
+	
 	public Address(String alias, String observation, String publicPlaceType, String publicPlace, String number, String district, 
 			String postalCode, String homeType, City city) {
 		super(true);

@@ -27,12 +27,9 @@ public class CreateView implements IStrategy {
     private static final String LIST_DISABLE = "LIST-DISABLE";
 	private static final String CREATE = "CREATE";
 	
-	protected String view;
 	protected Map<String, List<IDao>> persistence;
 	
-	public CreateView(String operation) {
-		this.view = operation;
-		
+	public CreateView() {		
 		// Context = Entity + Operation		
 		String book = Book.class.getSimpleName();
 		String customer = Customer.class.getSimpleName();
@@ -76,7 +73,7 @@ public class CreateView implements IStrategy {
 	
 	@Override
 	public Result process(Entity entity, Result result) {
-		List<IDao> daos = persistence.get(entity.getClass().getSimpleName() + view);
+		List<IDao> daos = persistence.get(entity.getClass().getSimpleName() + result.getOperation());
 		
 		for (IDao dao : daos) {
 			result.addEntities(dao.select(true));

@@ -14,18 +14,18 @@ public class Customer extends Entity {
 	private Gender gender;
 	private Phone phone;
 	private User user;
-	private List<DeliveryAddress> deliveryAddress;
-	private List<ChargeAddress> chargeAddress;
-	private List<CreditCard> creditCard;
+	private Address homeAddress;
+	private Address chargeAddress;
+	private List<DeliveryAddress> deliveryAddresses;
+	private List<CreditCard> creditCards;
 
 	public Customer() {
 		super(true);
-		this.deliveryAddress = new ArrayList<>();
-		this.chargeAddress = new ArrayList<>();
-		this.creditCard = new ArrayList<>();
+		this.deliveryAddresses = new ArrayList<>();
+		this.creditCards = new ArrayList<>();
 	}
 
-	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user) {
+	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, Address homeAddress) {
 		super(true);
 		this.registry = registry;
 		this.name = name;
@@ -33,13 +33,13 @@ public class Customer extends Entity {
 		this.gender = gender;
 		this.phone = phone;
 		this.user = user;
-		this.deliveryAddress = new ArrayList<>();
-		this.chargeAddress = new ArrayList<>();
-		this.creditCard = new ArrayList<>();
+		this.homeAddress = homeAddress;
+		this.deliveryAddresses = new ArrayList<>();
+		this.creditCards = new ArrayList<>();
 	}
 	
-	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
-			List<CreditCard> creditCard, List<DeliveryAddress> deliveryAddress, List<ChargeAddress> chargeAddress) {
+	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, Address homeAddress, 
+			Address chargeAddres) {
 		super(true);
 		this.registry = registry;
 		this.name = name;
@@ -47,13 +47,29 @@ public class Customer extends Entity {
 		this.gender = gender;
 		this.phone = phone;
 		this.user = user;
-		this.deliveryAddress = deliveryAddress;
+		this.homeAddress = homeAddress;
+		this.chargeAddress = chargeAddres;
+		this.deliveryAddresses = new ArrayList<>();
+		this.creditCards = new ArrayList<>();
+	}
+	
+	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, Address homeAddress, 
+			Address chargeAddress, List<CreditCard> creditCard, List<DeliveryAddress> deliveryAddresses) {
+		super(true);
+		this.registry = registry;
+		this.name = name;
+		this.birthDate = birthDate;
+		this.gender = gender;
+		this.phone = phone;
+		this.user = user;
+		this.homeAddress = homeAddress;
 		this.chargeAddress = chargeAddress;
-		this.creditCard = creditCard;
+		this.deliveryAddresses = deliveryAddresses;
+		this.creditCards = creditCard;
 	}
 
-	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
-			List<CreditCard> creditCard, List<DeliveryAddress> deliveryAddress, List<ChargeAddress> chargeAddress, long id) {
+	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, Address homeAddress,
+			Address chargeAddress, List<CreditCard> creditCard, List<DeliveryAddress> deliveryAddresses, long id) {
 		super(id, true);
 		this.registry = registry;
 		this.name = name;
@@ -61,9 +77,10 @@ public class Customer extends Entity {
 		this.gender = gender;
 		this.phone = phone;
 		this.user = user;
-		this.deliveryAddress = deliveryAddress;
+		this.homeAddress = homeAddress;
 		this.chargeAddress = chargeAddress;
-		this.creditCard = creditCard;
+		this.deliveryAddresses = deliveryAddresses;
+		this.creditCards = creditCard;
 	}
 
 	public String getRegistry() {
@@ -114,41 +131,45 @@ public class Customer extends Entity {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	public List<DeliveryAddress> getDeliveryAddress() {
-		return this.deliveryAddress;
+
+	public Address getHomeAddress() {
+		return homeAddress;
 	}
 
-	public DeliveryAddress getDeliveryAddress(int index) {
-		return this.deliveryAddress.get(index);
-	}
-	
-	public void setDeliveryAddress(List<DeliveryAddress> deliveryAddress) {
-		this.deliveryAddress = deliveryAddress;
+	public void setHomeAddress(Address homeAddress) {
+		this.homeAddress = homeAddress;
 	}
 
-	public List<ChargeAddress> getChargeAddress() {
-		return this.chargeAddress;
+	public Address getChargeAddress() {
+		return chargeAddress;
 	}
 
-	public ChargeAddress getChargeAddress(int index) {
-		return this.chargeAddress.get(index);
-	}
-	
-	public void setChargeAddress(List<ChargeAddress> chargeAddress) {
+	public void setChargeAddress(Address chargeAddress) {
 		this.chargeAddress = chargeAddress;
 	}
 	
+	public List<DeliveryAddress> getDeliveryAddress() {
+		return this.deliveryAddresses;
+	}
+
+	public DeliveryAddress getDeliveryAddress(int index) {
+		return this.deliveryAddresses.get(index);
+	}
+	
+	public void setDeliveryAddress(List<DeliveryAddress> deliveryAddress) {
+		this.deliveryAddresses = deliveryAddress;
+	}
+	
 	public List<CreditCard> getCreditCard() {
-		return this.creditCard;
+		return this.creditCards;
 	}
 
 	public CreditCard getCreditCard(int index) {
-		return this.creditCard.get(index);
+		return this.creditCards.get(index);
 	}
 	
 	public void setCreditCard(List<CreditCard> creditCard) {
-		this.creditCard = creditCard;
+		this.creditCards = creditCard;
 	}
 	
 }

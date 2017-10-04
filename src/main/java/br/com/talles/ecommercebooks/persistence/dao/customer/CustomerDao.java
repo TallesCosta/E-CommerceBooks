@@ -1,6 +1,8 @@
 package br.com.talles.ecommercebooks.persistence.dao.customer;
 
 import br.com.talles.ecommercebooks.domain.Entity;
+import br.com.talles.ecommercebooks.domain.customer.Address;
+import br.com.talles.ecommercebooks.domain.customer.City;
 import br.com.talles.ecommercebooks.domain.customer.Customer;
 import br.com.talles.ecommercebooks.domain.customer.Gender;
 import br.com.talles.ecommercebooks.domain.customer.Phone;
@@ -21,9 +23,12 @@ public class CustomerDao extends AbstractDao {
 	@Override
 	public List<Entity> select(boolean enabled) {
 		List<Entity> customers = new ArrayList();
-        String sql = "SELECT * FROM Customers c "
+        String sql = "SELECT c.*, p.*, u.*, "
+				+ "ha.alias as haAlias, ha.id as haId, ca.alias as caAlias, ca.id as caId FROM Customers c "
 				+ "INNER JOIN Phones p ON c.id_phone = p.id "
 				+ "INNER JOIN Users u ON c.id_user = u.id "
+				+ "INNER JOIN Addresses ha ON c.id_homeAddress = ha.id "
+				+ "INNER JOIN Addresses ca ON c.id_chargeAddress = ca.id "
 				+ "WHERE c.enabled = ? ";
         
         try {
@@ -47,6 +52,8 @@ public class CustomerDao extends AbstractDao {
 						result.getString("phones.phoneType"), result.getLong("phones.id")));
 				customer.setUser(new User(result.getString("users.email"), result.getString("users.password"),
 						result.getString("users.password"), result.getLong("users.id")));
+				customer.setHomeAddress(new Address(result.getString("haAlias"), result.getLong("haId")));
+				customer.setChargeAddress(new Address(result.getString("caAlias"), result.getLong("caId")));
 				
 				customers.add(customer);
             }
@@ -80,10 +87,23 @@ public class CustomerDao extends AbstractDao {
         }		
 		customer.setUser((User) userDao.findLast());
 		
+		// Persists the Home Address
+        IDao addressDao = new AddressDao();
+        if(!addressDao.save(customer.getHomeAddress())){
+            return false;
+        }		
+		customer.setHomeAddress((Address) addressDao.findLast());
+		
+		// Persists the Charge Address
+        if(!addressDao.save(customer.getChargeAddress())){
+            return false;
+        }		
+		customer.setChargeAddress((Address) addressDao.findLast());
+		
 		// SQL query
         String sql = "INSERT INTO Customers (enabled, registry, name, birthDate, gender, "
-				+ "id_phone, id_user) "
-				+ "VALUES(?, ?, ?, ?, ?, ?, ?)";
+				+ "id_phone, id_user, id_homeAddress, id_chargeAddress) "
+				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         try {
 			openConnection();
@@ -98,6 +118,8 @@ public class CustomerDao extends AbstractDao {
             
 			statement.setLong(6, customer.getPhone().getId());
 			statement.setLong(7, customer.getUser().getId());
+			statement.setLong(8, customer.getHomeAddress().getId());
+			statement.setLong(9, customer.getChargeAddress().getId());
             
             statement.execute();
 			statement.close();
@@ -109,18 +131,13 @@ public class CustomerDao extends AbstractDao {
 		}
 		
 		// Persists the DeliveryAddress
-		IDao creditCardDao = new CreditCardDao();
-		if (!creditCardDao.save(customer.getCreditCard(0)))
-			return false;
-		
-		// Persists the ChargeAddress
 		IDao deliveryAddressDao = new DeliveryAddressDao();
 		if (!deliveryAddressDao.save(customer.getDeliveryAddress(0)))
 			return false;
 		
 		// Persists the CreditCard
-		IDao chargeAddressDao = new ChargeAddressDao();
-		return chargeAddressDao.save(customer.getChargeAddress(0));		// If insert association is true, insert customer is true.
+		IDao creditCardDao = new CreditCardDao();
+		return creditCardDao.save(customer.getCreditCard(0));		// If insert association is true, insert customer is true.
 	}
 
 	@Override
@@ -132,12 +149,18 @@ public class CustomerDao extends AbstractDao {
 	public Entity find(Entity entity) {
 		Customer customer = (Customer) entity;
 		
-		String query = "SELECT * FROM Customers c "
+		String query = "SELECT c.*, p.*, u.*, "
+				+ "ha.alias as haAlias, ha.observation as haObservation, ha.publicPlaceType as haPublicPlaceType, "
+				+ "ha.publicPlace as haPublicPlace, ha.number as haNumber, ha.district as haDistrict, "
+				+ "ha.postalCode as haPostalCode, ha.homeType as haHomeType, ha.id_city as haId_city, ha.id as haId, "
+				+ "ca.alias as caAlias, ca.observation as caObservation, ca.publicPlaceType as caPublicPlaceType, "
+				+ "ca.publicPlace as caPublicPlace, ca.number as caNumber, ca.district as caDistrict, "
+				+ "ca.postalCode as caPostalCode, ca.homeType as caHomeType, ca.id_city as caId_city, ca.id as caId "
+				+ "FROM Customers c "
 				+ "INNER JOIN Phones p ON c.id_phone = p.id "
 				+ "INNER JOIN Users u ON c.id_user = u.id "
-				/*+ "INNER JOIN DeliveryAddresses da ON c.id = da.id_customer "
-				+ "INNER JOIN ChargeAddresses ca ON c.id = ca.id_customer "
-				+ "INNER JOIN CreditCards cc ON c.id = cc.id_customer "*/
+				+ "INNER JOIN Addresses ha ON c.id_homeAddress = ha.id "
+				+ "INNER JOIN Addresses ca ON c.id_chargeAddress = ca.id "
 				+ "WHERE c.enabled = true AND c.id = ?";
 		
 		try {
@@ -158,6 +181,14 @@ public class CustomerDao extends AbstractDao {
 						result.getString("phones.phoneType"), result.getLong("phones.id")));
 				customer.setUser(new User(result.getString("users.email"), result.getString("users.password"),
 						result.getString("users.password"), result.getLong("users.id")));
+				customer.setHomeAddress(new Address(result.getString("haAlias"), result.getString("haObservation"),
+						result.getString("haPublicPlaceType"), result.getString("haPublicPlace"), result.getString("haNumber"), 
+						result.getString("haDistrict"), result.getString("haPostalCode"), result.getString("haHomeType"), 
+						new City(result.getLong("haId_city")), result.getLong("haId")));
+				customer.setChargeAddress(new Address(result.getString("caAlias"), result.getString("caObservation"),
+						result.getString("caPublicPlaceType"), result.getString("caPublicPlace"), result.getString("caNumber"), 
+						result.getString("caDistrict"), result.getString("caPostalCode"), result.getString("caHomeType"), 
+						new City(result.getLong("caId_city")), result.getLong("caId")));
 			}
 			
 			stmt.close();

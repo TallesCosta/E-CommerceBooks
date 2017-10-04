@@ -3,7 +3,7 @@ package br.com.talles.ecommercebooks.controll.viewHelper;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.customer.CardCompany;
-import br.com.talles.ecommercebooks.domain.customer.ChargeAddress;
+import br.com.talles.ecommercebooks.domain.customer.Address;
 import br.com.talles.ecommercebooks.domain.customer.Customer;
 import br.com.talles.ecommercebooks.domain.customer.City;
 import br.com.talles.ecommercebooks.domain.customer.State;
@@ -60,32 +60,32 @@ public class CustomerVh implements IViewHelper {
         String password = request.getParameter("password");
         String passwordVerify = request.getParameter("passwordVerify");
 		
-		// Delivery's Address datas
-		String deliveryAlias = request.getParameter("deliveryAlias");
-		String deliveryObservation = request.getParameter("deliveryObservation");
-		String deliveryPublicPlaceType = request.getParameter("deliveryPublicPlaceType");
-		String deliveryPublicPlace = request.getParameter("deliveryPublicPlace");
-		String deliveryNumber = request.getParameter("deliveryNumber");
-		String deliveryDistrict = request.getParameter("deliveryDistrict");
-		String deliveryPostalCode = request.getParameter("deliveryPostalCode");
-		String deliveryHomeType = request.getParameter("deliveryHomeType");
+		// Home's Address datas
+		String homeAlias = request.getParameter("homeAlias");
+		String homeObservation = request.getParameter("homeObservation");
+		String homePublicPlaceType = request.getParameter("homePublicPlaceType");
+		String homePublicPlace = request.getParameter("homePublicPlace");
+		String homeNumber = request.getParameter("homeNumber");
+		String homeDistrict = request.getParameter("homeDistrict");
+		String homePostalCode = request.getParameter("homePostalCode");
+		String homeHomeType = request.getParameter("homeHomeType");
 		
-		String idDeliveryCityS = request.getParameter("deliveryCity");
-		long idDeliveryCity = 0L;
-		if (!(idDeliveryCityS == null || idDeliveryCityS.equals("")))
-			idDeliveryCity = Long.valueOf(idDeliveryCityS);
+		String idHomeCityS = request.getParameter("homeCity");
+		long idHomeCity = 0L;
+		if (!(idHomeCityS == null || idHomeCityS.equals("")))
+			idHomeCity = Long.valueOf(idHomeCityS);
 		
-		String idDeliveryStateS = request.getParameter("deliveryState");
-		long idDeliveryState = 0L;
-		if (!(idDeliveryStateS == null || idDeliveryStateS.equals("")))
-			idDeliveryState = Long.valueOf(idDeliveryStateS);
+		String idHomeStateS = request.getParameter("homeState");
+		long idHomeState = 0L;
+		if (!(idHomeStateS == null || idHomeStateS.equals("")))
+			idHomeState = Long.valueOf(idHomeStateS);
 		
-		String idDeliveryCountryS = request.getParameter("deliveryCountry");
-		long idDeliveryCountry = 0L;
-		if (!(idDeliveryCountryS == null || idDeliveryCountryS.equals("")))
-			idDeliveryCountry = Long.valueOf(idDeliveryCountryS);
+		String idHomeCountryS = request.getParameter("homeCountry");
+		long idHomeCountry = 0L;
+		if (!(idHomeCountryS == null || idHomeCountryS.equals("")))
+			idHomeCountry = Long.valueOf(idHomeCountryS);
 		
-		// Charge's Address datas
+		// Charge's Address datas - Only update view
 		String chargeAlias = request.getParameter("chargeAlias");
 		String chargeObservation = request.getParameter("chargeObservation");
 		String chargePublicPlaceType = request.getParameter("chargePublicPlaceType");
@@ -139,8 +139,9 @@ public class CustomerVh implements IViewHelper {
 				customer.setGender(new Gender(gender));
 				customer.setPhone(new Phone(ddd, phoneNumber, phoneType));
 				customer.setUser(new User(email, password, passwordVerify));
-				customer.setDeliveryAddress(Arrays.asList(new DeliveryAddress(true, chargeAlias, chargeObservation, chargePublicPlaceType, chargePublicPlace, chargeNumber, chargeDistrict, chargePostalCode, chargeHomeType, new City(idDeliveryCity, new State(idDeliveryState, new Country(idDeliveryCountry))))));
-				customer.setChargeAddress(Arrays.asList(new ChargeAddress(deliveryAlias, deliveryObservation, deliveryPublicPlaceType, deliveryPublicPlace, deliveryNumber, deliveryDistrict, deliveryPostalCode, deliveryHomeType, new City(idChargeCity, new State(idChargeState, new Country(idChargeCountry))))));
+				customer.setHomeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, new City(idChargeCity, new State(idChargeState, new Country(idChargeCountry)))));
+				customer.setChargeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, new City(idChargeCity, new State(idChargeState, new Country(idChargeCountry)))));
+				customer.setDeliveryAddress(Arrays.asList(new DeliveryAddress(true, homeAlias, homeObservation, homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry))))));
 				customer.setCreditCard(Arrays.asList(new CreditCard(cardNumber, printedName, securityCode, expirationDate, new CardCompany(idCardCompany))));
 				break;
 
@@ -158,6 +159,16 @@ public class CustomerVh implements IViewHelper {
 				break;
 
 			case "UPDATE":
+				customer.setRegistry(registry);
+				customer.setName(name);
+				customer.setBirthDate(birthDate);
+				customer.setGender(new Gender(gender));
+				customer.setPhone(new Phone(ddd, phoneNumber, phoneType));
+				customer.setUser(new User(email, password, passwordVerify));
+				customer.setHomeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, new City(idChargeCity, new State(idChargeState, new Country(idChargeCountry)))));
+				customer.setChargeAddress(new Address(chargeAlias, chargeObservation, chargePublicPlaceType, chargePublicPlace, chargeNumber, chargeDistrict, chargePostalCode, chargeHomeType, new City(idChargeCity, new State(idChargeState, new Country(idChargeCountry)))));
+				customer.setDeliveryAddress(Arrays.asList(new DeliveryAddress(true, homeAlias, homeObservation, homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry))))));
+				customer.setCreditCard(Arrays.asList(new CreditCard(cardNumber, printedName, securityCode, expirationDate, new CardCompany(idCardCompany))));
 				break;
 
 			case "DISABLE":
