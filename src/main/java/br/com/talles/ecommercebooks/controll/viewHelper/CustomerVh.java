@@ -41,6 +41,8 @@ public class CustomerVh implements IViewHelper {
         String registry = request.getParameter("registry");
         String name = request.getParameter("name");
         String gender = request.getParameter("gender");
+		if (gender == null)
+			gender = "";
 		
 		String birthDateS = request.getParameter("birthDate");
         Date birthDate = new Date(0L);
@@ -139,10 +141,17 @@ public class CustomerVh implements IViewHelper {
 				customer.setGender(new Gender(gender));
 				customer.setPhone(new Phone(ddd, phoneNumber, phoneType));
 				customer.setUser(new User(email, password, passwordVerify));
-				customer.setHomeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, new City(idChargeCity, new State(idChargeState, new Country(idChargeCountry)))));
-				customer.setChargeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, new City(idChargeCity, new State(idChargeState, new Country(idChargeCountry)))));
-				customer.setDeliveryAddress(Arrays.asList(new DeliveryAddress(true, homeAlias, homeObservation, homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry))))));
-				customer.setCreditCard(Arrays.asList(new CreditCard(cardNumber, printedName, securityCode, expirationDate, new CardCompany(idCardCompany))));
+				customer.setHomeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
+						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
+						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry)))));
+				customer.setChargeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
+						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
+						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry)))));
+				customer.setDeliveryAddress(Arrays.asList(new DeliveryAddress(true, homeAlias, homeObservation, 
+						homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, 
+						homeHomeType, new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry))))));
+				customer.setCreditCard(Arrays.asList(new CreditCard(cardNumber, printedName, securityCode, 
+						expirationDate, new CardCompany(idCardCompany))));
 				break;
 
 			case "LIST":
