@@ -202,32 +202,34 @@ public class CustomerDao extends AbstractDao {
 	}
 
 	@Override
-	public boolean update(Entity entity) {
+	public boolean update(Entity entity, String operation) {
 		Customer customer = (Customer) entity;
         
-		// Updates the Phone
-        PhoneDao phoneDao = new PhoneDao();
-        if(!phoneDao.update(customer.getPhone())){
-            return false;
-        }
-		
-        // Updates the User
-        UserDao userDao = new UserDao();
-        if(!userDao.update(customer.getUser())){
-            return false;
-        }
-        
-        AddressDao addressDao = new AddressDao();
-		
-		// Updates the Home Address
-        if(!addressDao.update(customer.getHomeAddress())){
-            return false;
-        }
-		
-		// Updates the Charge Address
-        if(!addressDao.update(customer.getChargeAddress())){
-            return false;
-        }
+		if (operation.equals("UPDATE")) {
+			// Updates the Phone
+			PhoneDao phoneDao = new PhoneDao();
+			if(!phoneDao.update(customer.getPhone(), operation)){
+				return false;
+			}
+
+			// Updates the User
+			UserDao userDao = new UserDao();
+			if(!userDao.update(customer.getUser(), operation)){
+				return false;
+			}
+
+			AddressDao addressDao = new AddressDao();
+
+			// Updates the Home Address
+			if(!addressDao.update(customer.getHomeAddress(), operation)){
+				return false;
+			}
+
+			// Updates the Charge Address
+			if(!addressDao.update(customer.getChargeAddress(), operation)){
+				return false;
+			}
+		}
 		
         String sql = "UPDATE Customers "
                 + "SET enabled = ?, registry = ?, name = ?, birthDate = ?, gender = ? "
@@ -280,16 +282,6 @@ public class CustomerDao extends AbstractDao {
 		} finally {
 			closeConnection();
 		}
-	}
-
-	@Override
-	public boolean disable(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public boolean enable(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 	
 }

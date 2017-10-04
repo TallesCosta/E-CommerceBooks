@@ -75,7 +75,7 @@
 										+ "</a>"
 									+ "</td>");
 						out.println("<td>"
-										+ "<a href='customers/delete?operation=DELETE&id=" + customer.getId() + "'>"
+										+ "<a href='" + request.getContextPath() + "/customers/disable?operation=DISABLE&id=" + customer.getId() + "'>"
 											+ "<i class='fa fa-trash' aria-hidden='true'></i>"
 										+ "</a>"
 									+ "</td>");

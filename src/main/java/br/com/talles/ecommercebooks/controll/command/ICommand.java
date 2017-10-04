@@ -5,6 +5,6 @@ import br.com.talles.ecommercebooks.domain.Entity;
 
 public interface ICommand {
     
-    public Result execute(Entity entity);
+    public Result execute(Entity entity, String operation);
     
 }

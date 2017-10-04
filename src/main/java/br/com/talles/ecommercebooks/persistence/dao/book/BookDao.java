@@ -182,7 +182,7 @@ public class BookDao extends AbstractDao {
 	}
 
 	@Override
-	public boolean update(Entity entity) {
+	public boolean update(Entity entity, String operation) {
 		return false;
 	}	
 
@@ -213,7 +213,7 @@ public class BookDao extends AbstractDao {
 		}
 	}
 
-	@Override
+	/*@Override
 	public boolean disable(Entity entity) {
 		 Book book = (Book) entity;
         
@@ -297,7 +297,7 @@ public class BookDao extends AbstractDao {
         } finally {
 			closeConnection();
 		}
-	}
+	}*/
 	
 	public Entity findIsbn(Entity entity){
 		Book book = (Book) entity;

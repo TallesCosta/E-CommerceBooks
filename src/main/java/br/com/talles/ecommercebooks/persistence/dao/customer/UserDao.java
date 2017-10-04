@@ -56,7 +56,7 @@ public class UserDao extends AbstractDao {
 	}
 
 	@Override
-	public boolean update(Entity entity) {
+	public boolean update(Entity entity, String operation) {
 		User user = (User) entity;
 		
         String sql = "UPDATE Users "
@@ -112,16 +112,6 @@ public class UserDao extends AbstractDao {
 		} finally {
 			closeConnection();
 		}
-	}
-
-	@Override
-	public boolean disable(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public boolean enable(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 	
 }

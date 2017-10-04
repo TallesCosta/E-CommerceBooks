@@ -8,10 +8,7 @@ import br.com.talles.ecommercebooks.controll.command.ICommand;
 import br.com.talles.ecommercebooks.controll.command.ListCmd;
 import br.com.talles.ecommercebooks.controll.command.SaveCmd;
 import br.com.talles.ecommercebooks.controll.command.DeleteCmd;
-import br.com.talles.ecommercebooks.controll.command.DisableCmd;
-import br.com.talles.ecommercebooks.controll.command.EnableCmd;
 import br.com.talles.ecommercebooks.controll.command.FindCmd;
-import br.com.talles.ecommercebooks.controll.command.ListDisableCmd;
 import br.com.talles.ecommercebooks.controll.command.UpdateCmd;
 import br.com.talles.ecommercebooks.domain.Entity;
 
@@ -49,16 +46,17 @@ public class Servlet extends HttpServlet {
 		viewHelpers.put("/E-CommerceBooks/customers/list", new CustomerVh());
 		viewHelpers.put("/E-CommerceBooks/customers/find", new CustomerVh());
 		viewHelpers.put("/E-CommerceBooks/customers/update", new CustomerVh());
+		viewHelpers.put("/E-CommerceBooks/customers/disable", new CustomerVh());
 
 		commands = new HashMap();
 		commands.put("LIST", new ListCmd());
-		commands.put("LIST-DISABLE", new ListDisableCmd());
+		commands.put("LIST-DISABLE", new UpdateCmd());
 		commands.put("SAVE", new SaveCmd());
 		commands.put("DELETE", new DeleteCmd());
 		commands.put("FIND", new FindCmd());
 		commands.put("UPDATE", new UpdateCmd());
-		commands.put("DISABLE", new DisableCmd());
-		commands.put("ENABLE", new EnableCmd());
+		commands.put("DISABLE", new UpdateCmd());
+		commands.put("ENABLE", new UpdateCmd());
 		commands.put("CREATE", new CreateCmd());
 	}
 	
@@ -72,10 +70,11 @@ public class Servlet extends HttpServlet {
 
 			Entity entity = viewHelper.getEntity(request);
 
-			String cmd = request.getParameter("operation");
+			String operation = request.getParameter("operation");
+			String cmd = operation;
 			ICommand command = commands.get(cmd);
 
-			Result result = command.execute(entity);
+			Result result = command.execute(entity, operation);
 
 			viewHelper.setView(result, request, response);
 			

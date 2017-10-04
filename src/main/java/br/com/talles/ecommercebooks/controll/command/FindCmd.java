@@ -6,8 +6,8 @@ import br.com.talles.ecommercebooks.domain.Entity;
 public class FindCmd extends AbstractCommand{
 
     @Override
-    public Result execute(Entity entity) {
-        return facade.find(entity);
+    public Result execute(Entity entity, String operation) {
+        return facade.find(entity, operation);
     }
     
 }
