@@ -7,6 +7,7 @@ import br.com.talles.ecommercebooks.business.CreateView;
 import br.com.talles.ecommercebooks.business.book.IsbnUnique;
 import br.com.talles.ecommercebooks.business.customer.CustomerNotBlank;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
+import br.com.talles.ecommercebooks.business.customer.PasswordValidate;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.book.Book;
 import br.com.talles.ecommercebooks.domain.Entity;

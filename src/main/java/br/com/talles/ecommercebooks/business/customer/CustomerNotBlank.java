@@ -15,6 +15,7 @@ public class CustomerNotBlank implements IStrategy {
 		IStrategy userNotBlank = new UserNotBlank();
 		IStrategy addressNotBlank = new AddressNotBlank();
 		IStrategy creditCardNotBlank = new CreditCardNotBlank();
+		IStrategy passwordValidate = new PasswordValidate();
 		
         if (customer.getRegistry() == null || customer.getRegistry().trim().isEmpty()) {
             result.addMsg("CPF é um campo obrigatório!\n");
@@ -35,6 +36,8 @@ public class CustomerNotBlank implements IStrategy {
 		
 		if (result.getOperation().equals("SAVE"))
 			result = creditCardNotBlank.process(customer.getCreditCard(0), result);
+		
+		result = passwordValidate.process(customer.getUser(), result);
 		
 		return result;
 	}
