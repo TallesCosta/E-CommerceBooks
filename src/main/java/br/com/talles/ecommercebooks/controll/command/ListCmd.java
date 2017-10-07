@@ -6,8 +6,8 @@ import br.com.talles.ecommercebooks.domain.Entity;
 public class ListCmd extends AbstractCommand{
 
     @Override
-    public Result execute(Entity entity) {
-        return facade.list(entity);
+    public Result execute(Entity entity, String operation) {
+        return facade.list(entity, operation);
     }
     
 }

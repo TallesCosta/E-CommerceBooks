@@ -57,8 +57,33 @@ public class PhoneDao extends AbstractDao {
 	}
 
 	@Override
-	public boolean update(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public boolean update(Entity entity, String operation) {
+		Phone phone = (Phone) entity;
+		
+        String sql = "UPDATE Phones "
+                + "SET enabled = ?, ddd = ?, number = ?, phoneType = ? "
+                + "WHERE id = ?";
+        
+        try {
+			openConnection();
+			
+            PreparedStatement statement = conn.prepareStatement(sql);
+            
+            statement.setBoolean(1, phone.isEnabled());
+            statement.setString(2, phone.getDdd());
+            statement.setString(3, phone.getNumber());
+            statement.setString(4, phone.getPhoneType());
+            statement.setLong(5, phone.getId());
+            
+            statement.execute();
+            statement.close();
+            
+            return true;
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+			closeConnection();
+		}
 	}
 
 	@Override
@@ -90,16 +115,6 @@ public class PhoneDao extends AbstractDao {
 		} finally {
 			closeConnection();
 		}
-	}
-
-	@Override
-	public boolean disable(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public boolean enable(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 	
 }

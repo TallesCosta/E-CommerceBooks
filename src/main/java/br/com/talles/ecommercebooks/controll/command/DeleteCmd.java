@@ -6,8 +6,8 @@ import br.com.talles.ecommercebooks.domain.Entity;
 public class DeleteCmd extends AbstractCommand{
 
     @Override
-    public Result execute(Entity entity) {
-        return facade.delete(entity);
+    public Result execute(Entity entity, String operation) {
+        return facade.delete(entity, operation);
     }
     
 }

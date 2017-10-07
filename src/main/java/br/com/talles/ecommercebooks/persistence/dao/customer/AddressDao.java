@@ -66,8 +66,40 @@ public class AddressDao extends AbstractDao {
 	}
 
 	@Override
-	public boolean update(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public boolean update(Entity entity, String operation) {
+		Address address = (Address) entity;
+		
+        String sql = "UPDATE Addresses "
+                + "SET enabled = ?, alias = ?, observation = ?, publicPlaceType = ?, publicPlace = ?, "
+				+ "number = ?, district = ?, postalCode = ?, homeType = ?, id_city = ? "
+                + "WHERE id = ?";
+        
+        try {
+			openConnection();
+			
+            PreparedStatement statement = conn.prepareStatement(sql);
+            
+            statement.setBoolean(1, address.isEnabled());
+            statement.setString(2, address.getAlias());
+            statement.setString(3, address.getObservation());
+            statement.setString(4, address.getPublicPlaceType());
+            statement.setString(5, address.getPublicPlace());
+            statement.setString(6, address.getNumber());
+            statement.setString(7, address.getDistrict());
+            statement.setString(8, address.getPostalCode());
+            statement.setString(9, address.getHomeType());
+            statement.setLong(10, address.getCity().getId());
+            statement.setLong(11, address.getId());
+            
+            statement.execute();
+            statement.close();
+            
+            return true;
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+			closeConnection();
+		}
 	}
 
 	@Override
@@ -106,16 +138,6 @@ public class AddressDao extends AbstractDao {
 		} finally {
 			closeConnection();
 		}
-	}
-
-	@Override
-	public boolean disable(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public boolean enable(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 	
 }

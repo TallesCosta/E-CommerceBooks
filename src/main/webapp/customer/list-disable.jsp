@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-		<title>Listagem de Clientes</title>
+		<title>Listagem de Clientes Inativos</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -27,7 +27,7 @@
 		%>
 		
 		<div id="app">
-			<h1>Listagem de Clientes</h1>
+			<h1>Listagem de Clientes Inativos</h1>
 			
 			<div>
 				<form action="" method="POST">
@@ -75,8 +75,8 @@
 										+ "</a>"
 									+ "</td>");
 						out.println("<td>"
-										+ "<a href='" + request.getContextPath() + "/customers/disable?operation=DISABLE&id=" + customer.getId() + "'>"
-											+ "<i class='fa fa-trash' aria-hidden='true'></i>"
+										+ "<a href='" + request.getContextPath() + "/customers/enable?operation=ENABLE&id=" + customer.getId() + "'>"
+											+ "<i class='fa fa-plus' aria-hidden='true'></i>"
 										+ "</a>"
 									+ "</td>");
 						out.println("</tr>");
@@ -113,8 +113,8 @@
 				<p><% out.println(i); %> registros encontrados.</p>
 			</div>
 			
-			<a class="create-customer" href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">Criar Cliente</a>
-			<a class="list-disable-customer" href="<% out.print(request.getContextPath().concat("/customers/list-disable?operation=LIST-DISABLE")); %>">Listar Inativos</a>
+			<a href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">Criar Cliente</a>
+			<a href="<% out.print(request.getContextPath().concat("/customers/list?operation=LIST")); %>">Listar Ativos</a>
 		</div>
 		<%
 			}

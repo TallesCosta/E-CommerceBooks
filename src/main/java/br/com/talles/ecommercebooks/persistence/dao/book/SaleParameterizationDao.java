@@ -56,7 +56,7 @@ public class SaleParameterizationDao extends AbstractDao {
 	}
 
 	@Override
-	public boolean update(Entity entity) {
+	public boolean update(Entity entity, String operation) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
@@ -88,16 +88,6 @@ public class SaleParameterizationDao extends AbstractDao {
 		} finally {
 			closeConnection();
 		}
-	}
-
-	@Override
-	public boolean disable(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public boolean enable(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 	
 }

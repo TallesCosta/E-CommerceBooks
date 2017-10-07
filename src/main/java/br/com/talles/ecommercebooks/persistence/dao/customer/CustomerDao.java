@@ -161,13 +161,14 @@ public class CustomerDao extends AbstractDao {
 				+ "INNER JOIN Users u ON c.id_user = u.id "
 				+ "INNER JOIN Addresses ha ON c.id_homeAddress = ha.id "
 				+ "INNER JOIN Addresses ca ON c.id_chargeAddress = ca.id "
-				+ "WHERE c.enabled = true AND c.id = ?";
+				+ "WHERE c.enabled = ? AND c.id = ?";
 		
 		try {
 			openConnection();
 			
 			PreparedStatement stmt = conn.prepareStatement(query);
-			stmt.setLong(1, customer.getId());
+			stmt.setBoolean(1, !customer.isEnabled());
+			stmt.setLong(2, customer.getId());
 			
 			ResultSet result = stmt.executeQuery();
 			
@@ -202,8 +203,60 @@ public class CustomerDao extends AbstractDao {
 	}
 
 	@Override
-	public boolean update(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	public boolean update(Entity entity, String operation) {
+		Customer customer = (Customer) entity;
+        
+		if (operation.equals("UPDATE")) {
+			// Updates the Phone
+			PhoneDao phoneDao = new PhoneDao();
+			if(!phoneDao.update(customer.getPhone(), operation)){
+				return false;
+			}
+
+			// Updates the User
+			UserDao userDao = new UserDao();
+			if(!userDao.update(customer.getUser(), operation)){
+				return false;
+			}
+
+			AddressDao addressDao = new AddressDao();
+
+			// Updates the Home Address
+			if(!addressDao.update(customer.getHomeAddress(), operation)){
+				return false;
+			}
+
+			// Updates the Charge Address
+			if(!addressDao.update(customer.getChargeAddress(), operation)){
+				return false;
+			}
+		}
+		
+        String sql = "UPDATE Customers "
+                + "SET enabled = ?, registry = ?, name = ?, birthDate = ?, gender = ? "
+                + "WHERE id = ?";
+        
+        try {
+			openConnection();
+			
+            PreparedStatement statement = conn.prepareStatement(sql);
+            
+            statement.setBoolean(1, customer.isEnabled());
+            statement.setString(2, customer.getRegistry());
+            statement.setString(3, customer.getName());
+            statement.setDate(4, new java.sql.Date(customer.getBirthDate().getTime()));
+            statement.setString(5, customer.getGender().getName());
+            statement.setLong(6, customer.getId());
+            
+            statement.execute();
+            statement.close();
+            
+            return true;
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+			closeConnection();
+		}
 	}
 
 	@Override
@@ -230,16 +283,6 @@ public class CustomerDao extends AbstractDao {
 		} finally {
 			closeConnection();
 		}
-	}
-
-	@Override
-	public boolean disable(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	public boolean enable(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 	
 }

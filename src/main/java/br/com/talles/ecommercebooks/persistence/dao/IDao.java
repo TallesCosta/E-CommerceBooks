@@ -13,12 +13,8 @@ public interface IDao {
     
     public Entity find(Entity entity);
     
-    public boolean update(Entity entity);
+    public boolean update(Entity entity, String operation);
 	
 	public Entity findLast();
-    
-	public boolean disable(Entity entity);
-	
-	public boolean enable(Entity entity);
 	
 }

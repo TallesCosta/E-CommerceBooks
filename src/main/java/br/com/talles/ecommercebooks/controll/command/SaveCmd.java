@@ -6,8 +6,8 @@ import br.com.talles.ecommercebooks.domain.Entity;
 public class SaveCmd extends AbstractCommand{
 
     @Override
-    public Result execute(Entity entity) {
-        return facade.save(entity);
+    public Result execute(Entity entity, String operation) {
+        return facade.save(entity, operation);
     }
     
 }

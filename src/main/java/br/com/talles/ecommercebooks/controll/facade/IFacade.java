@@ -5,22 +5,16 @@ import br.com.talles.ecommercebooks.domain.Entity;
 
 public interface IFacade {
     
-    public Result list(Entity entity);
-	
-    public Result listDisable(Entity entity);
+    public Result list(Entity entity, String operation);
     
-    public Result save(Entity entity);
+    public Result save(Entity entity, String operation);
     
-	public Result delete(Entity entity);
+	public Result delete(Entity entity, String operation);
 	
-    public Result find(Entity entity);
+    public Result find(Entity entity, String operation);
 	
-    public Result update(Entity entity);
+    public Result update(Entity entity, String operation);
 	
-    public Result disable(Entity entity);
-	
-    public Result enable(Entity entity);
-	
-    public Result create(Entity entity);
+    public Result create(Entity entity, String operation);
     
 }
