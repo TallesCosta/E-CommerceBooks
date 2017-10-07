@@ -1,6 +1,6 @@
 package br.com.talles.ecommercebooks.persistence;
 
-import br.com.talles.ecommercebooks.config.DbConfig;
+import br.com.talles.ecommercebooks.config.PropertiesConfig;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,8 +11,8 @@ public class ConnectionFactory {
     private final String DBURL;
 
     public ConnectionFactory() {
-        DbConfig dbconfig = new DbConfig();
-        DBURL = dbconfig.getDBUrl();
+        PropertiesConfig dbConfig = new PropertiesConfig();
+        DBURL = dbConfig.getDBUrl();
     }
 
     public Connection getConnection() {
