@@ -11,18 +11,18 @@
 		
 		<ul>
 			<li>
-				<a href="<% out.print(request.getContextPath().concat("/books/list?operation=LIST")); %>">Listagem de Livros</a>
+				<a class="list-book" href="<% out.print(request.getContextPath().concat("/books/list?operation=LIST")); %>">Listagem de Livros</a>
 			</li>
 			<li>
-				<a href="<% out.print(request.getContextPath().concat("/books/list-disable?operation=LIST-DISABLE")); %>">Listagem de Livros Inativos</a>
+				<a class="list-disable-book" href="<% out.print(request.getContextPath().concat("/books/list-disable?operation=LIST-DISABLE")); %>">Listagem de Livros Inativos</a>
 			</li>
 			
 			<br><br>
 			<li>
-				<a href="<% out.print(request.getContextPath().concat("/customers/list?operation=LIST")); %>">Listagem de Clientes</a>
+				<a class="list-customer" href="<% out.print(request.getContextPath().concat("/customers/list?operation=LIST")); %>">Listagem de Clientes</a>
 			</li>
 			<li>
-				<a href="<% out.print(request.getContextPath().concat("/customers/list-disable?operation=LIST-DISABLE")); %>">Listagem de Clientes Inativos</a>
+				<a class="list-disable-customer" href="<% out.print(request.getContextPath().concat("/customers/list-disable?operation=LIST-DISABLE")); %>">Listagem de Clientes Inativos</a>
 			</li>
 		</ul>
 		

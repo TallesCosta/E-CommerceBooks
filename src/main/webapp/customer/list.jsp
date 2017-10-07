@@ -113,8 +113,8 @@
 				<p><% out.println(i); %> registros encontrados.</p>
 			</div>
 			
-			<a href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">Criar Cliente</a>
-			<a href="<% out.print(request.getContextPath().concat("/customers/list-disable?operation=LIST-DISABLE")); %>">Listar Inativos</a>
+			<a class="create-customer" href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">Criar Cliente</a>
+			<a class="list-disable-customer" href="<% out.print(request.getContextPath().concat("/customers/list-disable?operation=LIST-DISABLE")); %>">Listar Inativos</a>
 		</div>
 		<%
 			}

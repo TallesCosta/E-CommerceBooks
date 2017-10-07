@@ -295,7 +295,7 @@
 					</div>
 					<div>
 						<label for="securityCode">Código de Segurança*: </label>
-						<input name="securityCode" id="passwordVerify" type="securityCode">
+						<input name="securityCode" id="securityCode" type="text">
 					</div>
 					<div>
 						<label for="expirationDate">Data Exp.*: </label>
@@ -317,7 +317,7 @@
 			}
 		%>
 
-				<button name="operation" value="SAVE" type="submit">Salvar</button>
+				<button name="operation" id="save-custumer" value="SAVE" type="submit">Salvar</button>
 				<small>Todos os campos marcados com * são obrigatórios.</small>
 			</form>
 		</div>
