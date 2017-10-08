@@ -27,7 +27,7 @@
 		%>
 		
 		<div id="app">
-			<h1>Listagem de Clientes</h1>
+			<h1 id="list-customer">Listagem de Clientes</h1>
 			
 			<div>
 				<form action="" method="POST">

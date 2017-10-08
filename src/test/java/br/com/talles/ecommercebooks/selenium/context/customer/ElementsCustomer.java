@@ -7,7 +7,12 @@ public class ElementsCustomer {
 	public final String LINK_LIST_DISABLE = "list-disable-customer";
 	public final String LINK_CREATE = "create-customer";
 	
-	// Name elements
+	// Name pages
+	public final String PAGE_LIST = "list-customer";
+	public final String PAGE_LIST_DISABLE = "list-disable-customer";
+	public final String PAGE_CREATE = "create-customer";
+	
+	// Name elements	
 	public final String INPUT_REGISTRY = "registry";
 	public final String INPUT_NAME = "name";
 	public final String INPUT_BIRTH_DATE = "birthDate";

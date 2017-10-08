@@ -50,7 +50,7 @@
 		%>
 		
 		<div id="app">
-			<h1>
+			<h1 id="create-customer">
 				<% if (result.getOperation().equals("CREATE")) { out.print("Criação de Cliente"); }
 				else if (result.getOperation().equals("FIND")) { out.print("Alteração de Cliente"); } %>
 			</h1>
@@ -340,9 +340,11 @@
 			}
 		%>
 
-				<button name="operation" id="save-custumer" type="submit"
-						<% if (result.getOperation().equals("CREATE")) { out.print("value='SAVE'"); }
-							else if (result.getOperation().equals("FIND")) { out.print("value='UPDATE'"); } %> >Salvar</button>
+				<input type="hidden" name="operation" id="save-custumer" 
+					<% if (result.getOperation().equals("CREATE")) { out.print("value='SAVE'"); }
+					else if (result.getOperation().equals("FIND")) { out.print("value='UPDATE'"); } %> />
+		
+				<button type="submit">Salvar</button>
 				<small>Todos os campos marcados com * são obrigatórios.</small>
 			</form>
 		</div>

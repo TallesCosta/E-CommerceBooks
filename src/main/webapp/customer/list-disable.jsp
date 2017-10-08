@@ -27,7 +27,7 @@
 		%>
 		
 		<div id="app">
-			<h1>Listagem de Clientes Inativos</h1>
+			<h1 id="list-disable-customer">Listagem de Clientes Inativos</h1>
 			
 			<div>
 				<form action="" method="POST">

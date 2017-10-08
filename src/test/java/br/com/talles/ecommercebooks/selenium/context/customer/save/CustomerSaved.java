@@ -1,11 +1,13 @@
-package br.com.talles.ecommercebooks.selenium.context.customer;
+package br.com.talles.ecommercebooks.selenium.context.customer.save;
 
+import br.com.talles.ecommercebooks.selenium.context.customer.CustomerT;
+import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-public class SaveCustomer extends CustomerT {
+public class CustomerSaved extends CustomerT {
 	
 	@Test
 	public void saveCustomer(){
@@ -107,8 +109,10 @@ public class SaveCustomer extends CustomerT {
 		select = new Select(element);
 		select.selectByValue("2");
 		
-		//element = browser.findElement(By.id(elements.BUTTON_SAVE_CUSTOMER));
-		//element.submit();
+		element = browser.findElement(By.id(elements.BUTTON_SAVE_CUSTOMER));
+		element.submit();
+		
+		Assert.assertNotEquals(null, browser.findElement(By.id(elements.PAGE_LIST)));
 	}
 	
 }
