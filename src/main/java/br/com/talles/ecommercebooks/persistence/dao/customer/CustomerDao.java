@@ -167,7 +167,7 @@ public class CustomerDao extends AbstractDao {
 			openConnection();
 			
 			PreparedStatement stmt = conn.prepareStatement(query);
-			stmt.setBoolean(1, !customer.isEnabled());
+			stmt.setBoolean(1, customer.isEnabled());
 			stmt.setLong(2, customer.getId());
 			
 			ResultSet result = stmt.executeQuery();

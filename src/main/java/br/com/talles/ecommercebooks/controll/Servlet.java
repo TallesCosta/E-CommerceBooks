@@ -73,8 +73,7 @@ public class Servlet extends HttpServlet {
 			Entity entity = viewHelper.getEntity(request);
 
 			String operation = request.getParameter("operation");
-			String cmd = operation;
-			ICommand command = commands.get(cmd);
+			ICommand command = commands.get(operation);
 
 			Result result = command.execute(entity, operation);
 
