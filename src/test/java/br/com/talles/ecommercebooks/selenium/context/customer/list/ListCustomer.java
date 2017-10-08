@@ -17,8 +17,14 @@ public class ListCustomer extends CustomerT {
 		WebElement element = browser.findElement(By.className(elements.LINK_LIST));
 		element.click();
 		
+		try {
+			browser.findElement(By.id(elements.PAGE_LIST));
+		} catch (Exception e) {
+			element = null;
+		}
+		
 		// Redirect list page? YES -> Passed the test!
-		Assert.assertNotEquals(null, browser.findElement(By.id(elements.PAGE_LIST)));
+		Assert.assertNotEquals(null, element);
 	}
 	
 }

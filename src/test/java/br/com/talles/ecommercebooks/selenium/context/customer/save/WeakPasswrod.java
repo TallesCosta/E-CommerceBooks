@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-public class CustomerFilled extends CustomerT {
+public class WeakPasswrod extends CustomerT {
 	
 	@Test
 	public void saveCustomer(){
@@ -114,7 +114,7 @@ public class CustomerFilled extends CustomerT {
 		element.submit();
 		
 		try {
-			browser.findElement(By.id(elements.PAGE_LIST));
+			browser.findElement(By.id(elements.PAGE_CREATE));
 		} catch (Exception e) {
 			element = null;
 		}

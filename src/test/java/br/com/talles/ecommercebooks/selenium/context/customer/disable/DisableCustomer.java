@@ -21,8 +21,14 @@ public class DisableCustomer extends CustomerT {
 		element = browser.findElement(By.id(elements.LINK_DISABLE_CUSTOMER_1));
 		element.click();
 		
+		try {
+			browser.findElement(By.id(elements.PAGE_LIST));
+		} catch (Exception e) {
+			element = null;
+		}
+		
 		// Redirect list page? YES -> Passed the test!
-		Assert.assertNotEquals(null, browser.findElement(By.id(elements.PAGE_LIST)));
+		Assert.assertNotEquals(null, element);
 	}
 	
 }

@@ -26,8 +26,14 @@ public class CustomerEmpity extends CustomerT {
 		element = browser.findElement(By.id(elements.BUTTON_SAVE_CUSTOMER));
 		element.submit();
 		
+		try {
+			browser.findElement(By.id(elements.PAGE_CREATE));
+		} catch (Exception e) {
+			element = null;
+		}
+		
 		// Redirect list page? YES -> Passed the test!
-		Assert.assertNotEquals(null, browser.findElement(By.id(elements.PAGE_CREATE)));
+		Assert.assertNotEquals(null, element);
 	}
 	
 }
