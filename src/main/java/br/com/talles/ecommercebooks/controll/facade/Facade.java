@@ -5,9 +5,9 @@ import br.com.talles.ecommercebooks.business.book.Ean13Unique;
 import br.com.talles.ecommercebooks.business.IStrategy;
 import br.com.talles.ecommercebooks.business.CreateView;
 import br.com.talles.ecommercebooks.business.book.IsbnUnique;
-import br.com.talles.ecommercebooks.business.customer.CustomerNotBlank;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
-import br.com.talles.ecommercebooks.business.customer.PasswordValidate;
+import br.com.talles.ecommercebooks.business.customer.save.CustomerValidateSave;
+import br.com.talles.ecommercebooks.business.customer.update.CustomerValidateUpdate;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.book.Book;
 import br.com.talles.ecommercebooks.domain.Entity;
@@ -48,7 +48,8 @@ public class Facade implements IFacade {
 		IStrategy isbnUnique = new IsbnUnique();
 		IStrategy ean13Unique = new Ean13Unique();
 		// Customers
-		IStrategy customerNotBlank = new CustomerNotBlank();
+		IStrategy customerValidateSave = new CustomerValidateSave();
+		IStrategy customerValidateUpdate = new CustomerValidateUpdate();
 		IStrategy findCostumer = new FindCustomer();
                 
         List<IStrategy> listBook = new ArrayList();
@@ -87,7 +88,7 @@ public class Facade implements IFacade {
 		createCustomer.add(new CreateView());
 		
 		List<IStrategy> saveCustomer = new ArrayList();
-		saveCustomer.add(customerNotBlank);
+		saveCustomer.add(customerValidateSave);
 		
 		List<IStrategy> listCustomer = new ArrayList();
 		
@@ -99,7 +100,7 @@ public class Facade implements IFacade {
 		
 		
 		List<IStrategy> updateCustomer = new ArrayList();
-		updateCustomer.add(customerNotBlank);
+		updateCustomer.add(customerValidateUpdate);
 		
 		List<IStrategy> disableCustomer = new ArrayList();
 		disableCustomer.add(findCostumer);
