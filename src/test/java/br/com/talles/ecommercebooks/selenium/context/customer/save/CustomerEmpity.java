@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class CustomerUnsaved extends CustomerT {
+public class CustomerEmpity extends CustomerT {
 	
 	@Test
 	public void saveCustomer(){
