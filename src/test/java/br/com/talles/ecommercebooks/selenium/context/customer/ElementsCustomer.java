@@ -57,7 +57,12 @@ public class ElementsCustomer {
 	public final String INPUT_CARD_SECURITY_CODE = "securityCode";
 	public final String INPUT_CARD_EXPIRATION_DATE = "expirationDate";
 	public final String INPUT_CARD_CARD_COMPANY = "cardCompany";
-	// Button
+	
+	// Buttons
 	public final String BUTTON_SAVE_CUSTOMER = "save-custumer";
-		
+	
+	// "Fake data"
+	public final String LINK_DISABLE_CUSTOMER_1 = "disable-1";
+	
+	
 }

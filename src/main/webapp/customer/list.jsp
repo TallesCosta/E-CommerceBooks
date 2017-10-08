@@ -70,12 +70,12 @@
 						out.println("<td>" + customer.getHomeAddress().getAlias() + "</td>");
 						out.println("<td>" + customer.getChargeAddress().getAlias() + "</td>");
 						out.println("<td>"
-										+ "<a href='" + request.getContextPath() + "/customers/find?operation=FIND&id=" + customer.getId() + "'>"
+										+ "<a id='edit-" + customer.getId() + "' href='" + request.getContextPath() + "/customers/find?operation=FIND&id=" + customer.getId() + "'>"
 											+ "<i class='fa fa-pencil' aria-hidden='true'></i>"
 										+ "</a>"
 									+ "</td>");
 						out.println("<td>"
-										+ "<a href='" + request.getContextPath() + "/customers/disable?operation=DISABLE&id=" + customer.getId() + "'>"
+										+ "<a id='disable-" + customer.getId() + "' href='" + request.getContextPath() + "/customers/disable?operation=DISABLE&id=" + customer.getId() + "'>"
 											+ "<i class='fa fa-trash' aria-hidden='true'></i>"
 										+ "</a>"
 									+ "</td>");
