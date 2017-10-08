@@ -50,10 +50,10 @@ public class CustomerFilled extends CustomerT {
 		element.sendKeys("miguel_andrade@email.com.br");
 		
 		element = browser.findElement(By.id(elements.INPUT_USER_PASSWORD));
-		element.sendKeys("abc123");
+		element.sendKeys("aBc123456@");
 		
 		element = browser.findElement(By.id(elements.INPUT_USER_PASSWORD_VERIFY));
-		element.sendKeys("abc123");
+		element.sendKeys("aBc123456@");
 		
 		// Home Address
 		element = browser.findElement(By.id(elements.INPUT_HOME_ALIAS));
