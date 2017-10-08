@@ -109,9 +109,11 @@ public class CustomerSaved extends CustomerT {
 		select = new Select(element);
 		select.selectByValue("2");
 		
+		// Sent form and save customer
 		element = browser.findElement(By.id(elements.BUTTON_SAVE_CUSTOMER));
 		element.submit();
 		
+		// Redirect list page? YES -> Passed the test!
 		Assert.assertNotEquals(null, browser.findElement(By.id(elements.PAGE_LIST)));
 	}
 	
