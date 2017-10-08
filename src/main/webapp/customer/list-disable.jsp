@@ -70,12 +70,12 @@
 						out.println("<td>" + customer.getHomeAddress().getAlias() + "</td>");
 						out.println("<td>" + customer.getChargeAddress().getAlias() + "</td>");
 						out.println("<td>"
-										+ "<a href='" + request.getContextPath() + "/customers/find?operation=FIND&id=" + customer.getId() + "'>"
+										+ "<a id='edit-" + customer.getId() + "' href='" + request.getContextPath() + "/customers/find?operation=FIND&id=" + customer.getId() + "'>"
 											+ "<i class='fa fa-pencil' aria-hidden='true'></i>"
 										+ "</a>"
 									+ "</td>");
 						out.println("<td>"
-										+ "<a href='" + request.getContextPath() + "/customers/enable?operation=ENABLE&id=" + customer.getId() + "'>"
+										+ "<a id='enable-" + customer.getId() + "' href='" + request.getContextPath() + "/customers/enable?operation=ENABLE&id=" + customer.getId() + "'>"
 											+ "<i class='fa fa-plus' aria-hidden='true'></i>"
 										+ "</a>"
 									+ "</td>");
@@ -113,8 +113,8 @@
 				<p><% out.println(i); %> registros encontrados.</p>
 			</div>
 			
-			<a href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">Criar Cliente</a>
-			<a href="<% out.print(request.getContextPath().concat("/customers/list?operation=LIST")); %>">Listar Ativos</a>
+			<a class="create-customer" href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">Criar Cliente</a>
+			<a class="list-customer" href="<% out.print(request.getContextPath().concat("/customers/list?operation=LIST")); %>">Listar Ativos</a>
 		</div>
 		<%
 			}

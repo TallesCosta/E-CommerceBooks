@@ -63,6 +63,7 @@ public class ElementsCustomer {
 	
 	// "Fake data"
 	public final String LINK_DISABLE_CUSTOMER_1 = "disable-1";
+	public final String LINK_ENABLE_CUSTOMER_1 = "enable-1";
 	
 	
 }

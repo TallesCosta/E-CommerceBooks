@@ -17,7 +17,7 @@ public class DisableCustomer extends CustomerT {
 		WebElement element = browser.findElement(By.className(elements.LINK_LIST));
 		element.click();
 		
-		// Click to delete Customer 1
+		// Click to disable Customer 1
 		element = browser.findElement(By.id(elements.LINK_DISABLE_CUSTOMER_1));
 		element.click();
 		
