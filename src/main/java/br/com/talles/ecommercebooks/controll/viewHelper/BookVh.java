@@ -5,10 +5,9 @@ import br.com.talles.ecommercebooks.domain.book.Author;
 import br.com.talles.ecommercebooks.domain.book.Book;
 import br.com.talles.ecommercebooks.domain.book.Category;
 import br.com.talles.ecommercebooks.domain.book.ChangeStatus;
-import br.com.talles.ecommercebooks.domain.book.DeactivationCategory;
+import br.com.talles.ecommercebooks.domain.book.StatusCategory;
 import br.com.talles.ecommercebooks.domain.book.Dimension;
 import br.com.talles.ecommercebooks.domain.Entity;
-import br.com.talles.ecommercebooks.domain.book.ActivationCategory;
 import br.com.talles.ecommercebooks.domain.book.PriceGroup;
 import br.com.talles.ecommercebooks.domain.book.PublishingCompany;
 import br.com.talles.ecommercebooks.domain.book.SaleParameterization;
@@ -114,7 +113,8 @@ public class BookVh implements IViewHelper {
 		List<Category> categories = new ArrayList<>();
 		long idCategory = 0L;
 		for(String idCategoryS : idCategoriesS){
-			idCategory = Long.valueOf(idCategoryS);
+			if (!(idCategoryS == null || idCategoryS.equals("")))
+				idCategory = Long.valueOf(idCategoryS);
 			categories.add(new Category(idCategory));
 		}
 		
@@ -136,6 +136,9 @@ public class BookVh implements IViewHelper {
 		Book book = new Book();
 		
 		switch(request.getParameter("operation")) {
+			case "CREATE" :				
+				break;
+				
 			case "SAVE":
 				book.setTitle(title);
 				book.setSynopsis(synopsis);
@@ -158,9 +161,6 @@ public class BookVh implements IViewHelper {
 			case "LIST-DISABLE":
 				break;
 				
-			case "DELETE":
-				break;
-
 			case "FIND":
 				break;
 
@@ -169,15 +169,15 @@ public class BookVh implements IViewHelper {
 
 			case "DISABLE":
 				book.setId(id);
-				book.setChangeStatus(new ChangeStatus(justification, new DeactivationCategory(idDeactivationCategory)));
+				book.setChangeStatus(new ChangeStatus(justification, new StatusCategory(idDeactivationCategory)));
 				break;
 
 			case "ENABLE":
 				book.setId(id);
-				book.setChangeStatus(new ChangeStatus(justification, new ActivationCategory(idActivationCategory)));
+				book.setChangeStatus(new ChangeStatus(justification, new StatusCategory(idActivationCategory)));
 				break;
 				
-			case "CREATE" :				
+			case "DELETE":
 				break;
 		}
 		
@@ -192,6 +192,11 @@ public class BookVh implements IViewHelper {
 		
 		try {
 			switch(request.getParameter("operation")) {
+				case "CREATE" :
+					dispatcher = request.getRequestDispatcher("/book/create.jsp");
+					dispatcher.forward(request, response);
+					break;
+					
 				case "SAVE":
 					if (!result.hasMsg()) {
 						response.sendRedirect("/E-CommerceBooks/books/list?operation=LIST");
@@ -210,14 +215,11 @@ public class BookVh implements IViewHelper {
 					dispatcher = request.getRequestDispatcher("/book/list-disable.jsp");
 					dispatcher.forward(request, response);
 					break;
-					
-				case "DELETE":
+
+				case "FIND":
 					break;
 
-				case "FIND":					
-					break;
-
-				case "UPDATE":					
+				case "UPDATE":
 					break;
 
 				case "DISABLE":
@@ -238,9 +240,7 @@ public class BookVh implements IViewHelper {
 					}
 					break;					
 					
-				case "CREATE" :
-					dispatcher = request.getRequestDispatcher("/book/create.jsp");
-					dispatcher.forward(request, response);
+				case "DELETE":
 					break;
 			}
 		} catch (ServletException | IOException ex) {

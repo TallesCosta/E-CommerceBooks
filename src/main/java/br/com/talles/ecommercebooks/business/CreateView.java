@@ -5,10 +5,9 @@ import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.book.Book;
 import br.com.talles.ecommercebooks.domain.customer.Customer;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
-import br.com.talles.ecommercebooks.persistence.dao.book.ActivationCategoryDao;
+import br.com.talles.ecommercebooks.persistence.dao.book.StatusCategoryDao;
 import br.com.talles.ecommercebooks.persistence.dao.book.AuthorDao;
 import br.com.talles.ecommercebooks.persistence.dao.book.CategoryDao;
-import br.com.talles.ecommercebooks.persistence.dao.book.DeactivationCategoryDao;
 import br.com.talles.ecommercebooks.persistence.dao.book.PriceGroupDao;
 import br.com.talles.ecommercebooks.persistence.dao.book.PublishingCompanyDao;
 import br.com.talles.ecommercebooks.persistence.dao.customer.CityDao;
@@ -47,7 +46,7 @@ public class CreateView implements IStrategy {
 		listBook.add(new CategoryDao());
 		listBook.add(new PriceGroupDao());
 		listBook.add(new PublishingCompanyDao());
-		listBook.add(new DeactivationCategoryDao());
+		listBook.add(new StatusCategoryDao());
 				
 		// Datas needed to list-disable view Book
 		List<IDao> listDisableBook = new ArrayList<>();
@@ -55,7 +54,7 @@ public class CreateView implements IStrategy {
 		listDisableBook.add(new CategoryDao());
 		listDisableBook.add(new PriceGroupDao());
 		listDisableBook.add(new PublishingCompanyDao());
-		listDisableBook.add(new ActivationCategoryDao());
+		listDisableBook.add(new StatusCategoryDao());
 				
 		// Datas needed to create Customer view
 		List<IDao> createCustomer = new ArrayList<>();

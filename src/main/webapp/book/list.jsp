@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="br.com.talles.ecommercebooks.domain.book.DeactivationCategory"%>
+<%@page import="br.com.talles.ecommercebooks.domain.book.StatusCategory"%>
 <%@page import="br.com.talles.ecommercebooks.domain.book.Book"%>
 <%@page import="br.com.talles.ecommercebooks.domain.book.PublishingCompany"%>
 <%@page import="br.com.talles.ecommercebooks.domain.book.PriceGroup"%>
@@ -176,9 +176,11 @@
 							<label for='deactivationCategory'>Categoria de Desativação*: </label>
 							<select name='deactivationCategory' id='deactivationCategory'>
 			<%
-					for (Entity entity : result.getEntities(DeactivationCategory.class.getSimpleName())) {
-						DeactivationCategory deactivationCategory = (DeactivationCategory) entity;
-						out.println("<option value='" + deactivationCategory.getId() + "'>" + deactivationCategory.getName() + "</option>");
+					for (Entity entity : result.getEntities(StatusCategory.class.getSimpleName())) {
+						StatusCategory deactivationCategory = (StatusCategory) entity;
+						
+						if (!deactivationCategory.isActivationCategory())
+							out.println("<option value='" + deactivationCategory.getId() + "'>" + deactivationCategory.getName() + "</option>");
 					}
 				}
 			%>

@@ -31,15 +31,15 @@ public class Servlet extends HttpServlet {
 	public Servlet() {
 		viewHelpers = new HashMap();
 		// Books Requests
+		viewHelpers.put("/E-CommerceBooks/books/create", new BookVh());
+		viewHelpers.put("/E-CommerceBooks/books/save", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/list", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/list-disable", new BookVh());
-		viewHelpers.put("/E-CommerceBooks/books/save", new BookVh());
-		viewHelpers.put("/E-CommerceBooks/books/delete", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/find", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/update", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/disable", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/enable", new BookVh());
-		viewHelpers.put("/E-CommerceBooks/books/create", new BookVh());
+		viewHelpers.put("/E-CommerceBooks/books/delete", new BookVh());
 		// Customers Request
 		viewHelpers.put("/E-CommerceBooks/customers/create", new CustomerVh());
 		viewHelpers.put("/E-CommerceBooks/customers/save", new CustomerVh());
@@ -49,17 +49,18 @@ public class Servlet extends HttpServlet {
 		viewHelpers.put("/E-CommerceBooks/customers/update", new CustomerVh());
 		viewHelpers.put("/E-CommerceBooks/customers/disable", new CustomerVh());
 		viewHelpers.put("/E-CommerceBooks/customers/enable", new CustomerVh());
+		viewHelpers.put("/E-CommerceBooks/customers/delete", new CustomerVh());
 
 		commands = new HashMap();
+		commands.put("CREATE", new CreateCmd());
+		commands.put("SAVE", new SaveCmd());
 		commands.put("LIST", new ListCmd());
 		commands.put("LIST-DISABLE", new ListCmd());
-		commands.put("SAVE", new SaveCmd());
-		commands.put("DELETE", new DeleteCmd());
 		commands.put("FIND", new FindCmd());
 		commands.put("UPDATE", new UpdateCmd());
 		commands.put("DISABLE", new UpdateCmd());
 		commands.put("ENABLE", new UpdateCmd());
-		commands.put("CREATE", new CreateCmd());
+		commands.put("DELETE", new DeleteCmd());
 	}
 	
 	@Override
@@ -69,12 +70,10 @@ public class Servlet extends HttpServlet {
 			String uri = request.getRequestURI();
         
 			IViewHelper viewHelper = viewHelpers.get(uri);
-
 			Entity entity = viewHelper.getEntity(request);
 
 			String operation = request.getParameter("operation");
 			ICommand command = commands.get(operation);
-
 			Result result = command.execute(entity, operation);
 
 			viewHelper.setView(result, request, response);

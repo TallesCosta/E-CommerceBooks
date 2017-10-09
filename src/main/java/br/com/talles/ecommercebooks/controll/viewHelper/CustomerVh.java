@@ -227,6 +227,11 @@ public class CustomerVh implements IViewHelper {
 		
 		try {
 			switch(request.getParameter("operation")) {
+				case "CREATE" :
+					dispatcher = request.getRequestDispatcher("/customer/create.jsp");
+					dispatcher.forward(request, response);
+					break;
+					
 				case "SAVE":
 					if (!result.hasMsg()) {
 						response.sendRedirect("/E-CommerceBooks/customers/list?operation=LIST");
@@ -246,9 +251,6 @@ public class CustomerVh implements IViewHelper {
 					dispatcher.forward(request, response);
 					break;
 					
-				case "DELETE":
-					break;
-
 				case "FIND":
 					dispatcher = request.getRequestDispatcher("/customer/create.jsp");
 					dispatcher.forward(request, response);
@@ -260,7 +262,7 @@ public class CustomerVh implements IViewHelper {
 					} else {
 						dispatcher = request.getRequestDispatcher("/customer/create.jsp");
 						dispatcher.forward(request, response);
-					}		
+					}
 					break;
 
 				case "DISABLE":
@@ -281,9 +283,7 @@ public class CustomerVh implements IViewHelper {
 					}
 					break;		
 					
-				case "CREATE" :
-					dispatcher = request.getRequestDispatcher("/customer/create.jsp");
-					dispatcher.forward(request, response);
+				case "DELETE":
 					break;
 			}
 		} catch (ServletException | IOException ex) {

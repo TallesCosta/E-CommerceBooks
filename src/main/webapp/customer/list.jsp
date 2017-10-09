@@ -111,14 +111,14 @@
 				</table>
 					
 				<p><% out.println(i); %> registros encontrados.</p>
+		<%
+			}
+		%>
 			</div>
 			
 			<a class="create-customer" href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">Criar Cliente</a>
 			<a class="list-disable-customer" href="<% out.print(request.getContextPath().concat("/customers/list-disable?operation=LIST-DISABLE")); %>">Listar Inativos</a>
 		</div>
-		<%
-			}
-		%>
 		
 		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
     </body>

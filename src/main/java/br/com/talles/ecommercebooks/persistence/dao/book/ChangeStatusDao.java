@@ -1,10 +1,9 @@
 package br.com.talles.ecommercebooks.persistence.dao.book;
 
 import br.com.talles.ecommercebooks.domain.book.ChangeStatus;
-import br.com.talles.ecommercebooks.domain.book.DeactivationCategory;
 import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
 import br.com.talles.ecommercebooks.domain.Entity;
-import br.com.talles.ecommercebooks.domain.book.ActivationCategory;
+import br.com.talles.ecommercebooks.domain.book.StatusCategory;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,15 +22,9 @@ public class ChangeStatusDao extends AbstractDao {
 	@Override
 	public boolean save(Entity entity) {
 		ChangeStatus changeStatus = (ChangeStatus) entity;
-		String sql;
 		
-		if (changeStatus.getStatusCategory() instanceof DeactivationCategory) {
-			sql = "INSERT INTO ChangeStatus(enabled, justification, id_deactivationCategory)"
+		String sql = "INSERT INTO ChangeStatus(enabled, justification, id_statusCategory)"
 				+ "VALUES(?, ?, ?)";
-		} else {
-			sql = "INSERT INTO ChangeStatus(enabled, justification, id_activationCategory)"
-					+ "VALUES(?, ?, ?)";
-		}
 		
 		try {
 			openConnection();
@@ -77,14 +70,7 @@ public class ChangeStatusDao extends AbstractDao {
                 changeStatus.setId(result.getLong("id"));
 				changeStatus.setEnabled(result.getBoolean("enabled"));
 				changeStatus.setJustification(result.getString("justification"));
-				
-				if (result.getLong("id_activationCategory") != 0L) {
-					changeStatus.setStatusCategory(new ActivationCategory(
-							result.getString("id_activationCategory")));
-				} else {
-					changeStatus.setStatusCategory(new DeactivationCategory(
-							result.getString("id_deactivationCategory")));
-				}
+				changeStatus.setStatusCategory(new StatusCategory(result.getLong("id_statusCategory")));
             }
             
             result.close();
@@ -102,18 +88,9 @@ public class ChangeStatusDao extends AbstractDao {
 	public boolean update(Entity entity, String operation) {
 		ChangeStatus changeStatus = (ChangeStatus) entity;
         
-		String sql;
-		
-        // Updates the AbstractCategory
-		if (changeStatus.getStatusCategory() instanceof DeactivationCategory) {
-			sql = "UPDATE ChangeStatus "
-                + "SET enabled = ?, justification = ?, id_deactivationCategory = ?, id_activationCategory = ? "
+		String sql = "UPDATE ChangeStatus "
+                + "SET enabled = ?, justification = ?, id_statusCategory = ? "
                 + "WHERE id = ?";
-		} else {
-			sql = "UPDATE ChangeStatus "
-                + "SET enabled = ?, justification = ?, id_activationCategory = ?, id_deactivationCategory = ? "
-                + "WHERE id = ?";
-		}
         
         try {
 			openConnection();
@@ -123,8 +100,7 @@ public class ChangeStatusDao extends AbstractDao {
             statement.setBoolean(1, changeStatus.isEnabled());
             statement.setString(2, changeStatus.getJustification());
             statement.setLong(3, changeStatus.getStatusCategory().getId());
-            statement.setLong(4, 0L);
-            statement.setLong(5, changeStatus.getId());
+            statement.setLong(4, changeStatus.getId());
             
             statement.execute();
             statement.close();
@@ -156,7 +132,7 @@ public class ChangeStatusDao extends AbstractDao {
 			changeStatus.setId(result.getLong("id"));
 			changeStatus.setEnabled(result.getBoolean("enabled"));
 			changeStatus.setJustification(result.getString("justification"));
-			changeStatus.setStatusCategory(new DeactivationCategory(result.getLong("id_deactivationCategory")));
+			changeStatus.setStatusCategory(new StatusCategory(result.getLong("id_statusCategory")));
 			
 			stmt.close();
 

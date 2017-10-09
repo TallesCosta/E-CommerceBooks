@@ -4,7 +4,10 @@ import br.com.talles.ecommercebooks.business.book.BookNotBlank;
 import br.com.talles.ecommercebooks.business.book.Ean13Unique;
 import br.com.talles.ecommercebooks.business.IStrategy;
 import br.com.talles.ecommercebooks.business.CreateView;
+import br.com.talles.ecommercebooks.business.book.FindBook;
 import br.com.talles.ecommercebooks.business.book.IsbnUnique;
+import br.com.talles.ecommercebooks.business.book.save.BookValidateSave;
+import br.com.talles.ecommercebooks.business.book.update.BookValidateUpdate;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
 import br.com.talles.ecommercebooks.business.customer.save.CustomerValidateSave;
 import br.com.talles.ecommercebooks.business.customer.update.CustomerValidateUpdate;
@@ -27,15 +30,15 @@ public class Facade implements IFacade {
     private Map<String, IDao> persistence;
     private Result result;
     
+	private static final String CREATE = "CREATE";
+    private static final String SAVE = "SAVE";
     private static final String LIST = "LIST";
     private static final String LIST_DISABLE = "LIST-DISABLE";
-    private static final String SAVE = "SAVE";
-    private static final String DELETE = "DELETE";
     private static final String FIND = "FIND";
     private static final String UPDATE = "UPDATE";
     private static final String DISABLE = "DISABLE";
     private static final String ENABLE = "ENABLE";
-	private static final String CREATE = "CREATE";
+    private static final String DELETE = "DELETE";
 	private static final String FILTERS = "FILTERS";
 	
 	 public Facade() {
@@ -44,46 +47,40 @@ public class Facade implements IFacade {
         
         // All Strategies
 		// Books
-		IStrategy bookNotBlank = new BookNotBlank();
-		IStrategy isbnUnique = new IsbnUnique();
-		IStrategy ean13Unique = new Ean13Unique();
+		IStrategy bookValidateSave = new BookValidateSave();
+		IStrategy bookValidateUpdate = new BookValidateUpdate();
+		IStrategy bookFind = new FindBook();
 		// Customers
 		IStrategy customerValidateSave = new CustomerValidateSave();
 		IStrategy customerValidateUpdate = new CustomerValidateUpdate();
-		IStrategy findCostumer = new FindCustomer();
+		IStrategy custumerFind = new FindCustomer();
                 
+		List<IStrategy> createBook = new ArrayList();
+		createBook.add(new CreateView());
+		
+        List<IStrategy> saveBook = new ArrayList();
+		saveBook.add(bookValidateSave);
+		
         List<IStrategy> listBook = new ArrayList();
 		listBook.add(new CreateView());
 		
         List<IStrategy> listDisableBook = new ArrayList();
 		listDisableBook.add(new CreateView());
-		
-        List<IStrategy> saveBook = new ArrayList();
-		saveBook.add(bookNotBlank);
-		saveBook.add(isbnUnique);
-		saveBook.add(ean13Unique);
-		
-		List<IStrategy> deleteBook = new ArrayList();
-		
-        
+		        
 		List<IStrategy> findBook = new ArrayList();
-		
-		
-        List<IStrategy> updateBook = new ArrayList();
-		
+				
+		List<IStrategy> updateBook = new ArrayList();
+		updateBook.add(bookValidateUpdate);
 		
 		List<IStrategy> disableBook = new ArrayList();
-		
+		disableBook.add(bookFind);
 		
 		List<IStrategy> enableBook = new ArrayList();
+		disableBook.add(bookFind);
 		
-		
-		List<IStrategy> createBook = new ArrayList();
-		createBook.add(new CreateView());
-		
+		List<IStrategy> deleteBook = new ArrayList();
 		List<IStrategy> filtersBook = new ArrayList();
-        
-		
+        		
 		List<IStrategy> createCustomer = new ArrayList();
 		createCustomer.add(new CreateView());
 		
@@ -91,33 +88,31 @@ public class Facade implements IFacade {
 		saveCustomer.add(customerValidateSave);
 		
 		List<IStrategy> listCustomer = new ArrayList();
-		
-		
 		List<IStrategy> listDisableCustomer = new ArrayList();
-		
-		
 		List<IStrategy> findCustomer = new ArrayList();
-		
-		
+				
 		List<IStrategy> updateCustomer = new ArrayList();
 		updateCustomer.add(customerValidateUpdate);
 		
 		List<IStrategy> disableCustomer = new ArrayList();
-		disableCustomer.add(findCostumer);
+		disableCustomer.add(custumerFind);
 		
 		List<IStrategy> enableCustomer = new ArrayList();
-		enableCustomer.add(findCostumer);
+		enableCustomer.add(custumerFind);
+		
+		List<IStrategy> deleteCustomer = new ArrayList();
+		List<IStrategy> filtersCustomer = new ArrayList();
 		
         Map<String, List<IStrategy>> contextBook = new HashMap();
+        contextBook.put(CREATE, createBook);
+		contextBook.put(SAVE, saveBook);
         contextBook.put(LIST, listBook);
         contextBook.put(LIST_DISABLE, listDisableBook);
-		contextBook.put(SAVE, saveBook);
-		contextBook.put(DELETE, deleteBook);
 		contextBook.put(FIND, findBook);
         contextBook.put(UPDATE, updateBook);
-        contextBook.put(CREATE, createBook);
         contextBook.put(DISABLE, disableBook);
         contextBook.put(ENABLE, enableBook);
+		contextBook.put(DELETE, deleteBook);
         contextBook.put(FILTERS, filtersBook);
 		
 		Map<String, List<IStrategy>> contextCustomer = new HashMap();
@@ -129,6 +124,8 @@ public class Facade implements IFacade {
 		contextCustomer.put(UPDATE, updateCustomer);
 		contextCustomer.put(DISABLE, disableCustomer);
 		contextCustomer.put(ENABLE, enableCustomer);
+		contextCustomer.put(DELETE, deleteCustomer);
+        contextCustomer.put(FILTERS, filtersCustomer);
 		
         requirements = new HashMap();
         requirements.put(book, contextBook);

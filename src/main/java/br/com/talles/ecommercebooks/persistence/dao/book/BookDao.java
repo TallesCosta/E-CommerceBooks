@@ -183,7 +183,66 @@ public class BookDao extends AbstractDao {
 
 	@Override
 	public boolean update(Entity entity, String operation) {
-		return false;
+		Book book = (Book) entity;
+        
+		if (operation.equals("UPDATE")) {
+			// Updates the Phone
+			/*DimensionDao dimensionDao = new DimensionDao();
+			if(!dimensionDao.update(book.getDimension(), operation)){
+				return false;
+			}
+
+			// Updates the User
+			SaleParameterizationDao saleParameterizationDao = new SaleParameterizationDao();
+			if(!saleParameterizationDao.update(book.getSaleParameterization(), operation)){
+				return false;
+			}*/
+			
+			// Author, Categories, etc.
+		} else if (operation.equals("DISABLE") || operation.equals("ENABLE")) {
+			StatusCategoryDao statusCategoryDao = new StatusCategoryDao();
+			
+			// Makes insert change-status or update case this exists in database
+			if ( book.getChangeStatus().getId() !=  0L ? 
+					statusCategoryDao.save(book.getChangeStatus()) : statusCategoryDao.update(book.getChangeStatus(), "UPDATE") ) {
+				return false;
+			}
+		}
+		
+        String sql = "UPDATE Books "
+                + "SET enabled = ?, title = ?, edition = ?, publicationYear = ?, numberOfPages = ?, synopsis = ?, isbn = ?, ean13 = ?, "
+				+ "id_author = ?, id_publishingCompany = ?, id_dimension = ?, id_priceGroup = ?, id_saleParameterization = ?"
+                + "WHERE id = ?";
+        
+        try {
+			openConnection();
+			
+            PreparedStatement statement = conn.prepareStatement(sql);
+            
+            statement.setBoolean(1, book.isEnabled());
+            statement.setString(2, book.getTitle());
+            statement.setString(3, book.getEdition());
+            statement.setInt(4, book.getPublicationYear());
+            statement.setInt(5, book.getNumberOfPages());
+            statement.setString(6, book.getSynopsis());
+            statement.setString(7, book.getIsbn());
+            statement.setString(8, book.getEan13());
+			
+            statement.setLong(9, book.getAuthor().getId());
+            statement.setLong(10, book.getPublishingCompany().getId());
+            statement.setLong(11, book.getDimension().getId());
+            statement.setLong(12, book.getPriceGroup().getId());
+            statement.setLong(13, book.getSaleParameterization().getId());
+            
+            statement.execute();
+            statement.close();
+            
+            return true;
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+			closeConnection();
+		}
 	}	
 
 	@Override

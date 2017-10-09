@@ -1,7 +1,7 @@
 package br.com.talles.ecommercebooks.persistence.dao.book;
 
-import br.com.talles.ecommercebooks.domain.book.ActivationCategory;
 import br.com.talles.ecommercebooks.domain.Entity;
+import br.com.talles.ecommercebooks.domain.book.StatusCategory;
 import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
 
 import java.sql.PreparedStatement;
@@ -10,12 +10,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivationCategoryDao extends AbstractDao {
+public class StatusCategoryDao extends AbstractDao {
 
 	@Override
 	public List<Entity> select(boolean enabled) {
-		List<Entity> activationCategories = new ArrayList();
-        String sql = "SELECT * FROM ActivationCategories WHERE enabled = ?";
+		List<Entity> statusCategories = new ArrayList();
+        String sql = "SELECT * FROM StatusCategories WHERE enabled = ?";
         
         try{
 			openConnection();
@@ -26,20 +26,21 @@ public class ActivationCategoryDao extends AbstractDao {
             ResultSet result = statement.executeQuery();
             
             while(result.next()){
-                ActivationCategory activationCategory = new ActivationCategory();
+                StatusCategory statusCategory = new StatusCategory();
                 
-                activationCategory.setId(result.getLong("id"));
-                activationCategory.setEnabled(result.getBoolean("enabled"));
-                activationCategory.setName(result.getString("name"));
-                activationCategory.setDescription(result.getString("description"));
+                statusCategory.setId(result.getLong("id"));
+                statusCategory.setEnabled(result.getBoolean("enabled"));
+                statusCategory.setName(result.getString("name"));
+                statusCategory.setActivationCategory(result.getBoolean("activationStatus"));
+                statusCategory.setDescription(result.getString("description"));
                 
-                activationCategories.add(activationCategory);
+                statusCategories.add(statusCategory);
             }
             
             result.close();
             statement.close();
             
-            return activationCategories;
+            return statusCategories;
         }catch(SQLException e){
             throw new RuntimeException(e);
         } finally {
