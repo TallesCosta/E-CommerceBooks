@@ -27,6 +27,12 @@ public class Book extends Entity {
 		this.categories = new ArrayList<>();
 	}
 
+	public Book(long id) {
+		super(id, true);
+		
+		this.categories = new ArrayList<>();
+	}
+	
 	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, 
 			String isbn, String ean13) {
 		super(true);

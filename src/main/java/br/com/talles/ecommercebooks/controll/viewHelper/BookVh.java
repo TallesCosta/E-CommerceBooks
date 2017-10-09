@@ -169,11 +169,13 @@ public class BookVh implements IViewHelper {
 
 			case "DISABLE":
 				book.setId(id);
+				book.setEnabled(false);
 				book.setChangeStatus(new ChangeStatus(justification, new StatusCategory(idDeactivationCategory)));
 				break;
 
 			case "ENABLE":
 				book.setId(id);
+				book.setEnabled(true);
 				book.setChangeStatus(new ChangeStatus(justification, new StatusCategory(idActivationCategory)));
 				break;
 				

@@ -204,13 +204,13 @@ public class CustomerVh implements IViewHelper {
 				break;
 
 			case "DISABLE":
-				customer.setEnabled(false);
 				customer.setId(id);
+				customer.setEnabled(false);
 				break;
 
 			case "ENABLE":
-				customer.setEnabled(true);
 				customer.setId(id);
+				customer.setEnabled(true);
 				break;
 				
 			case "CREATE" :				

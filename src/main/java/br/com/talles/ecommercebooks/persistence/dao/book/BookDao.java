@@ -156,9 +156,10 @@ public class BookDao extends AbstractDao {
                 book.setId(result.getLong("id"));
 				book.setEnabled(result.getBoolean("enabled"));
 				book.setTitle(result.getString("title"));
+				book.setEdition(result.getString("edition"));
 				book.setPublicationYear(result.getInt("publicationYear"));
 				book.setNumberOfPages(result.getInt("numberOfPages"));
-				book.setEdition(result.getString("edition"));
+				book.setSynopsis(result.getString("synopsis"));
 				book.setIsbn(result.getString("isbn"));
 				book.setEan13(result.getString("ean13"));
 				
@@ -200,18 +201,20 @@ public class BookDao extends AbstractDao {
 			
 			// Author, Categories, etc.
 		} else if (operation.equals("DISABLE") || operation.equals("ENABLE")) {
-			StatusCategoryDao statusCategoryDao = new StatusCategoryDao();
+			ChangeStatusDao changeStatusDao = new ChangeStatusDao();
 			
 			// Makes insert change-status or update case this exists in database
-			if ( book.getChangeStatus().getId() !=  0L ? 
-					statusCategoryDao.save(book.getChangeStatus()) : statusCategoryDao.update(book.getChangeStatus(), "UPDATE") ) {
+			boolean completed = book.getChangeStatus().getId() ==  0L ? 
+					changeStatusDao.save(book.getChangeStatus()) : changeStatusDao.update(book.getChangeStatus(), "UPDATE");
+			if (!completed)
 				return false;
-			}
+			
+			book.setChangeStatus((ChangeStatus) changeStatusDao.findLast());
 		}
 		
         String sql = "UPDATE Books "
                 + "SET enabled = ?, title = ?, edition = ?, publicationYear = ?, numberOfPages = ?, synopsis = ?, isbn = ?, ean13 = ?, "
-				+ "id_author = ?, id_publishingCompany = ?, id_dimension = ?, id_priceGroup = ?, id_saleParameterization = ?"
+				+ "id_author = ?, id_publishingCompany = ?, id_dimension = ?, id_priceGroup = ?, id_saleParameterization = ?, id_changeStatus = ? "
                 + "WHERE id = ?";
         
         try {
@@ -233,6 +236,8 @@ public class BookDao extends AbstractDao {
             statement.setLong(11, book.getDimension().getId());
             statement.setLong(12, book.getPriceGroup().getId());
             statement.setLong(13, book.getSaleParameterization().getId());
+            statement.setLong(14, book.getChangeStatus().getId());
+            statement.setLong(15, book.getId());
             
             statement.execute();
             statement.close();

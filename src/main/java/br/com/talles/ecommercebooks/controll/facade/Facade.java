@@ -1,11 +1,8 @@
 package br.com.talles.ecommercebooks.controll.facade;
 
-import br.com.talles.ecommercebooks.business.book.BookNotBlank;
-import br.com.talles.ecommercebooks.business.book.Ean13Unique;
 import br.com.talles.ecommercebooks.business.IStrategy;
 import br.com.talles.ecommercebooks.business.CreateView;
-import br.com.talles.ecommercebooks.business.book.FindBook;
-import br.com.talles.ecommercebooks.business.book.IsbnUnique;
+import br.com.talles.ecommercebooks.business.book.ModifyStatus;
 import br.com.talles.ecommercebooks.business.book.save.BookValidateSave;
 import br.com.talles.ecommercebooks.business.book.update.BookValidateUpdate;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
@@ -49,7 +46,7 @@ public class Facade implements IFacade {
 		// Books
 		IStrategy bookValidateSave = new BookValidateSave();
 		IStrategy bookValidateUpdate = new BookValidateUpdate();
-		IStrategy bookFind = new FindBook();
+		IStrategy modifyStatus = new ModifyStatus();
 		// Customers
 		IStrategy customerValidateSave = new CustomerValidateSave();
 		IStrategy customerValidateUpdate = new CustomerValidateUpdate();
@@ -73,10 +70,10 @@ public class Facade implements IFacade {
 		updateBook.add(bookValidateUpdate);
 		
 		List<IStrategy> disableBook = new ArrayList();
-		disableBook.add(bookFind);
+		disableBook.add(modifyStatus);
 		
 		List<IStrategy> enableBook = new ArrayList();
-		disableBook.add(bookFind);
+		enableBook.add(modifyStatus);
 		
 		List<IStrategy> deleteBook = new ArrayList();
 		List<IStrategy> filtersBook = new ArrayList();
