@@ -32,8 +32,10 @@
     <body>
 		<%
 			Customer customer = new Customer("", "", new Date(0L), new Gender(""), new Phone("", "", "", 0L), 
-					new User("", "", "", 0L), new Address("", "", "", "", "", "", "", "", 0L), 
-					Arrays.asList(new CreditCard("", "", "", new Date(0L), new CardCompany(), 0L)), 0L);
+					new User("", "", "", 0L), 
+					new Address("", "", "", "", "", "", "", "", new City(0L, new State(0L, new Country(0L))), 0L), 
+					new Address("", "", "", "", "", "", "", "", new City(0L, new State(0L, new Country(0L))), 0L), 
+					Arrays.asList(new CreditCard("", "", "", new Date(0L), new CardCompany(0L), 0L)), 0L);
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 			if (result.getKeys().contains(Customer.class.getSimpleName())) {
@@ -181,6 +183,8 @@
 							   placeholder="Casa, Apartamento, etc.">
 					</div>
 					<div>
+						<input type="hidden" name="idHomeCity" id="idHomeCity" 
+							   <% out.print("value='" + customer.getHomeAddress().getCity().getId() + "'"); %> >
 						<label for="homeCity">Cidade*: </label>
 						<select name="homeCity" id="homeCity">
 		<%	
@@ -192,6 +196,9 @@
 						<select>
 					</div>
 					<div>
+						<input type="hidden" name="idHomeState" id="idHomeState" 
+							   <% out.print("value='" + customer.getHomeAddress().getCity()
+									   .getState().getId() + "'"); %> >
 						<label for="homeState">Estado*: </label>
 						<select name="homeState" id="homeState">
 		<%	
@@ -203,6 +210,9 @@
 						<select>
 					</div>
 					<div>
+						<input type="hidden" name="idHomeCountry" id="idHomeCountry" 
+							   <% out.print("value='" + customer.getHomeAddress().getCity()
+									   .getState().getCountry().getId() + "'"); %> >
 						<label for="homeCountry">País*: </label>
 						<select name="homeCountry" id="homeCountry">
 		<%	
@@ -264,6 +274,8 @@
 							   placeholder="Casa, Apartamento, etc.">
 					</div>
 					<div>
+						<input type="hidden" name="idChargeCity" id="idChargeCity" 
+							   <% out.print("value='" + customer.getChargeAddress().getCity().getId() + "'"); %> >
 						<label for="chargeCity">Cidade*: </label>
 						<select name="chargeCity" id="chargeCity">
 			<%	
@@ -275,6 +287,9 @@
 						<select>
 					</div>
 					<div>
+						<input type="hidden" name="idChargeState" id="idChargeState" 
+							   <% out.print("value='" + customer.getChargeAddress().getCity()
+									   .getState().getId() + "'"); %> >
 						<label for="chargeState">Estado*: </label>
 						<select name="chargeState" id="chargeState">
 			<%	
@@ -286,6 +301,9 @@
 						<select>
 					</div>
 					<div>
+						<input type="hidden" name="idChargeCountry" id="idChargeCountry" 
+							   <% out.print("value='" + customer.getChargeAddress().getCity()
+									   .getState().getCountry().getId() + "'"); %> >
 						<label for="chargeCountry">País*: </label>
 						<select name="chargeCountry" id="chargeCountry">
 			<%	
@@ -325,6 +343,9 @@
 							   value="<% out.print(dateFormat.format(customer.getCreditCard().get(0).getExpirationDate())); %>"
 					</div>
 					<div>
+						<input type="hidden" name="idCardCompany" id="idCardCompany" 
+							   <% out.print("value='" + customer.getCreditCard(0)
+									   .getCardCompany().getId() + "'"); %> >
 						<label for="cardCompany">Bandeira*: </label>
 						<select name="cardCompany" id="cardCompany">
 			<%	
@@ -353,5 +374,36 @@
 	%>
 		
 		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			crossorigin="anonymous">
+		</script>
+		
+		<script>
+			// With the page ready, selects the options in combo-boxes
+			$(function() {
+				var idHomeCity = $("#idHomeCity").val();
+				$("#homeCity").val(idHomeCity);
+								
+				var idHomeState = $("#idHomeState").val();
+				$("#homeState").val(idHomeState);
+				
+				var idHomeCountry = $("#idHomeCountry").val();
+				$("#homeCountry").val(idHomeCountry);
+				
+				var idChargeCity = $("#idChargeCity").val();
+				$("#chargeCity").val(idChargeCity);
+								
+				var idChargeState = $("#idChargeState").val();
+				$("#chargeState").val(idChargeState);
+				
+				var idChargeCountry = $("#idChargeCountry").val();
+				$("#chargeCountry").val(idChargeCountry);
+				
+				var idCreditCard = $("#idCreditCard").val();
+				$("#creditCard").val(idCreditCard);
+			});
+		</script>
+		
     </body>
 </html>

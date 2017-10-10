@@ -82,8 +82,26 @@ public class Customer extends Entity {
 		this.creditCards = new ArrayList<>();
 	}
 	
-	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, Address homeAddress, 
-			Address chargeAddress, List<CreditCard> creditCard, List<DeliveryAddress> deliveryAddresses) {
+	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
+			Address homeAddress, Address chargeAddres, List<CreditCard> creditCard, long id) {
+		super(id, true);
+		this.registry = registry;
+		this.name = name;
+		this.birthDate = birthDate;
+		this.gender = gender;
+		this.phone = phone;
+		this.user = user;
+		this.homeAddress = homeAddress;
+		this.chargeAddress = chargeAddres;
+		
+		this.deliveryAddresses = new ArrayList<>();
+		this.creditCards = new ArrayList<>();
+		this.creditCards = creditCard;
+	}
+	
+	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, 
+			User user, Address homeAddress, Address chargeAddress, List<CreditCard> creditCard, 
+			List<DeliveryAddress> deliveryAddresses) {
 		super(true);
 		this.registry = registry;
 		this.name = name;
@@ -97,8 +115,9 @@ public class Customer extends Entity {
 		this.creditCards = creditCard;
 	}
 
-	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, Address homeAddress,
-			Address chargeAddress, List<CreditCard> creditCard, List<DeliveryAddress> deliveryAddresses, long id) {
+	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, 
+			User user, Address homeAddress, Address chargeAddress, List<CreditCard> creditCard, 
+			List<DeliveryAddress> deliveryAddresses, long id) {
 		super(id, true);
 		this.registry = registry;
 		this.name = name;

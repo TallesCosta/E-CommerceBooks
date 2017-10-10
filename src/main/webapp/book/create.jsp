@@ -233,12 +233,11 @@
 		</script>
 		
 		<script>
-			// TODO: Use this code to all selects sz
+			// With the page ready, selects the options in combo-boxes
 			$(function() {
 				var idAuthor = $("#idAuthor").val();
 				$("#author").val(idAuthor);
 				
-				// Don't work :(
 				var idCategory = $("#idCategory").val();
 				idCategory = idCategory.split("-");
 				$("#category").val(idCategory);
