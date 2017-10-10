@@ -27,7 +27,8 @@ public class BookDao extends AbstractDao {
 	@Override
 	public List<Entity> select(boolean enabled) {
 		List<Entity> books = new ArrayList();
-        String sql = "SELECT b.*, GROUP_CONCAT(c.name SEPARATOR '-') AS categories FROM Books b "
+        String sql = "SELECT b.*, GROUP_CONCAT(c.name SEPARATOR '-') AS categories "
+				+ "FROM Books b "
 				+ "INNER JOIN BooksCategories bc ON b.id = bc.id_book "
 				+ "INNER JOIN Categories c ON bc.id_category = c.id "
 				+ "WHERE b.enabled = ? "
@@ -152,14 +153,20 @@ public class BookDao extends AbstractDao {
 	public Entity find(Entity entity) {
 		Book book = (Book) entity;
 		
-        String sql = "SELECT * FROM Books b "
+        String sql = "SELECT b.*, a.*, pc.*, d.*, pg.*, sp.*, cs.*, "
+				+ "GROUP_CONCAT(c.id SEPARATOR '-') AS catsId, "
+				+ "GROUP_CONCAT(c.name SEPARATOR '-') AS catsName "
+				+ "FROM Books b "
                 + "INNER JOIN Authors a on b.id_author = a.id "
 				+ "INNER JOIN PublishingCompanies pc on b.id_publishingCompany = pc.id "
 				+ "INNER JOIN Dimensions d on b.id_dimension = d.id "
 				+ "INNER JOIN PriceGroups pg on b.id_priceGroup = pg.id "
 				+ "INNER JOIN SaleParameterizations sp on b.id_saleParameterization = sp.id "
 				+ "INNER JOIN ChangeStatus cs on b.id_changeStatus = cs.id "
-				+ "WHERE b.id = ?";
+				+ "INNER JOIN BooksCategories bc on b.id = bc.id_book "
+				+ "INNER JOIN Categories c on bc.id_category = c.id "
+				+ "WHERE b.id = ? "
+				+ "GROUP BY bc.id_book";
         
         try {
 			openConnection();
@@ -195,6 +202,16 @@ public class BookDao extends AbstractDao {
 				book.setChangeStatus(new ChangeStatus(result.getString("changeStatus.justification"), 
 						new StatusCategory(result.getLong("changeStatus.id_statusCategory")), 
 						result.getLong("changeStatus.id")));
+				
+				List<Category> categories = new ArrayList<>();
+				String[] catsIds = result.getString("catsId").split("-");
+				String[] catsNames = result.getString("catsName").split("-");
+				
+				for (int i = 0; i < catsIds.length; i++) {
+					categories.add(new Category(catsNames[i], new Long(catsIds[i])));
+				}
+				
+				book.setCategories(categories);
             }
             
             result.close();

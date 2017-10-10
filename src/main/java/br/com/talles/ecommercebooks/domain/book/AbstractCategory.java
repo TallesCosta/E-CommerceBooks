@@ -23,6 +23,11 @@ public abstract class AbstractCategory extends Entity {
 		super(true);
 		this.name = name;
 	}
+
+	public AbstractCategory(String name, long id) {
+		super(id);
+		this.name = name;
+	}
 	
 	public AbstractCategory(String name, String description) {
 		super(true);

@@ -10,6 +10,7 @@
 <%@page import="br.com.talles.ecommercebooks.domain.book.Category"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
 <%@page import="br.com.talles.ecommercebooks.controll.Result"%>
+<%@page import="java.util.Arrays"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -30,8 +31,10 @@
 	<body>
 		<%
 			Book book = new Book("", "", 0, 0, "", "", "", 
-					new Dimension(0.0, 0.0, 0.0, 0.0, 0L), new SaleParameterization(0, 0, 0L),
-					new ChangeStatus(new StatusCategory(0L), 0L), 0L);
+					new Dimension(0.0, 0.0, 0.0, 0.0, 0L), new PriceGroup(0.0, 0L), 
+					new PublishingCompany(0L), new SaleParameterization(0, 0, 0L),
+					new ChangeStatus(new StatusCategory(0L), 0L), new Author(0L), 
+					Arrays.asList(new Category(0L)), 0L);
 			
 			if (result.getKeys().contains(Book.class.getSimpleName())) {
 				book = (Book) result.getEntities(Book.class.getSimpleName()).get(0);
@@ -70,7 +73,8 @@
 						<textarea name="synopsis" id="synopsis" maxlength="255"><% out.print(book.getSynopsis()); %></textarea>
 					</div>
 					<div>
-						<input type="hidden" name="idAuthor" id="idAuthor" value="2" >
+						<input type="hidden" name="idAuthor" id="idAuthor" 
+							   <% out.print("value='" + book.getAuthor().getId() + "'"); %> >
 						<label for="author">Autor*: </label>
 						<select name="author" id="author">
 		<%	
@@ -82,7 +86,14 @@
 						</select>
 					</div>
 					<div>
-						<input type="hidden" name="idCategory" id="idCategory" value="1-2" >
+						<input type="hidden" name="idCategory" id="idCategory" 
+							   <% 
+								   String value = "";
+								   for (Category c : book.getCategories()) {
+									   value += c.getId() + "-";
+								   }
+								   
+								   out.print("value='" + value.substring(0, value.length() - 1) + "'"); %> >
 						<label for="category">Categoria*: </label>
 						<select name="category" id="category" multiple>
 		<%
@@ -98,7 +109,8 @@
 						</select>
 					</div>
 					<div>
-						<input type="hidden" name="idPublishingCompany" id="idPublishingCompany" value="1" >
+						<input type="hidden" name="idPublishingCompany" id="idPublishingCompany" 
+							   <% out.print("value='" + book.getPublishingCompany().getId() + "'"); %> >
 						<label for="publishingCompany">Editora*: </label>
 						<select name="publishingCompany" id="publishingCompany">
 		<%
@@ -160,7 +172,8 @@
 				<fieldset>
 					<legend>Grupo de Precificação</legend>
 					<div>
-						<input type="hidden" name="idPriceGroup" id="idPriceGroup" value="2" >
+						<input type="hidden" name="idPriceGroup" id="idPriceGroup" 
+							   <% out.print("value='" + book.getPriceGroup().getId() + "'"); %> >
 						<label for="priceGroup">Porcentagem*: </label>
 						<select name="priceGroup" id="priceGroup">
 		<%
@@ -223,20 +236,18 @@
 			// TODO: Use this code to all selects sz
 			$(function() {
 				var idAuthor = $("#idAuthor").val();
-				$("#author").prop("selectedIndex", idAuthor);
+				$("#author").val(idAuthor);
 				
 				// Don't work :(
 				var idCategory = $("#idCategory").val();
 				idCategory = idCategory.split("-");
-				for (var i = idCategory.length; i > 0 ; i--) {
-					$("#category").prop("selectedIndex", idCategory[i]);
-				}
+				$("#category").val(idCategory);
 				
 				var idPublishingCompany = $("#idPublishingCompany").val();
-				$("#publishingCompany").prop("selectedIndex", idPublishingCompany);
+				$("#publishingCompany").val(idPublishingCompany);
 				
 				var idPriceGroup = $("#idPriceGroup").val();
-				$("#priceGroup").prop("selectedIndex", idPriceGroup);
+				$("#priceGroup").val(idPriceGroup);
 			});
 		</script>
 		
