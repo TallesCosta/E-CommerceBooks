@@ -236,8 +236,16 @@ public class Facade implements IFacade {
 		
         result.setOperation(operation);
 		result = executeValidations(entity, validations);
-        if(result.hasMsg())
-            return result;
+		if(result.hasMsg()){
+			String msg = result.getMsg();
+			
+			result = create(entity, CREATE);
+			
+			result.addEntity(entity);
+			result.setMsg(msg);
+			
+			return result;
+		}
 
         IDao dao = persistence.get(entity.getClass().getSimpleName());
         boolean resultDao = dao.update(entity, operation);

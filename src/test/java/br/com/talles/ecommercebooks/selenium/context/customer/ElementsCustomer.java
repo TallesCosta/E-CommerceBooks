@@ -59,7 +59,7 @@ public class ElementsCustomer {
 	public final String INPUT_CARD_CARD_COMPANY = "cardCompany";
 	
 	// Buttons
-	public final String BUTTON_SAVE_CUSTOMER = "save-custumer";
+	public final String BUTTON_SAVE_CUSTOMER = "operation-custumer";
 	
 	// "Fake data"
 	public final String LINK_DISABLE_CUSTOMER_1 = "disable-1";

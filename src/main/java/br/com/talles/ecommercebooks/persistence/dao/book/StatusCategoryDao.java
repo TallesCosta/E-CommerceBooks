@@ -15,7 +15,7 @@ public class StatusCategoryDao extends AbstractDao {
 	@Override
 	public List<Entity> select(boolean enabled) {
 		List<Entity> statusCategories = new ArrayList();
-        String sql = "SELECT * FROM StatusCategories WHERE enabled = ?";
+        String sql = "SELECT * FROM StatusCategories WHERE enabled = ? AND id <> -1";
         
         try{
 			openConnection();

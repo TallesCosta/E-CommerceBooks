@@ -212,7 +212,7 @@
 			}
 		%>
 						<select>
-						</div>
+					</div>
 				</fieldset>
 				
 		<%
@@ -340,7 +340,7 @@
 			}
 		%>
 
-				<input type="hidden" name="operation" id="save-custumer" 
+				<input type="hidden" name="operation" id="operation-custumer" 
 					<% if (result.getOperation().equals("CREATE")) { out.print("value='SAVE'"); }
 					else if (result.getOperation().equals("FIND")) { out.print("value='UPDATE'"); } %> />
 		

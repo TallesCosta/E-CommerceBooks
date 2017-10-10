@@ -1,6 +1,9 @@
 /*
-	Populate activation-category table
+	Populate status-category table
 */
+INSERT INTO StatusCategories(id, enabled, name, activationStatus, description)
+VALUES (-1, true, 'Novo livro criado', true, 'Novo livro inserido no sistema.');
+
 INSERT INTO StatusCategories(enabled, name, activationStatus, description)
 VALUES (true, 'Nova Demanda', true, 'O mercado mudou e os consumidores querem comprar esse livro novamente.'),
 		(true, 'Ordens Superiores', true, 'Um superior determinou que este livro deve ser ativado.'),

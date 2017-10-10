@@ -13,10 +13,8 @@ public class Ean13Unique implements IStrategy {
 		Book book = (Book) entity;
 		
 		BookDao bookDao = new BookDao();
-		Book foundBook = (Book) bookDao.findEan13(entity);
-		
-		if (foundBook.getId() != 0L) {
-			result.addMsg("Código de Barras " + foundBook.getEan13() + " já cadastrado para o livro " + foundBook.getTitle() + "!");
+		if (bookDao.hasThisEan13(entity)) {
+			result.addMsg("Código de Barras " + book.getEan13() + " já cadastrado!\n");
 		}
 		
 		return result;

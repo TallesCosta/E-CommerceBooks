@@ -1,6 +1,7 @@
 package br.com.talles.ecommercebooks.domain.book;
 
 import br.com.talles.ecommercebooks.domain.Entity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +60,24 @@ public class Book extends Entity {
 		this.ean13 = ean13;
 		this.dimension = dimension;
 		this.saleParameterization = saleParameterization;
+		
+		this.categories = new ArrayList<>();
+	}
+	
+	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, 
+			String isbn, String ean13, Dimension dimension, SaleParameterization saleParameterization,
+			ChangeStatus changeStatus, long id) {
+		super(id, true);
+		this.title = title;
+		this.edition = edition;
+		this.publicationYear = publicationYear;
+		this.numberOfPages = numberOfPages;
+		this.synopsis = synopsis;
+		this.isbn = isbn;
+		this.ean13 = ean13;
+		this.dimension = dimension;
+		this.saleParameterization = saleParameterization;
+		this.changeStatus = changeStatus;
 		
 		this.categories = new ArrayList<>();
 	}

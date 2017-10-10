@@ -119,12 +119,12 @@
 						out.println("<td>" + book.getEan13()+ "</td>");
 						out.println("<td>" + categories.substring(0, categories.length() - 2) + "</td>");
 						out.println("<td>"
-										+ "<a href='books/find?operation=FIND&id=" + book.getId() + "'>"
+										+ "<a href='" + request.getContextPath() + "/books/find?operation=FIND&id=" + book.getId() + "'>"
 											+ "<i class='fa fa-pencil' aria-hidden='true'></i>"
 										+ "</a>"
 									+ "</td>");
 						out.println("<td>"
-										+ "<a onclick='setDisableId(" + book.getId() + ")' href='#'>"
+										+ "<a href='" + request.getContextPath() + "/books/disable?operation=DISABLE&id=" + book.getId() + "'>"
 											+ "<i class='fa fa-trash' aria-hidden='true'></i>"
 										+ "</a>"
 									+ "</td>");

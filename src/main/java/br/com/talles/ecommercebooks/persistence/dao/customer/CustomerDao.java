@@ -161,14 +161,13 @@ public class CustomerDao extends AbstractDao {
 				+ "INNER JOIN Users u ON c.id_user = u.id "
 				+ "INNER JOIN Addresses ha ON c.id_homeAddress = ha.id "
 				+ "INNER JOIN Addresses ca ON c.id_chargeAddress = ca.id "
-				+ "WHERE c.enabled = ? AND c.id = ?";
+				+ "WHERE c.id = ?";
 		
 		try {
 			openConnection();
 			
 			PreparedStatement stmt = conn.prepareStatement(query);
-			stmt.setBoolean(1, customer.isEnabled());
-			stmt.setLong(2, customer.getId());
+			stmt.setLong(1, customer.getId());
 			
 			ResultSet result = stmt.executeQuery();
 			

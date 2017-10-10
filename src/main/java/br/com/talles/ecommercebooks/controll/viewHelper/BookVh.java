@@ -72,6 +72,11 @@ public class BookVh implements IViewHelper {
 		if (!(depthS == null || depthS.equals("")))
 			depth = Double.valueOf(depthS);
 		
+		String idDimensionS = request.getParameter("idDimension");
+		long idDimension = 0L;
+		if (!(idDimensionS == null || idDimensionS.equals("")))
+			idDimension = Long.valueOf(idDimensionS);
+		
 		// SaleParameterization datas
 		String minSaleLimitS = request.getParameter("minSaleLimit");
 		int minSaleLimit = 0;
@@ -86,6 +91,11 @@ public class BookVh implements IViewHelper {
 			// Convert any time to minute
 			periodicity = convertToMinute(periodicity, request.getParameter("classifierPeriod"));
 		}
+		
+		String idSaleParameterizationS = request.getParameter("idSaleParameterization");
+		long idSaleParameterization = 0L;
+		if (!(idSaleParameterizationS == null || idSaleParameterizationS.equals("")))
+			idSaleParameterization = Long.valueOf(idSaleParameterizationS);
 		
 		// Author data
 		String idAuthorS = request.getParameter("author");
@@ -118,8 +128,21 @@ public class BookVh implements IViewHelper {
 			categories.add(new Category(idCategory));
 		}
 		
-		// ChangeStatus
+		// ChangeStatus (Save)
 		String justification = request.getParameter("justification");
+		
+		// ChangeStatus (Update)
+		String idChangeStatusS = request.getParameter("idChangeStatus");
+		long idChangeStatus = 0L;
+		if (!(idChangeStatusS == null || idChangeStatusS.equals("")))
+			idChangeStatus = Long.valueOf(idChangeStatusS);
+		
+		String justificationChangeStatus = request.getParameter("justificationChangeStatus");
+		
+		String idStatusCategoryChangeStatusS = request.getParameter("idStatusCategoryChangeStatus");
+		long idStatusCategoryChangeStatus = 0L;
+		if (!(idStatusCategoryChangeStatusS == null || idStatusCategoryChangeStatusS.equals("")))
+			idStatusCategoryChangeStatus = Long.valueOf(idStatusCategoryChangeStatusS);
 		
 		// DeactivationCategory
 		String idDeactivationCategoryS = request.getParameter("deactivationCategory");
@@ -152,6 +175,7 @@ public class BookVh implements IViewHelper {
 				book.setAuthor(new Author(idAuthor));
 				book.setPublishingCompany(new PublishingCompany(idPublishingCompany));
 				book.setPriceGroup(new PriceGroup(idPriceGroup));
+				book.setChangeStatus(new ChangeStatus("Livro novo", new StatusCategory(-1L)));
 				book.addCategories(categories);
 				break;
 
@@ -162,9 +186,27 @@ public class BookVh implements IViewHelper {
 				break;
 				
 			case "FIND":
+				book.setId(id);
 				break;
 
 			case "UPDATE":
+				book.setId(id);
+				book.setTitle(title);
+				book.setSynopsis(synopsis);
+				book.setPublicationYear(publicationYear);
+				book.setNumberOfPages(numberOfPages);
+				book.setEdition(edition);
+				book.setIsbn(isbn);
+				book.setEan13(ean13);
+				book.setDimension(new Dimension(height, widht, weight, depth, idDimension));
+				book.setSaleParameterization(new SaleParameterization(minSaleLimit, periodicity, 
+						idSaleParameterization));
+				book.setAuthor(new Author(idAuthor));
+				book.setPublishingCompany(new PublishingCompany(idPublishingCompany));
+				book.setPriceGroup(new PriceGroup(idPriceGroup));
+				book.setChangeStatus(new ChangeStatus(justificationChangeStatus, 
+						new StatusCategory(idStatusCategoryChangeStatus), idChangeStatus));
+				book.addCategories(categories);
 				break;
 
 			case "DISABLE":
@@ -219,9 +261,17 @@ public class BookVh implements IViewHelper {
 					break;
 
 				case "FIND":
+					dispatcher = request.getRequestDispatcher("/book/create.jsp");
+					dispatcher.forward(request, response);
 					break;
 
 				case "UPDATE":
+					if (!result.hasMsg()) {
+						response.sendRedirect("/E-CommerceBooks/books/list?operation=LIST");
+					} else {
+						dispatcher = request.getRequestDispatcher("/book/create.jsp");
+						dispatcher.forward(request, response);
+					}
 					break;
 
 				case "DISABLE":

@@ -59,7 +59,33 @@ public class DimensionDao extends AbstractDao {
 
 	@Override
 	public boolean update(Entity entity, String operation) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		Dimension dimension = (Dimension) entity;
+		
+		String sql = "UPDATE Dimensions "
+                + "SET enabled = ?, height = ?, widht = ?, weight = ?, depth = ? "
+                + "WHERE id = ?";
+        
+        try {
+			openConnection();
+			
+            PreparedStatement statement = conn.prepareStatement(sql);
+            
+            statement.setBoolean(1, dimension.isEnabled());
+            statement.setDouble(2, dimension.getHeight());
+            statement.setDouble(3, dimension.getWidht());
+            statement.setDouble(4, dimension.getWeight());
+            statement.setDouble(5, dimension.getDepth());
+            statement.setLong(6, dimension.getId());
+            
+            statement.execute();
+            statement.close();
+            
+            return true;
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+			closeConnection();
+		}
 	}
 	
 	@Override

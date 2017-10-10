@@ -13,10 +13,9 @@ public class IsbnUnique implements IStrategy {
 		Book book = (Book) entity;
 		
 		BookDao bookDao = new BookDao();
-		Book foundBook = (Book) bookDao.findIsbn(entity);
 		
-		if (foundBook.getId() != 0L) {
-			result.addMsg("ISBN " + foundBook.getIsbn() + " já cadastrado para o livro " + foundBook.getTitle() + "!");
+		if (bookDao.hasThisIsbn(entity)) {
+			result.addMsg("ISBN " + book.getIsbn() + " já cadastrado!\n");
 		}
 		
 		return result;

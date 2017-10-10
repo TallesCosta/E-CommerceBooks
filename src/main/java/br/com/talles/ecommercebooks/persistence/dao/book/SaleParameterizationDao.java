@@ -57,7 +57,31 @@ public class SaleParameterizationDao extends AbstractDao {
 
 	@Override
 	public boolean update(Entity entity, String operation) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		SaleParameterization saleParameterization = (SaleParameterization) entity;
+		
+		String sql = "UPDATE SaleParameterizations "
+                + "SET enabled = ?, minSaleLimit = ?, periodicity = ? "
+                + "WHERE id = ?";
+        
+        try {
+			openConnection();
+			
+            PreparedStatement statement = conn.prepareStatement(sql);
+            
+            statement.setBoolean(1, saleParameterization.isEnabled());
+            statement.setInt(2, saleParameterization.getMinSaleLimit());
+            statement.setInt(3, saleParameterization.getPeriodicity());
+            statement.setLong(4, saleParameterization.getId());
+            
+            statement.execute();
+            statement.close();
+            
+            return true;
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+			closeConnection();
+		}
 	}
 
 	@Override
