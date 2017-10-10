@@ -1,6 +1,4 @@
 <%@page import="br.com.talles.ecommercebooks.domain.book.StatusCategory"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.List"%>
 <%@page import="br.com.talles.ecommercebooks.domain.book.ChangeStatus"%>
 <%@page import="br.com.talles.ecommercebooks.domain.book.Dimension"%>
 <%@page import="br.com.talles.ecommercebooks.domain.book.Author"%>
@@ -12,6 +10,8 @@
 <%@page import="br.com.talles.ecommercebooks.domain.book.Category"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
 <%@page import="br.com.talles.ecommercebooks.controll.Result"%>
+<%@page import="java.util.List"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 	<%
@@ -82,7 +82,8 @@
 						</select>
 					</div>
 					<div>
-						<label for="category">Categoria*: </label>						
+						<input type="hidden" name="idCategory" id="idCategory" value="1-2" >
+						<label for="category">Categoria*: </label>
 						<select name="category" id="category" multiple>
 		<%
 			for(Entity entity : result.getEntities(Category.class.getSimpleName())){
@@ -97,6 +98,7 @@
 						</select>
 					</div>
 					<div>
+						<input type="hidden" name="idPublishingCompany" id="idPublishingCompany" value="1" >
 						<label for="publishingCompany">Editora*: </label>
 						<select name="publishingCompany" id="publishingCompany">
 		<%
@@ -158,6 +160,7 @@
 				<fieldset>
 					<legend>Grupo de Precificação</legend>
 					<div>
+						<input type="hidden" name="idPriceGroup" id="idPriceGroup" value="2" >
 						<label for="priceGroup">Porcentagem*: </label>
 						<select name="priceGroup" id="priceGroup">
 		<%
@@ -221,6 +224,19 @@
 			$(function() {
 				var idAuthor = $("#idAuthor").val();
 				$("#author").prop("selectedIndex", idAuthor);
+				
+				// Don't work :(
+				var idCategory = $("#idCategory").val();
+				idCategory = idCategory.split("-");
+				for (var i = idCategory.length; i > 0 ; i--) {
+					$("#category").prop("selectedIndex", idCategory[i]);
+				}
+				
+				var idPublishingCompany = $("#idPublishingCompany").val();
+				$("#publishingCompany").prop("selectedIndex", idPublishingCompany);
+				
+				var idPriceGroup = $("#idPriceGroup").val();
+				$("#priceGroup").prop("selectedIndex", idPriceGroup);
 			});
 		</script>
 		
