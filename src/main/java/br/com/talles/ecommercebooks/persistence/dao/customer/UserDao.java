@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class UserDao extends AbstractDao {
 
 	@Override
-	public List<Entity> select(boolean enabled) {
+	public List<Entity> select(boolean enabled, Entity entity) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 

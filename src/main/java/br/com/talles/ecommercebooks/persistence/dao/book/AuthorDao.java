@@ -13,7 +13,7 @@ import java.util.List;
 public class AuthorDao extends AbstractDao {
 
 	@Override
-	public List<Entity> select(boolean enabled) {
+	public List<Entity> select(boolean enabled, Entity entity) {
 		List<Entity> authors = new ArrayList();
         String sql = "SELECT * FROM authors WHERE enabled = ?";
         

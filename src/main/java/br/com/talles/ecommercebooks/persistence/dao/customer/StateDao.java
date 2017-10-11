@@ -12,7 +12,7 @@ import java.util.List;
 public class StateDao extends AbstractDao {
 
 	@Override
-	public List<Entity> select(boolean enabled) {
+	public List<Entity> select(boolean enabled, Entity entity) {
 		List<Entity> states = new ArrayList();
         String sql = "SELECT * FROM States WHERE enabled = ?";
         

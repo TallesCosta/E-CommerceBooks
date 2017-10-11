@@ -149,7 +149,7 @@ public class Facade implements IFacade {
             return result;
 		
 		IDao dao = persistence.get(entity.getClass().getSimpleName());
-        result.addEntities(((BookDao) dao).select(operation.equals(LIST) || operation.equals(FILTER), entity));
+        result.addEntities(dao.select(operation.equals(LIST) || operation.equals(FILTER), entity));
         
         return result;
 	}

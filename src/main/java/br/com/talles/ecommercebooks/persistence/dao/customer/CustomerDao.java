@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 public class CustomerDao extends AbstractDao {
 
 	@Override
-	public List<Entity> select(boolean enabled) {
+	public List<Entity> select(boolean enabled, Entity entity) {
 		List<Entity> customers = new ArrayList();
         String sql = "SELECT c.*, p.*, u.*, "
 				+ "ha.alias as haAlias, ha.id as haId, ca.alias as caAlias, ca.id as caId FROM Customers c "

@@ -12,7 +12,7 @@ import java.util.List;
 public class PriceGroupDao extends AbstractDao {
 
 	@Override
-	public List<Entity> select(boolean enabled) {
+	public List<Entity> select(boolean enabled, Entity entity) {
 		List<Entity> priceGroups = new ArrayList();
         String sql = "SELECT * FROM priceGroups WHERE enabled = ?";
         

@@ -13,7 +13,7 @@ import java.util.List;
 public class StatusCategoryDao extends AbstractDao {
 
 	@Override
-	public List<Entity> select(boolean enabled) {
+	public List<Entity> select(boolean enabled, Entity entity) {
 		List<Entity> statusCategories = new ArrayList();
         String sql = "SELECT * FROM StatusCategories WHERE enabled = ? AND id <> -1";
         
