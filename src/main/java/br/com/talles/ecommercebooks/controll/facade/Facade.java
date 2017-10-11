@@ -36,7 +36,6 @@ public class Facade implements IFacade {
     private static final String DISABLE = "DISABLE";
     private static final String ENABLE = "ENABLE";
     private static final String DELETE = "DELETE";
-	private static final String FILTER = "FILTER";
 	
 	 public Facade() {
         String book = Book.class.getSimpleName();
@@ -76,8 +75,6 @@ public class Facade implements IFacade {
 		enableBook.add(modifyStatus);
 		
 		List<IStrategy> deleteBook = new ArrayList();
-		List<IStrategy> filtersBook = new ArrayList();
-        filtersBook.add(new CreateView());
 		
 		List<IStrategy> createCustomer = new ArrayList();
 		createCustomer.add(new CreateView());
@@ -99,7 +96,6 @@ public class Facade implements IFacade {
 		enableCustomer.add(custumerFind);
 		
 		List<IStrategy> deleteCustomer = new ArrayList();
-		List<IStrategy> filtersCustomer = new ArrayList();
 		
         Map<String, List<IStrategy>> contextBook = new HashMap();
         contextBook.put(CREATE, createBook);
@@ -111,7 +107,6 @@ public class Facade implements IFacade {
         contextBook.put(DISABLE, disableBook);
         contextBook.put(ENABLE, enableBook);
 		contextBook.put(DELETE, deleteBook);
-        contextBook.put(FILTER, filtersBook);
 		
 		Map<String, List<IStrategy>> contextCustomer = new HashMap();
         contextCustomer.put(CREATE, createCustomer);
@@ -123,7 +118,6 @@ public class Facade implements IFacade {
 		contextCustomer.put(DISABLE, disableCustomer);
 		contextCustomer.put(ENABLE, enableCustomer);
 		contextCustomer.put(DELETE, deleteCustomer);
-        contextCustomer.put(FILTER, filtersCustomer);
 		
         requirements = new HashMap();
         requirements.put(book, contextBook);
@@ -149,7 +143,7 @@ public class Facade implements IFacade {
             return result;
 		
 		IDao dao = persistence.get(entity.getClass().getSimpleName());
-        result.addEntities(dao.select(operation.equals(LIST) || operation.equals(FILTER), entity));
+        result.addEntities(dao.select(operation.equals(LIST), entity));
         
         return result;
 	}

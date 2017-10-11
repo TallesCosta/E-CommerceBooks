@@ -29,8 +29,9 @@ public class BookDao extends AbstractDao {
 		List<Entity> books = new ArrayList();
 		String where = queryBuilder(entity);
 		
-        String sql = "SELECT b.*, GROUP_CONCAT(c.name SEPARATOR '-') AS categories "
+        String sql = "SELECT b.*, d.*, GROUP_CONCAT(c.name SEPARATOR '-') AS categories "
 				+ "FROM Books b "
+				+ "INNER JOIN Dimensions d on b.id_dimension = d.id "
 				+ "INNER JOIN BooksCategories bc ON b.id = bc.id_book "
 				+ "INNER JOIN Categories c ON bc.id_category = c.id "
 				+ "WHERE b.enabled = ? " + where
@@ -56,6 +57,11 @@ public class BookDao extends AbstractDao {
 				book.setEdition(result.getString("books.edition"));
 				book.setIsbn(result.getString("books.isbn"));
 				book.setEan13(result.getString("books.ean13"));
+				
+				// Dimension
+				book.setDimension(new Dimension(result.getDouble("dimensions.height"), 
+						result.getDouble("dimensions.widht"), result.getDouble("dimensions.weight"), 
+						result.getDouble("dimensions.depth"), result.getLong("dimensions.id")));
 				
 				List<String> categories = Arrays.asList(result.getString("categories").split("-"));
 				for(String category : categories){
@@ -387,6 +393,27 @@ public class BookDao extends AbstractDao {
 		
 		if (book.getTitle() != null && !book.getTitle().equals(""))
 			where += "AND b.title = '" + book.getTitle() + "' ";
+		if (book.getEdition() != null && !book.getEdition().equals(""))
+			where += "AND b.edition = '" + book.getEdition() + "' ";
+		if (book.getPublicationYear() != 0)
+			where += "AND b.publicationYear = " + book.getPublicationYear() + " ";
+		if (book.getNumberOfPages() != 0)
+			where += "AND b.numberOfPages = " + book.getNumberOfPages() + " ";
+		if (book.getSynopsis() != null && !book.getSynopsis().equals(""))
+			where += "AND b.synopsis = " + book.getSynopsis() + " ";
+		if (book.getIsbn() != null && !book.getIsbn().equals(""))
+			where += "AND b.isbn = " + book.getIsbn() + " ";
+		if (book.getEan13() != null && !book.getEan13().equals(""))
+			where += "AND b.ean13 = " + book.getEan13() + " ";
+		// Dimension
+		if (book.getDimension().getHeight() != 0.0)
+			where += "AND d.height = " + book.getDimension().getHeight() + " ";
+		if (book.getDimension().getWidht() != 0.0)
+			where += "AND d.widht = " + book.getDimension().getWidht() + " ";
+		if (book.getDimension().getWeight() != 0.0)
+			where += "AND d.weight = " + book.getDimension().getWeight() + " ";
+		if (book.getDimension().getDepth() != 0.0)
+			where += "AND d.depth = " + book.getDimension().getDepth() + " ";
 		
 		return where;
 	}

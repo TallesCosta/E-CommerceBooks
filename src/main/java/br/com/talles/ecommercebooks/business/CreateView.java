@@ -25,7 +25,6 @@ public class CreateView implements IStrategy {
 	private static final String LIST = "LIST";
     private static final String LIST_DISABLE = "LIST-DISABLE";
 	private static final String CREATE = "CREATE";
-	private static final String FILTER = "FILTER";
 	
 	protected Map<String, List<IDao>> persistence;
 	
@@ -64,19 +63,10 @@ public class CreateView implements IStrategy {
 		createCustomer.add(new CountryDao());
 		createCustomer.add(new CardCompanyDao());
 		
-		// Datas needed to list view Book
-		List<IDao> filterBook = new ArrayList<>();
-		filterBook.add(new AuthorDao());
-		filterBook.add(new CategoryDao());
-		filterBook.add(new PriceGroupDao());
-		filterBook.add(new PublishingCompanyDao());
-		filterBook.add(new StatusCategoryDao());
-		
 		persistence = new HashMap();
 		persistence.put(book + CREATE, createBook);
 		persistence.put(book + LIST, listBook);
 		persistence.put(book + LIST_DISABLE, listDisableBook);
-		persistence.put(book + FILTER, filterBook);
 		persistence.put(customer + CREATE, createCustomer);
 	}
 	

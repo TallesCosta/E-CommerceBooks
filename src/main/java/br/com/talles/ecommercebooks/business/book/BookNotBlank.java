@@ -26,8 +26,12 @@ public class BookNotBlank implements IStrategy {
             result.addMsg("Edição é um campo obrigatório!\n");
 		} if (book.getPublicationYear() == 0) {
             result.addMsg("Ano de Publicação é um campo obrigatório!\n");
+		} if (book.getPublicationYear() > 2017) {
+            result.addMsg("Ano de Publicação deve ser menor que 2017!\n");
 		} if (book.getNumberOfPages() == 0) {
             result.addMsg("Número de Páginas é um campo obrigatório!\n");
+		} if (book.getNumberOfPages() < 1) {
+            result.addMsg("Número de Páginas deve ser, no mínimo, igual a 1!\n");
 		} if (book.getIsbn ()== null || book.getIsbn().trim().isEmpty()) {
             result.addMsg("ISBN é um campo obrigatório!\n");
 		} if (book.getEan13 ()== null || book.getEan13().trim().isEmpty()) {

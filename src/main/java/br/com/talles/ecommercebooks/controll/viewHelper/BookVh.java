@@ -159,10 +159,7 @@ public class BookVh implements IViewHelper {
 		long idActivationCategory = 0;
 		if (!(idActivationCategoryS == null || idActivationCategoryS.equals("")))
 			idActivationCategory = Long.valueOf(idActivationCategoryS);
-		
-		// Test
-		String test = request.getParameter("test");
-		
+				
 		Book book = new Book();
 		
 		switch(request.getParameter("operation")) {
@@ -187,6 +184,19 @@ public class BookVh implements IViewHelper {
 				break;
 
 			case "LIST":
+				book.setTitle(title);
+				book.setSynopsis(synopsis);
+				book.setPublicationYear(publicationYear);
+				book.setNumberOfPages(numberOfPages);
+				book.setEdition(edition);
+				book.setIsbn(isbn);
+				book.setEan13(ean13);
+				book.setDimension(new Dimension(height, widht, weight, depth));
+				book.setSaleParameterization(new SaleParameterization(minSaleLimit, periodicity));
+				book.setAuthor(new Author(idAuthor));
+				book.setPublishingCompany(new PublishingCompany(idPublishingCompany));
+				book.setPriceGroup(new PriceGroup(idPriceGroup));
+				book.addCategories(categories);
 				break;
 
 			case "LIST-DISABLE":
@@ -229,10 +239,6 @@ public class BookVh implements IViewHelper {
 				break;
 				
 			case "DELETE":
-				break;
-				
-			case "FILTER":
-				book.setTitle(test);
 				break;
 		}
 		
@@ -304,11 +310,6 @@ public class BookVh implements IViewHelper {
 					break;					
 					
 				case "DELETE":
-					break;
-					
-				case "FILTER":
-					dispatcher = request.getRequestDispatcher("/book/list.jsp");
-					dispatcher.forward(request, response);
 					break;
 			}
 		} catch (ServletException | IOException ex) {

@@ -1,4 +1,7 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="br.com.talles.ecommercebooks.domain.book.Dimension"%>
+<%@page import="java.util.Arrays"%>
+<%@page import="br.com.talles.ecommercebooks.domain.book.ChangeStatus"%>
+<%@page import="br.com.talles.ecommercebooks.domain.book.SaleParameterization"%>
 <%@page import="br.com.talles.ecommercebooks.domain.book.StatusCategory"%>
 <%@page import="br.com.talles.ecommercebooks.domain.book.Book"%>
 <%@page import="br.com.talles.ecommercebooks.domain.book.PublishingCompany"%>
@@ -7,11 +10,18 @@
 <%@page import="br.com.talles.ecommercebooks.domain.book.Author"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
 <%@page import="br.com.talles.ecommercebooks.controll.Result"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <title>Listagem de Livros</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<style>
+			fieldset {
+				display: inline-block;
+			}
+		</style>	
     </head>
     <body>
 		<%
@@ -19,6 +29,13 @@
 			result = (Result) request.getAttribute("result");
 
 			if (result != null) {
+				
+				Book filterBook = new Book("", "", 0, 0, "", "", "", 
+					new Dimension(0.0, 0.0, 0.0, 0.0, 0L), new PriceGroup(0.0, 0L), 
+					new PublishingCompany(0L), new SaleParameterization(0, 0, 0L),
+					new ChangeStatus(new StatusCategory(0L), 0L), new Author(0L), 
+					Arrays.asList(new Category(0L)), 0L);
+				
 				if (result.hasMsg()) {
 					String[] msgs = result.getMsg().split("\n");
 					out.println("<p>");
@@ -32,53 +49,120 @@
 			<h1>Listagem de Livros</h1>
 			
 			<div>
-				<form action="filter" method="POST">
-					<!-- select authors -->
-					<label for='author'>Autor: </label>
-					<select name='author' id='author'>
-			<%
+				<form action="list" method="POST">
+					<fieldset>
+						<legend>Dados da filtragem</legend>
+						<fieldset>
+						<legend>Dados básicos</legend>
+						
+						<label for="title">Titulo*: </label>
+						<input name="title" id="title" type="text">
+						<label for="synopsis">Sinópse*: </label>
+						<textarea name="synopsis" id="synopsis" maxlength="255"></textarea>
+						
+						<input type="hidden" name="idAuthor" id="idAuthor" 
+							   <% out.print("value='" + filterBook.getAuthor().getId() + "'"); %> >
+						<label for="author">Autor*: </label>
+						<select name="author" id="author">
+			<%	
 				for(Entity entity : result.getEntities(Author.class.getSimpleName())){
 					Author author = (Author) entity;
-					out.println("<option value='" + author.getId() + "'>" + author.getName() + "</option>");
+					out.print("<option value='" + author.getId() + "'>" + author.getName() + "</option>");
 				}
 			%>
-					</select> <!-- end select authors -->
+						</select>
+						<input type="hidden" name="idCategory" id="idCategory" 
+							   <% 
+								   String value = "";
+								   for (Category c : filterBook.getCategories()) {
+									   value += c.getId() + "-";
+								   }
 
-					<!-- select categoty -->
-					<label for='categoty'>Categoria: </label>
-					<select name='categoty' id='categoty'>
+								   out.print("value='" + value.substring(0, value.length() - 1) + "'"); %> >
+						<label for="category">Categoria*: </label>
+						<select name="category" id="category" multiple>
 			<%
 				for(Entity entity : result.getEntities(Category.class.getSimpleName())){
-					Category categoty = (Category) entity;
-					out.println("<option value='" + categoty.getId() + "'>" + categoty.getName() + "</option>");
+					Category category = (Category) entity;
+					if(category.getId() == 1){
+						out.print("<option selected value='" + category.getId() + "'>" + category.getName() + "</option>");
+					}else{
+						out.print("<option value='" + category.getId() + "'>" + category.getName() + "</option>");
+					}
 				}
 			%>
-					</select> <!-- end select categoty -->
-
-					<!-- select publishingCompany -->
-					<label for='publishingCompany'>Editora: </label>
-					<select name='publishingCompany' id='publishingCompany'>
+						</select>
+						<input type="hidden" name="idPublishingCompany" id="idPublishingCompany" 
+							   <% out.print("value='" + filterBook.getPublishingCompany().getId() + "'"); %> >
+						<label for="publishingCompany">Editora*: </label>
+						<select name="publishingCompany" id="publishingCompany">
 			<%
 				for(Entity entity : result.getEntities(PublishingCompany.class.getSimpleName())){
 					PublishingCompany publishingCompany = (PublishingCompany) entity;
-					out.println("<option value='" + publishingCompany.getId() + "'>" + publishingCompany.getName() + "</option>");
+					out.print("<option value='" + publishingCompany.getId() + "'>" + publishingCompany.getName() + "</option>");
 				}
 			%>
-					</select> <!-- end select publishingCompany -->
+						</select>
+						<label for="edition">Edição*: </label>
+						<input name="edition" id="edition" type="text">
+						<label for="publicationYear">Ano*: </label>
+						<input name="publicationYear" id="publicationYear" type="number" >
+						<label for="numberOfPages">Número de páginas*: </label>
+						<input name="numberOfPages" id="numberOfPages" type="number" >
+					</fieldset>
 
-					<!-- select priceGroup -->
-					<label for='priceGroup'>Grupo de Precificação: </label>
-					<select name='priceGroup' id='priceGroup'>
+					<fieldset>
+						<legend>Dimensões</legend>
+						 <label for="height">Altura*: </label>
+						 <input name="height" id="height" type="number" step="0.01" > cm
+						 <label for="widht">Largura*: </label>
+						 <input name="widht" id="widht" type="number" step="0.01" > cm
+						 <label for="weight">Peso*: </label>
+						 <input name="weight" id="weight" type="number" step="0.001" > kg
+						 <label for="depth">Profundidade*: </label>
+						 <input name="depth" id="depth" type="number" step="0.01" > cm
+					</fieldset>
+
+					<fieldset>
+						<legend>Identificação</legend>
+						<label for="isbn">ISBN*: </label>
+						<input name="isbn" for="isbn" type="text">
+						<label for="ean13">Código de barras*: </label>
+						<input name="ean13" id="ean13" type="text">
+					</fieldset>
+
+					<fieldset>
+						<legend>Grupo de Precificação</legend>
+						<input type="hidden" name="idPriceGroup" id="idPriceGroup" 
+							   <% out.print("value='" + filterBook.getPriceGroup().getId() + "'"); %> >
+						<label for="priceGroup">Porcentagem*: </label>
+						<select name="priceGroup" id="priceGroup">
 			<%
 				for(Entity entity : result.getEntities(PriceGroup.class.getSimpleName())){
 					PriceGroup priceGroup = (PriceGroup) entity;
-					out.println("<option value='" + priceGroup.getId() + "'>" + priceGroup.getMarkup() + "</option>");
+					out.print("<option value='" + priceGroup.getId() + "'>" + priceGroup.getMarkup() + " %</option>");
 				}
 			%>
-					</select> <!-- end select priceGroup -->
+						</select>
+					</fieldset>
 
-					<input type="hidden" name="test" value="Os tres mosqueteiros" >
-					<button name="operation" value="FILTER" type="submit">Filtrar</button>
+					<fieldset>
+						<legend>Parâmetro de venda</legend>
+						 <label for="minSaleLimit">Limite mínimo de vendas*: </label>
+						 <input name="minSaleLimit" id="minSaleLimit" type="number" >
+						 <label for="periodicity">Periodicidade*: </label>
+						 <input name="periodicity" id="periodicity" value="<% out.print(filterBook.getSaleParameterization().getPeriodicity()); %>" type="number" >
+						 <select name="classifierPeriod">
+							 <option value="m">Minuto(s)</option>
+							 <option value="H">Hora(s)</option>
+							 <option value="D">Dia(s)</option>
+							 <option value="M">Mês(es)</option>
+							 <option value="Y">Ano(s)</option>
+						   </select>
+					</fieldset>
+						 
+					<button name="operation" value="LIST" type="submit">Filtrar</button>
+				</fieldset>
 				</form>
 			</div>
 			
@@ -93,6 +177,7 @@
 							<td>Nº de Páginas</td>
 							<td>ISBN</td>
 							<td>Código de Barras</td>
+							<td>Dimensions</td>
 							<td>Categoria(s)</td>
 							<td>Editar</td>
 							<td>Excluir</td>
@@ -118,6 +203,10 @@
 						out.println("<td>" + book.getNumberOfPages() + "</td>");
 						out.println("<td>" + book.getIsbn() + "</td>");
 						out.println("<td>" + book.getEan13()+ "</td>");
+						out.println("<td>" + book.getDimension().getHeight() + "x" 
+								+ book.getDimension().getWidht() + "x" 
+								+ book.getDimension().getDepth() + " (" 
+								+ book.getDimension().getWeight() + " kg)</td>");
 						out.println("<td>" + categories.substring(0, categories.length() - 2) + "</td>");
 						out.println("<td>"
 										+ "<a href='" + request.getContextPath() + "/books/find?operation=FIND&id=" + book.getId() + "'>"
@@ -152,6 +241,7 @@
 							<td>Nº de Páginas</td>
 							<td>ISBN</td>
 							<td>Código de Barras</td>
+							<td>Dimensions</td>
 							<td>Categoria(s)</td>
 							<td>Editar</td>
 							<td>Excluir</td>
@@ -207,6 +297,22 @@
 		</script>
 		
 		<script>
+			// With the page ready, selects the options in combo-boxes
+			$(function() {
+				var idAuthor = $("#idAuthor").val();
+				$("#author").val(idAuthor);
+				
+				var idCategory = $("#idCategory").val();
+				idCategory = idCategory.split("-");
+				$("#category").val(idCategory);
+				
+				var idPublishingCompany = $("#idPublishingCompany").val();
+				$("#publishingCompany").val(idPublishingCompany);
+				
+				var idPriceGroup = $("#idPriceGroup").val();
+				$("#priceGroup").val(idPriceGroup);
+			});
+			
 			function setDisableId(id) {
 				alert(id);
 				$("#id").val(id);

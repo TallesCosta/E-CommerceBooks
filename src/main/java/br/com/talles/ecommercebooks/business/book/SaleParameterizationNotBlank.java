@@ -13,8 +13,12 @@ public class SaleParameterizationNotBlank implements IStrategy {
         
         if (saleParameterization.getMinSaleLimit() == 0) {
             result.addMsg("Limíte Mínimo de Venda é um campo obrigatório!\n");
+		} if (saleParameterization.getMinSaleLimit() < 1) {
+            result.addMsg("Limíte Mínimo de Venda deve ser, no mínimo, igual a 1!\n");
 		} if (saleParameterization.getPeriodicity() == 0) {
             result.addMsg("Periodicidade é um campo obrigatório!\n");
+		} if (saleParameterization.getPeriodicity() < 1) {
+            result.addMsg("Periodicidade deve ser, no mínimo, igual a 1!\n");
 		}
 		
 		return result;

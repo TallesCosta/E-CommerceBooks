@@ -127,11 +127,11 @@
 					</div>
 					<div>
 						<label for="publicationYear">Ano*: </label>
-						<input name="publicationYear" id="publicationYear" value="<% out.print(book.getPublicationYear()); %>" type="number" min="1889" max="2017">
+						<input name="publicationYear" id="publicationYear" value="<% out.print(book.getPublicationYear()); %>" type="number" >
 					</div>
 					<div>
 						<label for="numberOfPages">Número de páginas*: </label>
-						<input name="numberOfPages" id="numberOfPages" value="<% out.print(book.getNumberOfPages()); %>" type="number" min="1">
+						<input name="numberOfPages" id="numberOfPages" value="<% out.print(book.getNumberOfPages()); %>" type="number" >
 					</div>
 				</fieldset>
 				
@@ -141,19 +141,19 @@
 						   <% out.print("value='" + book.getDimension().getId() + "'"); %> >
 					<div>
 						<label for="height">Altura*: </label>
-						<input name="height" id="height" value="<% out.print(book.getDimension().getHeight()); %>" type="number" step="0.01" min="0.01" max="100"> cm
+						<input name="height" id="height" value="<% out.print(book.getDimension().getHeight()); %>" type="number" step="0.01" > cm
 					</div>
 					<div>
 						<label for="widht">Largura*: </label>
-						<input name="widht" id="widht" value="<% out.print(book.getDimension().getWidht()); %>" type="number" step="0.01" min="0.01" max="100"> cm
+						<input name="widht" id="widht" value="<% out.print(book.getDimension().getWidht()); %>" type="number" step="0.01" > cm
 					</div>
 					<div>
 						<label for="weight">Peso*: </label>
-						<input name="weight" id="weight" value="<% out.print(book.getDimension().getWeight()); %>" type="number" step="0.001" min="0.001" max="10"> kg
+						<input name="weight" id="weight" value="<% out.print(book.getDimension().getWeight()); %>" type="number" step="0.001" > kg
 					</div>
 					<div>
 						<label for="depth">Profundidade*: </label>
-						<input name="depth" id="depth" value="<% out.print(book.getDimension().getDepth()); %>" type="number" step="0.01" min="0.01" max="100"> cm
+						<input name="depth" id="depth" value="<% out.print(book.getDimension().getDepth()); %>" type="number" step="0.01" > cm
 					</div>
 				</fieldset>
 				
@@ -192,11 +192,11 @@
 						   <% out.print("value='" + book.getSaleParameterization().getId() + "'"); %> >
 					<div>
 						<label for="minSaleLimit">Limite mínimo de vendas*: </label>
-						<input name="minSaleLimit" id="minSaleLimit" value="<% out.print(book.getSaleParameterization().getMinSaleLimit()); %>" type="number" min="1">
+						<input name="minSaleLimit" id="minSaleLimit" value="<% out.print(book.getSaleParameterization().getMinSaleLimit()); %>" type="number" >
 					</div>
 					<div>
 						<label for="periodicity">Periodicidade*: </label>
-						<input name="periodicity" id="periodicity" value="<% out.print(book.getSaleParameterization().getPeriodicity()); %>" type="number" min="1">
+						<input name="periodicity" id="periodicity" value="<% out.print(book.getSaleParameterization().getPeriodicity()); %>" type="number" >
 						<select name="classifierPeriod">
 							<option value="m">Minuto(s)</option>
 							<option value="H">Hora(s)</option>
