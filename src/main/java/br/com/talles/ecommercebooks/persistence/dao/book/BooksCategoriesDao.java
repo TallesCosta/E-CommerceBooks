@@ -92,7 +92,7 @@ public class BooksCategoriesDao extends AbstractDao {
             
             ResultSet result = statement.executeQuery();
             
-            if(result.next()){
+            while (result.next()) {
                 book.addCategory(new Category(result.getLong("id_category")));				
             }
             
@@ -110,11 +110,10 @@ public class BooksCategoriesDao extends AbstractDao {
 	@Override
 	public boolean update(Entity entity, String operation) {
 		// Delete all currentily categories assosciation with this book
-		Entity entityClean = new Book();
-		entityClean.setId(entity.getId());
+		Entity entityFound = new Book();
+		entityFound.setId(entity.getId());
 		
-		Entity entityFound = find(entityClean);
-		if (!delete(entityFound))
+		if (!delete(find(entityFound)))
 			return false;
 		
 		// Save new categories
