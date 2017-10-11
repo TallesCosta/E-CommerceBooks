@@ -60,8 +60,15 @@
 						<label for="synopsis">Sinópse*: </label>
 						<textarea name="synopsis" id="synopsis" maxlength="255"></textarea>
 						
-						<input type="hidden" name="idAuthor" id="idAuthor" 
-							   <% out.print("value='" + filterBook.getAuthor().getId() + "'"); %> >
+						<label for="edition">Edição*: </label>
+						<input name="edition" id="edition" type="text">
+						<label for="publicationYear">Ano*: </label>
+						<input name="publicationYear" id="publicationYear" type="number" >
+						<label for="numberOfPages">Número de páginas*: </label>
+						<input name="numberOfPages" id="numberOfPages" type="number" >
+						
+						<br/>
+						
 						<label for="author">Autor*: </label>
 						<select name="author" id="author">
 			<%	
@@ -71,14 +78,7 @@
 				}
 			%>
 						</select>
-						<input type="hidden" name="idCategory" id="idCategory" 
-							   <% 
-								   String value = "";
-								   for (Category c : filterBook.getCategories()) {
-									   value += c.getId() + "-";
-								   }
-
-								   out.print("value='" + value.substring(0, value.length() - 1) + "'"); %> >
+						
 						<label for="category">Categoria*: </label>
 						<select name="category" id="category" multiple>
 			<%
@@ -92,8 +92,7 @@
 				}
 			%>
 						</select>
-						<input type="hidden" name="idPublishingCompany" id="idPublishingCompany" 
-							   <% out.print("value='" + filterBook.getPublishingCompany().getId() + "'"); %> >
+						
 						<label for="publishingCompany">Editora*: </label>
 						<select name="publishingCompany" id="publishingCompany">
 			<%
@@ -103,12 +102,6 @@
 				}
 			%>
 						</select>
-						<label for="edition">Edição*: </label>
-						<input name="edition" id="edition" type="text">
-						<label for="publicationYear">Ano*: </label>
-						<input name="publicationYear" id="publicationYear" type="number" >
-						<label for="numberOfPages">Número de páginas*: </label>
-						<input name="numberOfPages" id="numberOfPages" type="number" >
 					</fieldset>
 
 					<fieldset>
@@ -133,8 +126,6 @@
 
 					<fieldset>
 						<legend>Grupo de Precificação</legend>
-						<input type="hidden" name="idPriceGroup" id="idPriceGroup" 
-							   <% out.print("value='" + filterBook.getPriceGroup().getId() + "'"); %> >
 						<label for="priceGroup">Porcentagem*: </label>
 						<select name="priceGroup" id="priceGroup">
 			<%
@@ -151,7 +142,7 @@
 						 <label for="minSaleLimit">Limite mínimo de vendas*: </label>
 						 <input name="minSaleLimit" id="minSaleLimit" type="number" >
 						 <label for="periodicity">Periodicidade*: </label>
-						 <input name="periodicity" id="periodicity" value="<% out.print(filterBook.getSaleParameterization().getPeriodicity()); %>" type="number" >
+						 <input name="periodicity" id="periodicity" type="number" >
 						 <select name="classifierPeriod">
 							 <option value="m">Minuto(s)</option>
 							 <option value="H">Hora(s)</option>
@@ -172,12 +163,17 @@
 					<thead>
 						<tr>
 							<td>Título</td>
+							<td>Sinopse</td>
 							<td>Edição</td>
-							<td>Ano de Publicação</td>
-							<td>Nº de Páginas</td>
+							<td>Ano de Publi.</td>
+							<td>Nº pág.</td>
 							<td>ISBN</td>
-							<td>Código de Barras</td>
+							<td>EAN13</td>
 							<td>Dimensions</td>
+							<td>Parâm. Venda</td>
+							<td>Autor</td>
+							<td>Editora</td>
+							<td>Precificação</td>
 							<td>Categoria(s)</td>
 							<td>Editar</td>
 							<td>Excluir</td>
@@ -198,6 +194,7 @@
 
 						out.println("<tr>");
 						out.println("<td>" + book.getTitle() + "</td>");
+						out.println("<td>" + book.getSynopsis() + "</td>");
 						out.println("<td>" + book.getEdition() + "</td>");
 						out.println("<td>" + book.getPublicationYear() + "</td>");
 						out.println("<td>" + book.getNumberOfPages() + "</td>");
@@ -207,6 +204,11 @@
 								+ book.getDimension().getWidht() + "x" 
 								+ book.getDimension().getDepth() + " (" 
 								+ book.getDimension().getWeight() + " kg)</td>");
+						out.println("<td>" + book.getSaleParameterization().getMinSaleLimit() + "/" 
+								+ book.getSaleParameterization().getPeriodicity() + "min.</td>");
+						out.println("<td>" + book.getAuthor().getName() + "</td>");
+						out.println("<td>" + book.getPublishingCompany().getName() + "</td>");
+						out.println("<td>" + book.getPriceGroup().getMarkup() + " %</td>");
 						out.println("<td>" + categories.substring(0, categories.length() - 2) + "</td>");
 						out.println("<td>"
 										+ "<a href='" + request.getContextPath() + "/books/find?operation=FIND&id=" + book.getId() + "'>"
@@ -236,12 +238,17 @@
 					<tfooter>
 						<tr>
 							<td>Título</td>
+							<td>Sinopse</td>
 							<td>Edição</td>
-							<td>Ano de Publicação</td>
-							<td>Nº de Páginas</td>
+							<td>Ano de Publi.</td>
+							<td>Nº pág.</td>
 							<td>ISBN</td>
-							<td>Código de Barras</td>
+							<td>EAN13</td>
 							<td>Dimensions</td>
+							<td>Parâm. Venda</td>
+							<td>Autor</td>
+							<td>Editora</td>
+							<td>Precificação</td>
 							<td>Categoria(s)</td>
 							<td>Editar</td>
 							<td>Excluir</td>
@@ -299,18 +306,10 @@
 		<script>
 			// With the page ready, selects the options in combo-boxes
 			$(function() {
-				var idAuthor = $("#idAuthor").val();
-				$("#author").val(idAuthor);
-				
-				var idCategory = $("#idCategory").val();
-				idCategory = idCategory.split("-");
-				$("#category").val(idCategory);
-				
-				var idPublishingCompany = $("#idPublishingCompany").val();
-				$("#publishingCompany").val(idPublishingCompany);
-				
-				var idPriceGroup = $("#idPriceGroup").val();
-				$("#priceGroup").val(idPriceGroup);
+				$("#author").val(0);
+				$("#category").val(0);
+				$("#publishingCompany").val(0);
+				$("#priceGroup").val(0);
 			});
 			
 			function setDisableId(id) {

@@ -29,9 +29,14 @@ public class BookDao extends AbstractDao {
 		List<Entity> books = new ArrayList();
 		String where = queryBuilder(entity);
 		
-        String sql = "SELECT b.*, d.*, GROUP_CONCAT(c.name SEPARATOR '-') AS categories "
+        String sql = "SELECT b.*, d.*, sp.*, a.*, pc.*, pg.*, "
+				+ "GROUP_CONCAT(c.name SEPARATOR '-') AS categories "
 				+ "FROM Books b "
 				+ "INNER JOIN Dimensions d on b.id_dimension = d.id "
+				+ "INNER JOIN SaleParameterizations sp on b.id_saleParameterization = sp.id "
+				+ "INNER JOIN Authors a on b.id_author = a.id "
+				+ "INNER JOIN PublishingCompanies pc on b.id_publishingCompany = pc.id "
+				+ "INNER JOIN PriceGroups pg on b.id_priceGroup = pg.id "
 				+ "INNER JOIN BooksCategories bc ON b.id = bc.id_book "
 				+ "INNER JOIN Categories c ON bc.id_category = c.id "
 				+ "WHERE b.enabled = ? " + where
@@ -52,6 +57,7 @@ public class BookDao extends AbstractDao {
 				book.setId(result.getLong("books.id"));
 				book.setEnabled(result.getBoolean("books.enabled"));
 				book.setTitle(result.getString("books.title"));
+				book.setSynopsis(result.getString("books.synopsis"));
 				book.setPublicationYear(result.getInt("books.publicationYear"));
 				book.setNumberOfPages(result.getInt("books.numberOfPages"));
 				book.setEdition(result.getString("books.edition"));
@@ -62,7 +68,20 @@ public class BookDao extends AbstractDao {
 				book.setDimension(new Dimension(result.getDouble("dimensions.height"), 
 						result.getDouble("dimensions.widht"), result.getDouble("dimensions.weight"), 
 						result.getDouble("dimensions.depth"), result.getLong("dimensions.id")));
-				
+				// Sale Parameterization
+				book.setSaleParameterization(new SaleParameterization(
+						result.getInt("saleParameterizations.minSaleLimit"), 
+						result.getInt("saleParameterizations.periodicity"), 
+						result.getLong("saleParameterizations.id")));
+				// Author
+				book.setAuthor(new Author(result.getString("authors.name"), result.getLong("authors.id")));
+				// PublishingCompany
+				book.setPublishingCompany(new PublishingCompany(result.getString("publishingCompanies.name"), 
+						result.getLong("publishingCompanies.id")));
+				// PriceGroup
+				book.setPriceGroup(new PriceGroup(result.getDouble("priceGroups.markup"), 
+						result.getLong("priceGroups.id")));
+				// Categories
 				List<String> categories = Arrays.asList(result.getString("categories").split("-"));
 				for(String category : categories){
 					book.addCategory(new Category(category));
@@ -194,23 +213,28 @@ public class BookDao extends AbstractDao {
 				book.setSynopsis(result.getString("books.synopsis"));
 				book.setIsbn(result.getString("books.isbn"));
 				book.setEan13(result.getString("books.ean13"));
-				
+				// Author
 				book.setAuthor(new Author(result.getString("authors.name"), result.getLong("authors.id")));
+				// PublishingCompany
 				book.setPublishingCompany(new PublishingCompany(result.getString("publishingCompanies.name"), 
 						result.getLong("publishingCompanies.id")));
+				// Dimension
 				book.setDimension(new Dimension(result.getDouble("dimensions.height"), 
 						result.getDouble("dimensions.widht"), result.getDouble("dimensions.weight"), 
 						result.getDouble("dimensions.depth"), result.getLong("dimensions.id")));
+				// PriceGroup
 				book.setPriceGroup(new PriceGroup(result.getDouble("priceGroups.markup"), 
 						result.getLong("priceGroups.id")));
+				// SaleParameterization
 				book.setSaleParameterization(new SaleParameterization(
 						result.getInt("saleParameterizations.minSaleLimit"), 
 						result.getInt("saleParameterizations.periodicity"), 
 						result.getLong("saleParameterizations.id")));
+				// ChangeStatus
 				book.setChangeStatus(new ChangeStatus(result.getString("changeStatus.justification"), 
 						new StatusCategory(result.getLong("changeStatus.id_statusCategory")), 
 						result.getLong("changeStatus.id")));
-				
+				// Categories
 				List<Category> categories = new ArrayList<>();
 				String[] catsIds = result.getString("catsId").split("-");
 				String[] catsNames = result.getString("catsName").split("-");
@@ -414,6 +438,25 @@ public class BookDao extends AbstractDao {
 			where += "AND d.weight = " + book.getDimension().getWeight() + " ";
 		if (book.getDimension().getDepth() != 0.0)
 			where += "AND d.depth = " + book.getDimension().getDepth() + " ";
+		// Sale Parameterization
+		if (book.getSaleParameterization().getMinSaleLimit() != 0)
+			where += "AND sp.minSaleLimit = " + book.getSaleParameterization().getMinSaleLimit() + " ";
+		if (book.getSaleParameterization().getPeriodicity() != 0)
+			where += "AND sp.periodicity = " + book.getSaleParameterization().getPeriodicity() + " ";
+		// Author
+		if (book.getAuthor().getId()!= 0L)
+			where += "AND a.id = " + book.getAuthor().getId() + " ";
+		// PublishingCompany
+		if (book.getPublishingCompany().getId()!= 0L)
+			where += "AND pc.id = " + book.getPublishingCompany().getId() + " ";
+		// PriceGroup
+		if (book.getPriceGroup().getId()!= 0L)
+			where += "AND pg.id = " + book.getPriceGroup().getId() + " ";
+		// Cateogories
+		for (Category category : book.getCategories()) {
+			if (category.getId()!= 0L)
+				where += "AND c.id = " + category.getId() + " ";
+		}
 		
 		return where;
 	}
