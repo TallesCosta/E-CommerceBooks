@@ -11,15 +11,15 @@ import org.openqa.selenium.support.ui.Select;
 public class BookFilled extends BookT {
 	
 	@Test
-	public void saveCustomer(){
+	public void saveBook(){
 		// Go to Home page
 		browser.get(index);
 		
-		// Go to List-Custumers page
+		// Go to List-Books page
 		WebElement element = browser.findElement(By.className(elements.LINK_LIST));
 		element.click();
 		
-		// Go to Create-Customers page
+		// Go to Create-Books page
 		element = browser.findElement(By.className(elements.LINK_CREATE));
 		element.click();
 		
