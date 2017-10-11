@@ -215,7 +215,7 @@
 					<% out.print("value='" + book.getChangeStatus().getId() + "'"); %> >
 				<input type="hidden" name="justificationChangeStatus" id="justificationChangeStatus" 
 					<% out.print("value='" + book.getChangeStatus().getJustification() + "'"); %> >
-				<input type="hidden" name="statusCategoryChangeStatus" id="idStatusCategoryChangeStatus" 
+				<input type="hidden" name="idStatusCategoryChangeStatus" id="idStatusCategoryChangeStatus" 
 					<% out.print("value='" + book.getChangeStatus().getStatusCategory().getId() + "'"); %> >
 				
 				<button type="submit">Salvar</button>

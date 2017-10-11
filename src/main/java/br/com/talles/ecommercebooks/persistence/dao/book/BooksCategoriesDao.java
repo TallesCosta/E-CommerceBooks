@@ -54,13 +54,16 @@ public class BooksCategoriesDao extends AbstractDao {
 		Book book = (Book) entity;
         
         String sql = "DELETE FROM BooksCategories "
-                + "WHERE id = ?";
+                + "WHERE id_book = ? AND id_category = ?";
         
         try {
+			openConnection();
+			
             PreparedStatement statement = conn.prepareStatement(sql);
             
 			for (int i = 0; i <= book.countCategories() - 1; i++) {
-				statement.setLong(1, book.getCategory(i).getId());
+				statement.setLong(1, book.getId());
+				statement.setLong(2, book.getCategory(i).getId());
 				statement.execute();
 			}
             statement.close();
@@ -79,7 +82,7 @@ public class BooksCategoriesDao extends AbstractDao {
 		Book book = (Book) entity;
 		
         String sql = "SELECT * FROM BooksCategories "
-				+ "WHERE id = ?";
+				+ "WHERE id_book = ?";
         
         try {
 			openConnection();
@@ -107,7 +110,10 @@ public class BooksCategoriesDao extends AbstractDao {
 	@Override
 	public boolean update(Entity entity, String operation) {
 		// Delete all currentily categories assosciation with this book
-		Entity entityFound = find(entity);
+		Entity entityClean = new Book();
+		entityClean.setId(entity.getId());
+		
+		Entity entityFound = find(entityClean);
 		if (!delete(entityFound))
 			return false;
 		
