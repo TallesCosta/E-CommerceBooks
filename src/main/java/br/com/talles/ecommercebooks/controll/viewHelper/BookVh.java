@@ -160,6 +160,9 @@ public class BookVh implements IViewHelper {
 		if (!(idActivationCategoryS == null || idActivationCategoryS.equals("")))
 			idActivationCategory = Long.valueOf(idActivationCategoryS);
 		
+		// Test
+		String test = request.getParameter("test");
+		
 		Book book = new Book();
 		
 		switch(request.getParameter("operation")) {
@@ -226,6 +229,10 @@ public class BookVh implements IViewHelper {
 				break;
 				
 			case "DELETE":
+				break;
+				
+			case "FILTER":
+				book.setTitle(test);
 				break;
 		}
 		
@@ -297,6 +304,11 @@ public class BookVh implements IViewHelper {
 					break;					
 					
 				case "DELETE":
+					break;
+					
+				case "FILTER":
+					dispatcher = request.getRequestDispatcher("/book/list.jsp");
+					dispatcher.forward(request, response);
 					break;
 			}
 		} catch (ServletException | IOException ex) {

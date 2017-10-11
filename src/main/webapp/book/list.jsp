@@ -32,7 +32,7 @@
 			<h1>Listagem de Livros</h1>
 			
 			<div>
-				<form action="" method="POST">
+				<form action="filter" method="POST">
 					<!-- select authors -->
 					<label for='author'>Autor: </label>
 					<select name='author' id='author'>
@@ -77,7 +77,8 @@
 			%>
 					</select> <!-- end select priceGroup -->
 
-					<button name="" value="">Filtrar</button>
+					<input type="hidden" name="test" value="Os tres mosqueteiros" >
+					<button name="operation" value="FILTER" type="submit">Filtrar</button>
 				</form>
 			</div>
 			

@@ -23,7 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BookDao extends AbstractDao {
-
+	
 	@Override
 	public List<Entity> select(boolean enabled) {
 		List<Entity> books = new ArrayList();
@@ -74,6 +74,57 @@ public class BookDao extends AbstractDao {
 		}
 	}
 
+	public List<Entity> select(boolean enabled, Entity entity) {
+		List<Entity> books = new ArrayList();
+		String where = makeWhere(entity);
+		
+        String sql = "SELECT b.*, GROUP_CONCAT(c.name SEPARATOR '-') AS categories "
+				+ "FROM Books b "
+				+ "INNER JOIN BooksCategories bc ON b.id = bc.id_book "
+				+ "INNER JOIN Categories c ON bc.id_category = c.id "
+				+ "WHERE b.enabled = ? " + where
+				+ "GROUP BY bc.id_book";
+        
+        try {
+			openConnection();
+			
+            PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setBoolean(1, enabled);
+			
+            ResultSet result = statement.executeQuery();
+            
+			
+            while (result.next()) {
+				Book book = new Book();
+				
+				book.setId(result.getLong("books.id"));
+				book.setEnabled(result.getBoolean("books.enabled"));
+				book.setTitle(result.getString("books.title"));
+				book.setPublicationYear(result.getInt("books.publicationYear"));
+				book.setNumberOfPages(result.getInt("books.numberOfPages"));
+				book.setEdition(result.getString("books.edition"));
+				book.setIsbn(result.getString("books.isbn"));
+				book.setEan13(result.getString("books.ean13"));
+				
+				List<String> categories = Arrays.asList(result.getString("categories").split("-"));
+				for(String category : categories){
+					book.addCategory(new Category(category));
+				}
+				
+				books.add(book);
+            }
+            
+            result.close();
+            statement.close();
+            
+            return  books;
+        } catch (SQLException e) {
+            throw new RuntimeException (e);   
+        } finally {
+			closeConnection();
+		}
+	}
+	
 	@Override
 	public boolean save(Entity entity) {
 		Book book = (Book) entity;
@@ -224,7 +275,7 @@ public class BookDao extends AbstractDao {
 			closeConnection();
 		}
 	}
-
+	
 	@Override
 	public boolean update(Entity entity, String operation) {
 		Book book = (Book) entity;
@@ -377,6 +428,16 @@ public class BookDao extends AbstractDao {
         } finally {
 			closeConnection();
 		}
+	}
+	
+	public String makeWhere(Entity entity) {
+		Book book = (Book) entity;
+		String where = "";
+		
+		if (book.getTitle() != null && !book.getTitle().equals(""))
+			where += "AND b.title = '" + book.getTitle() + "' ";
+		
+		return where;
 	}
 	
 }

@@ -40,6 +40,7 @@ public class Servlet extends HttpServlet {
 		viewHelpers.put("/E-CommerceBooks/books/disable", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/enable", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/delete", new BookVh());
+		viewHelpers.put("/E-CommerceBooks/books/filter", new BookVh());
 		// Customers Request
 		viewHelpers.put("/E-CommerceBooks/customers/create", new CustomerVh());
 		viewHelpers.put("/E-CommerceBooks/customers/save", new CustomerVh());
@@ -61,6 +62,7 @@ public class Servlet extends HttpServlet {
 		commands.put("DISABLE", new UpdateCmd());
 		commands.put("ENABLE", new UpdateCmd());
 		commands.put("DELETE", new DeleteCmd());
+		commands.put("FILTER", new ListCmd());
 	}
 	
 	@Override
