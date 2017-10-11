@@ -142,7 +142,7 @@
 						   </select>
 					</fieldset>
 						 
-					<button name="operation" value="LIST" type="submit">Filtrar</button>
+					<button name="operation" value="LIST-DISABLE" type="submit">Filtrar</button>
 				</fieldset>
 				</form>
 			</div>
@@ -295,6 +295,14 @@
 		</script>
 		
 		<script>
+			// With the page ready, selects the options in combo-boxes
+			$(function() {
+				$("#author").val(0);
+				$("#category").val(0);
+				$("#publishingCompany").val(0);
+				$("#priceGroup").val(0);
+			});
+			
 			function setEnableId(id) {
 				alert(id);
 				$("#id").val(id);
