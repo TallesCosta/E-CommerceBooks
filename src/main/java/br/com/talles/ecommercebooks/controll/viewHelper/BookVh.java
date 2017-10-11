@@ -128,6 +128,10 @@ public class BookVh implements IViewHelper {
 			categories.add(new Category(idCategory));
 		}
 		
+		if (categories.isEmpty()) {
+			categories.add(new Category(0L));
+		}
+		
 		// ChangeStatus (Save)
 		String justification = request.getParameter("justification");
 		
