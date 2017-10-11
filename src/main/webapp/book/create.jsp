@@ -50,7 +50,7 @@
 		%>
 		
 		<div id="app">
-			<h1>
+			<h1 id="create-book">
 				<% if (result.getOperation().equals("CREATE")) { out.print("Criação de Livro"); }
 				else if (result.getOperation().equals("FIND")) { out.print("Alteração de Livro"); } %>
 			</h1>
@@ -161,7 +161,7 @@
 					<legend>Identificação</legend>
 					<div>
 						<label for="isbn">ISBN*: </label>
-						<input name="isbn" for="isbn" value="<% out.print(book.getIsbn()); %>" type="text">
+						<input name="isbn" id="isbn" value="<% out.print(book.getIsbn()); %>" type="text">
 					</div>
 					<div>
 						<label for="ean13">Código de barras*: </label>
@@ -197,7 +197,7 @@
 					<div>
 						<label for="periodicity">Periodicidade*: </label>
 						<input name="periodicity" id="periodicity" value="<% out.print(book.getSaleParameterization().getPeriodicity()); %>" type="number" >
-						<select name="classifierPeriod">
+						<select name="classifierPeriod" id="classifierPeriod" >
 							<option value="m">Minuto(s)</option>
 							<option value="H">Hora(s)</option>
 							<option value="D">Dia(s)</option>

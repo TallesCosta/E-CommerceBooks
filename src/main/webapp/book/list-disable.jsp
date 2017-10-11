@@ -30,7 +30,7 @@
 		%>
 		
 		<div id="app">
-			<h1>Listagem de Livros Inativos</h1>
+			<h1 id="list-disable-book">Listagem de Livros Inativos</h1>
 			
 			<div>
 				<form action="" method="POST">
@@ -162,8 +162,8 @@
 				<p><% out.println(i); %> registros encontrados.</p>
 			</div>
 			
-			<a href="<% out.print(request.getContextPath().concat("/books/create?operation=CREATE")); %>">Criar Livro</a>
-			<a href="<% out.print(request.getContextPath().concat("/books/list?operation=LIST")); %>">Listar Ativos</a>
+			<a class="create-book" href="<% out.print(request.getContextPath().concat("/books/create?operation=CREATE")); %>">Criar Livro</a>
+			<a class="list-book" href="<% out.print(request.getContextPath().concat("/books/list?operation=LIST")); %>">Listar Ativos</a>
 			
 			<br><br><br><br><br>
 			<div id="light-box">

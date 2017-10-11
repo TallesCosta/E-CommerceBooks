@@ -22,7 +22,7 @@ public class CustomerFilled extends CustomerT {
 		element = browser.findElement(By.className(elements.LINK_CREATE));
 		element.click();
 		
-		// Get all attributes
+		// Set all attributes
 		element = browser.findElement(By.id(elements.INPUT_REGISTRY));
 		element.sendKeys("889.151.254-01");
 		
