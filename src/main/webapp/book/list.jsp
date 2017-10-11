@@ -55,21 +55,21 @@
 						<fieldset>
 						<legend>Dados básicos</legend>
 						
-						<label for="title">Titulo*: </label>
+						<label for="title">Titulo: </label>
 						<input name="title" id="title" type="text">
-						<label for="synopsis">Sinópse*: </label>
+						<label for="synopsis">Sinópse: </label>
 						<textarea name="synopsis" id="synopsis" maxlength="255"></textarea>
 						
-						<label for="edition">Edição*: </label>
+						<label for="edition">Edição: </label>
 						<input name="edition" id="edition" type="text">
-						<label for="publicationYear">Ano*: </label>
+						<label for="publicationYear">Ano: </label>
 						<input name="publicationYear" id="publicationYear" type="number" >
-						<label for="numberOfPages">Número de páginas*: </label>
+						<label for="numberOfPages">Número de páginas: </label>
 						<input name="numberOfPages" id="numberOfPages" type="number" >
 						
 						<br/>
 						
-						<label for="author">Autor*: </label>
+						<label for="author">Autor: </label>
 						<select name="author" id="author">
 			<%	
 				for(Entity entity : result.getEntities(Author.class.getSimpleName())){
@@ -79,7 +79,7 @@
 			%>
 						</select>
 						
-						<label for="category">Categoria*: </label>
+						<label for="category">Categoria: </label>
 						<select name="category" id="category" multiple>
 			<%
 				for(Entity entity : result.getEntities(Category.class.getSimpleName())){
@@ -93,7 +93,7 @@
 			%>
 						</select>
 						
-						<label for="publishingCompany">Editora*: </label>
+						<label for="publishingCompany">Editora: </label>
 						<select name="publishingCompany" id="publishingCompany">
 			<%
 				for(Entity entity : result.getEntities(PublishingCompany.class.getSimpleName())){
@@ -106,27 +106,27 @@
 
 					<fieldset>
 						<legend>Dimensões</legend>
-						 <label for="height">Altura*: </label>
+						 <label for="height">Altura: </label>
 						 <input name="height" id="height" type="number" step="0.01" > cm
-						 <label for="widht">Largura*: </label>
+						 <label for="widht">Largura: </label>
 						 <input name="widht" id="widht" type="number" step="0.01" > cm
-						 <label for="weight">Peso*: </label>
+						 <label for="weight">Peso: </label>
 						 <input name="weight" id="weight" type="number" step="0.001" > kg
-						 <label for="depth">Profundidade*: </label>
+						 <label for="depth">Profundidade: </label>
 						 <input name="depth" id="depth" type="number" step="0.01" > cm
 					</fieldset>
 
 					<fieldset>
 						<legend>Identificação</legend>
-						<label for="isbn">ISBN*: </label>
+						<label for="isbn">ISBN: </label>
 						<input name="isbn" for="isbn" type="text">
-						<label for="ean13">Código de barras*: </label>
+						<label for="ean13">Código de barras: </label>
 						<input name="ean13" id="ean13" type="text">
 					</fieldset>
 
 					<fieldset>
 						<legend>Grupo de Precificação</legend>
-						<label for="priceGroup">Porcentagem*: </label>
+						<label for="priceGroup">Porcentagem: </label>
 						<select name="priceGroup" id="priceGroup">
 			<%
 				for(Entity entity : result.getEntities(PriceGroup.class.getSimpleName())){
@@ -139,9 +139,9 @@
 
 					<fieldset>
 						<legend>Parâmetro de venda</legend>
-						 <label for="minSaleLimit">Limite mínimo de vendas*: </label>
+						 <label for="minSaleLimit">Limite mínimo de vendas: </label>
 						 <input name="minSaleLimit" id="minSaleLimit" type="number" >
-						 <label for="periodicity">Periodicidade*: </label>
+						 <label for="periodicity">Periodicidade: </label>
 						 <input name="periodicity" id="periodicity" type="number" >
 						 <select name="classifierPeriod">
 							 <option value="m">Minuto(s)</option>
@@ -216,7 +216,7 @@
 										+ "</a>"
 									+ "</td>");
 						out.println("<td>"
-										+ "<a href='" + request.getContextPath() + "/books/disable?operation=DISABLE&id=" + book.getId() + "'>"
+										+ "<a onclick='setDisableId(" + book.getId() + ")' href='#')>"
 											+ "<i class='fa fa-trash' aria-hidden='true'></i>"
 										+ "</a>"
 									+ "</td>");
@@ -271,7 +271,7 @@
 						<legend>Desativar Livro</legend>
 						<div>
 							<!-- select categoty -->
-							<label for='deactivationCategory'>Categoria de Desativação*: </label>
+							<label for='deactivationCategory'>Categoria de Desativação: </label>
 							<select name='deactivationCategory' id='deactivationCategory'>
 			<%
 					for (Entity entity : result.getEntities(StatusCategory.class.getSimpleName())) {
@@ -285,7 +285,7 @@
 							</select> <!-- end select categoty -->
 						</div>
 						<div>
-							<label for="justification">Justificativa*: </label>
+							<label for="justification">Justificativa: </label>
 							<input name="justification" id="justification" type="text">
 						</div>
 					</fieldset>
@@ -294,6 +294,7 @@
 					<small>Todos os campos marcados com * são obrigatórios.</small>
 				</form>
 			</div>
+			<br><br><br><br><br>
 		</div>
 		
 		<script src="https://use.fontawesome.com/51922b6b29.js"></script>

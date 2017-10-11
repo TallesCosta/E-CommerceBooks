@@ -13,6 +13,12 @@
         <title>Listagem de Livros Inativos</title>
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<style>
+			fieldset {
+				display: inline-block;
+			}
+		</style>	
     </head>
     <body>
 		<%
@@ -33,52 +39,111 @@
 			<h1 id="list-disable-book">Listagem de Livros Inativos</h1>
 			
 			<div>
-				<form action="" method="POST">
-					<!-- select authors -->
-					<label for='author'>Autor: </label>
-					<select name='author' id='author'>
-			<%
+				<form action="list-disable" method="POST">
+					<fieldset>
+						<legend>Dados da filtragem</legend>
+						<fieldset>
+						<legend>Dados básicos</legend>
+						
+						<label for="title">Titulo: </label>
+						<input name="title" id="title" type="text">
+						<label for="synopsis">Sinópse: </label>
+						<textarea name="synopsis" id="synopsis" maxlength="255"></textarea>
+						
+						<label for="edition">Edição: </label>
+						<input name="edition" id="edition" type="text">
+						<label for="publicationYear">Ano: </label>
+						<input name="publicationYear" id="publicationYear" type="number" >
+						<label for="numberOfPages">Número de páginas: </label>
+						<input name="numberOfPages" id="numberOfPages" type="number" >
+						
+						<br/>
+						
+						<label for="author">Autor: </label>
+						<select name="author" id="author">
+			<%	
 				for(Entity entity : result.getEntities(Author.class.getSimpleName())){
 					Author author = (Author) entity;
-					out.println("<option value='" + author.getId() + "'>" + author.getName() + "</option>");
+					out.print("<option value='" + author.getId() + "'>" + author.getName() + "</option>");
 				}
 			%>
-					</select> <!-- end select authors -->
-
-					<!-- select categoty -->
-					<label for='categoty'>Categoria: </label>
-					<select name='categoty' id='categoty'>
+						</select>
+						
+						<label for="category">Categoria: </label>
+						<select name="category" id="category" multiple>
 			<%
 				for(Entity entity : result.getEntities(Category.class.getSimpleName())){
-					Category categoty = (Category) entity;
-					out.println("<option value='" + categoty.getId() + "'>" + categoty.getName() + "</option>");
+					Category category = (Category) entity;
+					if(category.getId() == 1){
+						out.print("<option selected value='" + category.getId() + "'>" + category.getName() + "</option>");
+					}else{
+						out.print("<option value='" + category.getId() + "'>" + category.getName() + "</option>");
+					}
 				}
 			%>
-					</select> <!-- end select categoty -->
-
-					<!-- select publishingCompany -->
-					<label for='publishingCompany'>Editora: </label>
-					<select name='publishingCompany' id='publishingCompany'>
+						</select>
+						
+						<label for="publishingCompany">Editora: </label>
+						<select name="publishingCompany" id="publishingCompany">
 			<%
 				for(Entity entity : result.getEntities(PublishingCompany.class.getSimpleName())){
 					PublishingCompany publishingCompany = (PublishingCompany) entity;
-					out.println("<option value='" + publishingCompany.getId() + "'>" + publishingCompany.getName() + "</option>");
+					out.print("<option value='" + publishingCompany.getId() + "'>" + publishingCompany.getName() + "</option>");
 				}
 			%>
-					</select> <!-- end select publishingCompany -->
+						</select>
+					</fieldset>
 
-					<!-- select priceGroup -->
-					<label for='priceGroup'>Grupo de Precificação: </label>
-					<select name='priceGroup' id='priceGroup'>
+					<fieldset>
+						<legend>Dimensões</legend>
+						 <label for="height">Altura: </label>
+						 <input name="height" id="height" type="number" step="0.01" > cm
+						 <label for="widht">Largura: </label>
+						 <input name="widht" id="widht" type="number" step="0.01" > cm
+						 <label for="weight">Peso: </label>
+						 <input name="weight" id="weight" type="number" step="0.001" > kg
+						 <label for="depth">Profundidade: </label>
+						 <input name="depth" id="depth" type="number" step="0.01" > cm
+					</fieldset>
+
+					<fieldset>
+						<legend>Identificação</legend>
+						<label for="isbn">ISBN: </label>
+						<input name="isbn" for="isbn" type="text">
+						<label for="ean13">Código de barras: </label>
+						<input name="ean13" id="ean13" type="text">
+					</fieldset>
+
+					<fieldset>
+						<legend>Grupo de Precificação</legend>
+						<label for="priceGroup">Porcentagem: </label>
+						<select name="priceGroup" id="priceGroup">
 			<%
 				for(Entity entity : result.getEntities(PriceGroup.class.getSimpleName())){
 					PriceGroup priceGroup = (PriceGroup) entity;
-					out.println("<option value='" + priceGroup.getId() + "'>" + priceGroup.getMarkup() + "</option>");
+					out.print("<option value='" + priceGroup.getId() + "'>" + priceGroup.getMarkup() + " %</option>");
 				}
 			%>
-					</select> <!-- end select priceGroup -->
+						</select>
+					</fieldset>
 
-					<button name="" value="">Filtrar</button>
+					<fieldset>
+						<legend>Parâmetro de venda</legend>
+						 <label for="minSaleLimit">Limite mínimo de vendas: </label>
+						 <input name="minSaleLimit" id="minSaleLimit" type="number" >
+						 <label for="periodicity">Periodicidade: </label>
+						 <input name="periodicity" id="periodicity" type="number" >
+						 <select name="classifierPeriod">
+							 <option value="m">Minuto(s)</option>
+							 <option value="H">Hora(s)</option>
+							 <option value="D">Dia(s)</option>
+							 <option value="M">Mês(es)</option>
+							 <option value="Y">Ano(s)</option>
+						   </select>
+					</fieldset>
+						 
+					<button name="operation" value="LIST" type="submit">Filtrar</button>
+				</fieldset>
 				</form>
 			</div>
 			
@@ -88,14 +153,20 @@
 					<thead>
 						<tr>
 							<td>Título</td>
+							<td>Sinopse</td>
 							<td>Edição</td>
-							<td>Ano de Publicação</td>
-							<td>Nº de Páginas</td>
+							<td>Ano de Publi.</td>
+							<td>Nº pág.</td>
 							<td>ISBN</td>
-							<td>Código de Barras</td>
+							<td>EAN13</td>
+							<td>Dimensions</td>
+							<td>Parâm. Venda</td>
+							<td>Autor</td>
+							<td>Editora</td>
+							<td>Precificação</td>
 							<td>Categoria(s)</td>
-							<td>Excluir</td>
 							<td>Editar</td>
+							<td>Excluir</td>
 						</tr>
 					</thead>
 					
@@ -113,11 +184,21 @@
 
 						out.println("<tr>");
 						out.println("<td>" + book.getTitle() + "</td>");
+						out.println("<td>" + book.getSynopsis() + "</td>");
 						out.println("<td>" + book.getEdition() + "</td>");
 						out.println("<td>" + book.getPublicationYear() + "</td>");
 						out.println("<td>" + book.getNumberOfPages() + "</td>");
 						out.println("<td>" + book.getIsbn() + "</td>");
 						out.println("<td>" + book.getEan13()+ "</td>");
+						out.println("<td>" + book.getDimension().getHeight() + "x" 
+								+ book.getDimension().getWidht() + "x" 
+								+ book.getDimension().getDepth() + " (" 
+								+ book.getDimension().getWeight() + " kg)</td>");
+						out.println("<td>" + book.getSaleParameterization().getMinSaleLimit() + "/" 
+								+ book.getSaleParameterization().getPeriodicity() + "min.</td>");
+						out.println("<td>" + book.getAuthor().getName() + "</td>");
+						out.println("<td>" + book.getPublishingCompany().getName() + "</td>");
+						out.println("<td>" + book.getPriceGroup().getMarkup() + " %</td>");
 						out.println("<td>" + categories.substring(0, categories.length() - 2) + "</td>");
 						out.println("<td>"
 										+ "<a href='" + request.getContextPath() + "/books/find?operation=FIND&id=" + book.getId() + "'>"
@@ -125,8 +206,8 @@
 										+ "</a>"
 									+ "</td>");
 						out.println("<td>"
-										+ "<a href='" + request.getContextPath() + "/books/disable?operation=DISABLE&id=" + book.getId() + "'>"
-											+ "<i class='fa fa-trash' aria-hidden='true'></i>"
+										+ "<a onclick='setEnableId(" + book.getId() + ")' href='#')>"
+											+ "<i class='fa fa-plus' aria-hidden='true'></i>"
 										+ "</a>"
 									+ "</td>");
 						out.println("</tr>");
@@ -147,11 +228,17 @@
 					<tfooter>
 						<tr>
 							<td>Título</td>
+							<td>Sinopse</td>
 							<td>Edição</td>
-							<td>Ano de Publicação</td>
-							<td>Nº de Páginas</td>
+							<td>Ano de Publi.</td>
+							<td>Nº pág.</td>
 							<td>ISBN</td>
-							<td>Código de Barras</td>
+							<td>EAN13</td>
+							<td>Dimensions</td>
+							<td>Parâm. Venda</td>
+							<td>Autor</td>
+							<td>Editora</td>
+							<td>Precificação</td>
 							<td>Categoria(s)</td>
 							<td>Editar</td>
 							<td>Excluir</td>
@@ -197,6 +284,7 @@
 					<small>Todos os campos marcados com * são obrigatórios.</small>
 				</form>
 			</div>
+			<br><br><br><br><br>
 		</div>
 		
 		<script src="https://use.fontawesome.com/51922b6b29.js"></script>

@@ -200,6 +200,19 @@ public class BookVh implements IViewHelper {
 				break;
 
 			case "LIST-DISABLE":
+				book.setTitle(title);
+				book.setSynopsis(synopsis);
+				book.setPublicationYear(publicationYear);
+				book.setNumberOfPages(numberOfPages);
+				book.setEdition(edition);
+				book.setIsbn(isbn);
+				book.setEan13(ean13);
+				book.setDimension(new Dimension(height, widht, weight, depth));
+				book.setSaleParameterization(new SaleParameterization(minSaleLimit, periodicity));
+				book.setAuthor(new Author(idAuthor));
+				book.setPublishingCompany(new PublishingCompany(idPublishingCompany));
+				book.setPriceGroup(new PriceGroup(idPriceGroup));
+				book.addCategories(categories);
 				break;
 				
 			case "FIND":

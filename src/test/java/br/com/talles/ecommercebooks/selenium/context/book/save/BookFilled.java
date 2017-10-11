@@ -28,7 +28,7 @@ public class BookFilled extends BookT {
 		element.sendKeys("Biblia Sagrada");
 		
 		element = browser.findElement(By.id(elements.INPUT_SYNOPSIS));
-		element.sendKeys("A história da vida");
+		element.sendKeys("A historia da vida");
 		
 		// Author
 		element = browser.findElement(By.id(elements.SELECT_AUTHOR));
