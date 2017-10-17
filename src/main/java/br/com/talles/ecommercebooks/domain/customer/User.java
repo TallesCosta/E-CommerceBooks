@@ -12,6 +12,10 @@ public class User extends Entity {
 		super(true);
 	}
 
+	public User(long id) {
+		super(id, true);
+	}
+	
 	public User(String email, String password, String passwordVerify) {
 		super(true);
 		this.email = email;

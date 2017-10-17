@@ -177,6 +177,7 @@
 							<td>Categoria(s)</td>
 							<td>Editar</td>
 							<td>Excluir</td>
+							<td>Histórico</td>
 						</tr>
 					</thead>
 					
@@ -221,6 +222,11 @@
 										+ "</a>"
 									+ "</td>");
 						out.println("</tr>");
+						out.println("<td>"
+										+ "<a href='" + request.getContextPath() + "/books/history?operation=HISTORY&id=" + book.getId() + "'>"
+											+ "<i class='fa fa-history' aria-hidden='true'></i>"
+										+ "</a>"
+									+ "</td>");
 						i++;
 					}
 				} else {
@@ -252,6 +258,7 @@
 							<td>Categoria(s)</td>
 							<td>Editar</td>
 							<td>Excluir</td>
+							<td>Histórico</td>
 						</tr>
 					</tfooter>
 				</table>

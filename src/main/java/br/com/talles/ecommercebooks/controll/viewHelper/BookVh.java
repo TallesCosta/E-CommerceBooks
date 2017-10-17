@@ -8,13 +8,16 @@ import br.com.talles.ecommercebooks.domain.book.ChangeStatus;
 import br.com.talles.ecommercebooks.domain.book.StatusCategory;
 import br.com.talles.ecommercebooks.domain.book.Dimension;
 import br.com.talles.ecommercebooks.domain.Entity;
+import br.com.talles.ecommercebooks.domain.History;
 import br.com.talles.ecommercebooks.domain.book.PriceGroup;
 import br.com.talles.ecommercebooks.domain.book.PublishingCompany;
 import br.com.talles.ecommercebooks.domain.book.SaleParameterization;
+import br.com.talles.ecommercebooks.domain.customer.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -159,8 +162,17 @@ public class BookVh implements IViewHelper {
 		long idActivationCategory = 0;
 		if (!(idActivationCategoryS == null || idActivationCategoryS.equals("")))
 			idActivationCategory = Long.valueOf(idActivationCategoryS);
-				
+		
+		// History
+		// Fake user - (TEMP)
+		String idUserS = "1";
+		long idUser = 0;
+		if (!(idUserS == null || idUserS.equals("")))
+			idUser = Long.valueOf(idUserS);
+		
+		// Book
 		Book book = new Book();
+		History history = new History(new Date(), new User(idUser));
 		
 		switch(request.getParameter("operation")) {
 			case "CREATE" :				
@@ -174,12 +186,29 @@ public class BookVh implements IViewHelper {
 				book.setEdition(edition);
 				book.setIsbn(isbn);
 				book.setEan13(ean13);
+				book.setHistory(history);
+				// Dimension
 				book.setDimension(new Dimension(height, widht, weight, depth));
+				book.getDimension().setHistory(history);
+				// Sale Parameterization
 				book.setSaleParameterization(new SaleParameterization(minSaleLimit, periodicity));
+				book.getSaleParameterization().setHistory(history);
+				// Author
 				book.setAuthor(new Author(idAuthor));
+				book.getAuthor().setHistory(history);
+				// Publishing Company
 				book.setPublishingCompany(new PublishingCompany(idPublishingCompany));
+				book.getPublishingCompany().setHistory(history);
+				// Price Group
 				book.setPriceGroup(new PriceGroup(idPriceGroup));
+				book.getPriceGroup().setHistory(history);
+				// Change Status
 				book.setChangeStatus(new ChangeStatus("Livro novo", new StatusCategory(-1L)));
+				book.getChangeStatus().setHistory(history);
+				// Categories
+				for (Category category : categories) {
+					category.setHistory(history);
+				}
 				book.addCategories(categories);
 				break;
 
@@ -219,6 +248,10 @@ public class BookVh implements IViewHelper {
 				book.setId(id);
 				break;
 
+			case "HISTORY":
+				book.setId(id);
+				break;
+				
 			case "UPDATE":
 				book.setId(id);
 				book.setTitle(title);
@@ -228,14 +261,31 @@ public class BookVh implements IViewHelper {
 				book.setEdition(edition);
 				book.setIsbn(isbn);
 				book.setEan13(ean13);
+				book.setHistory(history);
+				// Dimension
 				book.setDimension(new Dimension(height, widht, weight, depth, idDimension));
+				book.getDimension().setHistory(history);
+				// Sale Parameterization
 				book.setSaleParameterization(new SaleParameterization(minSaleLimit, periodicity, 
 						idSaleParameterization));
+				book.getSaleParameterization().setHistory(history);
+				// Author
 				book.setAuthor(new Author(idAuthor));
+				book.getAuthor().setHistory(history);
+				// Publishing Company
 				book.setPublishingCompany(new PublishingCompany(idPublishingCompany));
+				book.getPublishingCompany().setHistory(history);
+				// Price Group
 				book.setPriceGroup(new PriceGroup(idPriceGroup));
+				book.getPriceGroup().setHistory(history);
+				// Change Status
 				book.setChangeStatus(new ChangeStatus(justificationChangeStatus, 
 						new StatusCategory(idStatusCategoryChangeStatus), idChangeStatus));
+				book.getChangeStatus().setHistory(history);
+				// Categories
+				for (Category category : categories) {
+					category.setHistory(history);
+				}
 				book.addCategories(categories);
 				break;
 
@@ -292,6 +342,11 @@ public class BookVh implements IViewHelper {
 
 				case "FIND":
 					dispatcher = request.getRequestDispatcher("/book/create.jsp");
+					dispatcher.forward(request, response);
+					break;
+					
+				case "HISTORY":
+					dispatcher = request.getRequestDispatcher("/book/show.jsp");
 					dispatcher.forward(request, response);
 					break;
 

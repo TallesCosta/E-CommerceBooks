@@ -4,6 +4,7 @@ public class Entity {
 
 	private long id;
 	private boolean enabled;
+	private History history;
 
 	public Entity() {
 	}
@@ -37,6 +38,14 @@ public class Entity {
 		this.enabled = enabled;
 	}
 
+	public History getHistory() {
+		return history;
+	}
+
+	public void setHistory(History history) {
+		this.history = history;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

@@ -1,21 +1,20 @@
 package br.com.talles.ecommercebooks.persistence.dao.book;
 
+import br.com.talles.ecommercebooks.domain.book.PriceGroup;
 import br.com.talles.ecommercebooks.domain.Entity;
-import br.com.talles.ecommercebooks.domain.book.Author;
 import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AuthorDao extends AbstractDao {
+public class PriceGroupHistoryDao extends AbstractDao {
 
 	@Override
 	public List<Entity> select(boolean enabled, Entity entity) {
-		List<Entity> authors = new ArrayList();
-        String sql = "SELECT * FROM authors WHERE enabled = ?";
+		List<Entity> priceGroups = new ArrayList();
+        String sql = "SELECT * FROM priceGroups WHERE enabled = ?";
         
         try{
 			openConnection();
@@ -26,19 +25,19 @@ public class AuthorDao extends AbstractDao {
             ResultSet result = statement.executeQuery();
             
             while(result.next()){
-                Author author = new Author();
+                PriceGroup priceGroup = new PriceGroup();
                 
-                author.setId(result.getLong("id"));
-                author.setEnabled(result.getBoolean("enabled"));
-                author.setName(result.getString("name"));
+                priceGroup.setId(result.getLong("id"));
+                priceGroup.setEnabled(result.getBoolean("enabled"));
+                priceGroup.setMarkup(result.getDouble("markup"));
                 
-                authors.add(author);
+                priceGroups.add(priceGroup);
             }
             
             result.close();
             statement.close();
             
-            return  authors;
+            return  priceGroups;
         }catch(SQLException e){
             throw new RuntimeException(e);   
         } finally {
@@ -58,31 +57,7 @@ public class AuthorDao extends AbstractDao {
 
 	@Override
 	public Entity find(Entity entity) {
-		Author author = (Author) entity;
-		
-		String sql = "SELECT * FROM Authors WHERE id = ?";
-		
-		try {
-			openConnection();
-			
-			PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setLong(1, author.getId());
-            
-            ResultSet result = statement.executeQuery();
-			result.first();
-
-			author.setId(result.getLong("id"));
-			author.setEnabled(result.getBoolean("enabled"));
-			author.setName(result.getString("name"));
-			
-			statement.close();
-
-			return author;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		} finally {
-			closeConnection();
-		}
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
 	@Override

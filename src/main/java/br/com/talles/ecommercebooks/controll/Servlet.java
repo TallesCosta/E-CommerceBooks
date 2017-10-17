@@ -36,6 +36,7 @@ public class Servlet extends HttpServlet {
 		viewHelpers.put("/E-CommerceBooks/books/list", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/list-disable", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/find", new BookVh());
+		viewHelpers.put("/E-CommerceBooks/books/history", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/update", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/disable", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/enable", new BookVh());
@@ -57,6 +58,7 @@ public class Servlet extends HttpServlet {
 		commands.put("LIST", new ListCmd());
 		commands.put("LIST-DISABLE", new ListCmd());
 		commands.put("FIND", new FindCmd());
+		commands.put("HISTORY", new FindCmd());
 		commands.put("UPDATE", new UpdateCmd());
 		commands.put("DISABLE", new UpdateCmd());
 		commands.put("ENABLE", new UpdateCmd());
