@@ -8,7 +8,7 @@ CREATE TABLE StatusCategoriesHistory (
 	activationStatus BOOLEAN NOT NULL,
 	description VARCHAR(255),
 	
-	version INT NOT NULL,
+	-- --------------------
 	date TIMESTAMP NOT NULL,
 	
 	id_statusCategory INT NOT NULL,	

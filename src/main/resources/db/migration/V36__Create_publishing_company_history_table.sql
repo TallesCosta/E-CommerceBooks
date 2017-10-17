@@ -6,7 +6,7 @@ CREATE TABLE PublishingCompaniesHistory (
 	enabled BOOLEAN NOT NULL,
 	name VARCHAR(255) NOT NULL,
 						
-	version INT NOT NULL,
+	-- --------------------
 	date TIMESTAMP NOT NULL,
 	
 	id_publishingCompany INT NOT NULL,	

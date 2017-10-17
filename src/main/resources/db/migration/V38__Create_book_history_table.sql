@@ -18,8 +18,8 @@ CREATE TABLE BooksHistory (
 	id_priceGroupHistory INT NOT NULL,
 	id_saleParameterizationHistory INT NOT NULL,
 	id_changeStatusHistory INT,
-							
-	version INT NOT NULL,
+
+	-- --------------------
 	date TIMESTAMP NOT NULL,
 	
 	id_book INT NOT NULL,	

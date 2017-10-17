@@ -7,7 +7,7 @@ CREATE TABLE CategoriesHistory (
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255),
 									
-	version INT NOT NULL,
+	-- --------------------
 	date TIMESTAMP NOT NULL,
 	
 	id_category INT NOT NULL,	

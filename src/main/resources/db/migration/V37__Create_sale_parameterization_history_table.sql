@@ -7,7 +7,7 @@ CREATE TABLE SaleParameterizationsHistory (
 	minSaleLimit INT NOT NULL,
 	periodicity INT NOT NULL,
 							
-	version INT NOT NULL,
+	-- --------------------
 	date TIMESTAMP NOT NULL,
 	
 	id_saleParameterization INT NOT NULL,	

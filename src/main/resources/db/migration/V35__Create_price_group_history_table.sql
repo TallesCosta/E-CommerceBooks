@@ -6,7 +6,7 @@ CREATE TABLE PriceGroupsHistory (
 	enabled BOOLEAN NOT NULL,
 	markup DECIMAL(4,2) NOT NULL,
 					
-	version INT NOT NULL,
+	-- --------------------
 	date TIMESTAMP NOT NULL,
 	
 	id_priceGroup INT NOT NULL,	

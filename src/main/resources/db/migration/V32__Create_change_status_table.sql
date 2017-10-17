@@ -7,8 +7,8 @@ CREATE TABLE ChangeStatusHistory (
 	justification VARCHAR(255),
 	
 	id_statusCategoryHistory INT,
-		
-	version INT NOT NULL,
+
+	-- --------------------
 	date TIMESTAMP NOT NULL,
 	
 	id_changeStatus INT NOT NULL,	

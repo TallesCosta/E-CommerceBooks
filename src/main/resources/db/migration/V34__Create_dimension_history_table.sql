@@ -9,7 +9,7 @@ CREATE TABLE DimensionsHistory (
 	weight DECIMAL(4,3) NOT NULL,
 	depth DECIMAL(4,2) NOT NULL,
 				
-	version INT NOT NULL,
+	-- --------------------
 	date TIMESTAMP NOT NULL,
 	
 	id_dimension INT NOT NULL,	

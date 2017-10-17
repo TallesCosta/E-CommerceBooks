@@ -7,7 +7,7 @@ CREATE TABLE BooksCategoriesHistory (
 	id_bookHistory INT NOT NULL,
 	id_categoryHistory INT NOT NULL,
 								
-	version INT NOT NULL,
+	-- --------------------
 	date TIMESTAMP NOT NULL,
 	
 	id_booksCategories INT NOT NULL,	
