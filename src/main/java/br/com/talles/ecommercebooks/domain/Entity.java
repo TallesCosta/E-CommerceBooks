@@ -1,6 +1,8 @@
 package br.com.talles.ecommercebooks.domain;
 
-public class Entity {
+import java.io.Serializable;
+
+public class Entity implements Serializable {
 
 	private long id;
 	private boolean enabled;

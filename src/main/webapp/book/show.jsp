@@ -51,97 +51,91 @@
 			
 			<fieldset>
 				<legend>Dados básicos</legend>
-				<input type="hidden" name="id" id="id" 
-					   <% out.print("value='" + book.getId() + "'"); %> >
 				<div>
-					<label for="title">Titulo*: </label>
+					<label>Titulo: </label>
 					<span> <% out.print(book.getTitle()); %> </span>
 				</div>
 				<div>
-					<label for="synopsis">Sinópse*: </label>
+					<label>Sinópse: </label>
 					<span> <% out.print(book.getSynopsis()); %> </span>
 				</div>
 				<div>
-					<input type="hidden" name="idAuthor" id="idAuthor" 
-						   <% out.print("value='" + book.getAuthor().getId() + "'"); %> >
-					<label for="author">Autor*: </label>
+					<label>Autor: </label>
 					<select name="author" id="author" disabled>
-	<%	
-		for(Entity entity : result.getEntities(Author.class.getSimpleName())){
-			Author author = (Author) entity;
-			out.print("<option value='" + author.getId() + "'>" + author.getName() + "</option>");
-		}
-	%>
+		<%	
+			for(Entity entity : result.getEntities(Author.class.getSimpleName())){
+				Author author = (Author) entity;
+				out.print("<option value='" + author.getId() + "'>" + author.getName() + "</option>");
+			}
+		%>
 					</select>
 				</div>
 				<div>
 					<input type="hidden" name="idCategory" id="idCategory" 
 						   <% 
-							   String value = "";
-							   for (Category c : book.getCategories()) {
-								   value += c.getId() + "-";
-							   }
+								String value = "";
+								for (Category c : book.getCategories()) {
+									value += c.getId() + "-";
+								}
 
-							   out.print("value='" + value.substring(0, value.length() - 1) + "'"); %> >
-					<label for="category">Categoria*: </label>
+								out.print("value='" + value.substring(0, value.length() - 1) + "'"); %> >
+					<label>Categoria: </label>
 					<select name="category" id="category" multiple disabled>
-	<%
-		for(Entity entity : result.getEntities(Category.class.getSimpleName())){
-			Category category = (Category) entity;
-			if(category.getId() == 1){
-				out.print("<option selected value='" + category.getId() + "'>" + category.getName() + "</option>");
-			}else{
-				out.print("<option value='" + category.getId() + "'>" + category.getName() + "</option>");
+		<%
+			for(Entity entity : result.getEntities(Category.class.getSimpleName())){
+				Category category = (Category) entity;
+				if(category.getId() == 1){
+					out.print("<option selected value='" + category.getId() + "'>" + category.getName() + "</option>");
+				}else{
+					out.print("<option value='" + category.getId() + "'>" + category.getName() + "</option>");
+				}
 			}
-		}
-	%>
+		%>
 					</select>
 				</div>
 				<div>
 					<input type="hidden" name="idPublishingCompany" id="idPublishingCompany" 
 						   <% out.print("value='" + book.getPublishingCompany().getId() + "'"); %> >
-					<label for="publishingCompany">Editora*: </label>
+					<label>Editora: </label>
 					<select name="publishingCompany" id="publishingCompany" disabled="">
-	<%
-		for(Entity entity : result.getEntities(PublishingCompany.class.getSimpleName())){
-			PublishingCompany publishingCompany = (PublishingCompany) entity;
-			out.print("<option value='" + publishingCompany.getId() + "'>" + publishingCompany.getName() + "</option>");
-		}
-	%>
+		<%
+			for(Entity entity : result.getEntities(PublishingCompany.class.getSimpleName())){
+				PublishingCompany publishingCompany = (PublishingCompany) entity;
+				out.print("<option value='" + publishingCompany.getId() + "'>" + publishingCompany.getName() + "</option>");
+			}
+		%>
 					</select>
 				</div>
 				<div>
-					<label for="edition">Edição*: </label>
+					<label>Edição: </label>
 					<span> <% out.print(book.getEdition()); %> </span>
 				</div>
 				<div>
-					<label for="publicationYear">Ano*: </label>
+					<label>Ano: </label>
 					<span> <% out.print(book.getPublicationYear()); %> </span>
 				</div>
 				<div>
-					<label for="numberOfPages">Número de páginas*: </label>
+					<label>Número de páginas: </label>
 					<span> <% out.print(book.getNumberOfPages()); %> </span>
 				</div>
 			</fieldset>
 
 			<fieldset>
 				<legend>Dimensões</legend>
-				<input type="hidden" name="idDimension" id="idDimension" 
-					   <% out.print("value='" + book.getDimension().getId() + "'"); %> >
 				<div>
-					<label for="height">Altura*: </label>
+					<label>Altura: </label>
 					<span> <% out.print(book.getDimension().getHeight()); %> </span>
 				</div>
 				<div>
-					<label for="widht">Largura*: </label>
+					<label>Largura: </label>
 					<span> <% out.print(book.getDimension().getWidht()); %> </span>
 				</div>
 				<div>
-					<label for="weight">Peso*: </label>
+					<label>Peso: </label>
 					<span> <% out.print(book.getDimension().getWeight()); %> </span>
 				</div>
 				<div>
-					<label for="depth">Profundidade*: </label>
+					<label>Profundidade: </label>
 					<span> <% out.print(book.getDimension().getDepth()); %> </span>
 				</div>
 			</fieldset>
@@ -149,11 +143,11 @@
 			<fieldset>
 				<legend>Identificação</legend>
 				<div>
-					<label for="isbn">ISBN*: </label>
+					<label>ISBN: </label>
 					<span> <% out.print(book.getIsbn()); %> </span>
 				</div>
 				<div>
-					<label for="ean13">Código de barras*: </label>
+					<label>Código de barras: </label>
 					<span> <% out.print(book.getEan13()); %> </span>
 				</div>
 			</fieldset>
@@ -163,28 +157,26 @@
 				<div>
 					<input type="hidden" name="idPriceGroup" id="idPriceGroup" 
 						   <% out.print("value='" + book.getPriceGroup().getId() + "'"); %> >
-					<label for="priceGroup">Porcentagem*: </label>
+					<label>Porcentagem: </label>
 					<select name="priceGroup" id="priceGroup" disabled>
-	<%
-		for(Entity entity : result.getEntities(PriceGroup.class.getSimpleName())){
-			PriceGroup priceGroup = (PriceGroup) entity;
-			out.print("<option value='" + priceGroup.getId() + "'>" + priceGroup.getMarkup() + " %</option>");
-		}
-	%>
+		<%
+			for(Entity entity : result.getEntities(PriceGroup.class.getSimpleName())){
+				PriceGroup priceGroup = (PriceGroup) entity;
+				out.print("<option value='" + priceGroup.getId() + "'>" + priceGroup.getMarkup() + " %</option>");
+			}
+		%>
 					</select>
 				</div>      
 			</fieldset>
 
 			<fieldset>
 				<legend>Parâmetro de venda</legend>
-				<input type="hidden" name="idSaleParameterization" id="idSaleParameterization" 
-					   <% out.print("value='" + book.getSaleParameterization().getId() + "'"); %> >
 				<div>
-					<label for="minSaleLimit">Limite mínimo de vendas*: </label>
+					<label>Limite mínimo de vendas: </label>
 					<span> <% out.print(book.getSaleParameterization().getMinSaleLimit()); %> </span>
 				</div>
 				<div>
-					<label for="periodicity">Periodicidade*: </label>
+					<label>Periodicidade: </label>
 					<span> <% out.print(book.getSaleParameterization().getPeriodicity()); %> </span>
 					<select name="classifierPeriod" id="classifierPeriod" disabled>
 						<option value="m">Minuto(s)</option>
@@ -196,15 +188,9 @@
 				</div>
 			</fieldset>
 
-			<input type="hidden" name="operation" id="operation-book" 
-				<% if (result.getOperation().equals("CREATE")) { out.print("value='SAVE'"); }
-				else if (result.getOperation().equals("FIND")) { out.print("value='UPDATE'"); } %> />
-
 			<fieldset>
 				<legend>Status de Mudança</legend>
 				<div>
-					<input type="hidden" name="idChangeStatus" id="idChangeStatus" 
-						<% out.print("value='" + book.getChangeStatus().getId() + "'"); %> >
 					<label>Justicativa: </label>
 					<span> <% out.print(book.getChangeStatus().getJustification()); %> </span>
 				</div>

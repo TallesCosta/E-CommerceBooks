@@ -40,9 +40,8 @@ public class AuthorHistoryDao extends AbstractDao {
 				authorHistory.setId(result.getLong("id"));
 				authorHistory.setEnabled(result.getBoolean("enabled"));
 				authorHistory.setName(result.getString("name"));
-				authorHistory.setHistory(
-						new History(new Date(result.getTimestamp("date").getTime()), new User(result.getLong("id_user")), 
-								result.getLong("id_book")));
+				authorHistory.setHistory(new History("", new Date(result.getTimestamp("date").getTime()), 
+						new User(result.getLong("id_user")), result.getLong("id_book")));
 				
 				authorsHistory.add(authorHistory);
 			}
@@ -151,7 +150,7 @@ public class AuthorHistoryDao extends AbstractDao {
 			authorHistory.setId(result.getLong("id"));
 			authorHistory.setEnabled(result.getBoolean("enabled"));
 			authorHistory.setName(result.getString("name"));
-			authorHistory.setHistory(new History(new Date(result.getTimestamp("date").getTime()), 
+			authorHistory.setHistory(new History("", new Date(result.getTimestamp("date").getTime()), 
 					new User(result.getLong("id_user")), result.getLong("id_author")));
 			
 			stmt.close();

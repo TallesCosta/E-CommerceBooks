@@ -20,13 +20,13 @@ public class DimensionDao extends AbstractDao {
 
 	@Override
 	public boolean save(Entity entity) {
-		openConnection();
-
 		Dimension dimension = (Dimension) entity;
 		String sql = "INSERT INTO dimensions(enabled, height, widht, weight, depth)"
 				+ "VALUES(?, ?, ?, ?, ?)";
 
 		try {
+			openConnection();
+			
 			PreparedStatement statement = conn.prepareStatement(sql);
 
 			statement.setBoolean(1, dimension.isEnabled());

@@ -1,5 +1,6 @@
 package br.com.talles.ecommercebooks.controll.viewHelper;
 
+import br.com.talles.ecommercebooks.config.PropertiesConfig;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.book.Author;
 import br.com.talles.ecommercebooks.domain.book.Book;
@@ -170,9 +171,13 @@ public class BookVh implements IViewHelper {
 		if (!(idUserS == null || idUserS.equals("")))
 			idUser = Long.valueOf(idUserS);
 		
+		// Path history books folder
+		PropertiesConfig pathConfig = new PropertiesConfig();
+		String path = pathConfig.getHistoryBook();
+		
 		// Book
 		Book book = new Book();
-		History history = new History(new Date(), new User(idUser));
+		History history = new History(path, new Date(), new User(idUser));
 		
 		switch(request.getParameter("operation")) {
 			case "CREATE" :				

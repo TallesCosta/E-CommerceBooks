@@ -15,8 +15,13 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         
+		<!-- Path database H2 -->
 		<dbURL>jdbc:h2:file:${basedir}/src/main/resources/data/ecommerce-books</dbURL>
+		<!-- Path WebDriver (Win, Linux) -->
 		<webDriver>${basedir}/src/test/resources/web-driver</webDriver>
+		<!-- Path history objects folder -->
+		<historyBook>${basedir}/src/main/resources/data/history/book</historyBook>
+		<historyCustomer>${basedir}/src/main/resources/data/history/customer</historyCustomer>
     </properties>
     
     <dependencies>

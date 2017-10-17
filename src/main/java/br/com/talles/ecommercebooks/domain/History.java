@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class History extends Entity {
 	
+	private String path;
 	private Date date;
 	private User user;
 
@@ -12,16 +13,26 @@ public class History extends Entity {
 		super(true);
 	}
 
-	public History(Date date, User user) {
+	public History(String path, Date date, User user) {
 		super(true);
+		this.path = path;
 		this.date = date;
 		this.user = user;
 	}
 
-	public History(Date date, User user, long id) {
+	public History(String path, Date date, User user, long id) {
 		super(id, true);
+		this.path = path;
 		this.date = date;
 		this.user = user;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 	
 	public Date getDate() {

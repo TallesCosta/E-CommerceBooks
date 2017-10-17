@@ -7,4 +7,11 @@
                 <goal>flyway:migrate</goal>
             </goals>
         </action>
+        <action>
+            <actionName>CUSTOM-flyway:clean</actionName>
+            <displayName>flyway:clean</displayName>
+            <goals>
+                <goal>flyway:clean</goal>
+            </goals>
+        </action>
     </actions>
