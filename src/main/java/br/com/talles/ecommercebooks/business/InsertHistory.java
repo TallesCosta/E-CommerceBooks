@@ -11,11 +11,11 @@ import br.com.talles.ecommercebooks.persistence.dao.customer.HistoryCustomerDao;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SaveHistory implements IStrategy {
+public class InsertHistory implements IStrategy {
 	
 	protected Map<String, IDao> persistence;
 	
-	public SaveHistory() {
+	public InsertHistory() {
 		String book = Book.class.getSimpleName();
 		String customer = Customer.class.getSimpleName();
 				

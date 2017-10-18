@@ -2,7 +2,8 @@ package br.com.talles.ecommercebooks.controll.facade;
 
 import br.com.talles.ecommercebooks.business.IStrategy;
 import br.com.talles.ecommercebooks.business.CreateView;
-import br.com.talles.ecommercebooks.business.SaveHistory;
+import br.com.talles.ecommercebooks.business.InsertHistory;
+import br.com.talles.ecommercebooks.business.UpdateHistory;
 import br.com.talles.ecommercebooks.business.book.ModifyStatus;
 import br.com.talles.ecommercebooks.business.book.save.BookValidateSave;
 import br.com.talles.ecommercebooks.business.book.update.BookValidateUpdate;
@@ -49,7 +50,8 @@ public class Facade implements IFacade {
         
         // General Strategies
 		IStrategy createView = new CreateView();
-		IStrategy saveHistory = new SaveHistory();
+		IStrategy insertHistory = new InsertHistory();
+		IStrategy updateHistory = new UpdateHistory();
 		// Books
 		IStrategy modifyStatus = new ModifyStatus();
 		// Customers
@@ -72,7 +74,7 @@ public class Facade implements IFacade {
 				
 		List<IStrategy> updateBook = new ArrayList();
 		updateBook.add(new BookValidateUpdate());
-		updateBook.add(saveHistory);
+		updateBook.add(updateHistory);
 		
 		List<IStrategy> disableBook = new ArrayList();
 		disableBook.add(modifyStatus);
@@ -95,7 +97,7 @@ public class Facade implements IFacade {
 				
 		List<IStrategy> updateCustomer = new ArrayList();
 		updateCustomer.add(new CustomerValidateUpdate());
-		updateCustomer.add(saveHistory);
+		updateCustomer.add(updateHistory);
 		
 		List<IStrategy> disableCustomer = new ArrayList();
 		disableCustomer.add(custumerFind);
@@ -133,10 +135,10 @@ public class Facade implements IFacade {
 		
 		// Requirements Later
 		List<IStrategy> saveBookLater = new ArrayList();
-		saveBookLater.add(saveHistory);
+		saveBookLater.add(insertHistory);
 		
 		List<IStrategy> saveCustomerLater = new ArrayList();
-		saveCustomerLater.add(saveHistory);
+		saveCustomerLater.add(insertHistory);
 		
 		// Requirements Book Later
         Map<String, List<IStrategy>> contextReqBookLater = new HashMap();

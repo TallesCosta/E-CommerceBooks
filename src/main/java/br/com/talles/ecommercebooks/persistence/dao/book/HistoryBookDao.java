@@ -55,7 +55,7 @@ public class HistoryBookDao extends AbstractDao {
 	}
 
 	@Override
-	public Entity find(Entity entity) {		
+	public Entity find(Entity entity) {
 		String sql = "SELECT * FROM HistoryBooks WHERE id_book = ? ORDER BY date DESC LIMIT 1";
 		
 		try {
