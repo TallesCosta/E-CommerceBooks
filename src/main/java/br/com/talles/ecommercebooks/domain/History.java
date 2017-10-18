@@ -5,34 +5,32 @@ import java.util.Date;
 
 public class History extends Entity {
 	
-	private String path;
 	private Date date;
 	private User user;
+	private Entity entity;
 
 	public History() {
 		super(true);
 	}
 
-	public History(String path, Date date, User user) {
+	public History(Date date, User user) {
 		super(true);
-		this.path = path;
 		this.date = date;
 		this.user = user;
 	}
 
-	public History(String path, Date date, User user, long id) {
+	public History(Date date, User user, Entity entity) {
+		super(true);
+		this.date = date;
+		this.user = user;
+		this.entity = entity;
+	}
+	
+	public History(Date date, User user, Entity entity, long id) {
 		super(id, true);
-		this.path = path;
 		this.date = date;
 		this.user = user;
-	}
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
+		this.entity = entity;
 	}
 	
 	public Date getDate() {
@@ -49,6 +47,14 @@ public class History extends Entity {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Entity getEntity() {
+		return entity;
+	}
+
+	public void setEntity(Entity entity) {
+		this.entity = entity;
 	}
 	
 }

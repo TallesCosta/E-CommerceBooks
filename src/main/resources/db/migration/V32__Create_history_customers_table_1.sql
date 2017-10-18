@@ -5,7 +5,7 @@ CREATE TABLE HistoryCustomers (
     id INT NOT NULL AUTO_INCREMENT,
 	enabled BOOLEAN NOT NULL,
 	date TIMESTAMP NOT NULL,
-	path VARCHAR(255),
+	serializedObject OTHER,
 
 	id_customer INT NOT NULL,
 	id_user INT NOT NULL,

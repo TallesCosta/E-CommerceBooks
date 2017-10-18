@@ -53,13 +53,15 @@
 				<legend>Dados básicos</legend>
 				<div>
 					<label>Titulo: </label>
-					<span> <% out.print(book.getTitle()); %> </span>
+					<span> <% out.print(((Book) book.getHistory().getEntity()).getTitle()); %> </span>
 				</div>
 				<div>
 					<label>Sinópse: </label>
-					<span> <% out.print(book.getSynopsis()); %> </span>
+					<span> <% out.print(((Book) book.getHistory().getEntity()).getSynopsis()); %> </span>
 				</div>
 				<div>
+					<input type="hidden" name="idAuthor" id="idAuthor" 
+						   <% out.print("value='" + ((Book) book.getHistory().getEntity()).getAuthor().getId() + "'"); %> >
 					<label>Autor: </label>
 					<select name="author" id="author" disabled>
 		<%	
@@ -74,7 +76,7 @@
 					<input type="hidden" name="idCategory" id="idCategory" 
 						   <% 
 								String value = "";
-								for (Category c : book.getCategories()) {
+								for (Category c : ((Book) book.getHistory().getEntity()).getCategories()) {
 									value += c.getId() + "-";
 								}
 
@@ -95,7 +97,7 @@
 				</div>
 				<div>
 					<input type="hidden" name="idPublishingCompany" id="idPublishingCompany" 
-						   <% out.print("value='" + book.getPublishingCompany().getId() + "'"); %> >
+						   <% out.print("value='" + ((Book) book.getHistory().getEntity()).getPublishingCompany().getId() + "'"); %> >
 					<label>Editora: </label>
 					<select name="publishingCompany" id="publishingCompany" disabled="">
 		<%
@@ -108,15 +110,15 @@
 				</div>
 				<div>
 					<label>Edição: </label>
-					<span> <% out.print(book.getEdition()); %> </span>
+					<span> <% out.print(((Book) book.getHistory().getEntity()).getEdition()); %> </span>
 				</div>
 				<div>
 					<label>Ano: </label>
-					<span> <% out.print(book.getPublicationYear()); %> </span>
+					<span> <% out.print(((Book) book.getHistory().getEntity()).getPublicationYear()); %> </span>
 				</div>
 				<div>
 					<label>Número de páginas: </label>
-					<span> <% out.print(book.getNumberOfPages()); %> </span>
+					<span> <% out.print(((Book) book.getHistory().getEntity()).getNumberOfPages()); %> </span>
 				</div>
 			</fieldset>
 
@@ -124,19 +126,19 @@
 				<legend>Dimensões</legend>
 				<div>
 					<label>Altura: </label>
-					<span> <% out.print(book.getDimension().getHeight()); %> </span>
+					<span> <% out.print(((Book) book.getHistory().getEntity()).getDimension().getHeight()); %> </span>
 				</div>
 				<div>
 					<label>Largura: </label>
-					<span> <% out.print(book.getDimension().getWidht()); %> </span>
+					<span> <% out.print(((Book) book.getHistory().getEntity()).getDimension().getWidht()); %> </span>
 				</div>
 				<div>
 					<label>Peso: </label>
-					<span> <% out.print(book.getDimension().getWeight()); %> </span>
+					<span> <% out.print(((Book) book.getHistory().getEntity()).getDimension().getWeight()); %> </span>
 				</div>
 				<div>
 					<label>Profundidade: </label>
-					<span> <% out.print(book.getDimension().getDepth()); %> </span>
+					<span> <% out.print(((Book) book.getHistory().getEntity()).getDimension().getDepth()); %> </span>
 				</div>
 			</fieldset>
 
@@ -144,11 +146,11 @@
 				<legend>Identificação</legend>
 				<div>
 					<label>ISBN: </label>
-					<span> <% out.print(book.getIsbn()); %> </span>
+					<span> <% out.print(((Book) book.getHistory().getEntity()).getIsbn()); %> </span>
 				</div>
 				<div>
 					<label>Código de barras: </label>
-					<span> <% out.print(book.getEan13()); %> </span>
+					<span> <% out.print(((Book) book.getHistory().getEntity()).getEan13()); %> </span>
 				</div>
 			</fieldset>
 
@@ -156,7 +158,7 @@
 				<legend>Grupo de Precificação</legend>
 				<div>
 					<input type="hidden" name="idPriceGroup" id="idPriceGroup" 
-						   <% out.print("value='" + book.getPriceGroup().getId() + "'"); %> >
+						   <% out.print("value='" + ((Book) book.getHistory().getEntity()).getPriceGroup().getId() + "'"); %> >
 					<label>Porcentagem: </label>
 					<select name="priceGroup" id="priceGroup" disabled>
 		<%
@@ -173,11 +175,11 @@
 				<legend>Parâmetro de venda</legend>
 				<div>
 					<label>Limite mínimo de vendas: </label>
-					<span> <% out.print(book.getSaleParameterization().getMinSaleLimit()); %> </span>
+					<span> <% out.print(((Book) book.getHistory().getEntity()).getSaleParameterization().getMinSaleLimit()); %> </span>
 				</div>
 				<div>
 					<label>Periodicidade: </label>
-					<span> <% out.print(book.getSaleParameterization().getPeriodicity()); %> </span>
+					<span> <% out.print(((Book) book.getHistory().getEntity()).getSaleParameterization().getPeriodicity()); %> </span>
 					<select name="classifierPeriod" id="classifierPeriod" disabled>
 						<option value="m">Minuto(s)</option>
 						<option value="H">Hora(s)</option>
@@ -192,11 +194,11 @@
 				<legend>Status de Mudança</legend>
 				<div>
 					<label>Justicativa: </label>
-					<span> <% out.print(book.getChangeStatus().getJustification()); %> </span>
+					<span> <% out.print(((Book) book.getHistory().getEntity()).getChangeStatus().getJustification()); %> </span>
 				</div>
 				<div>
 					<label>Categoria de Ativação: </label>
-					<span> <% out.print(book.getChangeStatus().getStatusCategory().getName()); %> </span>
+					<span> <% out.print(((Book) book.getHistory().getEntity()).getChangeStatus().getStatusCategory().getName()); %> </span>
 				</div>
 			</fieldset>
 

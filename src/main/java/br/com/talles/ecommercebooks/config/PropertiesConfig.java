@@ -21,14 +21,6 @@ public class PropertiesConfig {
 		return customProps.getProperty("WEBDRIVER") + "/chromedriver.exe";
 	}
 	
-	public String getHistoryBook() {
-        return customProps.getProperty("HISTORYBOOK");
-    }
-	
-	public String getHistoryCustomer() {
-        return customProps.getProperty("HISTORYCUSTOMER");
-    }
-	
     private void loadConfigFile() {
         InputStream in = this.getClass().getClassLoader().getResourceAsStream("custom-config.properties");
         try {

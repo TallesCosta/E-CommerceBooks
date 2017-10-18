@@ -2,9 +2,7 @@ package br.com.talles.ecommercebooks.controll.facade;
 
 import br.com.talles.ecommercebooks.business.IStrategy;
 import br.com.talles.ecommercebooks.business.CreateView;
-import br.com.talles.ecommercebooks.business.Deserializator;
 import br.com.talles.ecommercebooks.business.SaveHistory;
-import br.com.talles.ecommercebooks.business.Serializator;
 import br.com.talles.ecommercebooks.business.book.ModifyStatus;
 import br.com.talles.ecommercebooks.business.book.save.BookValidateSave;
 import br.com.talles.ecommercebooks.business.book.update.BookValidateUpdate;
@@ -15,12 +13,11 @@ import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.book.Book;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.customer.Customer;
-import br.com.talles.ecommercebooks.persistence.dao.HistoryDao;
+import br.com.talles.ecommercebooks.persistence.dao.book.HistoryBookDao;
 import br.com.talles.ecommercebooks.persistence.dao.book.BookDao;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
-import br.com.talles.ecommercebooks.persistence.dao.book.BookHistoryDao;
 import br.com.talles.ecommercebooks.persistence.dao.customer.CustomerDao;
-import br.com.talles.ecommercebooks.persistence.dao.customer.CustomerHistoryDao;
+import br.com.talles.ecommercebooks.persistence.dao.customer.HistoryCustomerDao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,8 +49,6 @@ public class Facade implements IFacade {
         
         // General Strategies
 		IStrategy createView = new CreateView();
-		IStrategy serializator = new Serializator();
-		IStrategy deserializator = new Deserializator();
 		IStrategy saveHistory = new SaveHistory();
 		// Books
 		IStrategy modifyStatus = new ModifyStatus();
@@ -138,20 +133,14 @@ public class Facade implements IFacade {
 		
 		// Requirements Later
 		List<IStrategy> saveBookLater = new ArrayList();
-		saveBookLater.add(serializator);
 		saveBookLater.add(saveHistory);
 		
-		List<IStrategy> historyBookLater = new ArrayList();
-		historyBookLater.add(deserializator);
-		
 		List<IStrategy> saveCustomerLater = new ArrayList();
-		saveCustomerLater.add(serializator);
 		saveCustomerLater.add(saveHistory);
 		
 		// Requirements Book Later
         Map<String, List<IStrategy>> contextReqBookLater = new HashMap();
 		contextReqBookLater.put(SAVE, saveBookLater);
-		contextReqBookLater.put(HISTORY, historyBookLater);
 		
 		// Requirements Customer Later
 		Map<String, List<IStrategy>> contextReqCustomerLater = new HashMap();
@@ -169,10 +158,9 @@ public class Facade implements IFacade {
 		
 		// All DAOs
 		IDao bookDao = new BookDao();
-		IDao bookHistoryDao = new HistoryDao();
-		//IDao bookHistoryDao = new BookHistoryDao();
+		IDao historyBookDao = new HistoryBookDao();
 		IDao customerDao = new CustomerDao();
-		IDao customerHistoryDao = new CustomerHistoryDao();
+		IDao historyCustomerDao = new HistoryCustomerDao();
 		
 		// Persistence Book
 		Map<String, IDao> contextPersBook = new HashMap();
@@ -181,7 +169,7 @@ public class Facade implements IFacade {
         contextPersBook.put(LIST, bookDao);
         contextPersBook.put(LIST_DISABLE, bookDao);
 		contextPersBook.put(FIND, bookDao);
-		contextPersBook.put(HISTORY, bookHistoryDao);
+		contextPersBook.put(HISTORY, historyBookDao);
 		contextPersBook.put(UPDATE, bookDao);
 		contextPersBook.put(DISABLE, bookDao);
 		contextPersBook.put(ENABLE, bookDao);
@@ -194,7 +182,7 @@ public class Facade implements IFacade {
         contextPersCustomer.put(LIST, customerDao);
         contextPersCustomer.put(LIST_DISABLE, customerDao);
 		contextPersCustomer.put(FIND, customerDao);
-		contextPersCustomer.put(HISTORY, customerHistoryDao);
+		contextPersCustomer.put(HISTORY, historyCustomerDao);
 		contextPersCustomer.put(UPDATE, customerDao);
 		contextPersCustomer.put(DISABLE, customerDao);
 		contextPersCustomer.put(ENABLE, customerDao);
@@ -306,12 +294,6 @@ public class Facade implements IFacade {
 	    Map<String, IDao> daosEntity = persistence.get(entity.getClass().getSimpleName());
 		IDao dao = daosEntity.get(operation);
 	    result.addEntity(dao.find(entity));
-		
-		Map<String, List<IStrategy>> reqsLater = requirementsLater.get(entity.getClass().getSimpleName());
-        List<IStrategy> validationsLater = reqsLater.get(operation);
-		
-		result.setOperation(operation);
-        result = executeValidations(entity, validationsLater);
 		
 	    return result;
 	}

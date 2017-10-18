@@ -1,6 +1,5 @@
 package br.com.talles.ecommercebooks.controll.viewHelper;
 
-import br.com.talles.ecommercebooks.config.PropertiesConfig;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.book.Author;
 import br.com.talles.ecommercebooks.domain.book.Book;
@@ -171,13 +170,9 @@ public class BookVh implements IViewHelper {
 		if (!(idUserS == null || idUserS.equals("")))
 			idUser = Long.valueOf(idUserS);
 		
-		// Path history books folder
-		PropertiesConfig pathConfig = new PropertiesConfig();
-		String path = pathConfig.getHistoryBook();
-		
 		// Book
 		Book book = new Book();
-		History history = new History(path, new Date(), new User(idUser));
+		History history = new History(new Date(), new User(idUser), book);
 		
 		switch(request.getParameter("operation")) {
 			case "CREATE" :				
@@ -194,26 +189,17 @@ public class BookVh implements IViewHelper {
 				book.setHistory(history);
 				// Dimension
 				book.setDimension(new Dimension(height, widht, weight, depth));
-				book.getDimension().setHistory(history);
 				// Sale Parameterization
 				book.setSaleParameterization(new SaleParameterization(minSaleLimit, periodicity));
-				book.getSaleParameterization().setHistory(history);
 				// Author
 				book.setAuthor(new Author(idAuthor));
-				book.getAuthor().setHistory(history);
 				// Publishing Company
 				book.setPublishingCompany(new PublishingCompany(idPublishingCompany));
-				book.getPublishingCompany().setHistory(history);
 				// Price Group
 				book.setPriceGroup(new PriceGroup(idPriceGroup));
-				book.getPriceGroup().setHistory(history);
 				// Change Status
 				book.setChangeStatus(new ChangeStatus("Livro novo", new StatusCategory(-1L)));
-				book.getChangeStatus().setHistory(history);
 				// Categories
-				for (Category category : categories) {
-					category.setHistory(history);
-				}
 				book.addCategories(categories);
 				break;
 
@@ -269,28 +255,19 @@ public class BookVh implements IViewHelper {
 				book.setHistory(history);
 				// Dimension
 				book.setDimension(new Dimension(height, widht, weight, depth, idDimension));
-				book.getDimension().setHistory(history);
 				// Sale Parameterization
 				book.setSaleParameterization(new SaleParameterization(minSaleLimit, periodicity, 
 						idSaleParameterization));
-				book.getSaleParameterization().setHistory(history);
 				// Author
 				book.setAuthor(new Author(idAuthor));
-				book.getAuthor().setHistory(history);
 				// Publishing Company
 				book.setPublishingCompany(new PublishingCompany(idPublishingCompany));
-				book.getPublishingCompany().setHistory(history);
 				// Price Group
 				book.setPriceGroup(new PriceGroup(idPriceGroup));
-				book.getPriceGroup().setHistory(history);
 				// Change Status
 				book.setChangeStatus(new ChangeStatus(justificationChangeStatus, 
 						new StatusCategory(idStatusCategoryChangeStatus), idChangeStatus));
-				book.getChangeStatus().setHistory(history);
 				// Categories
-				for (Category category : categories) {
-					category.setHistory(history);
-				}
 				book.addCategories(categories);
 				break;
 
