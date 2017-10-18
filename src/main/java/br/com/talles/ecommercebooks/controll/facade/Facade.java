@@ -14,11 +14,10 @@ import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.book.Book;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.customer.Customer;
-import br.com.talles.ecommercebooks.persistence.dao.book.HistoryBookDao;
+import br.com.talles.ecommercebooks.persistence.dao.HistoryDao;
 import br.com.talles.ecommercebooks.persistence.dao.book.BookDao;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 import br.com.talles.ecommercebooks.persistence.dao.customer.CustomerDao;
-import br.com.talles.ecommercebooks.persistence.dao.customer.HistoryCustomerDao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -160,9 +159,8 @@ public class Facade implements IFacade {
 		
 		// All DAOs
 		IDao bookDao = new BookDao();
-		IDao historyBookDao = new HistoryBookDao();
+		IDao historyDao = new HistoryDao();
 		IDao customerDao = new CustomerDao();
-		IDao historyCustomerDao = new HistoryCustomerDao();
 		
 		// Persistence Book
 		Map<String, IDao> contextPersBook = new HashMap();
@@ -171,7 +169,7 @@ public class Facade implements IFacade {
         contextPersBook.put(LIST, bookDao);
         contextPersBook.put(LIST_DISABLE, bookDao);
 		contextPersBook.put(FIND, bookDao);
-		contextPersBook.put(HISTORY, historyBookDao);
+		contextPersBook.put(HISTORY, historyDao);
 		contextPersBook.put(UPDATE, bookDao);
 		contextPersBook.put(DISABLE, bookDao);
 		contextPersBook.put(ENABLE, bookDao);
@@ -184,7 +182,7 @@ public class Facade implements IFacade {
         contextPersCustomer.put(LIST, customerDao);
         contextPersCustomer.put(LIST_DISABLE, customerDao);
 		contextPersCustomer.put(FIND, customerDao);
-		contextPersCustomer.put(HISTORY, historyCustomerDao);
+		contextPersCustomer.put(HISTORY, historyDao);
 		contextPersCustomer.put(UPDATE, customerDao);
 		contextPersCustomer.put(DISABLE, customerDao);
 		contextPersCustomer.put(ENABLE, customerDao);

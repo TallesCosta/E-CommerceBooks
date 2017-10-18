@@ -6,9 +6,8 @@ import br.com.talles.ecommercebooks.domain.book.Book;
 import br.com.talles.ecommercebooks.domain.customer.Customer;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 import br.com.talles.ecommercebooks.persistence.dao.book.BookDao;
-import br.com.talles.ecommercebooks.persistence.dao.book.HistoryBookDao;
+import br.com.talles.ecommercebooks.persistence.dao.HistoryDao;
 import br.com.talles.ecommercebooks.persistence.dao.customer.CustomerDao;
-import br.com.talles.ecommercebooks.persistence.dao.customer.HistoryCustomerDao;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +17,6 @@ import java.util.logging.Logger;
 public class UpdateHistory implements IStrategy {
 
 	protected Map<String, IDao> persistence;
-	protected Map<String, IDao> persistenceHistory;
 
 	public UpdateHistory() {
 		String book = Book.class.getSimpleName();
@@ -27,10 +25,6 @@ public class UpdateHistory implements IStrategy {
 		persistence = new HashMap();
 		persistence.put(book, new BookDao());
 		persistence.put(customer, new CustomerDao());
-		
-		persistenceHistory = new HashMap();
-		persistenceHistory.put(book, new HistoryBookDao());
-		persistenceHistory.put(customer, new HistoryCustomerDao());
 	}
 
 	@Override
@@ -43,7 +37,7 @@ public class UpdateHistory implements IStrategy {
 			dao.find(entityHistory);
 			entityHistory.setHistory(entity.getHistory());
 			
-			dao = persistenceHistory.get(entity.getClass().getSimpleName());
+			dao = new HistoryDao();
 			dao.save(entityHistory);
 		} catch (InstantiationException | IllegalAccessException ex) {
 			Logger.getLogger(UpdateHistory.class.getName()).log(Level.SEVERE, null, ex);

@@ -193,7 +193,7 @@
 				out.print("<option value='" + city.getId() + "'>" + city.getName() + "</option>");
 			}
 		%>
-						<select>
+						</select>
 					</div>
 					<div>
 						<input type="hidden" name="idHomeState" id="idHomeState" 
@@ -206,7 +206,7 @@
 				out.print("<option value='" + state.getId() + "'>" + state.getName() + "</option>");
 			}
 		%>
-						<select>
+						</select>
 					</div>
 					<div>
 						<input type="hidden" name="idHomeCountry" id="idHomeCountry" 
@@ -219,7 +219,7 @@
 				out.print("<option value='" + country.getId() + "'>" + country.getName() + "</option>");
 			}
 		%>
-						<select>
+						</select>
 					</div>
 				</fieldset>
 				
@@ -282,7 +282,7 @@
 					out.print("<option value='" + city.getId() + "'>" + city.getName() + "</option>");
 				}
 			%>
-						<select>
+						</select>
 					</div>
 					<div>
 						<input type="hidden" name="idChargeState" id="idChargeState" 
@@ -295,7 +295,7 @@
 					out.print("<option value='" + state.getId() + "'>" + state.getName() + "</option>");
 				}
 			%>
-						<select>
+						</select>
 					</div>
 					<div>
 						<input type="hidden" name="idChargeCountry" id="idChargeCountry" 
@@ -308,8 +308,8 @@
 					out.print("<option value='" + country.getId() + "'>" + country.getName() + "</option>");
 				}
 			%>
-						<select>
-						</div>
+						</select>
+					</div>
 				</fieldset>
 		<%
 			}
@@ -350,7 +350,7 @@
 					out.print("<option value='" + cardCompany.getId() + "'>" + cardCompany.getName() + "</option>");
 				}
 			%>
-						<select>
+						</select>
 					</div>
 				</fieldset>
 		<%

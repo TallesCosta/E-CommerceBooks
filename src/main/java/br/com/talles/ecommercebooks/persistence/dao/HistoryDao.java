@@ -1,4 +1,4 @@
-package br.com.talles.ecommercebooks.persistence.dao.customer;
+package br.com.talles.ecommercebooks.persistence.dao;
 
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.History;
@@ -14,8 +14,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class HistoryCustomerDao extends AbstractDao {
+public class HistoryDao extends AbstractDao {
 
+	private String entityCapitalize;
+	private String entityLower;
+	
 	@Override
 	public List<Entity> select(boolean enabled, Entity entity) {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -23,7 +26,10 @@ public class HistoryCustomerDao extends AbstractDao {
 
 	@Override
 	public boolean save(Entity entity) {
-		String sql = "INSERT INTO HistoryCustomers(enabled, date, serializedObject, id_customer, id_user)"
+		definesName(entity);
+		
+		String sql = "INSERT INTO " + entityCapitalize + "Histories"
+				+ "(enabled, date, serializedObject, id_" + entityLower + ", id_user)"
 				+ "VALUES(?, ?, ?, ?, ?)";
 
 		try {
@@ -42,7 +48,7 @@ public class HistoryCustomerDao extends AbstractDao {
 
 			return true;
 		} catch (SQLException ex) {
-			Logger.getLogger(HistoryCustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(HistoryDao.class.getName()).log(Level.SEVERE, null, ex);
 			return false;
 		} finally {
 			closeConnection();
@@ -55,8 +61,11 @@ public class HistoryCustomerDao extends AbstractDao {
 	}
 
 	@Override
-	public Entity find(Entity entity) {		
-		String sql = "SELECT * FROM HistoryBooks WHERE id_customer = ? ORDER BY date DESC LIMIT 1";
+	public Entity find(Entity entity) {
+		definesName(entity);
+		
+		String sql = "SELECT * FROM " + entityCapitalize + "Histories "
+				+ "WHERE id_" + entityLower + " = ? ORDER BY date DESC LIMIT 1";
 		
 		try {
 			openConnection();
@@ -67,8 +76,9 @@ public class HistoryCustomerDao extends AbstractDao {
             ResultSet result = statement.executeQuery();
 			
 			if (result.first()) {				
-				entity.setId(result.getLong("id_customer"));
-				entity.setHistory(new History(new Date(result.getTimestamp("date").getTime()), new User(result.getLong("id_user")), 
+				entity.setId(result.getLong("id_" + entityLower));
+				entity.setHistory(new History(new Date(result.getTimestamp("date").getTime()), 
+						new User(result.getLong("id_user")), 
 						(Entity) result.getObject("serializedObject"),  result.getLong("id")));
 			}
 			
@@ -90,6 +100,11 @@ public class HistoryCustomerDao extends AbstractDao {
 	@Override
 	public Entity findLast() {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+	
+	public void definesName(Entity entity){
+		entityCapitalize = entity.getClass().getSimpleName();
+		entityLower = entityCapitalize.toLowerCase();
 	}
 	
 }

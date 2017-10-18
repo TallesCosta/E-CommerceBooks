@@ -50,6 +50,7 @@
 							<td>End. Cobrança</td>
 							<td>Editar</td>
 							<td>Excluir</td>
+							<td>Histórico</td>
 						</tr>
 					</thead>
 					
@@ -79,13 +80,18 @@
 											+ "<i class='fa fa-trash' aria-hidden='true'></i>"
 										+ "</a>"
 									+ "</td>");
+						out.println("<td>"
+										+ "<a href='" + request.getContextPath() + "/customers/history?operation=HISTORY&id=" + customer.getId() + "'>"
+											+ "<i class='fa fa-history' aria-hidden='true'></i>"
+										+ "</a>"
+									+ "</td>");
 						out.println("</tr>");
 						i++;
 					}
 				} else {
 					out.println("<tr>");
 					
-					for(int j = 0; j <= 9; j++){
+					for(int j = 0; j <= 10; j++){
 						out.println("<td> - </td>");
 					}
 					
@@ -106,6 +112,7 @@
 							<td>End. Cobrança</td>
 							<td>Editar</td>
 							<td>Excluir</td>
+							<td>Histórico</td>
 						</tr>
 					</tfooter>
 				</table>

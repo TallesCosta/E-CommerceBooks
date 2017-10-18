@@ -165,20 +165,20 @@ public class BookVh implements IViewHelper {
 		
 		// History
 		// Fake user - (TEMP)
-		String idUserS = "1";
-		long idUser = 0;
-		if (!(idUserS == null || idUserS.equals("")))
-			idUser = Long.valueOf(idUserS);
+		String idUserOnS = "1";
+		long idUserOn = 0;
+		if (!(idUserOnS == null || idUserOnS.equals("")))
+			idUserOn = Long.valueOf(idUserOnS);
 		
 		// Book
 		Book book = new Book();
-		History history = new History(new Date(), new User(idUser), book);
 		
 		switch(request.getParameter("operation")) {
 			case "CREATE" :				
 				break;
 				
-			case "SAVE":
+			case "SAVE":				
+				// Book
 				book.setTitle(title);
 				book.setSynopsis(synopsis);
 				book.setPublicationYear(publicationYear);
@@ -186,7 +186,7 @@ public class BookVh implements IViewHelper {
 				book.setEdition(edition);
 				book.setIsbn(isbn);
 				book.setEan13(ean13);
-				book.setHistory(history);
+				book.setHistory(new History(new Date(), new User(idUserOn), book));
 				// Dimension
 				book.setDimension(new Dimension(height, widht, weight, depth));
 				// Sale Parameterization
@@ -243,7 +243,8 @@ public class BookVh implements IViewHelper {
 				book.setId(id);
 				break;
 				
-			case "UPDATE":
+			case "UPDATE":				
+				// Book
 				book.setId(id);
 				book.setTitle(title);
 				book.setSynopsis(synopsis);
@@ -252,7 +253,7 @@ public class BookVh implements IViewHelper {
 				book.setEdition(edition);
 				book.setIsbn(isbn);
 				book.setEan13(ean13);
-				book.setHistory(history);
+				book.setHistory(new History(new Date(), new User(idUserOn)));
 				// Dimension
 				book.setDimension(new Dimension(height, widht, weight, depth, idDimension));
 				// Sale Parameterization

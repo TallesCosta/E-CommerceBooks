@@ -221,18 +221,18 @@
 											+ "<i class='fa fa-trash' aria-hidden='true'></i>"
 										+ "</a>"
 									+ "</td>");
-						out.println("</tr>");
 						out.println("<td>"
 										+ "<a href='" + request.getContextPath() + "/books/history?operation=HISTORY&id=" + book.getId() + "'>"
 											+ "<i class='fa fa-history' aria-hidden='true'></i>"
 										+ "</a>"
 									+ "</td>");
+						out.println("</tr>");
 						i++;
 					}
 				} else {
 					out.println("<tr>");
 					
-					for(int j = 0; j <= 8; j++){
+					for(int j = 0; j <= 9; j++){
 						out.println("<td> - </td>");
 					}
 					

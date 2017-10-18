@@ -2,6 +2,7 @@ package br.com.talles.ecommercebooks.controll.viewHelper;
 
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
+import br.com.talles.ecommercebooks.domain.History;
 import br.com.talles.ecommercebooks.domain.customer.CardCompany;
 import br.com.talles.ecommercebooks.domain.customer.Address;
 import br.com.talles.ecommercebooks.domain.customer.Customer;
@@ -151,25 +152,41 @@ public class CustomerVh implements IViewHelper {
 		if (!(cardCompanyS == null || cardCompanyS.equals("")))
 			idCardCompany = Long.valueOf(cardCompanyS);
 		
+		// History
+		// Fake user - (TEMP)
+		String idUserOnS = "1";
+		long idUserOn = 0;
+		if (!(idUserOnS == null || idUserOnS.equals("")))
+			idUserOn = Long.valueOf(idUserOnS);
+		
+		// Customer
 		Customer customer = new Customer();
 		
 		switch(request.getParameter("operation")) {
 			case "SAVE":
+				// Customer
 				customer.setRegistry(registry);
 				customer.setName(name);
 				customer.setBirthDate(birthDate);
 				customer.setGender(new Gender(gender));
+				customer.setHistory(new History(new Date(), new User(idUserOn), customer));
+				// Phone
 				customer.setPhone(new Phone(ddd, phoneNumber, phoneType));
+				// User
 				customer.setUser(new User(email, password, passwordVerify));
+				// Home Address
 				customer.setHomeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
 						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
 						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry)))));
+				// Charge Address
 				customer.setChargeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
 						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
 						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry)))));
+				// Delivery Address
 				customer.setDeliveryAddress(Arrays.asList(new DeliveryAddress(true, homeAlias, homeObservation, 
 						homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, 
 						homeHomeType, new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry))))));
+				// Credit Card
 				customer.setCreditCard(Arrays.asList(new CreditCard(cardNumber, printedName, securityCode, 
 						expirationDate, new CardCompany(idCardCompany))));
 				break;
@@ -187,17 +204,26 @@ public class CustomerVh implements IViewHelper {
 				customer.setId(id);
 				break;
 
+			case "HISTORY":
+				customer.setId(id);
+				break;
+				
 			case "UPDATE":
 				customer.setId(id);
 				customer.setRegistry(registry);
 				customer.setName(name);
 				customer.setBirthDate(birthDate);
 				customer.setGender(new Gender(gender));
+				customer.setHistory(new History(new Date(), new User(idUserOn)));
+				// Phone
 				customer.setPhone(new Phone(ddd, phoneNumber, phoneType, idPhone));
+				// User
 				customer.setUser(new User(email, password, passwordVerify, idUser));
+				// Home Address
 				customer.setHomeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
 						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
 						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry))), idHome));
+				// Change Address
 				customer.setChargeAddress(new Address(chargeAlias, chargeObservation, chargePublicPlaceType, 
 						chargePublicPlace, chargeNumber, chargeDistrict, chargePostalCode, chargeHomeType, 
 						new City(idChargeCity, new State(idChargeState, new Country(idChargeCountry))), idCharge));
@@ -256,6 +282,11 @@ public class CustomerVh implements IViewHelper {
 					dispatcher.forward(request, response);
 					break;
 
+				case "HISTORY":
+					dispatcher = request.getRequestDispatcher("/customer/show.jsp");
+					dispatcher.forward(request, response);
+					break;
+					
 				case "UPDATE":
 					if (!result.hasMsg()) {
 						response.sendRedirect("/E-CommerceBooks/customers/list?operation=LIST");
