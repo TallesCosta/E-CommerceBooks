@@ -163,6 +163,9 @@ public class CustomerVh implements IViewHelper {
 		Customer customer = new Customer();
 		
 		switch(request.getParameter("operation")) {
+			case "CREATE" :				
+				break;
+			
 			case "SAVE":
 				// Customer
 				customer.setRegistry(registry);
@@ -192,12 +195,57 @@ public class CustomerVh implements IViewHelper {
 				break;
 
 			case "LIST":
+				// Customer
+				customer.setRegistry(registry);
+				customer.setName(name);
+				customer.setBirthDate(birthDate);
+				customer.setGender(new Gender(gender));
+				// Phone
+				customer.setPhone(new Phone(ddd, phoneNumber, phoneType));
+				// User
+				customer.setUser(new User(email, password, passwordVerify));
+				// Home Address
+				customer.setHomeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
+						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
+						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry)))));
+				// Charge Address
+				customer.setChargeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
+						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
+						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry)))));
+				// Delivery Address
+				customer.setDeliveryAddress(Arrays.asList(new DeliveryAddress(true, homeAlias, homeObservation, 
+						homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, 
+						homeHomeType, new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry))))));
+				// Credit Card
+				customer.setCreditCard(Arrays.asList(new CreditCard(cardNumber, printedName, securityCode, 
+						expirationDate, new CardCompany(idCardCompany))));
 				break;
 
 			case "LIST-DISABLE":
-				break;
-				
-			case "DELETE":
+				// Customer
+				customer.setRegistry(registry);
+				customer.setName(name);
+				customer.setBirthDate(birthDate);
+				customer.setGender(new Gender(gender));
+				// Phone
+				customer.setPhone(new Phone(ddd, phoneNumber, phoneType));
+				// User
+				customer.setUser(new User(email, password, passwordVerify));
+				// Home Address
+				customer.setHomeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
+						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
+						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry)))));
+				// Charge Address
+				customer.setChargeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
+						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
+						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry)))));
+				// Delivery Address
+				customer.setDeliveryAddress(Arrays.asList(new DeliveryAddress(true, homeAlias, homeObservation, 
+						homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, 
+						homeHomeType, new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry))))));
+				// Credit Card
+				customer.setCreditCard(Arrays.asList(new CreditCard(cardNumber, printedName, securityCode, 
+						expirationDate, new CardCompany(idCardCompany))));
 				break;
 
 			case "FIND":
@@ -239,8 +287,9 @@ public class CustomerVh implements IViewHelper {
 				customer.setEnabled(true);
 				break;
 				
-			case "CREATE" :				
+			case "DELETE":
 				break;
+				
 		}
 		
 		return customer;

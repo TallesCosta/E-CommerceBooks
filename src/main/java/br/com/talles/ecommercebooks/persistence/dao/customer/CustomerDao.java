@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,13 +24,15 @@ public class CustomerDao extends AbstractDao {
 	@Override
 	public List<Entity> select(boolean enabled, Entity entity) {
 		List<Entity> customers = new ArrayList();
+		String where = queryBuilder(entity);
+		
         String sql = "SELECT c.*, p.*, u.*, "
 				+ "ha.alias as haAlias, ha.id as haId, ca.alias as caAlias, ca.id as caId FROM Customers c "
 				+ "INNER JOIN Phones p ON c.id_phone = p.id "
 				+ "INNER JOIN Users u ON c.id_user = u.id "
 				+ "INNER JOIN Addresses ha ON c.id_homeAddress = ha.id "
 				+ "INNER JOIN Addresses ca ON c.id_chargeAddress = ca.id "
-				+ "WHERE c.enabled = ? ";
+				+ "WHERE c.enabled = ? " + where;
         
         try {
 			openConnection();
@@ -282,6 +285,68 @@ public class CustomerDao extends AbstractDao {
 		} finally {
 			closeConnection();
 		}
+	}
+	
+	public String queryBuilder(Entity entity) {
+		Customer customer = (Customer) entity;
+		String where = "";
+		
+		if (customer.getName() != null && !customer.getName().equals(""))
+			where += "AND c.name = '" + customer.getName() + "' ";
+		if (customer.getRegistry() != null && !customer.getRegistry().equals(""))
+			where += "AND c.registry = '" + customer.getRegistry() + "' ";
+		if (customer.getBirthDate() != new Date(0L))
+			where += "AND c.birthDate = " + customer.getBirthDate() + " ";
+		if (customer.getGender().getName() != null && !customer.getGender().getName().equals(""))
+			where += "AND c.birthDate = " + customer.getBirthDate() + " ";
+		// Phone
+		if (customer.getPhone().getDdd() != null && !customer.getPhone().getDdd().equals(""))
+			where += "AND p.ddd = " + customer.getPhone().getDdd() + " ";
+		if (customer.getPhone().getNumber() != null && !customer.getPhone().getNumber().equals(""))
+			where += "AND p.number = " + customer.getPhone().getNumber() + " ";
+		if (customer.getPhone().getPhoneType() != null && !customer.getPhone().getPhoneType().equals(""))
+			where += "AND p.phoneType = " + customer.getPhone().getPhoneType() + " ";
+		// User
+		if (customer.getUser().getEmail() != null && !customer.getUser().getEmail().equals(""))
+			where += "AND u.email = " + customer.getUser().getEmail() + " ";
+		if (customer.getUser().getPassword() != null && !customer.getUser().getPassword().equals(""))
+			where += "AND u.password = " + customer.getUser().getPassword() + " ";
+		// Home Address
+		if (customer.getHomeAddress().getAlias() != null && !customer.getHomeAddress().getAlias().equals(""))
+			where += "AND ha.alias = " + customer.getHomeAddress().getAlias() + " ";
+		if (customer.getHomeAddress().getObservation() != null && !customer.getHomeAddress().getObservation().equals(""))
+			where += "AND ha.observation = " + customer.getHomeAddress().getObservation() + " ";
+		if (customer.getHomeAddress().getPublicPlaceType() != null && !customer.getHomeAddress().getPublicPlaceType().equals(""))
+			where += "AND ha.publicPlaceType = " + customer.getHomeAddress().getPublicPlaceType() + " ";
+		if (customer.getHomeAddress().getPublicPlace() != null && !customer.getHomeAddress().getPublicPlace().equals(""))
+			where += "AND ha.publicPlace = " + customer.getHomeAddress().getPublicPlace() + " ";
+		if (customer.getHomeAddress().getNumber() != null && !customer.getHomeAddress().getNumber().equals(""))
+			where += "AND ha.number = " + customer.getHomeAddress().getNumber() + " ";
+		if (customer.getHomeAddress().getDistrict() != null && !customer.getHomeAddress().getDistrict().equals(""))
+			where += "AND ha.district = " + customer.getHomeAddress().getDistrict() + " ";
+		if (customer.getHomeAddress().getPostalCode() != null && !customer.getHomeAddress().getPostalCode().equals(""))
+			where += "AND ha.postalCode = " + customer.getHomeAddress().getPostalCode() + " ";
+		if (customer.getHomeAddress().getHomeType() != null && !customer.getHomeAddress().getHomeType().equals(""))
+			where += "AND ha.homeType = " + customer.getHomeAddress().getHomeType() + " ";
+		// Charge Address
+		if (customer.getChargeAddress().getAlias() != null && !customer.getChargeAddress().getAlias().equals(""))
+			where += "AND ca.alias = " + customer.getChargeAddress().getAlias() + " ";
+		if (customer.getChargeAddress().getObservation() != null && !customer.getChargeAddress().getObservation().equals(""))
+			where += "AND ca.observation = " + customer.getChargeAddress().getObservation() + " ";
+		if (customer.getChargeAddress().getPublicPlaceType() != null && !customer.getChargeAddress().getPublicPlaceType().equals(""))
+			where += "AND ca.publicPlaceType = " + customer.getChargeAddress().getPublicPlaceType() + " ";
+		if (customer.getChargeAddress().getPublicPlace() != null && !customer.getChargeAddress().getPublicPlace().equals(""))
+			where += "AND ca.publicPlace = " + customer.getChargeAddress().getPublicPlace() + " ";
+		if (customer.getChargeAddress().getNumber() != null && !customer.getChargeAddress().getNumber().equals(""))
+			where += "AND ca.number = " + customer.getChargeAddress().getNumber() + " ";
+		if (customer.getChargeAddress().getDistrict() != null && !customer.getChargeAddress().getDistrict().equals(""))
+			where += "AND ca.district = " + customer.getChargeAddress().getDistrict() + " ";
+		if (customer.getChargeAddress().getPostalCode() != null && !customer.getChargeAddress().getPostalCode().equals(""))
+			where += "AND ca.postalCode = " + customer.getChargeAddress().getPostalCode() + " ";
+		if (customer.getChargeAddress().getHomeType() != null && !customer.getChargeAddress().getHomeType().equals(""))
+			where += "AND ca.homeType = " + customer.getChargeAddress().getHomeType() + " ";
+		
+		return where;
 	}
 	
 }

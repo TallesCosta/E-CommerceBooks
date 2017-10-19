@@ -174,9 +174,6 @@ public class BookVh implements IViewHelper {
 		Book book = new Book();
 		
 		switch(request.getParameter("operation")) {
-			case "CREATE" :				
-				break;
-				
 			case "SAVE":				
 				// Book
 				book.setTitle(title);
@@ -204,6 +201,7 @@ public class BookVh implements IViewHelper {
 				break;
 
 			case "LIST":
+				// Book
 				book.setTitle(title);
 				book.setSynopsis(synopsis);
 				book.setPublicationYear(publicationYear);
@@ -211,15 +209,22 @@ public class BookVh implements IViewHelper {
 				book.setEdition(edition);
 				book.setIsbn(isbn);
 				book.setEan13(ean13);
+				// Dimension
 				book.setDimension(new Dimension(height, widht, weight, depth));
+				// Sale Parameterization
 				book.setSaleParameterization(new SaleParameterization(minSaleLimit, periodicity));
+				// Author
 				book.setAuthor(new Author(idAuthor));
+				// Publishing Company
 				book.setPublishingCompany(new PublishingCompany(idPublishingCompany));
+				// Price Group
 				book.setPriceGroup(new PriceGroup(idPriceGroup));
+				// Categories
 				book.addCategories(categories);
 				break;
 
 			case "LIST-DISABLE":
+				// Book
 				book.setTitle(title);
 				book.setSynopsis(synopsis);
 				book.setPublicationYear(publicationYear);
@@ -227,19 +232,27 @@ public class BookVh implements IViewHelper {
 				book.setEdition(edition);
 				book.setIsbn(isbn);
 				book.setEan13(ean13);
+				// Dimension
 				book.setDimension(new Dimension(height, widht, weight, depth));
+				// Sale Parameterization
 				book.setSaleParameterization(new SaleParameterization(minSaleLimit, periodicity));
+				// Author
 				book.setAuthor(new Author(idAuthor));
+				// Publishing Company
 				book.setPublishingCompany(new PublishingCompany(idPublishingCompany));
+				// Price Group
 				book.setPriceGroup(new PriceGroup(idPriceGroup));
+				// Categories
 				book.addCategories(categories);
 				break;
 				
 			case "FIND":
+				// Book
 				book.setId(id);
 				break;
 
 			case "HISTORY":
+				// Book
 				book.setId(id);
 				break;
 				
@@ -273,12 +286,14 @@ public class BookVh implements IViewHelper {
 				break;
 
 			case "DISABLE":
+				// Book
 				book.setId(id);
 				book.setEnabled(false);
 				book.setChangeStatus(new ChangeStatus(justification, new StatusCategory(idDeactivationCategory)));
 				break;
 
 			case "ENABLE":
+				// Book
 				book.setId(id);
 				book.setEnabled(true);
 				book.setChangeStatus(new ChangeStatus(justification, new StatusCategory(idActivationCategory)));
@@ -286,6 +301,9 @@ public class BookVh implements IViewHelper {
 				
 			case "DELETE":
 				break;
+				
+			case "CREATE" :				
+				break;				
 		}
 		
 		return book;
