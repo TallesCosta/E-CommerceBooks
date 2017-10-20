@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -69,7 +70,7 @@ public class Servlet extends HttpServlet {
 	@Override
 	protected void service (HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
-		try{
+		try{			
 			String uri = request.getRequestURI();
         
 			IViewHelper viewHelper = viewHelpers.get(uri);

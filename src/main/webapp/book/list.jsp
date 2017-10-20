@@ -21,7 +21,7 @@
 			fieldset {
 				display: inline-block;
 			}
-		</style>	
+		</style>
     </head>
     <body>
 		<%
@@ -52,35 +52,36 @@
 				<form action="list" method="POST">
 					<fieldset>
 						<legend>Dados da filtragem</legend>
+						
 						<fieldset>
-						<legend>Dados básicos</legend>
-						
-						<label for="title">Titulo: </label>
-						<input name="title" id="title" type="text">
-						<label for="synopsis">Sinópse: </label>
-						<textarea name="synopsis" id="synopsis" maxlength="255"></textarea>
-						
-						<label for="edition">Edição: </label>
-						<input name="edition" id="edition" type="text">
-						<label for="publicationYear">Ano: </label>
-						<input name="publicationYear" id="publicationYear" type="number" >
-						<label for="numberOfPages">Número de páginas: </label>
-						<input name="numberOfPages" id="numberOfPages" type="number" >
-						
-						<br/>
-						
-						<label for="author">Autor: </label>
-						<select name="author" id="author">
+							<legend>Dados básicos</legend>
+
+							<label for="title">Titulo: </label>
+							<input name="title" id="title" type="text">
+							<label for="synopsis">Sinópse: </label>
+							<textarea name="synopsis" id="synopsis" maxlength="255"></textarea>
+
+							<label for="edition">Edição: </label>
+							<input name="edition" id="edition" type="text">
+							<label for="publicationYear">Ano: </label>
+							<input name="publicationYear" id="publicationYear" type="number" >
+							<label for="numberOfPages">Número de páginas: </label>
+							<input name="numberOfPages" id="numberOfPages" type="number" >
+
+							<br/>
+
+							<label for="author">Autor: </label>
+							<select name="author" id="author">
 			<%	
 				for(Entity entity : result.getEntities(Author.class.getSimpleName())){
 					Author author = (Author) entity;
 					out.print("<option value='" + author.getId() + "'>" + author.getName() + "</option>");
 				}
 			%>
-						</select>
+							</select>
 						
-						<label for="category">Categoria: </label>
-						<select name="category" id="category" multiple>
+							<label for="category">Categoria: </label>
+							<select name="category" id="category" multiple>
 			<%
 				for(Entity entity : result.getEntities(Category.class.getSimpleName())){
 					Category category = (Category) entity;
@@ -91,69 +92,69 @@
 					}
 				}
 			%>
-						</select>
+							</select>
 						
-						<label for="publishingCompany">Editora: </label>
-						<select name="publishingCompany" id="publishingCompany">
+							<label for="publishingCompany">Editora: </label>
+							<select name="publishingCompany" id="publishingCompany">
 			<%
 				for(Entity entity : result.getEntities(PublishingCompany.class.getSimpleName())){
 					PublishingCompany publishingCompany = (PublishingCompany) entity;
 					out.print("<option value='" + publishingCompany.getId() + "'>" + publishingCompany.getName() + "</option>");
 				}
 			%>
-						</select>
-					</fieldset>
+							</select>
+						</fieldset>
 
-					<fieldset>
-						<legend>Dimensões</legend>
-						 <label for="height">Altura: </label>
-						 <input name="height" id="height" type="number" step="0.01" > cm
-						 <label for="widht">Largura: </label>
-						 <input name="widht" id="widht" type="number" step="0.01" > cm
-						 <label for="weight">Peso: </label>
-						 <input name="weight" id="weight" type="number" step="0.001" > kg
-						 <label for="depth">Profundidade: </label>
-						 <input name="depth" id="depth" type="number" step="0.01" > cm
-					</fieldset>
+						<fieldset>
+							<legend>Dimensões</legend>
+							 <label for="height">Altura: </label>
+							 <input name="height" id="height" type="number" step="0.01" > cm
+							 <label for="widht">Largura: </label>
+							 <input name="widht" id="widht" type="number" step="0.01" > cm
+							 <label for="weight">Peso: </label>
+							 <input name="weight" id="weight" type="number" step="0.001" > kg
+							 <label for="depth">Profundidade: </label>
+							 <input name="depth" id="depth" type="number" step="0.01" > cm
+						</fieldset>
 
-					<fieldset>
-						<legend>Identificação</legend>
-						<label for="isbn">ISBN: </label>
-						<input name="isbn" for="isbn" type="text">
-						<label for="ean13">Código de barras: </label>
-						<input name="ean13" id="ean13" type="text">
-					</fieldset>
+						<fieldset>
+							<legend>Identificação</legend>
+							<label for="isbn">ISBN: </label>
+							<input name="isbn" for="isbn" type="text">
+							<label for="ean13">Código de barras: </label>
+							<input name="ean13" id="ean13" type="text">
+						</fieldset>
 
-					<fieldset>
-						<legend>Grupo de Precificação</legend>
-						<label for="priceGroup">Porcentagem: </label>
-						<select name="priceGroup" id="priceGroup">
+						<fieldset>
+							<legend>Grupo de Precificação</legend>
+							<label for="priceGroup">Porcentagem: </label>
+							<select name="priceGroup" id="priceGroup">
 			<%
 				for(Entity entity : result.getEntities(PriceGroup.class.getSimpleName())){
 					PriceGroup priceGroup = (PriceGroup) entity;
 					out.print("<option value='" + priceGroup.getId() + "'>" + priceGroup.getMarkup() + " %</option>");
 				}
 			%>
-						</select>
-					</fieldset>
+							</select>
+						</fieldset>
 
-					<fieldset>
-						<legend>Parâmetro de venda</legend>
-						 <label for="minSaleLimit">Limite mínimo de vendas: </label>
-						 <input name="minSaleLimit" id="minSaleLimit" type="number" >
-						 <label for="periodicity">Periodicidade: </label>
-						 <input name="periodicity" id="periodicity" type="number" >
-						 <select name="classifierPeriod">
-							 <option value="m">Minuto(s)</option>
-							 <option value="H">Hora(s)</option>
-							 <option value="D">Dia(s)</option>
-							 <option value="M">Mês(es)</option>
-							 <option value="Y">Ano(s)</option>
-						   </select>
-					</fieldset>
+						<fieldset>
+							<legend>Parâmetro de venda</legend>
+							 <label for="minSaleLimit">Limite mínimo de vendas: </label>
+							 <input name="minSaleLimit" id="minSaleLimit" type="number" >
+							 <label for="periodicity">Periodicidade: </label>
+							 <input name="periodicity" id="periodicity" type="number" >
+							 <select name="classifierPeriod">
+								 <option value="m">Minuto(s)</option>
+								 <option value="H">Hora(s)</option>
+								 <option value="D">Dia(s)</option>
+								 <option value="M">Mês(es)</option>
+								 <option value="Y">Ano(s)</option>
+							   </select>
+						</fieldset>
 						 
-					<button name="operation" value="LIST" type="submit">Filtrar</button>
-				</fieldset>
+						<button name="operation" value="LIST" type="submit">Filtrar</button>
+					</fieldset>
 				</form>
 			</div>
 			

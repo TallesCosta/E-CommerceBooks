@@ -90,6 +90,8 @@ public class Facade implements IFacade {
 		saveCustomer.add(new CustomerValidateSave());
 		
 		List<IStrategy> listCustomer = new ArrayList();
+		listCustomer.add(createView);
+		
 		List<IStrategy> listDisableCustomer = new ArrayList();
 		List<IStrategy> findCustomer = new ArrayList();
 		List<IStrategy> historyCustomer = new ArrayList();

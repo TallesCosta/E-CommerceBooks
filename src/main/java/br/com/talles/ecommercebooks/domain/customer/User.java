@@ -23,6 +23,12 @@ public class User extends Entity {
 		this.passwordVerify = passwordVerify;
 	}
 	
+	public User(String email, String password) {
+		super(true);
+		this.email = email;
+		this.password = password;
+	}
+	
 	public User(String email, String password, String passwordVerify, long id) {
 		super(id, true);
 		this.email = email;

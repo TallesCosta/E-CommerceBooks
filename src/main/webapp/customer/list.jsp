@@ -1,3 +1,6 @@
+<%@page import="br.com.talles.ecommercebooks.domain.customer.Country"%>
+<%@page import="br.com.talles.ecommercebooks.domain.customer.State"%>
+<%@page import="br.com.talles.ecommercebooks.domain.customer.City"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="br.com.talles.ecommercebooks.domain.customer.Customer"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
@@ -8,6 +11,12 @@
     <head>
 		<title>Listagem de Clientes</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<style>
+			fieldset {
+				display: inline-block;
+			}
+		</style>
     </head>
     <body>
 		<%
@@ -30,8 +39,104 @@
 			<h1 id="list-customer">Listagem de Clientes</h1>
 			
 			<div>
-				<form action="" method="POST">
-					<button name="" value="">Filtrar</button>
+				<form action="list" method="POST">
+					<fieldset>
+						<legend>Dados da filtragem</legend>
+						
+						<fieldset>
+							<legend>Dados básicos</legend>
+								<label for="registry">CPF: </label>
+								<input name="registry" id="registry" type="text" >
+								<label for="name">Nome: </label>
+								<input name="name" id="name" type="text" >
+								<label for="birthDate">Data Nasc.: </label>
+								<input name="birthDate" id="birthDate" type="date" >
+								
+								<label for="gender">Gênero*: </label>
+								<input name="gender" id="female" value="Feminino" type="radio">
+								<label for="female">Feminino</label>
+								<input name="gender" id="male" value="Masculino" type="radio">
+								<label for="male">Masculino</label>
+								<input name="gender" id="other" value="Outro" type="radio">
+								<label for="other">Outro</label>
+						</fieldset>
+						
+						<fieldset>
+							<legend>Telefone</legend>
+							<label for="ddd">DDD: </label>
+							<input name="ddd" id="ddd" type="text" >
+							<label for="phoneNumber">Número: </label>
+							<input name="phoneNumber" id="phoneNumber" type="text" >
+							<label for="phoneType">Tipo: </label>
+							<input name="phoneType" id="phoneType" type="text" >
+						</fieldset>
+						
+						<fieldset>
+							<legend>Usuário</legend>
+							<input type="hidden" name="idUser" id="idUser" >
+							<label for="email">E-mail: </label>
+							<input name="email" id="email" type="email" >
+							<label for="password">Senha: </label>
+							<input name="password" id="password" type="password" >
+						</fieldset>
+						
+						<fieldset>
+							<legend>Endereço Residencial</legend>
+							<label for="homeAlias">Apelido: </label>
+							<input name="homeAlias" id="homeAlias" type="text" >
+							<label for="homeObservation">Observações: </label>
+							<textarea name="homeObservation" id="homeObservation"></textarea>
+							<label for="homeHomeType">Tipo de Residência: </label>
+							<input name="homeHomeType" id="homeHomeType" type="text" placeholder="Casa, Apartamento, etc.">
+							
+							<br>
+							
+							<label for="homePublicPlaceType">Tipo de Logradouro: </label>
+							<input name="homePublicPlaceType" id="homePublicPlaceType" type="text" placeholder="Rua, Av., Tr., etc.">
+							<label for="homePublicPlace">Logradouro: </label>
+							<input name="homePublicPlace" id="homePublicPlace" type="text" >
+							<label for="homeNumber">Número: </label>
+							<input name="homeNumber" id="homeNumber" type="text" >
+							<label for="homeDistrict">Bairro: </label>
+							<input name="homeDistrict" id="homeDistrict" type="text" >
+							<label for="homePostalCode">CEP: </label>
+							<input name="homePostalCode" id="homePostalCode" type="text" >
+							
+							<br>
+							
+							<label for="homeCity">Cidade: </label>
+							<select name="homeCity" id="homeCity">
+			<%	
+				for(Entity entity : result.getEntities(City.class.getSimpleName())){
+					City city = (City) entity;
+					out.print("<option value='" + city.getId() + "'>" + city.getName() + "</option>");
+				}
+			%>
+							</select>
+							
+							<label for="homeState">Estado: </label>
+							<select name="homeState" id="homeState">
+			<%	
+				for(Entity entity : result.getEntities(State.class.getSimpleName())){
+					State state = (State) entity;
+					out.print("<option value='" + state.getId() + "'>" + state.getName() + "</option>");
+				}
+			%>
+							</select>
+							
+							<label for="homeCountry">País: </label>
+							<select name="homeCountry" id="homeCountry">
+			<%	
+				for(Entity entity : result.getEntities(Country.class.getSimpleName())){
+					Country country = (Country) entity;
+					out.print("<option value='" + country.getId() + "'>" + country.getName() + "</option>");
+				}
+			%>
+							</select>
+						</fieldset>
+						
+						<button name="operation" value="LIST" type="submit">Filtrar</button>
+					</fieldset>
 				</form>
 			</div>
 				
@@ -128,5 +233,32 @@
 		</div>
 		
 		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			crossorigin="anonymous">
+		</script>
+		
+		<script>
+			// With the page ready, selects the options in combo-boxes
+			$(function() {
+				var idHomeCity = $("#idHomeCity").val();
+				$("#homeCity").val(idHomeCity);
+								
+				var idHomeState = $("#idHomeState").val();
+				$("#homeState").val(idHomeState);
+				
+				var idHomeCountry = $("#idHomeCountry").val();
+				$("#homeCountry").val(idHomeCountry);
+				
+				var idChargeCity = $("#idChargeCity").val();
+				$("#chargeCity").val(idChargeCity);
+								
+				var idChargeState = $("#idChargeState").val();
+				$("#chargeState").val(idChargeState);
+				
+				var idChargeCountry = $("#idChargeCountry").val();
+				$("#chargeCountry").val(idChargeCountry);
+			});
+		</script>
     </body>
 </html>

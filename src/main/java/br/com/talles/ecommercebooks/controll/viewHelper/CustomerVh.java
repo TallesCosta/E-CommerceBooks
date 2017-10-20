@@ -203,7 +203,7 @@ public class CustomerVh implements IViewHelper {
 				// Phone
 				customer.setPhone(new Phone(ddd, phoneNumber, phoneType));
 				// User
-				customer.setUser(new User(email, password, passwordVerify));
+				customer.setUser(new User(email, password));
 				// Home Address
 				customer.setHomeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
 						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
@@ -230,7 +230,7 @@ public class CustomerVh implements IViewHelper {
 				// Phone
 				customer.setPhone(new Phone(ddd, phoneNumber, phoneType));
 				// User
-				customer.setUser(new User(email, password, passwordVerify));
+				customer.setUser(new User(email, password));
 				// Home Address
 				customer.setHomeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
 						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
