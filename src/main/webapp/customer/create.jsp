@@ -197,7 +197,7 @@
 					</div>
 					<div>
 						<input type="hidden" name="idHomeState" id="idHomeState" 
-							   <% /*out.print("value='" + customer.getHomeAddress().getCity().getState().getId() + "'");*/ %> >
+							   <% out.print("value='" + customer.getHomeAddress().getCity().getState().getId() + "'"); %> >
 						<label for="homeState">Estado*: </label>
 						<select name="homeState" id="homeState">
 		<%	
@@ -210,7 +210,7 @@
 					</div>
 					<div>
 						<input type="hidden" name="idHomeCountry" id="idHomeCountry" 
-							   <% /*out.print("value='" + customer.getHomeAddress().getCity().getState().getCountry().getId() + "'");*/ %> >
+							   <% out.print("value='" + customer.getHomeAddress().getCity().getState().getCountry().getId() + "'"); %> >
 						<label for="homeCountry">País*: </label>
 						<select name="homeCountry" id="homeCountry">
 		<%	
@@ -286,7 +286,7 @@
 					</div>
 					<div>
 						<input type="hidden" name="idChargeState" id="idChargeState" 
-							   <% /*out.print("value='" + customer.getChargeAddress().getCity().getState().getId() + "'");*/ %> >
+							   <% out.print("value='" + customer.getChargeAddress().getCity().getState().getId() + "'"); %> >
 						<label for="chargeState">Estado*: </label>
 						<select name="chargeState" id="chargeState">
 			<%	
@@ -299,7 +299,7 @@
 					</div>
 					<div>
 						<input type="hidden" name="idChargeCountry" id="idChargeCountry" 
-							   <% /*out.print("value='" + customer.getChargeAddress().getCity().getState().getCountry().getId() + "'");*/ %> >
+							   <% out.print("value='" + customer.getChargeAddress().getCity().getState().getCountry().getId() + "'"); %> >
 						<label for="chargeCountry">País*: </label>
 						<select name="chargeCountry" id="chargeCountry">
 			<%	

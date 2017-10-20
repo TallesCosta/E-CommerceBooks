@@ -3,9 +3,11 @@ package br.com.talles.ecommercebooks.persistence.dao.customer;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.customer.Address;
 import br.com.talles.ecommercebooks.domain.customer.City;
+import br.com.talles.ecommercebooks.domain.customer.Country;
 import br.com.talles.ecommercebooks.domain.customer.Customer;
 import br.com.talles.ecommercebooks.domain.customer.Gender;
 import br.com.talles.ecommercebooks.domain.customer.Phone;
+import br.com.talles.ecommercebooks.domain.customer.State;
 import br.com.talles.ecommercebooks.domain.customer.User;
 import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
@@ -156,14 +158,22 @@ public class CustomerDao extends AbstractDao {
 				+ "ha.alias as haAlias, ha.observation as haObservation, ha.publicPlaceType as haPublicPlaceType, "
 				+ "ha.publicPlace as haPublicPlace, ha.number as haNumber, ha.district as haDistrict, "
 				+ "ha.postalCode as haPostalCode, ha.homeType as haHomeType, ha.id_city as haId_city, ha.id as haId, "
+				+ "haCity.id as haCity, haState.id as haState, haCountry.id as haCountry, "
 				+ "ca.alias as caAlias, ca.observation as caObservation, ca.publicPlaceType as caPublicPlaceType, "
 				+ "ca.publicPlace as caPublicPlace, ca.number as caNumber, ca.district as caDistrict, "
-				+ "ca.postalCode as caPostalCode, ca.homeType as caHomeType, ca.id_city as caId_city, ca.id as caId "
+				+ "ca.postalCode as caPostalCode, ca.homeType as caHomeType, ca.id_city as caId_city, ca.id as caId, "
+				+ "caCity.id as caCity, caState.id as caState, caCountry.id as caCountry "
 				+ "FROM Customers c "
 				+ "INNER JOIN Phones p ON c.id_phone = p.id "
 				+ "INNER JOIN Users u ON c.id_user = u.id "
 				+ "INNER JOIN Addresses ha ON c.id_homeAddress = ha.id "
+				+ "INNER JOIN Cities haCity ON ha.id_city = haCity.id "
+				+ "INNER JOIN States haState ON haCity.id_state = haState.id "
+				+ "INNER JOIN Countries haCountry ON haState.id_country = haCountry.id "
 				+ "INNER JOIN Addresses ca ON c.id_chargeAddress = ca.id "
+				+ "INNER JOIN Cities caCity ON ca.id_city = caCity.id "
+				+ "INNER JOIN States caState ON caCity.id_state = caState.id "
+				+ "INNER JOIN Countries caCountry ON caState.id_country = caCountry.id "
 				+ "WHERE c.id = ?";
 		
 		try {
@@ -187,11 +197,15 @@ public class CustomerDao extends AbstractDao {
 				customer.setHomeAddress(new Address(result.getString("haAlias"), result.getString("haObservation"),
 						result.getString("haPublicPlaceType"), result.getString("haPublicPlace"), result.getString("haNumber"), 
 						result.getString("haDistrict"), result.getString("haPostalCode"), result.getString("haHomeType"), 
-						new City(result.getLong("haId_city")), result.getLong("haId")));
+						new City(result.getLong("haCity"), 
+								new State(result.getLong("haState"), 
+										new Country(result.getLong("haCountry")))), result.getLong("haId")));
 				customer.setChargeAddress(new Address(result.getString("caAlias"), result.getString("caObservation"),
 						result.getString("caPublicPlaceType"), result.getString("caPublicPlace"), result.getString("caNumber"), 
 						result.getString("caDistrict"), result.getString("caPostalCode"), result.getString("caHomeType"), 
-						new City(result.getLong("caId_city")), result.getLong("caId")));
+						new City(result.getLong("haCity"), 
+								new State(result.getLong("haState"), 
+										new Country(result.getLong("haCountry")))), result.getLong("caId")));
 			}
 			
 			stmt.close();
@@ -295,10 +309,10 @@ public class CustomerDao extends AbstractDao {
 			where += "AND c.name = '" + customer.getName() + "' ";
 		if (customer.getRegistry() != null && !customer.getRegistry().equals(""))
 			where += "AND c.registry = '" + customer.getRegistry() + "' ";
-		if (customer.getBirthDate() != new Date(0L))
-			where += "AND c.birthDate = " + customer.getBirthDate() + " ";
+		if (customer.getBirthDate().getTime() != new Date(0L).getTime())
+			where += "AND c.birthDate = " + customer.getBirthDate().getTime() + " ";
 		if (customer.getGender().getName() != null && !customer.getGender().getName().equals(""))
-			where += "AND c.birthDate = " + customer.getBirthDate() + " ";
+			where += "AND c.gender = " + customer.getGender().getName() + " ";
 		// Phone
 		if (customer.getPhone().getDdd() != null && !customer.getPhone().getDdd().equals(""))
 			where += "AND p.ddd = " + customer.getPhone().getDdd() + " ";
