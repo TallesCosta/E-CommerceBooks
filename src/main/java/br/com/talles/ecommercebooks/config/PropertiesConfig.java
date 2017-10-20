@@ -18,7 +18,11 @@ public class PropertiesConfig {
     }
 
 	public String getWebDriverChromePath() {
-		return customProps.getProperty("WEBDRIVER") + "/chromedriver.exe";
+		Properties properties = System.getProperties();
+		String os = (String) properties.get("os.name");
+		
+		return os.equals("Linux") ? customProps.getProperty("WEBDRIVER") + "/chromedriver" : 
+				customProps.getProperty("WEBDRIVER") + "/chromedriver.exe";
 	}
 	
     private void loadConfigFile() {
