@@ -53,7 +53,7 @@
 								<label for="birthDate">Data Nasc.: </label>
 								<input name="birthDate" id="birthDate" type="date" >
 								
-								<label for="gender">Gênero*: </label>
+								<label for="gender">Gênero: </label>
 								<input name="gender" id="female" value="Feminino" type="radio">
 								<label for="female">Feminino</label>
 								<input name="gender" id="male" value="Masculino" type="radio">
