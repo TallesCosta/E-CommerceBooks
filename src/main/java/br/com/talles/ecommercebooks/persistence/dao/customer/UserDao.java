@@ -1,13 +1,13 @@
 package br.com.talles.ecommercebooks.persistence.dao.customer;
 
 import br.com.talles.ecommercebooks.domain.Entity;
-import br.com.talles.ecommercebooks.domain.customer.Customer;
 import br.com.talles.ecommercebooks.domain.customer.User;
 import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +16,41 @@ public class UserDao extends AbstractDao {
 
 	@Override
 	public List<Entity> select(boolean enabled, Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		List<Entity> users = new ArrayList();
+		String where = queryBuilder(entity);
+		
+        String sql = "SELECT u.*"
+				+ "FROM Users u "
+				+ "WHERE u.enabled = ? " + where;
+        
+        try {
+			openConnection();
+			
+            PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setBoolean(1, enabled);
+			
+            ResultSet result = statement.executeQuery();
+            			
+            while (result.next()) {
+				User user = new User();
+				
+				user.setId(result.getLong("id"));
+				user.setEnabled(result.getBoolean("enabled"));
+				user.setEmail(result.getString("email"));
+				user.setPassword(result.getString("password"));
+				
+				users.add(user);
+            }
+            
+            result.close();
+            statement.close();
+            
+            return  users;
+        } catch (SQLException e) {
+            throw new RuntimeException (e);   
+        } finally {
+			closeConnection();
+		}
 	}
 
 	@Override
@@ -120,9 +154,9 @@ public class UserDao extends AbstractDao {
 		String where = "";
 		
 		if (user.getEmail() != null && !user.getEmail().equals(""))
-			where += "AND c.email = '" + user.getEmail() + "' ";
+			where += "AND u.email = '" + user.getEmail() + "' ";
 		if (user.getPassword() != null && !user.getPassword().equals(""))
-			where += "AND c.password = '" + user.getPassword()+ "' ";
+			where += "AND u.password = '" + user.getPassword()+ "' ";
 		
 		return where;
 	}

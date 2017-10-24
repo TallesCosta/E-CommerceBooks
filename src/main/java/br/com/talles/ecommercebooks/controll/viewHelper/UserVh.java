@@ -2,11 +2,12 @@ package br.com.talles.ecommercebooks.controll.viewHelper;
 
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
-import br.com.talles.ecommercebooks.domain.customer.Customer;
 import br.com.talles.ecommercebooks.domain.customer.User;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,14 +32,14 @@ public class UserVh implements IViewHelper {
 				break;
 
 			case "LIST":
+				user.setEmail(email);
+				user.setPassword(password);
 				break;
 
 			case "LIST-DISABLE":
 				break;
 
 			case "FIND":
-				user.setEmail(email);
-				user.setPassword(password);
 				break;
 
 			case "HISTORY":
@@ -74,23 +75,23 @@ public class UserVh implements IViewHelper {
 					break;
 
 				case "LIST":
+					if (result.hasEntities()) {
+						if (result.getEntities(User.class.getSimpleName()).get(0).getId() == 1L) {
+							response.sendRedirect("/E-CommerceBooks/customers/list?operation=LIST");
+						} else {
+							response.sendRedirect("/E-CommerceBooks/orders/list?operation=LIST");
+						}
+					} else {
+						dispatcher = request.getRequestDispatcher("/index.jsp");
+						dispatcher.forward(request, response);
+					}
+					
 					break;
 
 				case "LIST-DISABLE":
 					break;
 					
 				case "FIND":
-					User user = (User) result.getEntities("Customer").get(0);
-					
-					if (user.getId() == 0L) {
-						dispatcher = request.getRequestDispatcher("/index.jsp");
-						dispatcher.forward(request, response);
-					}
-					else if (user.getId() == 1L) {
-						response.sendRedirect("/E-CommerceBooks/orders/list?operation=LIST");
-					} else {
-						response.sendRedirect("/E-CommerceBooks/orders/list-orders?operation=LIST");
-					}
 					break;
 
 				case "HISTORY":					

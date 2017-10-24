@@ -50,21 +50,21 @@
 			}			
 		%>
         <h1></h1>
-		<form action="<% out.print(request.getContextPath().concat("/customers/log-in")); %>" method="POST" >
+		<form action="<% out.print(request.getContextPath().concat("/log-in")); %>" method="POST" >
 			<fieldset>
 				<legend>Usuário</legend>
 				<div>
-					<label for="email">E-mail*: </label>
+					<label for="email">E-mail: </label>
 					<input name="email" id="email" type="email" 
 						   value="<% out.print(customer.getUser().getEmail()); %>">
 				</div>
 				<div>
-					<label for="password">Senha*: </label>
+					<label for="password">Senha: </label>
 					<input name="password" id="password" type="password"
 						   value="<% out.print(customer.getUser().getPassword()); %>">
 				</div>
 				
-				<input type="hidden" name="operation" id="operation-custumer" value="FIND" />
+				<input type="hidden" name="operation" id="operation-custumer" value="LIST" />
 				<button type="submit">Log-in</button>
 				<a class="create-customer" 
 				   href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">Cadastra</a>
