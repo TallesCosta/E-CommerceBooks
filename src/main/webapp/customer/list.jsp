@@ -1,3 +1,4 @@
+<%@page import="br.com.talles.ecommercebooks.domain.customer.DeliveryAddress"%>
 <%@page import="br.com.talles.ecommercebooks.domain.customer.Country"%>
 <%@page import="br.com.talles.ecommercebooks.domain.customer.State"%>
 <%@page import="br.com.talles.ecommercebooks.domain.customer.City"%>
@@ -153,6 +154,7 @@
 							<td>E-mail</td>
 							<td>End. Residencial</td>
 							<td>End. Cobrança</td>
+							<td>End(s). Entrega</td>
 							<td>Editar</td>
 							<td>Excluir</td>
 							<td>Histórico</td>
@@ -166,6 +168,11 @@
 					for(Entity entity : result.getEntities(Customer.class.getSimpleName())){
 						Customer customer = (Customer) entity;
 
+						String deliveryAddresses = "";
+						for(DeliveryAddress deliveryAddress : customer.getDeliveryAddresses()){
+							deliveryAddresses += deliveryAddress.getAlias()+ ", ";
+						}
+						
 						out.println("<tr>");
 						out.println("<td>" + customer.getRegistry() + "</td>");
 						out.println("<td>" + customer.getName() + "</td>");
@@ -175,6 +182,7 @@
 						out.println("<td>" + customer.getUser().getEmail() + "</td>");
 						out.println("<td>" + customer.getHomeAddress().getAlias() + "</td>");
 						out.println("<td>" + customer.getChargeAddress().getAlias() + "</td>");
+						out.println("<td>" + deliveryAddresses.substring(0, deliveryAddresses.length() - 2) + "</td>");
 						out.println("<td>"
 										+ "<a id='edit-" + customer.getId() + "' href='" + request.getContextPath() + "/customers/find?operation=FIND&id=" + customer.getId() + "'>"
 											+ "<i class='fa fa-pencil' aria-hidden='true'></i>"
@@ -215,6 +223,7 @@
 							<td>E-mail</td>
 							<td>End. Residencial</td>
 							<td>End. Cobrança</td>
+							<td>End(s). Entrega</td>
 							<td>Editar</td>
 							<td>Excluir</td>
 							<td>Histórico</td>

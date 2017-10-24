@@ -186,7 +186,7 @@ public class CustomerVh implements IViewHelper {
 						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
 						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry)))));
 				// Delivery Address
-				customer.setDeliveryAddress(Arrays.asList(new DeliveryAddress(true, homeAlias, homeObservation, 
+				customer.setDeliveryAddresses(Arrays.asList(new DeliveryAddress(true, homeAlias, homeObservation, 
 						homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, 
 						homeHomeType, new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry))))));
 				// Credit Card
@@ -208,14 +208,6 @@ public class CustomerVh implements IViewHelper {
 				customer.setHomeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
 						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
 						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry)))));
-				// Charge Address
-				customer.setChargeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
-						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
-						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry)))));
-				// Delivery Address
-				customer.setDeliveryAddress(Arrays.asList(new DeliveryAddress(true, homeAlias, homeObservation, 
-						homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, 
-						homeHomeType, new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry))))));
 				// Credit Card
 				customer.setCreditCard(Arrays.asList(new CreditCard(cardNumber, printedName, securityCode, 
 						expirationDate, new CardCompany(idCardCompany))));
@@ -240,7 +232,7 @@ public class CustomerVh implements IViewHelper {
 						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
 						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry)))));
 				// Delivery Address
-				customer.setDeliveryAddress(Arrays.asList(new DeliveryAddress(true, homeAlias, homeObservation, 
+				customer.setDeliveryAddresses(Arrays.asList(new DeliveryAddress(true, homeAlias, homeObservation, 
 						homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, 
 						homeHomeType, new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry))))));
 				// Credit Card

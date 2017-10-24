@@ -195,17 +195,49 @@ public class Customer extends Entity {
 	public void setChargeAddress(Address chargeAddress) {
 		this.chargeAddress = chargeAddress;
 	}
-	
-	public List<DeliveryAddress> getDeliveryAddress() {
-		return this.deliveryAddresses;
-	}
 
-	public DeliveryAddress getDeliveryAddress(int index) {
+	public DeliveryAddress getDeliveryAddress(int index){
 		return this.deliveryAddresses.get(index);
 	}
 	
-	public void setDeliveryAddress(List<DeliveryAddress> deliveryAddress) {
-		this.deliveryAddresses = deliveryAddress;
+	public List<DeliveryAddress> getDeliveryAddresses(){
+		return this.deliveryAddresses;
+	}
+	
+	public void setDeliveryAddress(DeliveryAddress deliveryAddress){
+		this.deliveryAddresses.clear();
+		this.deliveryAddresses.add(deliveryAddress);
+	}
+	
+	public void setDeliveryAddresses(List<DeliveryAddress> deliveryAddresses){
+		this.deliveryAddresses.clear();
+		this.deliveryAddresses = deliveryAddresses;
+	}
+	
+	public void addDeliveryAddress(DeliveryAddress deliveryAddress){
+		this.deliveryAddresses.add(deliveryAddress);
+	}
+	
+	public void addDeliveryAddresses(List<DeliveryAddress> deliveryAddresses){
+		for(DeliveryAddress deliveryAddress : deliveryAddresses){
+			this.deliveryAddresses.add(deliveryAddress);
+		}
+	}
+	
+	public int countDeliveryAddresses(){
+		return this.deliveryAddresses.size();
+	}
+	
+	public boolean containsDeliveryAddress(DeliveryAddress deliveryAddress){
+		return this.deliveryAddresses.contains(deliveryAddress);
+	}
+	
+	public void clearDeliveryAddresses(){
+		this.deliveryAddresses.clear();
+	}
+	
+	public boolean deliveryAddressesAreEmpty(){
+		return this.deliveryAddresses.isEmpty();
 	}
 	
 	public List<CreditCard> getCreditCard() {
