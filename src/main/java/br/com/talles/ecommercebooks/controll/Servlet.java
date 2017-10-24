@@ -10,13 +10,13 @@ import br.com.talles.ecommercebooks.controll.command.SaveCmd;
 import br.com.talles.ecommercebooks.controll.command.DeleteCmd;
 import br.com.talles.ecommercebooks.controll.command.FindCmd;
 import br.com.talles.ecommercebooks.controll.command.UpdateCmd;
+import br.com.talles.ecommercebooks.controll.viewHelper.UserVh;
 import br.com.talles.ecommercebooks.domain.Entity;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -53,6 +53,8 @@ public class Servlet extends HttpServlet {
 		viewHelpers.put("/E-CommerceBooks/customers/disable", new CustomerVh());
 		viewHelpers.put("/E-CommerceBooks/customers/enable", new CustomerVh());
 		viewHelpers.put("/E-CommerceBooks/customers/delete", new CustomerVh());
+		// Users Request
+		viewHelpers.put("/E-CommerceBooks/users/log-in", new UserVh());
 
 		commands = new HashMap();
 		commands.put("CREATE", new CreateCmd());

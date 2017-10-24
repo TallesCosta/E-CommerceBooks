@@ -1,6 +1,7 @@
 package br.com.talles.ecommercebooks.persistence.dao.customer;
 
 import br.com.talles.ecommercebooks.domain.Entity;
+import br.com.talles.ecommercebooks.domain.customer.Customer;
 import br.com.talles.ecommercebooks.domain.customer.User;
 import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
 
@@ -112,6 +113,18 @@ public class UserDao extends AbstractDao {
 		} finally {
 			closeConnection();
 		}
+	}
+	
+	public String queryBuilder(Entity entity) {
+		User user = (User) entity;
+		String where = "";
+		
+		if (user.getEmail() != null && !user.getEmail().equals(""))
+			where += "AND c.email = '" + user.getEmail() + "' ";
+		if (user.getPassword() != null && !user.getPassword().equals(""))
+			where += "AND c.password = '" + user.getPassword()+ "' ";
+		
+		return where;
 	}
 	
 }

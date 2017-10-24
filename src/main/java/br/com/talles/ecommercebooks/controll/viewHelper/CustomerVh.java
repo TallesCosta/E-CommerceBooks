@@ -309,11 +309,11 @@ public class CustomerVh implements IViewHelper {
 					
 				case "SAVE":
 					if (!result.hasMsg()) {
-						response.sendRedirect("/E-CommerceBooks/customers/list?operation=LIST");
+						response.sendRedirect("/E-CommerceBooks/orders/list-orders?operation=LIST");
 					} else {
 						dispatcher = request.getRequestDispatcher("/customer/create.jsp");
 						dispatcher.forward(request, response);
-					}					
+					}
 					break;
 
 				case "LIST":

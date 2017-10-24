@@ -15,11 +15,11 @@ public class CustomerFilled extends CustomerT {
 		browser.get(index);
 		
 		// Go to List-Custumers page
-		WebElement element = browser.findElement(By.className(elements.LINK_LIST));
-		element.click();
+		// element = browser.findElement(By.className(elements.LINK_LIST));
+		//element.click();
 		
 		// Go to Create-Customers page
-		element = browser.findElement(By.className(elements.LINK_CREATE));
+		WebElement element = browser.findElement(By.className(elements.LINK_CREATE));
 		element.click();
 		
 		// Set all attributes
