@@ -8,6 +8,7 @@ import br.com.talles.ecommercebooks.business.book.ModifyStatus;
 import br.com.talles.ecommercebooks.business.book.save.BookValidateSave;
 import br.com.talles.ecommercebooks.business.book.update.BookValidateUpdate;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
+import br.com.talles.ecommercebooks.business.customer.FoundUser;
 import br.com.talles.ecommercebooks.business.customer.save.CustomerValidateSave;
 import br.com.talles.ecommercebooks.business.customer.update.CustomerValidateUpdate;
 import br.com.talles.ecommercebooks.controll.Result;
@@ -150,16 +151,29 @@ public class Facade implements IFacade {
 		List<IStrategy> saveBookLater = new ArrayList();
 		saveBookLater.add(insertHistory);
 		
+		List<IStrategy> listBookLater = new ArrayList();
+		
 		List<IStrategy> saveCustomerLater = new ArrayList();
 		saveCustomerLater.add(insertHistory);
+		
+		List<IStrategy> listCustomerLater = new ArrayList();
+		
+		List<IStrategy> listUserLater = new ArrayList();
+		listUserLater.add(new FoundUser());
 		
 		// Requirements Book Later
         Map<String, List<IStrategy>> contextReqBookLater = new HashMap();
 		contextReqBookLater.put(SAVE, saveBookLater);
+		contextReqBookLater.put(LIST, listBookLater);
 		
 		// Requirements Customer Later
 		Map<String, List<IStrategy>> contextReqCustomerLater = new HashMap();
         contextReqCustomerLater.put(SAVE, saveCustomerLater);
+        contextReqCustomerLater.put(LIST, listCustomerLater);
+		
+		// Requirements User Later
+		Map<String, List<IStrategy>> contextReqUserLater = new HashMap();
+        contextReqUserLater.put(LIST, listUserLater);
 		
 		// Requirements
         requirements = new HashMap<>();
@@ -171,6 +185,7 @@ public class Facade implements IFacade {
 		requirementsLater = new HashMap<>();
 		requirementsLater.put(book, contextReqBookLater);
         requirementsLater.put(customer, contextReqCustomerLater);
+        requirementsLater.put(user, contextReqUserLater);
 		
 		// All DAOs
 		IDao historyDao = new HistoryDao();
@@ -233,6 +248,12 @@ public class Facade implements IFacade {
 		IDao dao = daosEntity.get(operation);
         result.addEntities(dao.select(operation.equals(LIST), entity));
         
+		Map<String, List<IStrategy>> reqsLater = requirementsLater.get(entity.getClass().getSimpleName());
+        List<IStrategy> validationsLater = reqsLater.get(operation);
+		
+		result.setOperation(operation);
+        result = executeValidations(entity, validationsLater);
+		
         return result;
 	}
 		

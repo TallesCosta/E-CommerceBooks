@@ -55,13 +55,11 @@
 				<legend>Usuário</legend>
 				<div>
 					<label for="email">E-mail: </label>
-					<input name="email" id="email" type="email" 
-						   value="<% out.print(customer.getUser().getEmail()); %>">
+					<input name="email" id="email" type="email" >
 				</div>
 				<div>
 					<label for="password">Senha: </label>
-					<input name="password" id="password" type="password"
-						   value="<% out.print(customer.getUser().getPassword()); %>">
+					<input name="password" id="password" type="password" >
 				</div>
 				
 				<input type="hidden" name="operation" id="operation-custumer" value="LIST" />
@@ -71,5 +69,6 @@
 			</fieldset>
 		</form>
 		
+		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
     </body>
 </html>
