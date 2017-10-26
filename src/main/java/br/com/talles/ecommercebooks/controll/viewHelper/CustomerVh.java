@@ -190,7 +190,7 @@ public class CustomerVh implements IViewHelper {
 						homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, 
 						homeHomeType, new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry))))));
 				// Credit Card
-				customer.setCreditCard(Arrays.asList(new CreditCard(cardNumber, printedName, securityCode, 
+				customer.setCreditCards(Arrays.asList(new CreditCard(cardNumber, printedName, securityCode, 
 						expirationDate, new CardCompany(idCardCompany))));
 				break;
 
@@ -209,7 +209,7 @@ public class CustomerVh implements IViewHelper {
 						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
 						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry)))));
 				// Credit Card
-				customer.setCreditCard(Arrays.asList(new CreditCard(cardNumber, printedName, securityCode, 
+				customer.setCreditCards(Arrays.asList(new CreditCard(cardNumber, printedName, securityCode, 
 						expirationDate, new CardCompany(idCardCompany))));
 				break;
 
@@ -236,7 +236,7 @@ public class CustomerVh implements IViewHelper {
 						homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, 
 						homeHomeType, new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry))))));
 				// Credit Card
-				customer.setCreditCard(Arrays.asList(new CreditCard(cardNumber, printedName, securityCode, 
+				customer.setCreditCards(Arrays.asList(new CreditCard(cardNumber, printedName, securityCode, 
 						expirationDate, new CardCompany(idCardCompany))));
 				break;
 

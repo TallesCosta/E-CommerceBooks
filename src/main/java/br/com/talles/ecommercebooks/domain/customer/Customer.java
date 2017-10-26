@@ -1,6 +1,8 @@
 package br.com.talles.ecommercebooks.domain.customer;
 
 import br.com.talles.ecommercebooks.domain.Entity;
+import br.com.talles.ecommercebooks.domain.sale.PromotionalCoupon;
+import br.com.talles.ecommercebooks.domain.sale.Sale;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +20,8 @@ public class Customer extends Entity {
 	private Address chargeAddress;
 	private List<DeliveryAddress> deliveryAddresses;
 	private List<CreditCard> creditCards;
+	private List<Sale> sales;
+	private List<PromotionalCoupon> promotionalCoupons;
 
 	public Customer() {
 		super(true);
@@ -240,7 +244,7 @@ public class Customer extends Entity {
 		return this.deliveryAddresses.isEmpty();
 	}
 	
-	public List<CreditCard> getCreditCard() {
+	public List<CreditCard> getCreditCards() {
 		return this.creditCards;
 	}
 
@@ -248,8 +252,34 @@ public class Customer extends Entity {
 		return this.creditCards.get(index);
 	}
 	
-	public void setCreditCard(List<CreditCard> creditCard) {
+	public void setCreditCards(List<CreditCard> creditCard) {
 		this.creditCards = creditCard;
 	}
+
+	public List<Sale> getSales() {
+		return sales;
+	}
+
+	public Sale getSale(int index){
+		return this.sales.get(index);
+	}
+	
+	public void setSales(List<Sale> sale) {
+		this.sales = sale;
+	}
+
+	public List<PromotionalCoupon> getPromotionalCoupons() {
+		return promotionalCoupons;
+	}
+
+	public PromotionalCoupon getPromotionalCoupon(int index){
+		return this.promotionalCoupons.get(index);
+	}
+	
+	public void setPromotionalCoupons(List<PromotionalCoupon> promotionalCoupons) {
+		this.promotionalCoupons = promotionalCoupons;
+	}
+	
+	
 	
 }
