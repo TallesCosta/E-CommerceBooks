@@ -38,6 +38,7 @@ public class Sale {
 		this.chargeAddress = chargeAddress;
 		this.creditCard = creditCard;
 		this.customer = customer;
+		
 		this.saleItems = saleItems;
 	}
 

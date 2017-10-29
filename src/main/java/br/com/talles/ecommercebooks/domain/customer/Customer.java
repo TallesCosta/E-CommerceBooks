@@ -27,6 +27,8 @@ public class Customer extends Entity {
 		super(true);
 		this.deliveryAddresses = new ArrayList<>();
 		this.creditCards = new ArrayList<>();
+		this.sales = new ArrayList<>();
+		this.promotionalCoupons = new ArrayList<>();
 	}
 
 	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
@@ -39,36 +41,11 @@ public class Customer extends Entity {
 		this.phone = phone;
 		this.user = user;
 		this.homeAddress = homeAddress;
+		
 		this.deliveryAddresses = new ArrayList<>();
 		this.creditCards = new ArrayList<>();
-	}
-	
-	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
-			Address homeAddress, List<CreditCard> creditCards) {
-		super(true);
-		this.registry = registry;
-		this.name = name;
-		this.birthDate = birthDate;
-		this.gender = gender;
-		this.phone = phone;
-		this.user = user;
-		this.homeAddress = homeAddress;
-		this.creditCards = creditCards;
-		this.deliveryAddresses = new ArrayList<>();
-	}
-	
-	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
-			Address homeAddress, List<CreditCard> creditCards, long id) {
-		super(id, true);
-		this.registry = registry;
-		this.name = name;
-		this.birthDate = birthDate;
-		this.gender = gender;
-		this.phone = phone;
-		this.user = user;
-		this.homeAddress = homeAddress;
-		this.creditCards = creditCards;
-		this.deliveryAddresses = new ArrayList<>();
+		this.sales = new ArrayList<>();
+		this.promotionalCoupons = new ArrayList<>();
 	}
 	
 	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
@@ -82,8 +59,45 @@ public class Customer extends Entity {
 		this.user = user;
 		this.homeAddress = homeAddress;
 		this.chargeAddress = chargeAddres;
+		
 		this.deliveryAddresses = new ArrayList<>();
 		this.creditCards = new ArrayList<>();
+		this.sales = new ArrayList<>();
+		this.promotionalCoupons = new ArrayList<>();
+	}
+	
+	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
+			Address homeAddress, List<CreditCard> creditCards) {
+		super(true);
+		this.registry = registry;
+		this.name = name;
+		this.birthDate = birthDate;
+		this.gender = gender;
+		this.phone = phone;
+		this.user = user;
+		this.homeAddress = homeAddress;
+		
+		this.creditCards = creditCards;
+		this.deliveryAddresses = new ArrayList<>();
+		this.sales = new ArrayList<>();
+		this.promotionalCoupons = new ArrayList<>();
+	}
+	
+	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
+			Address homeAddress, List<CreditCard> creditCards, long id) {
+		super(id, true);
+		this.registry = registry;
+		this.name = name;
+		this.birthDate = birthDate;
+		this.gender = gender;
+		this.phone = phone;
+		this.user = user;
+		this.homeAddress = homeAddress;
+		
+		this.creditCards = creditCards;
+		this.deliveryAddresses = new ArrayList<>();
+		this.sales = new ArrayList<>();
+		this.promotionalCoupons = new ArrayList<>();
 	}
 	
 	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
@@ -99,13 +113,13 @@ public class Customer extends Entity {
 		this.chargeAddress = chargeAddres;
 		
 		this.deliveryAddresses = new ArrayList<>();
-		this.creditCards = new ArrayList<>();
 		this.creditCards = creditCard;
+		this.sales = new ArrayList<>();
+		this.promotionalCoupons = new ArrayList<>();
 	}
 	
-	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, 
-			User user, Address homeAddress, Address chargeAddress, List<CreditCard> creditCard, 
-			List<DeliveryAddress> deliveryAddresses) {
+	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
+			Address homeAddress, Address chargeAddress, List<CreditCard> creditCard, List<DeliveryAddress> deliveryAddresses) {
 		super(true);
 		this.registry = registry;
 		this.name = name;
@@ -115,8 +129,11 @@ public class Customer extends Entity {
 		this.user = user;
 		this.homeAddress = homeAddress;
 		this.chargeAddress = chargeAddress;
+		
 		this.deliveryAddresses = deliveryAddresses;
 		this.creditCards = creditCard;
+		this.sales = new ArrayList<>();
+		this.promotionalCoupons = new ArrayList<>();
 	}
 
 	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, 
@@ -131,10 +148,32 @@ public class Customer extends Entity {
 		this.user = user;
 		this.homeAddress = homeAddress;
 		this.chargeAddress = chargeAddress;
+		
 		this.deliveryAddresses = deliveryAddresses;
 		this.creditCards = creditCard;
+		this.sales = new ArrayList<>();
+		this.promotionalCoupons = new ArrayList<>();
 	}
 
+	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, 
+			User user, Address homeAddress, Address chargeAddress, List<CreditCard> creditCard, 
+			List<DeliveryAddress> deliveryAddresses, List<Sale> sales, List<PromotionalCoupon> promotionalCoupons, long id) {
+		super(id, true);
+		this.registry = registry;
+		this.name = name;
+		this.birthDate = birthDate;
+		this.gender = gender;
+		this.phone = phone;
+		this.user = user;
+		this.homeAddress = homeAddress;
+		this.chargeAddress = chargeAddress;
+		
+		this.deliveryAddresses = deliveryAddresses;
+		this.creditCards = creditCard;
+		this.sales = sales;
+		this.promotionalCoupons = promotionalCoupons;
+	}
+	
 	public String getRegistry() {
 		return registry;
 	}

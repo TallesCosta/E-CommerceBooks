@@ -1,8 +1,10 @@
 package br.com.talles.ecommercebooks.domain.sale;
 
+import br.com.talles.ecommercebooks.domain.Entity;
+
 import java.util.List;
 
-public class Stock {
+public class Stock extends Entity {
 
 	// Attributes
 	private double averagePrice;
@@ -21,6 +23,7 @@ public class Stock {
 		this.salePrice = salePrice;
 		this.realAmount = realAmount;
 		this.virtualAmount = virtualAmount;
+		
 		this.stockItems = stockItems;
 	}
 
