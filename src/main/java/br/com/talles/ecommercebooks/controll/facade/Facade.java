@@ -205,6 +205,7 @@ public class Facade implements IFacade {
 		requirementsLater.put(book, contextReqBookLater);
         requirementsLater.put(customer, contextReqCustomerLater);
         requirementsLater.put(user, contextReqUserLater);
+        requirementsLater.put(sale, contextReqSaleLater);
 		
 		// All DAOs
 		IDao historyDao = new HistoryDao();
