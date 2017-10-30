@@ -1,6 +1,8 @@
 package br.com.talles.ecommercebooks.domain.sale;
 
-public class PromotionalCoupon {
+import br.com.talles.ecommercebooks.domain.Entity;
+
+public class PromotionalCoupon extends Entity {
 
 	// Attributes
 	private String code;

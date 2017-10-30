@@ -300,12 +300,12 @@ public class CustomerVh implements IViewHelper {
 					break;
 					
 				case "SAVE":
-					if (!result.hasMsg()) {
-						response.sendRedirect("/E-CommerceBooks/orders/list-orders?operation=LIST");
-					} else {
+					if (!result.hasMsg())
+						response.sendRedirect("/E-CommerceBooks/customers/list?operation=LIST");
+					else{
 						dispatcher = request.getRequestDispatcher("/customer/create.jsp");
 						dispatcher.forward(request, response);
-					}
+					}					
 					break;
 
 				case "LIST":

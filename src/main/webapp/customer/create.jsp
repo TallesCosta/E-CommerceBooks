@@ -321,22 +321,22 @@
 					<div>
 						<label for="cardNumber">Número*: </label>
 						<input name="cardNumber" id="cardNumber" type="text"
-							   value="<% out.print(customer.getCreditCard().get(0).getNumber()); %>">
+							   value="<% out.print(customer.getCreditCard(0).getNumber()); %>">
 					</div>
 					<div>
 						<label for="printedName">Nome Impresso*: </label>
 						<input name="printedName" id="printedName" type="text"
-							   value="<% out.print(customer.getCreditCard().get(0).getPrintedName()); %>">
+							   value="<% out.print(customer.getCreditCard(0).getPrintedName()); %>">
 					</div>
 					<div>
 						<label for="securityCode">Código de Segurança*: </label>
 						<input name="securityCode" id="securityCode" type="text"
-							   value="<% out.print(customer.getCreditCard().get(0).getSecurityCode()); %>">
+							   value="<% out.print(customer.getCreditCard(0).getSecurityCode()); %>">
 					</div>
 					<div>
 						<label for="expirationDate">Data Exp.*: </label>
 						<input name="expirationDate" id="expirationDate" type="date"
-							   value="<% out.print(dateFormat.format(customer.getCreditCard().get(0).getExpirationDate())); %>"
+							   value="<% out.print(dateFormat.format(customer.getCreditCard(0).getExpirationDate())); %>"
 					</div>
 					<div>
 						<input type="hidden" name="idCardCompany" id="idCardCompany" 

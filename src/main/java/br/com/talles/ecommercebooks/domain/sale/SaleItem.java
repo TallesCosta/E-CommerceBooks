@@ -1,8 +1,9 @@
 package br.com.talles.ecommercebooks.domain.sale;
 
+import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.book.Book;
 
-public class SaleItem {
+public class SaleItem extends Entity {
 
 	// Attributes
 	private double unitaryPrice;

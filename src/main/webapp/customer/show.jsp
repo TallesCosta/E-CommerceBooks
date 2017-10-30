@@ -263,19 +263,19 @@
 				<legend>Cartão de Crédito</legend>
 				<div>
 					<label for="cardNumber">Número: </label>
-					<span> <% out.print(((Customer) customer.getHistory().getEntity()).getCreditCard().get(0).getNumber()); %> </span>
+					<span> <% out.print(((Customer) customer.getHistory().getEntity()).getCreditCard(0).getNumber()); %> </span>
 				</div>
 				<div>
 					<label for="printedName">Nome Impresso: </label>
-					<span> <% out.print(((Customer) customer.getHistory().getEntity()).getCreditCard().get(0).getPrintedName()); %> </span>
+					<span> <% out.print(((Customer) customer.getHistory().getEntity()).getCreditCard(0).getPrintedName()); %> </span>
 				</div>
 				<div>
 					<label for="securityCode">Código de Segurança: </label>
-					<span> <% out.print(((Customer) customer.getHistory().getEntity()).getCreditCard().get(0).getSecurityCode()); %> </span>
+					<span> <% out.print(((Customer) customer.getHistory().getEntity()).getCreditCard(0).getSecurityCode()); %> </span>
 				</div>
 				<div>
 					<label for="expirationDate">Data Exp.: </label>
-					<span> <% out.print(dateFormat.format(((Customer) customer.getHistory().getEntity()).getCreditCard().get(0).getExpirationDate())); %> </span>
+					<span> <% out.print(dateFormat.format(((Customer) customer.getHistory().getEntity()).getCreditCard(0).getExpirationDate())); %> </span>
 				</div>
 				<div>
 					<span> <% out.print("value='" + ((Customer) customer.getHistory().getEntity()).getCreditCard(0)

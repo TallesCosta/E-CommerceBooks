@@ -3,6 +3,7 @@ package br.com.talles.ecommercebooks.selenium;
 import br.com.talles.ecommercebooks.config.PropertiesConfig;
 
 import org.openqa.selenium.WebDriver;
+
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,7 +19,7 @@ public abstract class ApplicationTest {
 		
 		System.setProperty("webdriver.chrome.driver", chormePath);
 		
-		index = "http://localhost:8080/E-CommerceBooks/";
+		index = "http://localhost:8080/E-CommerceBooks/dashboard-admin.jsp";
 	}
 	
 	@Before

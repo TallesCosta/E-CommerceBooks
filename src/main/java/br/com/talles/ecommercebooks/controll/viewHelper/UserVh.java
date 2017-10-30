@@ -79,7 +79,7 @@ public class UserVh implements IViewHelper {
 						dispatcher = request.getRequestDispatcher("/index.jsp");
 						dispatcher.forward(request, response);
 					} else if (result.getEntities(User.class.getSimpleName()).get(0).getId() == 1L) {
-						response.sendRedirect("/E-CommerceBooks/customers/list?operation=LIST");
+						response.sendRedirect("/E-CommerceBooks/dashboard-admin.jsp");
 					} else {
 						response.sendRedirect("/E-CommerceBooks/orders/list?operation=LIST");
 					}

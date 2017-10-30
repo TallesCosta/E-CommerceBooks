@@ -1,6 +1,8 @@
 package br.com.talles.ecommercebooks.domain.sale;
 
-public class Status {
+import br.com.talles.ecommercebooks.domain.Entity;
+
+public class Status extends Entity {
 
 	// Attributes
 	private String name;
