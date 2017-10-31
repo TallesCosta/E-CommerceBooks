@@ -332,8 +332,13 @@ public class BookVh implements IViewHelper {
 					break;
 
 				case "LIST":
-					dispatcher = request.getRequestDispatcher("/book/list.jsp");
-					dispatcher.forward(request, response);
+					if (request.getRequestURI().equals("/E-CommerceBooks/")) {
+						dispatcher = request.getRequestDispatcher("/index.jsp");
+						dispatcher.forward(request, response);
+					} else {
+						dispatcher = request.getRequestDispatcher("/book/list.jsp");
+						dispatcher.forward(request, response);
+					}
 					break;
 
 				case "LIST-DISABLE":
