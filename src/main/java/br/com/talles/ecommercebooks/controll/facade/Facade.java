@@ -162,6 +162,7 @@ public class Facade implements IFacade {
 		saveBookLater.add(insertHistory);
 		
 		List<IStrategy> listBookLater = new ArrayList();
+		List<IStrategy> listDisableBookLater = new ArrayList();
 		
 		List<IStrategy> saveCustomerLater = new ArrayList();
 		saveCustomerLater.add(insertHistory);
@@ -178,6 +179,7 @@ public class Facade implements IFacade {
         Map<String, List<IStrategy>> contextReqBookLater = new HashMap();
 		contextReqBookLater.put(SAVE, saveBookLater);
 		contextReqBookLater.put(LIST, listBookLater);
+		contextReqBookLater.put(LIST_DISABLE, listDisableBookLater);
 		
 		// Requirements Customer Later
 		Map<String, List<IStrategy>> contextReqCustomerLater = new HashMap();
