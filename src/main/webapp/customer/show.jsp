@@ -67,12 +67,9 @@
 				</div>
 				<div>
 					<label for="gender">Gênero: </label>
-					<span><% if (((Customer) customer.getHistory().getEntity()).getGender().getName().equals("Feminino")) { out.print("checked"); } %> </span>
-					<label for="female">Feminino</label>
-					<span><% if (((Customer) customer.getHistory().getEntity()).getGender().getName().equals("Masculino")) { out.print("checked"); } %> </span>
-					<label for="male">Masculino</label>
-					<span><% if (((Customer) customer.getHistory().getEntity()).getGender().getName().equals("Outro")) { out.print("checked"); } %> </span>
-					<label for="other">Outro</label>
+					<span><% if (((Customer) customer.getHistory().getEntity()).getGender().getName().equals("Feminino")) { %> <label for="female">Feminino</label> <% } %> </span>
+					<span><% if (((Customer) customer.getHistory().getEntity()).getGender().getName().equals("Masculino")) { %> <label for="male">Masculino</label> <% } %> </span>
+					<span><% if (((Customer) customer.getHistory().getEntity()).getGender().getName().equals("Outro")){ %> <label for="other">Outro</label> <% } %> </span>
 				</div>
 			</fieldset>
 
@@ -116,7 +113,7 @@
 				</div>
 				<div>
 					<label for="homeObservation">Observações: </label>
-					<textarea name="homeObservation" id="homeObservation"><% out.print(((Customer) customer.getHistory().getEntity()).getHomeAddress().getObservation()); %></textarea>
+					<span name="homeObservation" id="homeObservation"><% out.print(((Customer) customer.getHistory().getEntity()).getHomeAddress().getObservation()); %></span>
 				</div>
 				<div>
 					<label for="homePublicPlaceType">Tipo de Logradouro: </label>
@@ -144,15 +141,16 @@
 				</div>
 				<div>
 					<input type="hidden" name="idHomeCity" id="idHomeCity" <% out.print("value='" + ((Customer) customer.getHistory().getEntity()).getHomeAddress().getCity().getId() + "'"); %> />
-					<label for="homeCity">Cidade: </label>
-					<select name="homeCity" id="homeCity">
+					<label for="homeCity">Cidade: </label>		
 		<%	
 			for(Entity entity : result.getEntities(City.class.getSimpleName())){
 				City city = (City) entity;
-				out.print("<option value='" + city.getId() + "'>" + city.getName() + "</option>");
+				if (((Customer) customer.getHistory().getEntity()).getHomeAddress().getCity().getId() == city.getId()){
+				%>
+					<span> <% out.print(city.getName()); %> </span>
+				<% }
 			}
 		%>
-					</select>
 				</div>
 				<div>
 					<span> <% /*out.print("value='" + ((Customer) customer.getHistory().getEntity()).getHomeAddress().getCity().getState().getId() + "'");*/ %> </span>
@@ -180,9 +178,6 @@
 				</div>
 			</fieldset>
 
-		<%
-			if (result.getOperation().equals("FIND")) {
-		%>
 			<fieldset>
 				<legend>Endereço de Cobrança</legend>
 				<div>
@@ -191,7 +186,7 @@
 				</div>
 				<div>
 					<label for="chargeObservation">Observações: </label>
-					<textarea name="chargeObservation" id="chargeObservation"><% out.print(((Customer) customer.getHistory().getEntity()).getChargeAddress().getObservation()); %></textarea>
+					<span name="chargeObservation" id="chargeObservation"><% out.print(((Customer) customer.getHistory().getEntity()).getChargeAddress().getObservation()); %></span>
 				</div>
 				<div>
 					<label for="chargePublicPlaceType">Tipo de Logradouro: </label>
@@ -218,16 +213,17 @@
 					<span> <% out.print(((Customer) customer.getHistory().getEntity()).getChargeAddress().getHomeType()); %> </span>
 				</div>
 				<div>
-					<span> <% out.print("value='" + ((Customer) customer.getHistory().getEntity()).getChargeAddress().getCity().getId() + "'"); %> </span>
+					<input type="hidden" name="idChargeCity" id="idChargeCity" <% out.print("value='" + ((Customer) customer.getHistory().getEntity()).getChargeAddress().getCity().getId() + "'"); %> />
 					<label for="chargeCity">Cidade: </label>
-					<select name="chargeCity" id="chargeCity">
-			<%	
-				for(Entity entity : result.getEntities(City.class.getSimpleName())){
-					City city = (City) entity;
-					out.print("<option value='" + city.getId() + "'>" + city.getName() + "</option>");
-				}
-			%>
-					</select>
+		<%	
+			for(Entity entity : result.getEntities(City.class.getSimpleName())){
+				City city = (City) entity;
+				if (((Customer) customer.getHistory().getEntity()).getChargeAddress().getCity().getId() == city.getId()){
+				%>
+					<span> <% out.print(city.getName()); %> </span>
+				<% }
+			}
+		%>
 				</div>
 				<div>
 					<span> <% /*out.print("value='" + ((Customer) customer.getHistory().getEntity()).getChargeAddress().getCity().getState().getId() + "'");*/ %> </span>
@@ -254,46 +250,6 @@
 					</select>
 				</div>
 			</fieldset>
-		<%
-			}
-
-			if (result.getOperation().equals("CREATE")) {
-		%>				
-			<fieldset>
-				<legend>Cartão de Crédito</legend>
-				<div>
-					<label for="cardNumber">Número: </label>
-					<span> <% out.print(((Customer) customer.getHistory().getEntity()).getCreditCard(0).getNumber()); %> </span>
-				</div>
-				<div>
-					<label for="printedName">Nome Impresso: </label>
-					<span> <% out.print(((Customer) customer.getHistory().getEntity()).getCreditCard(0).getPrintedName()); %> </span>
-				</div>
-				<div>
-					<label for="securityCode">Código de Segurança: </label>
-					<span> <% out.print(((Customer) customer.getHistory().getEntity()).getCreditCard(0).getSecurityCode()); %> </span>
-				</div>
-				<div>
-					<label for="expirationDate">Data Exp.: </label>
-					<span> <% out.print(dateFormat.format(((Customer) customer.getHistory().getEntity()).getCreditCard(0).getExpirationDate())); %> </span>
-				</div>
-				<div>
-					<span> <% out.print("value='" + ((Customer) customer.getHistory().getEntity()).getCreditCard(0)
-								   .getCardCompany().getId() + "'"); %> </span>
-					<label for="cardCompany">Bandeira: </label>
-					<select name="cardCompany" id="cardCompany">
-			<%	
-				for(Entity entity : result.getEntities(CardCompany.class.getSimpleName())){
-					CardCompany cardCompany = (CardCompany) entity;
-					out.print("<option value='" + cardCompany.getId() + "'>" + cardCompany.getName() + "</option>");
-				}
-			%>
-					</select>
-				</div>
-			</fieldset>
-		<%
-			}
-		%>
 
 			<a href="javascript:window.history.go(-1)">Voltar</a>
 		</div>

@@ -3,7 +3,6 @@ package br.com.talles.ecommercebooks.persistence.dao;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.History;
 import br.com.talles.ecommercebooks.domain.customer.User;
-import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

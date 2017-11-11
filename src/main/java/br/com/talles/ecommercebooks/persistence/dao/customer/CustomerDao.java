@@ -109,7 +109,7 @@ public class CustomerDao extends AbstractDao {
 		customer.setUser((User) userDao.findLast());
 		
 		// Persists the Home Address
-        IDao addressDao = new AddressDao();
+		IDao addressDao = new AddressDao();
         if(!addressDao.save(customer.getHomeAddress())){
             return false;
         }		
@@ -150,6 +150,10 @@ public class CustomerDao extends AbstractDao {
         } finally {
 			closeConnection();
 		}
+		
+		// Find the last customer register to get its id
+		Customer lastCustomer = (Customer) findLast();
+		customer.setId(lastCustomer.getId());
 		
 		// Persists the DeliveryAddress
 		IDao deliveryAddressDao = new DeliveryAddressDao();
