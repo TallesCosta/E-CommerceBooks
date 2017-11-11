@@ -168,6 +168,7 @@ public class Facade implements IFacade {
 		saveCustomerLater.add(insertHistory);
 		
 		List<IStrategy> listCustomerLater = new ArrayList();
+		List<IStrategy> listDisableCustomerLater = new ArrayList();
 		
 		List<IStrategy> listUserLater = new ArrayList();
 		listUserLater.add(new FoundUser());
@@ -185,6 +186,7 @@ public class Facade implements IFacade {
 		Map<String, List<IStrategy>> contextReqCustomerLater = new HashMap();
         contextReqCustomerLater.put(SAVE, saveCustomerLater);
         contextReqCustomerLater.put(LIST, listCustomerLater);
+        contextReqCustomerLater.put(LIST_DISABLE, listDisableCustomerLater);
 		
 		// Requirements User Later
 		Map<String, List<IStrategy>> contextReqUserLater = new HashMap();
