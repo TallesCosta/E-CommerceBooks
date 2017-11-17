@@ -4,6 +4,11 @@ import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.sale.Cart;
 import br.com.talles.ecommercebooks.domain.sale.SaleItem;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,19 +19,20 @@ public class CartVh implements IViewHelper {
 	@Override
 	public Entity getEntity(HttpServletRequest request) {
 		// Cart datas
-		String priceS = request.getParameter("unitaryPrice");
-		double price = Double.valueOf(priceS);
-		String totalAmountS = request.getParameter("amount");
-		int totalAmount = Integer.valueOf(totalAmountS);
+		String unitaryPriceS = request.getParameter("unitaryPrice");
+		double unitaryPrice = Double.valueOf(unitaryPriceS);
+		String amountS = request.getParameter("amount");
+		int amount = Integer.valueOf(amountS);
 		
 		// Cart
-		Cart cart = null;
+		Cart cart = new Cart();
 		
 		switch(request.getParameter("operation")) {
-			case "CREATE" :				
+			case "CREATE" :
 				break;
 			
 			case "SAVE":
+				cart.addSaleItem(new SaleItem(unitaryPrice, amount));
 				break;
 
 			case "LIST":
@@ -41,17 +47,7 @@ public class CartVh implements IViewHelper {
 			case "HISTORY":
 				break;
 				
-			case "UPDATE":
-				HttpSession session = request.getSession();
-				cart = (Cart) session.getAttribute("cart");
-				
-				if (cart != null)
-					cart = new Cart();
-				
-				cart.addSaleItem(new SaleItem(price, totalAmount));
-				cart.calcTotalPrice();
-				cart.calcTotalAmount();
-				
+			case "UPDATE":				
 				break;
 
 			case "DISABLE":
@@ -69,7 +65,46 @@ public class CartVh implements IViewHelper {
 
 	@Override
 	public void setView(Result result, HttpServletRequest request, HttpServletResponse response) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		RequestDispatcher dispatcher;
+		request.setAttribute("result", result);
+		
+		try {
+			switch(request.getParameter("operation")) {
+				case "CREATE" :
+					break;
+					
+				case "SAVE":
+					dispatcher = request.getRequestDispatcher("/index.jsp");
+					dispatcher.forward(request, response);
+					break;
+
+				case "LIST":
+					break;
+
+				case "LIST-DISABLE":
+					break;
+
+				case "FIND":
+					break;
+					
+				case "HISTORY":
+					break;
+
+				case "UPDATE":
+					break;
+
+				case "DISABLE":
+					break;
+
+				case "ENABLE":
+					break;					
+					
+				case "DELETE":
+					break;
+			}
+		} catch (ServletException | IOException ex) {
+			Logger.getLogger(BookVh.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 	
 }

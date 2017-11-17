@@ -1,6 +1,7 @@
 package br.com.talles.ecommercebooks.domain.sale;
 
 import br.com.talles.ecommercebooks.domain.Entity;
+import java.util.ArrayList;
 
 import java.util.List;
 
@@ -12,11 +13,15 @@ public class Cart extends Entity {
 	private List<SaleItem> saleItems;
 
 	// Constructors
-	public Cart() { }
+	public Cart() {
+		this.price = 0.0;
+		this.totalAmount = 0;
+		this.saleItems = new ArrayList<>();
+	}
 
-	public Cart(double price, int totalAmount, List<SaleItem> saleItems) {
-		this.price = price;
-		this.totalAmount = totalAmount;		
+	public Cart(List<SaleItem> saleItems) {
+		this.price = 0.0;
+		this.totalAmount = 0;
 		this.saleItems = saleItems;
 	}
 
@@ -48,15 +53,25 @@ public class Cart extends Entity {
 	
 	public void addSaleItem(SaleItem saleItem) {
 		this.saleItems.add(saleItem);
+		
+		updateValues();
 	}
 	
-	// 
-	public void calcTotalPrice() {
+	public void addSaleItems(List<SaleItem> saleItems) {
+		for(SaleItem saleItem : saleItems){
+			this.saleItems.add(saleItem);
+		}
 		
+		updateValues();
 	}
 	
-	public void calcTotalAmount() {
-		
+	// Updates the cart when a new sale-item is added.
+	private void updateValues() {
+		SaleItem saleItem = saleItems.get(saleItems.size() - 1);
+		price += saleItem.getUnitaryPrice() * saleItem.getAmount();
+		totalAmount += 1;
 	}
+	
+	
 	
 }

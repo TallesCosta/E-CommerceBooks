@@ -1,22 +1,19 @@
 package br.com.talles.ecommercebooks.domain.sale;
 
 import br.com.talles.ecommercebooks.domain.Entity;
-import br.com.talles.ecommercebooks.domain.book.Book;
 
 public class StockItem extends Entity {
 
 	// Attributes
 	private double unitaryPrice;
 	private int amount;
-	private Book book;
 
 	// Constructors
 	public StockItem() { }
 
-	public StockItem(double unitaryPrice, int amount, Book book) {
+	public StockItem(double unitaryPrice, int amount) {
 		this.unitaryPrice = unitaryPrice;
 		this.amount = amount;
-		this.book = book;
 	}
 
 	// Getters
@@ -28,10 +25,6 @@ public class StockItem extends Entity {
 		return amount;
 	}
 
-	public Book getBook() {
-		return book;
-	}
-
 	// Setters
 	public void setUnitaryPrice(double unitaryPrice) {
 		this.unitaryPrice = unitaryPrice;
@@ -39,10 +32,6 @@ public class StockItem extends Entity {
 
 	public void setAmount(int amount) {
 		this.amount = amount;
-	}
-
-	public void setBook(Book book) {
-		this.book = book;
 	}
 
 

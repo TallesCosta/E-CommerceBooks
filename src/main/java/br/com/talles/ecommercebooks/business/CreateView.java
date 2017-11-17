@@ -86,7 +86,7 @@ public class CreateView implements IStrategy {
 	
 	@Override
 	public Result process(Entity entity, Result result) {
-		List<IDao> daos = persistence.get(entity.getClass().getSimpleName() + result.getOperation());
+		List<IDao> daos = persistence.get(entity.getClass().getSimpleName() + result.getTransaction().getOperation());
 		
 		for (IDao dao : daos) {
 			result.addEntities(dao.select(true, entity));
