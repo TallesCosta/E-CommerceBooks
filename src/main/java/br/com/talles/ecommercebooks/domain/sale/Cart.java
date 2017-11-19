@@ -34,6 +34,10 @@ public class Cart extends Entity {
 		return totalAmount;
 	}
 	
+	public SaleItem getSaleItem(int index) {
+		return saleItems.get(index);
+	}
+	
 	public List<SaleItem> getSaleItems() {
 		return saleItems;
 	}
@@ -65,13 +69,26 @@ public class Cart extends Entity {
 		updateValues();
 	}
 	
-	// Updates the cart when a new sale-item is added.
-	private void updateValues() {
-		SaleItem saleItem = saleItems.get(saleItems.size() - 1);
-		price += saleItem.getUnitaryPrice() * saleItem.getAmount();
-		totalAmount += 1;
+	public void removeSaleItem(SaleItem saleItem) {
+		this.saleItems.remove(saleItem);
+		
+		updateValues();
 	}
 	
+	public boolean hasSaleItem(){
+		return !this.saleItems.isEmpty();
+	}
 	
+	// Updates the cart when a new sale-item is added.
+	private void updateValues() {
+		if (saleItems.isEmpty()) {
+			price = 0.0;
+			totalAmount = 0;
+		} else {
+			SaleItem saleItem = saleItems.get(saleItems.size() - 1);
+			price += saleItem.getUnitaryPrice() * saleItem.getAmount();
+			totalAmount += 1;
+		}
+	}
 	
 }

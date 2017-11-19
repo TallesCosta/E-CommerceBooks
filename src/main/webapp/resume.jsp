@@ -15,7 +15,7 @@
     </head>
     <body>
         <h1>Bora às compras!</h1>
-		<% out.print("<a href='" + request.getContextPath() + "/carts/list?operation=LIST'>Carrinho</a>"); %>
+		<% out.print("<a href='" + request.getContextPath() + "/cart/list.jsp'>Carrinho</a>"); %>
 		
 		<div>
 			<div class="product">

@@ -4,6 +4,7 @@ import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.sale.Cart;
 import br.com.talles.ecommercebooks.domain.sale.SaleItem;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,18 +13,27 @@ import javax.servlet.ServletException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class CartVh implements IViewHelper {
 
 	@Override
 	public Entity getEntity(HttpServletRequest request) {
 		// Cart datas
-		String unitaryPriceS = request.getParameter("unitaryPrice");
-		double unitaryPrice = Double.valueOf(unitaryPriceS);
-		String amountS = request.getParameter("amount");
-		int amount = Integer.valueOf(amountS);
+		String idS = request.getParameter("id");
+		long id = 0L;
+		if (!(idS == null || idS.equals("")))
+			id = Long.valueOf(idS);
 		
+		String unitaryPriceS = request.getParameter("unitaryPrice");
+		double unitaryPrice = 0.0;
+		if (!(unitaryPriceS == null || unitaryPriceS.equals("")))
+			unitaryPrice = Double.valueOf(unitaryPriceS);
+		
+		String amountS = request.getParameter("amount");
+		int amount = 0;
+		if (!(amountS == null || amountS.equals("")))
+			amount = Integer.valueOf(amountS);
+				
 		// Cart
 		Cart cart = new Cart();
 		
@@ -57,6 +67,7 @@ public class CartVh implements IViewHelper {
 				break;
 				
 			case "DELETE":
+				cart.setId(id);
 				break;
 		}
 		
@@ -100,6 +111,8 @@ public class CartVh implements IViewHelper {
 					break;					
 					
 				case "DELETE":
+					dispatcher = request.getRequestDispatcher("/cart/list.jsp");
+					dispatcher.forward(request, response);
 					break;
 			}
 		} catch (ServletException | IOException ex) {

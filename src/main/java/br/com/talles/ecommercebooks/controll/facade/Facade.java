@@ -7,6 +7,7 @@ import br.com.talles.ecommercebooks.business.UpdateHistory;
 import br.com.talles.ecommercebooks.business.book.ModifyStatus;
 import br.com.talles.ecommercebooks.business.book.save.BookValidateSave;
 import br.com.talles.ecommercebooks.business.book.update.BookValidateUpdate;
+import br.com.talles.ecommercebooks.business.cart.delete.cartDelete;
 import br.com.talles.ecommercebooks.business.cart.save.CartSave;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
 import br.com.talles.ecommercebooks.business.customer.FoundUser;
@@ -68,6 +69,7 @@ public class Facade implements IFacade {
 		IStrategy custumerFind = new FindCustomer();
         // Cart Strategies
 		IStrategy cartSave = new CartSave();
+		IStrategy cartDelete = new cartDelete();
 		
 		// Book Requirements
 		List<IStrategy> createBook = new ArrayList();
@@ -136,7 +138,9 @@ public class Facade implements IFacade {
 		List<IStrategy> updateCart = new ArrayList();		
 		List<IStrategy> disableCart = new ArrayList();
 		List<IStrategy> enableCart = new ArrayList();		
+		
 		List<IStrategy> deleteCart = new ArrayList();
+		deleteCart.add(cartDelete);
 		
 		// User Requirements
 		List<IStrategy> listUser = new ArrayList();
@@ -374,12 +378,14 @@ public class Facade implements IFacade {
             return result;
 				
 	    Map<String, IDao> daosEntity = persistence.get(entity.getClass().getSimpleName());
-		IDao dao = daosEntity.get(transaction.getOperation());
-	    boolean resultDao = dao.delete(entity);
-		
-		if(!resultDao)
-            result.addMsg("An error has occurred in the process of your operation, "
-					+ "it has been noted and will be resolved soon!");
+		if (daosEntity != null){
+			IDao dao = daosEntity.get(transaction.getOperation());
+			boolean resultDao = dao.delete(entity);
+
+			if(!resultDao)
+				result.addMsg("An error has occurred in the process of your operation, "
+						+ "it has been noted and will be resolved soon!");
+		}
 		
 	    return result;
 	}

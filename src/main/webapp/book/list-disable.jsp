@@ -216,7 +216,7 @@
 				} else {
 					out.println("<tr>");
 					
-					for(int j = 0; j <= 8; j++){
+					for(int j = 0; j <= 14; j++){
 						out.println("<td> - </td>");
 					}
 					
