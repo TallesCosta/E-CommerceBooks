@@ -3,8 +3,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<meta http-equiv="refresh" content="0;URL='http://localhost:8080/E-CommerceBooks/books/list?operation=LIST'">
+        <title>Home</title>
     </head>
     <body>
+        <h1>Hello World!</h1>
     </body>
 </html>

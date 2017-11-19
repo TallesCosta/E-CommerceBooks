@@ -11,7 +11,7 @@
 		
 		<ul>
 			<li>
-				<a class="list-book" href="<% out.print(request.getContextPath().concat("/books/list?operation=LIST")); %>">Listagem de Livros</a>
+				<a class="list-book" href="<% out.print(request.getContextPath().concat("/books/list?operation=LIST&USER=1")); %>">Listagem de Livros</a>
 			</li>
 			<li>
 				<a class="list-disable-book" href="<% out.print(request.getContextPath().concat("/books/list-disable?operation=LIST-DISABLE")); %>">Listagem de Livros Inativos</a>
@@ -25,6 +25,10 @@
 				<a class="list-disable-customer" href="<% out.print(request.getContextPath().concat("/customers/list-disable?operation=LIST-DISABLE")); %>">Listagem de Clientes Inativos</a>
 			</li>
 		</ul>
+		
+		<%
+			/*}*/
+		%>
 		
 		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
     </body>

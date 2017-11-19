@@ -1,9 +1,9 @@
 package br.com.talles.ecommercebooks.persistence.dao.sale;
 
-import br.com.talles.ecommercebooks.domain.Entity;
-import br.com.talles.ecommercebooks.domain.sale.Cart;
-import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
 import java.util.List;
+
+import br.com.talles.ecommercebooks.domain.Entity;
+import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
 
 public class CartDao extends AbstractDao {
 

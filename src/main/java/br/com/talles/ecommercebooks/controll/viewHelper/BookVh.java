@@ -26,6 +26,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class BookVh implements IViewHelper {
 
@@ -332,8 +333,15 @@ public class BookVh implements IViewHelper {
 					break;
 
 				case "LIST":
-					dispatcher = request.getRequestDispatcher("/book/list.jsp");
-					dispatcher.forward(request, response);
+					String user = request.getParameter("USER");
+					
+					if (user == null || !user.equals("1")) {
+						dispatcher = request.getRequestDispatcher("/resume.jsp");
+						dispatcher.forward(request, response);
+					} else {
+						dispatcher = request.getRequestDispatcher("/book/list.jsp");
+						dispatcher.forward(request, response);
+					}
 					break;
 
 				case "LIST-DISABLE":

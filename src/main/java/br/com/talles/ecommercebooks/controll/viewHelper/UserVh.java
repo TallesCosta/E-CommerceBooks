@@ -12,6 +12,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class UserVh implements IViewHelper {
 
@@ -76,12 +77,14 @@ public class UserVh implements IViewHelper {
 
 				case "LIST":
 					if (result.hasMsg()) {
-						dispatcher = request.getRequestDispatcher("/index.jsp");
+						dispatcher = request.getRequestDispatcher("/login.jsp");
 						dispatcher.forward(request, response);
-					} else if (result.getEntities(User.class.getSimpleName()).get(0).getId() == 1L) {
-						response.sendRedirect("/E-CommerceBooks/dashboard-admin.jsp");
 					} else {
-						response.sendRedirect("/E-CommerceBooks/orders/list?operation=LIST");
+						if (result.getEntities(User.class.getSimpleName()).get(0).getId() == 1L) {
+							response.sendRedirect("/E-CommerceBooks/dashboard-admin.jsp");
+						} else {
+							response.sendRedirect("/E-CommerceBooks/orders/list?operation=LIST");
+						}
 					}
 					
 					break;
