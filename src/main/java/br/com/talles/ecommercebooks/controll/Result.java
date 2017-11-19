@@ -10,13 +10,19 @@ import java.util.HashMap;
 public class Result {
     
     private Map<String, List<Entity>> entities;
-	private String operation;
+	private Transaction transaction;
     private String msg;
     
 	public Result() {
-        entities = new HashMap<>();
-		operation = "";
-        msg = "";
+        this.entities = new HashMap<>();
+		this.transaction = new Transaction("");
+		this.msg = "";
+    }
+	
+	public Result(Transaction transaction) {
+        this.entities = new HashMap<>();
+		this.transaction = transaction;
+        this.msg = "";
     }
 	
     public List<Entity> getEntities(String key){
@@ -48,12 +54,12 @@ public class Result {
 			this.entities.put(entities.get(0).getClass().getSimpleName(), entities);
     }
 
-	public String getOperation() {
-		return operation;
+	public Transaction getTransaction() {
+		return transaction;
 	}
 
-	public void setOperation(String operation) {
-		this.operation = operation;
+	public void setTransaction(Transaction transaction) {
+		this.transaction = transaction;
 	}
 	
     public String getMsg() {

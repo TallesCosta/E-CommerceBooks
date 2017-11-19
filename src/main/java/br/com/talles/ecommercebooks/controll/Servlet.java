@@ -10,6 +10,7 @@ import br.com.talles.ecommercebooks.controll.command.SaveCmd;
 import br.com.talles.ecommercebooks.controll.command.DeleteCmd;
 import br.com.talles.ecommercebooks.controll.command.FindCmd;
 import br.com.talles.ecommercebooks.controll.command.UpdateCmd;
+import br.com.talles.ecommercebooks.controll.viewHelper.CartVh;
 import br.com.talles.ecommercebooks.controll.viewHelper.SaleVh;
 import br.com.talles.ecommercebooks.controll.viewHelper.UserVh;
 import br.com.talles.ecommercebooks.domain.Entity;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "Servlet", urlPatterns = {"/log-in", "/books/*", "/customers/*", "/orders/*"})
+@WebServlet(name = "Servlet", urlPatterns = {"/log-in", "/books/*", "/customers/*", "/carts/*", "/orders/*"})
 public class Servlet extends HttpServlet {
 
 	private Map<String, IViewHelper> viewHelpers;
@@ -56,6 +57,8 @@ public class Servlet extends HttpServlet {
 		viewHelpers.put("/E-CommerceBooks/customers/delete", new CustomerVh());
 		// Users Request
 		viewHelpers.put("/E-CommerceBooks/log-in", new UserVh());
+		// Carts Request
+		viewHelpers.put("/E-CommerceBooks/carts/save", new CartVh());
 		// Orders Request
 		viewHelpers.put("/E-CommerceBooks/orders/list", new SaleVh());
 
@@ -83,7 +86,9 @@ public class Servlet extends HttpServlet {
 
 			String operation = request.getParameter("operation");
 			ICommand command = commands.get(operation);
-			Result result = command.execute(entity, operation);
+			
+			Transaction transaction = new Transaction(request, operation);
+			Result result = command.execute(entity, transaction);
 
 			viewHelper.setView(result, request, response);
 			

@@ -5,6 +5,5 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="refresh" content="0;URL='http://localhost:8080/E-CommerceBooks/books/list?operation=LIST'">
     </head>
-    <body>
     </body>
 </html>

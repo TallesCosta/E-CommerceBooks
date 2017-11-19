@@ -1,6 +1,7 @@
 package br.com.talles.ecommercebooks.domain.sale;
 
 import br.com.talles.ecommercebooks.domain.Entity;
+import br.com.talles.ecommercebooks.domain.book.Book;
 
 import java.util.List;
 
@@ -12,17 +13,20 @@ public class Stock extends Entity {
 	private double salePrice;
 	private int realAmount;
 	private int virtualAmount;
+	private Book book;
 	private List<StockItem> stockItems;
 
 	// Constructors
 	public Stock() { }
 
-	public Stock(double averagePrice, double minimumPrice, double salePrice, int realAmount, int virtualAmount, List<StockItem> stockItems) {
+	public Stock(double averagePrice, double minimumPrice, double salePrice, int realAmount, int virtualAmount, 
+			Book book, List<StockItem> stockItems) {
 		this.averagePrice = averagePrice;
 		this.minimumPrice = minimumPrice;
 		this.salePrice = salePrice;
 		this.realAmount = realAmount;
 		this.virtualAmount = virtualAmount;
+		this.book = book;
 		
 		this.stockItems = stockItems;
 	}
@@ -48,6 +52,10 @@ public class Stock extends Entity {
 		return virtualAmount;
 	}
 
+	public Book getBook() {
+		return book;
+	}
+	
 	public List<StockItem> getStockItems() {
 		return stockItems;
 	}
@@ -77,6 +85,10 @@ public class Stock extends Entity {
 		this.stockItems = stockItems;
 	}
 
+	public void setBook(Book book) {
+		this.book = book;
+	}
 
+	
 
 }
