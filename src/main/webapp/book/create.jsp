@@ -23,8 +23,8 @@
 	%>
 	<head>
 		<title>
-			<% if (result.getOperation().equals("CREATE")) { out.print("Criação de Livro"); }
-			else if (result.getOperation().equals("FIND")) { out.print("Alteração de Livro"); } %>
+			<% if (result.getTransaction().getOperation().equals("CREATE")) { out.print("Criação de Livro"); }
+			else if (result.getTransaction().getOperation().equals("FIND")) { out.print("Alteração de Livro"); } %>
 		</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	</head>
@@ -51,13 +51,13 @@
 		
 		<div id="app">
 			<h1 id="create-book">
-				<% if (result.getOperation().equals("CREATE")) { out.print("Criação de Livro"); }
-				else if (result.getOperation().equals("FIND")) { out.print("Alteração de Livro"); } %>
+				<% if (result.getTransaction().getOperation().equals("CREATE")) { out.print("Criação de Livro"); }
+				else if (result.getTransaction().getOperation().equals("FIND")) { out.print("Alteração de Livro"); } %>
 			</h1>
 			
 			<form 
-				<% if (result.getOperation().equals("CREATE")) { out.print("action='save'"); }
-				else if (result.getOperation().equals("FIND")) { out.print("action='update'"); } %>
+				<% if (result.getTransaction().getOperation().equals("CREATE")) { out.print("action='save'"); }
+				else if (result.getTransaction().getOperation().equals("FIND")) { out.print("action='update'"); } %>
 				method="POST">
 				
 				<fieldset>
@@ -208,8 +208,8 @@
 				</fieldset>
 				
 				<input type="hidden" name="operation" id="operation-book" 
-					<% if (result.getOperation().equals("CREATE")) { out.print("value='SAVE'"); }
-					else if (result.getOperation().equals("FIND")) { out.print("value='UPDATE'"); } %> />
+					<% if (result.getTransaction().getOperation().equals("CREATE")) { out.print("value='SAVE'"); }
+					else if (result.getTransaction().getOperation().equals("FIND")) { out.print("value='UPDATE'"); } %> />
 						
 				<input type="hidden" name="idChangeStatus" id="idChangeStatus" 
 					<% out.print("value='" + book.getChangeStatus().getId() + "'"); %> >
