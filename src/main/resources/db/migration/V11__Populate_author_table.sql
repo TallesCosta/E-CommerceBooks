@@ -4,4 +4,5 @@
 INSERT INTO Authors(enabled, name)
 VALUES (true, 'Machado de Assis'),
 		(true, 'Monteiro Lobato'),
-		(true, 'Rubem Fonseca');
+		(true, 'Rubem Fonseca'),
+		(true, 'Davisson Medeiros');
