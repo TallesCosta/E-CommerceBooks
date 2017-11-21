@@ -1,6 +1,7 @@
 /*
 	Populate book table
 */
+
 /* First book */
 INSERT INTO Dimensions (enabled, height, widht, weight, depth)
 VALUES (true, 16.0, 12.0, 0.255, 3.0);
