@@ -1,3 +1,6 @@
+<%@page import="br.com.talles.ecommercebooks.controll.Result"%>
+<%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
+<%@page import="br.com.talles.ecommercebooks.domain.sale.Stock"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,43 +21,39 @@
 		<% out.print("<a href='" + request.getContextPath() + "/cart/list.jsp'>Carrinho</a>"); %>
 		
 		<div>
+		<%
+			Result result = new Result();
+			result = (Result) request.getAttribute("result");
+
+			if (result != null) {
+				if(result.hasEntities() && result.getKeys().contains(Stock.class.getSimpleName())){
+					for(Entity entity : result.getEntities(Stock.class.getSimpleName())){				
+						Stock stock = (Stock) entity;
+		%>
 			<div class="product">
 				<div>
 					<img src="http://www.hancock.k12.ky.us/userfiles/92/bookworm.jpg" width="100px" height="100px" />
-					<p>Como passar em LES em 583 passos!</p>
-					<span>Davisson Medeiros</span>
-					<p>49,99</p>
+					<% out.println("<p> " + stock.getBook().getTitle() + " </p>"); %>
+					<% out.println("<p> " + stock.getBook().getAuthor().getName() + " </p>"); %>
+					<% out.println("<p> " + stock.getSalePrice() + " </p>"); %>
 				</div>
 
 				<div>
 				<form action="../carts/save" method="POST">
-					<input type="hidden" name="book_id" id="book_id" value="1" />
-					<input type="hidden" name="unitaryPrice" id="unitaryPrice" value="49" />
-					<input type="number" name="amount" id="amount" value="1" />
+					<% out.println("<input type='hidden' name='book_id' id='id_book' value='" + stock.getBook().getId() + "' />"); %>
+					<% out.println("<input type='hidden' name='unitaryPrice' id='unitaryPrice' value='" + stock.getSalePrice() + "' />"); %>
+					<input type="number" name="amount" id="amount" value="1" min="1" />
 
 					<input type="hidden" name="operation" id="operation-cart" value="SAVE" />
 					<button type="submit">Add-Cart</button>
 				</form>
 				</div>
 			</div>
-
-			<div class="product">
-				<div>
-					<img src="http://www.hancock.k12.ky.us/userfiles/92/bookworm.jpg" width="100px" height="100px" />
-					<p>Como superar uma DP!</p>
-					<span>Davisson Medeiros</span>
-					<p>34,99</p>
-				</div>
-
-				<form action="../carts/save" method="POST">
-					<input type="hidden" name="book_id" id="book_id" value="1" />
-					<input type="hidden" name="unitaryPrice" id="unitaryPrice" value="34" />
-					<input type="number" name="amount" id="amount" value="1" />
-
-					<input type="hidden" name="operation" id="operation-cart" value="SAVE" />
-					<button type="submit">Add-Cart</button>
-				</form>
-			</div>
+		<%
+					}
+				}
+			}
+		%>
 		</div>
     </body>
 </html>

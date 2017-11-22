@@ -2,6 +2,7 @@ package br.com.talles.ecommercebooks.domain.sale;
 
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.book.Book;
+import java.util.ArrayList;
 
 import java.util.List;
 
@@ -17,7 +18,11 @@ public class Stock extends Entity {
 	private List<StockItem> stockItems;
 
 	// Constructors
-	public Stock() { }
+	public Stock() {
+		this.book = new Book();
+		
+		this.stockItems = new ArrayList<>();
+	}
 
 	public Stock(double averagePrice, double minimumPrice, double salePrice, int realAmount, int virtualAmount, 
 			Book book, List<StockItem> stockItems) {

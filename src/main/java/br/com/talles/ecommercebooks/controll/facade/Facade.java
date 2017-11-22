@@ -21,12 +21,14 @@ import br.com.talles.ecommercebooks.domain.customer.Customer;
 import br.com.talles.ecommercebooks.domain.customer.User;
 import br.com.talles.ecommercebooks.domain.sale.Cart;
 import br.com.talles.ecommercebooks.domain.sale.Sale;
+import br.com.talles.ecommercebooks.domain.sale.Stock;
 import br.com.talles.ecommercebooks.persistence.dao.HistoryDao;
 import br.com.talles.ecommercebooks.persistence.dao.book.BookDao;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 import br.com.talles.ecommercebooks.persistence.dao.customer.CustomerDao;
 import br.com.talles.ecommercebooks.persistence.dao.customer.UserDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.SaleDao;
+import br.com.talles.ecommercebooks.persistence.dao.sale.StockDao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,6 +59,7 @@ public class Facade implements IFacade {
         String customer = Customer.class.getSimpleName();
 		String user = User.class.getSimpleName();
 		String sale = Sale.class.getSimpleName();
+		String stock = Stock.class.getSimpleName();
 		String cart = Cart.class.getSimpleName();
         
         // General Strategies
@@ -145,6 +148,9 @@ public class Facade implements IFacade {
 		// User Requirements
 		List<IStrategy> listUser = new ArrayList();
 		
+		// Stock Requirements
+		List<IStrategy> listStock = new ArrayList();
+		
 		// Sales Requirements
 		List<IStrategy> listSales = new ArrayList();
 		
@@ -177,6 +183,10 @@ public class Facade implements IFacade {
 		// User Requirements to contexts
 		Map<String, List<IStrategy>> contextReqUser = new HashMap();
         contextReqUser.put(LIST, listUser);
+		
+		// Stock Requirements to contexts
+		Map<String, List<IStrategy>> contextReqStock = new HashMap();
+        contextReqStock.put(LIST, listStock);
 		
 		// Order Requirements to contexts
 		Map<String, List<IStrategy>> contextReqSale = new HashMap();
@@ -211,6 +221,9 @@ public class Facade implements IFacade {
 		List<IStrategy> listUserLater = new ArrayList();
 		listUserLater.add(new FoundUser());
 		
+		List<IStrategy> listStockLater = new ArrayList();
+		listStockLater.add(new FoundUser());
+		
 		List<IStrategy> saveSaleLater = new ArrayList();
 		List<IStrategy> listSaleLater = new ArrayList();
 		
@@ -230,6 +243,10 @@ public class Facade implements IFacade {
 		Map<String, List<IStrategy>> contextReqUserLater = new HashMap();
         contextReqUserLater.put(LIST, listUserLater);
 		
+		// Requirements Stock Later
+		Map<String, List<IStrategy>> contextReqStockLater = new HashMap();
+        contextReqStockLater.put(LIST, listStockLater);
+		
 		// Requirements Sale Later
 		Map<String, List<IStrategy>> contextReqSaleLater = new HashMap();
 		contextReqSaleLater.put(SAVE, saveSaleLater);
@@ -240,6 +257,7 @@ public class Facade implements IFacade {
         requirements.put(book, contextReqBook);
         requirements.put(customer, contextReqCustomer);
         requirements.put(user, contextReqUser);
+        requirements.put(stock, contextReqStock);
         requirements.put(sale, contextReqSale);
         requirements.put(cart, contextReqCart);
         
@@ -248,6 +266,7 @@ public class Facade implements IFacade {
 		requirementsLater.put(book, contextReqBookLater);
         requirementsLater.put(customer, contextReqCustomerLater);
         requirementsLater.put(user, contextReqUserLater);
+        requirementsLater.put(stock, contextReqStockLater);
         requirementsLater.put(sale, contextReqSaleLater);
 		
 		// All DAOs
@@ -255,6 +274,7 @@ public class Facade implements IFacade {
 		IDao bookDao = new BookDao();
 		IDao customerDao = new CustomerDao();
 		IDao userDao = new UserDao();
+		IDao stockDao = new StockDao();
 		IDao saleDao = new SaleDao();
 		
 		// Book Persistence
@@ -287,6 +307,10 @@ public class Facade implements IFacade {
 		Map<String, IDao> contextPersUser = new HashMap();
         contextPersUser.put(LIST, userDao);
 		
+		// Stock Persistence 
+		Map<String, IDao> contextPersStock = new HashMap();
+        contextPersStock.put(LIST, stockDao);
+		
 		// Sale Persistence 
 		Map<String, IDao> contextPersSale = new HashMap();
         contextPersSale.put(LIST, saleDao);
@@ -295,6 +319,7 @@ public class Facade implements IFacade {
         persistence = new HashMap();
         persistence.put(book, contextPersBook);
         persistence.put(customer, contextPersCustomer);
+        persistence.put(stock, contextPersStock);
         persistence.put(user, contextPersUser);
         persistence.put(sale, contextPersSale);
 

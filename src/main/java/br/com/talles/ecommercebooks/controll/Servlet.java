@@ -12,6 +12,7 @@ import br.com.talles.ecommercebooks.controll.command.FindCmd;
 import br.com.talles.ecommercebooks.controll.command.UpdateCmd;
 import br.com.talles.ecommercebooks.controll.viewHelper.CartVh;
 import br.com.talles.ecommercebooks.controll.viewHelper.SaleVh;
+import br.com.talles.ecommercebooks.controll.viewHelper.StockVh;
 import br.com.talles.ecommercebooks.controll.viewHelper.UserVh;
 import br.com.talles.ecommercebooks.domain.Entity;
 
@@ -25,7 +26,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "Servlet", urlPatterns = {"/log-in", "/books/*", "/customers/*", "/carts/*", "/orders/*"})
+@WebServlet(name = "Servlet", urlPatterns = {"/log-in", "/books/*", "/customers/*", "/stocks/*", "/carts/*", "/orders/*"})
 public class Servlet extends HttpServlet {
 
 	private Map<String, IViewHelper> viewHelpers;
@@ -55,6 +56,8 @@ public class Servlet extends HttpServlet {
 		viewHelpers.put("/E-CommerceBooks/customers/disable", new CustomerVh());
 		viewHelpers.put("/E-CommerceBooks/customers/enable", new CustomerVh());
 		viewHelpers.put("/E-CommerceBooks/customers/delete", new CustomerVh());
+		// Stocks Request
+		viewHelpers.put("/E-CommerceBooks/stocks/list", new StockVh());
 		// Users Request
 		viewHelpers.put("/E-CommerceBooks/log-in", new UserVh());
 		// Carts Request
