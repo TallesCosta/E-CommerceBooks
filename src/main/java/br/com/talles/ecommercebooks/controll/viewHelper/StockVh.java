@@ -17,20 +17,7 @@ public class StockVh implements IViewHelper {
 	@Override
 	public Entity getEntity(HttpServletRequest request) {
 		// Stock datas
-		/*String idS = request.getParameter("id");
-		long id = 0L;
-		if (!(idS == null || idS.equals("")))
-			id = Long.valueOf(idS);
-		
-		String unitaryPriceS = request.getParameter("unitaryPrice");
-		double unitaryPrice = 0.0;
-		if (!(unitaryPriceS == null || unitaryPriceS.equals("")))
-			unitaryPrice = Double.valueOf(unitaryPriceS);
-		
-		String amountS = request.getParameter("amount");
-		int amount = 0;
-		if (!(amountS == null || amountS.equals("")))
-			amount = Integer.valueOf(amountS);*/
+		// ...
 				
 		// Stock
 		Stock stock = new Stock();

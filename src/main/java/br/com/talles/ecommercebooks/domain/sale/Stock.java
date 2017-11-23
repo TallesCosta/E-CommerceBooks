@@ -19,13 +19,22 @@ public class Stock extends Entity {
 
 	// Constructors
 	public Stock() {
+		super(true);
 		this.book = new Book();
 		
 		this.stockItems = new ArrayList<>();
 	}
 
+	public Stock(long id) {
+		super(id, true);
+		this.book = new Book();
+
+		this.stockItems = new ArrayList<>();
+	}
+
 	public Stock(double averagePrice, double minimumPrice, double salePrice, int realAmount, int virtualAmount, 
 			Book book, List<StockItem> stockItems) {
+		super(true);
 		this.averagePrice = averagePrice;
 		this.minimumPrice = minimumPrice;
 		this.salePrice = salePrice;
@@ -33,6 +42,19 @@ public class Stock extends Entity {
 		this.virtualAmount = virtualAmount;
 		this.book = book;
 		
+		this.stockItems = stockItems;
+	}
+
+	public Stock(long id, double averagePrice, double minimumPrice, double salePrice, int realAmount, int virtualAmount,
+				 Book book, List<StockItem> stockItems) {
+		super(id, true);
+		this.averagePrice = averagePrice;
+		this.minimumPrice = minimumPrice;
+		this.salePrice = salePrice;
+		this.realAmount = realAmount;
+		this.virtualAmount = virtualAmount;
+		this.book = book;
+
 		this.stockItems = stockItems;
 	}
 

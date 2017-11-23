@@ -1,6 +1,7 @@
 package br.com.talles.ecommercebooks.domain.book;
 
 import br.com.talles.ecommercebooks.domain.Entity;
+import br.com.talles.ecommercebooks.domain.sale.Stock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +21,12 @@ public class Book extends Entity {
 	private PriceGroup priceGroup;
 	private SaleParameterization saleParameterization;
 	private ChangeStatus changeStatus;
+	private Stock stock;
 	private List<Category> categories;
 
 	public Book() {
 		super(true);
-		
+
 		this.categories = new ArrayList<>();
 	}
 
@@ -33,7 +35,14 @@ public class Book extends Entity {
 		
 		this.categories = new ArrayList<>();
 	}
-	
+
+	public Book(long id, Stock stock) {
+		super(id, true);
+		this.stock = stock;
+
+		this.categories = new ArrayList<>();
+	}
+
 	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, 
 			String isbn, String ean13) {
 		super(true);
@@ -129,7 +138,7 @@ public class Book extends Entity {
 
 	public Book(String title, String edition, int publicationYear, int numberOfPages, String synopsis, String isbn, 
 			String ean13, Dimension dimension, PriceGroup priceGroup, PublishingCompany publishingCompany, 
-			SaleParameterization saleParameterization, ChangeStatus changeStatus, Author author, 
+			SaleParameterization saleParameterization, ChangeStatus changeStatus, Author author,
 			List<Category> categories, long id) {
 		super(id, true);
 		this.title = title;
@@ -144,8 +153,7 @@ public class Book extends Entity {
 		this.publishingCompany = publishingCompany;
 		this.saleParameterization = saleParameterization;
 		this.changeStatus = changeStatus;
-		this.author = author;
-		
+
 		this.categories = new ArrayList<>();
 		this.categories = categories;
 	}
@@ -253,7 +261,15 @@ public class Book extends Entity {
 	public void setChangeStatus(ChangeStatus changeStatus) {
 		this.changeStatus = changeStatus;
 	}
-	
+
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
+	}
+
 	public Category getCategory(int index){
 		return this.categories.get(index);
 	}

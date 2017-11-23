@@ -2,8 +2,10 @@ package br.com.talles.ecommercebooks.controll.viewHelper;
 
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
+import br.com.talles.ecommercebooks.domain.book.Book;
 import br.com.talles.ecommercebooks.domain.sale.Cart;
 import br.com.talles.ecommercebooks.domain.sale.SaleItem;
+import br.com.talles.ecommercebooks.domain.sale.Stock;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -33,7 +35,17 @@ public class CartVh implements IViewHelper {
 		int amount = 0;
 		if (!(amountS == null || amountS.equals("")))
 			amount = Integer.valueOf(amountS);
-				
+
+		String idStockS = request.getParameter("id_stock");
+		int idStock = 0;
+		if (!(idStockS == null || idStockS.equals("")))
+			idStock = Integer.valueOf(idStockS);
+
+		String idBookS = request.getParameter("id_book");
+		int idBook = 0;
+		if (!(idBookS == null || idBookS.equals("")))
+			idBook = Integer.valueOf(idBookS);
+
 		// Cart
 		Cart cart = new Cart();
 		
@@ -42,7 +54,7 @@ public class CartVh implements IViewHelper {
 				break;
 			
 			case "SAVE":
-				cart.addSaleItem(new SaleItem(unitaryPrice, amount));
+				cart.addSaleItem(new SaleItem(unitaryPrice, amount, new Book(idBook, new Stock(idStock))));
 				break;
 
 			case "LIST":

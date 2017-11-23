@@ -40,7 +40,8 @@
 
 				<div>
 				<form action="../carts/save" method="POST">
-					<% out.println("<input type='hidden' name='book_id' id='id_book' value='" + stock.getBook().getId() + "' />"); %>
+					<% out.println("<input type='hidden' name='id_stock' id='id_stock' value='" + stock.getId() + "' />"); %>
+					<% out.println("<input type='hidden' name='id_book' id='id_book' value='" + stock.getBook().getId() + "' />"); %>
 					<% out.println("<input type='hidden' name='unitaryPrice' id='unitaryPrice' value='" + stock.getSalePrice() + "' />"); %>
 					<input type="number" name="amount" id="amount" value="1" min="1" />
 
