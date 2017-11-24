@@ -7,7 +7,7 @@ import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.sale.Cart;
 import javax.servlet.http.HttpSession;
 
-public class cartDelete implements IStrategy {
+public class CartWithoutSession implements IStrategy {
 
 	@Override
 	public Result process(Entity entity, Result result) {

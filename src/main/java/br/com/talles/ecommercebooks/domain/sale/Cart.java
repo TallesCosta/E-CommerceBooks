@@ -54,7 +54,12 @@ public class Cart extends Entity {
 	public void setSaleItems(List<SaleItem> saleItems) {
 		this.saleItems = saleItems;
 	}
-	
+
+	// Others methods
+	public int countSaleItems(){
+		return this.saleItems.size();
+	}
+
 	public void addSaleItem(SaleItem saleItem) {
 		this.saleItems.add(saleItem);
 		

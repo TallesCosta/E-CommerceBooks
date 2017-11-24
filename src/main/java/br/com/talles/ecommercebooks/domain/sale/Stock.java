@@ -116,6 +116,9 @@ public class Stock extends Entity {
 		this.book = book;
 	}
 
-	
+	// Others Methods
+	public void minusVirtualAmount(int value) {
+		this.virtualAmount = this.virtualAmount - value;
+	}
 
 }

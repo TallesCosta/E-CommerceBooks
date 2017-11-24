@@ -26,8 +26,14 @@
 			result = (Result) request.getAttribute("result");
 
 			if (result != null) {
-				if(result.hasEntities() && result.getKeys().contains(Stock.class.getSimpleName())){
-					for(Entity entity : result.getEntities(Stock.class.getSimpleName())){				
+				if (result.hasMsg()) {
+					String[] msgs = result.getMsg().split("\n");
+					out.println("<p>");
+					for (String msg : msgs)
+						out.println("<i class='fa fa-times' aria-hidden='true' style='color: #FF0000;'></i> " + msg + "<br/>");
+					out.println("</p>");
+				} else if (result.hasEntities() && result.getKeys().contains(Stock.class.getSimpleName())) {
+					for (Entity entity : result.getEntities(Stock.class.getSimpleName())) {
 						Stock stock = (Stock) entity;
 		%>
 			<div class="product">

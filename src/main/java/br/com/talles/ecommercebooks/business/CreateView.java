@@ -74,7 +74,7 @@ public class CreateView implements IStrategy {
 		listDisableCustomer.add(new CityDao());
 		listDisableCustomer.add(new StateDao());
 		listDisableCustomer.add(new CountryDao());
-		
+
 		persistence = new HashMap();
 		persistence.put(book + CREATE, createBook);
 		persistence.put(book + LIST, listBook);

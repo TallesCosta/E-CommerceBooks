@@ -72,6 +72,7 @@ public class StockVh implements IViewHelper {
 					break;
 
 				case "LIST":
+					// TODO: Make the result shows in resume page when has error, or a new request to happen.
 					dispatcher = request.getRequestDispatcher("/resume.jsp");
 					dispatcher.forward(request, response);
 					break;

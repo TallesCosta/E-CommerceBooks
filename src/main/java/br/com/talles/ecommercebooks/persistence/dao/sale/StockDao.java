@@ -11,6 +11,7 @@ import br.com.talles.ecommercebooks.domain.book.Dimension;
 import br.com.talles.ecommercebooks.domain.book.PriceGroup;
 import br.com.talles.ecommercebooks.domain.book.PublishingCompany;
 import br.com.talles.ecommercebooks.domain.book.SaleParameterization;
+import br.com.talles.ecommercebooks.domain.sale.SaleItem;
 import br.com.talles.ecommercebooks.domain.sale.Stock;
 import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
 import java.sql.PreparedStatement;
@@ -117,12 +118,96 @@ public class StockDao extends AbstractDao {
 
 	@Override
 	public Entity find(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		Stock stock = (Stock) entity;
+
+		String sql = "SELECT s.*, b.* "
+				+ "FROM Stocks s "
+				+ "INNER JOIN Books b on s.id_book = b.id "
+				+ "WHERE s.id = ? ";
+
+		try {
+			openConnection();
+
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setLong(1, stock.getId());
+
+			ResultSet result = statement.executeQuery();
+
+			if(result.first()){
+				stock.setId(result.getLong("stocks.id"));
+				stock.setEnabled(result.getBoolean("stocks.enabled"));
+				stock.setAveragePrice(result.getDouble("stocks.averagePrice"));
+				stock.setMinimumPrice(result.getDouble("stocks.minimumPrice"));
+				stock.setSalePrice(result.getDouble("stocks.salePrice"));
+				stock.setRealAmount(result.getInt("stocks.realAmount"));
+				stock.setVirtualAmount(result.getInt("stocks.virtualAmount"));
+				stock.setVirtualAmount(result.getInt("stocks.virtualAmount"));
+
+				// Book of this stock
+				stock.getBook().setId(result.getLong("books.id"));
+				stock.getBook().setEnabled(result.getBoolean("books.enabled"));
+				stock.getBook().setTitle(result.getString("books.title"));
+				stock.getBook().setEdition(result.getString("books.edition"));
+				stock.getBook().setPublicationYear(result.getInt("books.publicationYear"));
+				stock.getBook().setNumberOfPages(result.getInt("books.numberOfPages"));
+				stock.getBook().setSynopsis(result.getString("books.synopsis"));
+				stock.getBook().setIsbn(result.getString("books.isbn"));
+				stock.getBook().setEan13(result.getString("books.ean13"));
+
+				// StockItems - inputs/outputs
+				/*List<SaleItem> saleitems = new ArrayList<>();
+				String[] catsIds = result.getString("").split("-");
+				String[] catsNames = result.getString("").split("-");
+
+				for (int i = 0; i < catsIds.length; i++) {
+					saleitems.add(new Category(catsNames[i], new Long(catsIds[i])));
+				}
+
+				stock.setStockItems(saleitems);*/
+			}
+
+			result.close();
+			statement.close();
+
+			return  stock;
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
+		}
 	}
 
 	@Override
 	public boolean update(Entity entity, String operation) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		Stock stock = (Stock) entity;
+
+		String sql = "UPDATE Stocks "
+				+ "SET enabled = ?, averagePrice = ?, minimumPrice = ?, salePrice = ?, realAmount = ?, virtualAmount = ? "
+				+ "WHERE id = ?";
+
+		try {
+			openConnection();
+
+			PreparedStatement statement = conn.prepareStatement(sql);
+
+			statement.setBoolean(1, stock.isEnabled());
+			statement.setDouble(2, stock.getAveragePrice());
+			statement.setDouble(3, stock.getMinimumPrice());
+			statement.setDouble(4, stock.getSalePrice());
+			statement.setInt(5, stock.getRealAmount());
+			statement.setInt(6, stock.getVirtualAmount());
+
+			statement.setLong(7, stock.getId());
+
+			statement.execute();
+			statement.close();
+
+			return true;
+		} catch (SQLException ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			closeConnection();
+		}
 	}
 
 	@Override

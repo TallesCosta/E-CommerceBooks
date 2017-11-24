@@ -7,8 +7,11 @@ import br.com.talles.ecommercebooks.business.UpdateHistory;
 import br.com.talles.ecommercebooks.business.book.ModifyStatus;
 import br.com.talles.ecommercebooks.business.book.save.BookValidateSave;
 import br.com.talles.ecommercebooks.business.book.update.BookValidateUpdate;
-import br.com.talles.ecommercebooks.business.cart.delete.cartDelete;
-import br.com.talles.ecommercebooks.business.cart.save.CartSave;
+import br.com.talles.ecommercebooks.business.cart.delete.CartWithoutSession;
+import br.com.talles.ecommercebooks.business.cart.save.CartSession;
+import br.com.talles.ecommercebooks.business.cart.save.CompleteCart;
+import br.com.talles.ecommercebooks.business.cart.save.UpdateStock;
+import br.com.talles.ecommercebooks.business.cart.save.ValidateAmount;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
 import br.com.talles.ecommercebooks.business.customer.FoundUser;
 import br.com.talles.ecommercebooks.business.customer.save.CustomerValidateSave;
@@ -70,10 +73,13 @@ public class Facade implements IFacade {
 		IStrategy modifyStatus = new ModifyStatus();
 		// Customer Strategies
 		IStrategy custumerFind = new FindCustomer();
-        // Cart Strategies
-		IStrategy cartSave = new CartSave();
-		IStrategy cartDelete = new cartDelete();
-		
+		// Cart Strategies
+ 		IStrategy completeCart = new CompleteCart();
+	 	IStrategy validateAmount = new ValidateAmount();
+	 	IStrategy cartSession = new CartSession();
+	 	IStrategy updateStock = new UpdateStock();
+	 	IStrategy cartWithoutSession = new CartWithoutSession();
+
 		// Book Requirements
 		List<IStrategy> createBook = new ArrayList();
 		createBook.add(createView);
@@ -132,7 +138,10 @@ public class Facade implements IFacade {
 		List<IStrategy> createCart = new ArrayList();
 		
 		List<IStrategy> saveCart = new ArrayList();
-		saveCart.add(cartSave);
+		saveCart.add(completeCart);
+		saveCart.add(validateAmount);
+		saveCart.add(cartSession);
+		saveCart.add(updateStock);
 		
 		List<IStrategy> listCart = new ArrayList();
 		List<IStrategy> listDisableCart = new ArrayList();
@@ -143,7 +152,7 @@ public class Facade implements IFacade {
 		List<IStrategy> enableCart = new ArrayList();		
 		
 		List<IStrategy> deleteCart = new ArrayList();
-		deleteCart.add(cartDelete);
+		deleteCart.add(cartWithoutSession);
 		
 		// User Requirements
 		List<IStrategy> listUser = new ArrayList();
