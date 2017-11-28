@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter(filterName = "FilterAuthentication", urlPatterns = { "/books/*", "/customers/*", "/sale/*" })
+@WebFilter(filterName = "FilterAuthentication", urlPatterns = { "/books/*", "/customers/*", "/sales/*" })
 public class FilterAuthentication implements Filter {
 
     @Override

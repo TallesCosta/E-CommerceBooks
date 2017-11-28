@@ -10,10 +10,7 @@ import br.com.talles.ecommercebooks.persistence.dao.book.AuthorDao;
 import br.com.talles.ecommercebooks.persistence.dao.book.CategoryDao;
 import br.com.talles.ecommercebooks.persistence.dao.book.PriceGroupDao;
 import br.com.talles.ecommercebooks.persistence.dao.book.PublishingCompanyDao;
-import br.com.talles.ecommercebooks.persistence.dao.customer.CityDao;
-import br.com.talles.ecommercebooks.persistence.dao.customer.CountryDao;
-import br.com.talles.ecommercebooks.persistence.dao.customer.StateDao;
-import br.com.talles.ecommercebooks.persistence.dao.customer.CardCompanyDao;
+import br.com.talles.ecommercebooks.persistence.dao.customer.*;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -69,7 +66,7 @@ public class CreateView implements IStrategy {
 		listCustomer.add(new StateDao());
 		listCustomer.add(new CountryDao());
 		
-		// Datas needed to list-dosabçe Customer view
+		// Datas needed to list-disable Customer view
 		List<IDao> listDisableCustomer = new ArrayList<>();
 		listDisableCustomer.add(new CityDao());
 		listDisableCustomer.add(new StateDao());

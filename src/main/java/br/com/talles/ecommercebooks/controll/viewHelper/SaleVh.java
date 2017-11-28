@@ -18,13 +18,26 @@ public class SaleVh implements IViewHelper {
 	@Override
 	public Entity getEntity(HttpServletRequest request) {
 		// Sale datas
-		// ...
-		
+		String idDeliveryAddressS = request.getParameter("idDeliveryAddress");
+		long idDeliveryAddress = 0L;
+		if (!(idDeliveryAddressS == null || idDeliveryAddressS.equals("")))
+			idDeliveryAddress = Long.valueOf(idDeliveryAddressS);
+
+		String idChargeAddressS = request.getParameter("idChargeAddress");
+		long idChargeAddress = 0L;
+		if (!(idChargeAddressS == null || idChargeAddressS.equals("")))
+			idChargeAddress = Long.valueOf(idChargeAddressS);
+
+		String idCreditCardS = request.getParameter("idCreditCard");
+		long idCreditCard = 0L;
+		if (!(idCreditCardS == null || idCreditCardS.equals("")))
+			idCreditCard = Long.valueOf(idCreditCardS);
+
 		// Sale
 		Sale sale = new Sale();
 		
 		switch(request.getParameter("operation")) {
-			case "CREATE" :				
+			case "CREATE" :
 				break;
 			
 			case "SAVE":

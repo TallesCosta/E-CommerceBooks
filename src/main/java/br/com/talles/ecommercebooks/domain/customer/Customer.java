@@ -17,6 +17,7 @@ public class Customer extends Entity {
 	private Phone phone;
 	private User user;
 	private Address homeAddress;
+	// TODO: Make the asssociation with n chargeAddress
 	private Address chargeAddress;
 	private List<DeliveryAddress> deliveryAddresses;
 	private List<CreditCard> creditCards;
@@ -25,6 +26,22 @@ public class Customer extends Entity {
 
 	public Customer() {
 		super(true);
+		this.deliveryAddresses = new ArrayList<>();
+		this.creditCards = new ArrayList<>();
+		this.sales = new ArrayList<>();
+		this.promotionalCoupons = new ArrayList<>();
+	}
+
+	public Customer(User user) {
+		super(true);
+		this.birthDate = new Date(0L);
+		this.gender = new Gender();
+		this.phone = new Phone();
+		this.homeAddress = new Address();
+		this.chargeAddress = new Address();
+
+		this.user = user;
+
 		this.deliveryAddresses = new ArrayList<>();
 		this.creditCards = new ArrayList<>();
 		this.sales = new ArrayList<>();

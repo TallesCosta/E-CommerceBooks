@@ -13,6 +13,7 @@ import br.com.talles.ecommercebooks.business.cart.save.CompleteCart;
 import br.com.talles.ecommercebooks.business.cart.save.UpdateStock;
 import br.com.talles.ecommercebooks.business.cart.save.ValidateAmount;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
+import br.com.talles.ecommercebooks.business.sale.create.CustomerFragment;
 import br.com.talles.ecommercebooks.business.user.list.FoundUser;
 import br.com.talles.ecommercebooks.business.customer.save.CustomerValidateSave;
 import br.com.talles.ecommercebooks.business.customer.update.CustomerValidateUpdate;
@@ -81,6 +82,8 @@ public class Facade implements IFacade {
 	 	IStrategy cartSession = new CartSession();
 	 	IStrategy updateStock = new UpdateStock();
 	 	IStrategy cartWithoutSession = new CartWithoutSession();
+	 	// Sale Strategies
+	 	IStrategy customerFragment = new CustomerFragment();
 
 		// Book Requirements
 		List<IStrategy> createBook = new ArrayList();
@@ -163,8 +166,11 @@ public class Facade implements IFacade {
 		List<IStrategy> listStock = new ArrayList();
 		
 		// Sales Requirements
-		List<IStrategy> listSales = new ArrayList();
-		
+		List<IStrategy> createSales = new ArrayList();
+		createSales.add(customerFragment);
+
+	 	List<IStrategy> listSales = new ArrayList();
+
 		// Book Requirements to contexts
         Map<String, List<IStrategy>> contextReqBook = new HashMap();
         contextReqBook.put(CREATE, createBook);
@@ -199,8 +205,9 @@ public class Facade implements IFacade {
 		Map<String, List<IStrategy>> contextReqStock = new HashMap();
         contextReqStock.put(LIST, listStock);
 		
-		// Order Requirements to contexts
+		// Sale Requirements to contexts
 		Map<String, List<IStrategy>> contextReqSale = new HashMap();
+		contextReqSale.put(CREATE, createSales);
         contextReqSale.put(LIST, listSales);
 		
 		// Book Requirements to contexts

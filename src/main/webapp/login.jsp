@@ -80,7 +80,7 @@
 		<script>
             // With the page ready, set the URL next
             $(function() {
-                $("#next").val(window.location.pathname);
+                $("#next").val(window.location.pathname + window.location.search);
             });
 		</script>
     </body>

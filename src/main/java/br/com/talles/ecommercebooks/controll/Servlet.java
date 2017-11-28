@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "Servlet", urlPatterns = {"/log-in", "/books/*", "/customers/*", "/stocks/*", "/carts/*", "/orders/*"})
+@WebServlet(name = "Servlet", urlPatterns = {"/log-in", "/books/*", "/customers/*", "/stocks/*", "/carts/*", "/sales/*", "/orders/*"})
 public class Servlet extends HttpServlet {
 
 	private Map<String, IViewHelper> viewHelpers;
@@ -63,7 +63,7 @@ public class Servlet extends HttpServlet {
 		// Carts Request
 		viewHelpers.put("/E-CommerceBooks/carts/save", new CartVh());
 		viewHelpers.put("/E-CommerceBooks/carts/delete", new CartVh());
-		// Saves Request
+		// Sales Request
 		viewHelpers.put("/E-CommerceBooks/sales/create", new SaleVh());
 		// Orders Request
 		viewHelpers.put("/E-CommerceBooks/orders/list", new SaleVh());

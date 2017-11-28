@@ -96,7 +96,7 @@
 				</table>
 			</div>
 
-			<% out.print("<a href='" + request.getContextPath() + "/sale/create?operation=CREATE'>Finalizar Compras</a>"); %>
+			<% out.print("<a href='" + request.getContextPath() + "/sales/create?operation=CREATE'>Finalizar Compras</a>"); %>
 		</div>
 				
 		<script src="https://use.fontawesome.com/51922b6b29.js"></script>

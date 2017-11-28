@@ -4,6 +4,7 @@ import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.customer.Address;
 import br.com.talles.ecommercebooks.domain.customer.CreditCard;
 import br.com.talles.ecommercebooks.domain.customer.Customer;
+import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
 
 import java.util.Date;
 import java.util.List;
@@ -18,7 +19,7 @@ public class Sale extends Entity {
 	private Status status;
 	private Date deliveryForecast;
 	private PromotionalCoupon promotionalCoupon;
-	private Address deliveryAddress;
+	private DeliveryAddress deliveryAddress;
 	private Address chargeAddress;
 	private CreditCard creditCard;
 	private Customer customer;
@@ -27,7 +28,7 @@ public class Sale extends Entity {
 	// Constructors
 	public Sale() { }
 
-	public Sale(String saleNumber, Date date, double price, int totalAmount, Status status, Date deliveryForecast, PromotionalCoupon promotionalCoupon, Address deliveryAddress, Address chargeAddress, CreditCard creditCard, Customer customer, List<SaleItem> saleItems) {
+	public Sale(String saleNumber, Date date, double price, int totalAmount, Status status, Date deliveryForecast, PromotionalCoupon promotionalCoupon, DeliveryAddress deliveryAddress, Address chargeAddress, CreditCard creditCard, Customer customer, List<SaleItem> saleItems) {
 		this.saleNumber = saleNumber;
 		this.date = date;
 		this.price = price;
@@ -121,7 +122,7 @@ public class Sale extends Entity {
 		this.promotionalCoupon = promotionalCoupon;
 	}
 
-	public void setDeliveryAddress(Address deliveryAddress) {
+	public void setDeliveryAddress(DeliveryAddress deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
 	}
 

@@ -3,6 +3,3 @@
 */
 INSERT INTO Users(enabled, email, password)
 VALUES (true, 'admin@admin.admin', 'Admin@123');
-
-INSERT INTO Users(enabled, email, password)
-VALUES (true, 't@t.t', 'Talles@123');
