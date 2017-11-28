@@ -13,7 +13,7 @@ import br.com.talles.ecommercebooks.business.cart.save.CompleteCart;
 import br.com.talles.ecommercebooks.business.cart.save.UpdateStock;
 import br.com.talles.ecommercebooks.business.cart.save.ValidateAmount;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
-import br.com.talles.ecommercebooks.business.customer.FoundUser;
+import br.com.talles.ecommercebooks.business.user.list.FoundUser;
 import br.com.talles.ecommercebooks.business.customer.save.CustomerValidateSave;
 import br.com.talles.ecommercebooks.business.customer.update.CustomerValidateUpdate;
 import br.com.talles.ecommercebooks.controll.Transaction;
@@ -73,6 +73,8 @@ public class Facade implements IFacade {
 		IStrategy modifyStatus = new ModifyStatus();
 		// Customer Strategies
 		IStrategy custumerFind = new FindCustomer();
+		// User Strategies
+		FoundUser foundUser = new FoundUser();
 		// Cart Strategies
  		IStrategy completeCart = new CompleteCart();
 	 	IStrategy validateAmount = new ValidateAmount();
@@ -228,10 +230,10 @@ public class Facade implements IFacade {
 		List<IStrategy> listDisableCustomerLater = new ArrayList();
 		
 		List<IStrategy> listUserLater = new ArrayList();
-		listUserLater.add(new FoundUser());
+		listUserLater.add(foundUser);
 		
 		List<IStrategy> listStockLater = new ArrayList();
-		listStockLater.add(new FoundUser());
+		//listStockLater.add(new FoundUser()); What? Ctrl + C / Ctrl + V????
 		
 		List<IStrategy> saveSaleLater = new ArrayList();
 		List<IStrategy> listSaleLater = new ArrayList();

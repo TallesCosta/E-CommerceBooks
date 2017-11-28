@@ -63,6 +63,8 @@ public class Servlet extends HttpServlet {
 		// Carts Request
 		viewHelpers.put("/E-CommerceBooks/carts/save", new CartVh());
 		viewHelpers.put("/E-CommerceBooks/carts/delete", new CartVh());
+		// Saves Request
+		viewHelpers.put("/E-CommerceBooks/sales/create", new SaleVh());
 		// Orders Request
 		viewHelpers.put("/E-CommerceBooks/orders/list", new SaleVh());
 
@@ -82,7 +84,7 @@ public class Servlet extends HttpServlet {
 	@Override
 	protected void service (HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
-		try{			
+		try {
 			String uri = request.getRequestURI();
         
 			IViewHelper viewHelper = viewHelpers.get(uri);
@@ -96,7 +98,7 @@ public class Servlet extends HttpServlet {
 
 			viewHelper.setView(result, request, response);
 			
-		}catch(Exception ex){
+		} catch(Exception ex){
 			PrintWriter out = response.getWriter();
 			out.println("<html>");
 			out.println("<head>");

@@ -61,7 +61,8 @@
 					<label for="password">Senha: </label>
 					<input name="password" id="password" type="password" >
 				</div>
-				
+
+				<input type="hidden" name="next" id="next" value="" />
 				<input type="hidden" name="operation" id="operation-custumer" value="LIST" />
 				<button type="submit">Log-in</button>
 				<a class="create-customer" 
@@ -70,5 +71,17 @@
 		</form>
 		
 		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
+
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+				integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+				crossorigin="anonymous">
+		</script>
+
+		<script>
+            // With the page ready, set the URL next
+            $(function() {
+                $("#next").val(window.location.pathname);
+            });
+		</script>
     </body>
 </html>

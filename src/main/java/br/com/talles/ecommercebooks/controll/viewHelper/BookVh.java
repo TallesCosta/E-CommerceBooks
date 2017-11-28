@@ -26,6 +26,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class BookVh implements IViewHelper {
 
@@ -316,77 +317,77 @@ public class BookVh implements IViewHelper {
 		request.setAttribute("result", result);
 		
 		try {
-			switch(request.getParameter("operation")) {
-				case "CREATE" :
-					dispatcher = request.getRequestDispatcher("/book/create.jsp");
-					dispatcher.forward(request, response);
-					break;
-					
-				case "SAVE":
-					if (!result.hasMsg()) {
-						response.sendRedirect("/E-CommerceBooks/books/list?operation=LIST");
-					} else {
+			HttpSession session = request.getSession();
+			User userSession = (User) session.getAttribute("user");
+
+			if (userSession == null || userSession.getId() != 1) {
+				response.sendRedirect("/E-CommerceBooks/stocks/list?operation=LIST");
+			} else {
+				switch (request.getParameter("operation")) {
+					case "CREATE":
 						dispatcher = request.getRequestDispatcher("/book/create.jsp");
 						dispatcher.forward(request, response);
-					}
-					break;
+						break;
 
-				case "LIST":
-					String user = request.getParameter("USER");
-					
-					if (user == null || !user.equals("1")) {
-						dispatcher = request.getRequestDispatcher("/resume.jsp");
-						dispatcher.forward(request, response);
-					} else {
+					case "SAVE":
+						if (!result.hasMsg()) {
+							response.sendRedirect("/E-CommerceBooks/books/list?operation=LIST");
+						} else {
+							dispatcher = request.getRequestDispatcher("/book/create.jsp");
+							dispatcher.forward(request, response);
+						}
+						break;
+
+					case "LIST":
 						dispatcher = request.getRequestDispatcher("/book/list.jsp");
 						dispatcher.forward(request, response);
-					}
-					break;
+						break;
 
-				case "LIST-DISABLE":
-					dispatcher = request.getRequestDispatcher("/book/list-disable.jsp");
-					dispatcher.forward(request, response);
-					break;
-
-				case "FIND":
-					dispatcher = request.getRequestDispatcher("/book/create.jsp");
-					dispatcher.forward(request, response);
-					break;
-					
-				case "HISTORY":
-					dispatcher = request.getRequestDispatcher("/book/show.jsp");
-					dispatcher.forward(request, response);
-					break;
-
-				case "UPDATE":
-					if (!result.hasMsg()) {
-						response.sendRedirect("/E-CommerceBooks/books/list?operation=LIST");
-					} else {
-						dispatcher = request.getRequestDispatcher("/book/create.jsp");
-						dispatcher.forward(request, response);
-					}
-					break;
-
-				case "DISABLE":
-					if (!result.hasMsg()) {
-						response.sendRedirect("/E-CommerceBooks/books/list?operation=LIST");
-					} else {
-						dispatcher = request.getRequestDispatcher("/book/list.jsp");
-						dispatcher.forward(request, response);
-					}
-					break;
-
-				case "ENABLE":
-					if (!result.hasMsg()) {
-						response.sendRedirect("/E-CommerceBooks/books/list-disable?operation=LIST-DISABLE");
-					} else {
+					case "LIST-DISABLE":
 						dispatcher = request.getRequestDispatcher("/book/list-disable.jsp");
 						dispatcher.forward(request, response);
-					}
-					break;					
-					
-				case "DELETE":
-					break;
+						break;
+
+					case "FIND":
+						dispatcher = request.getRequestDispatcher("/book/create.jsp");
+						dispatcher.forward(request, response);
+						break;
+
+					case "HISTORY":
+						dispatcher = request.getRequestDispatcher("/book/show.jsp");
+						dispatcher.forward(request, response);
+						break;
+
+					case "UPDATE":
+						if (!result.hasMsg()) {
+							response.sendRedirect("/E-CommerceBooks/books/list?operation=LIST");
+						} else {
+							dispatcher = request.getRequestDispatcher("/book/create.jsp");
+							dispatcher.forward(request, response);
+						}
+						break;
+
+					case "DISABLE":
+						if (!result.hasMsg()) {
+							response.sendRedirect("/E-CommerceBooks/books/list?operation=LIST");
+						} else {
+							dispatcher = request.getRequestDispatcher("/book/list.jsp");
+							dispatcher.forward(request, response);
+						}
+						break;
+
+					case "ENABLE":
+						if (!result.hasMsg()) {
+							response.sendRedirect("/E-CommerceBooks/books/list-disable?operation=LIST-DISABLE");
+						} else {
+							dispatcher = request.getRequestDispatcher("/book/list-disable.jsp");
+							dispatcher.forward(request, response);
+						}
+						break;
+
+					case "DELETE":
+						break;
+				}
 			}
 		} catch (ServletException | IOException ex) {
 			Logger.getLogger(BookVh.class.getName()).log(Level.SEVERE, null, ex);
