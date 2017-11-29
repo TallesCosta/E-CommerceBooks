@@ -13,6 +13,7 @@ import br.com.talles.ecommercebooks.business.cart.save.CompleteCart;
 import br.com.talles.ecommercebooks.business.cart.save.UpdateStock;
 import br.com.talles.ecommercebooks.business.cart.save.ValidateAmount;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
+import br.com.talles.ecommercebooks.business.sale.create.CompleteSale;
 import br.com.talles.ecommercebooks.business.sale.create.CustomerFragment;
 import br.com.talles.ecommercebooks.business.user.list.FoundUser;
 import br.com.talles.ecommercebooks.business.customer.save.CustomerValidateSave;
@@ -84,6 +85,7 @@ public class Facade implements IFacade {
 	 	IStrategy cartWithoutSession = new CartWithoutSession();
 	 	// Sale Strategies
 	 	IStrategy customerFragment = new CustomerFragment();
+	 	IStrategy completeSale = new CompleteSale();
 
 		// Book Requirements
 		List<IStrategy> createBook = new ArrayList();
@@ -166,10 +168,13 @@ public class Facade implements IFacade {
 		List<IStrategy> listStock = new ArrayList();
 		
 		// Sales Requirements
-		List<IStrategy> createSales = new ArrayList();
-		createSales.add(customerFragment);
+		List<IStrategy> createSale = new ArrayList();
+		createSale.add(customerFragment);
 
-	 	List<IStrategy> listSales = new ArrayList();
+	 	List<IStrategy> saveSale = new ArrayList();
+	 	saveSale.add(completeSale);
+
+	 	List<IStrategy> listSale = new ArrayList();
 
 		// Book Requirements to contexts
         Map<String, List<IStrategy>> contextReqBook = new HashMap();
@@ -207,8 +212,9 @@ public class Facade implements IFacade {
 		
 		// Sale Requirements to contexts
 		Map<String, List<IStrategy>> contextReqSale = new HashMap();
-		contextReqSale.put(CREATE, createSales);
-        contextReqSale.put(LIST, listSales);
+		contextReqSale.put(CREATE, createSale);
+		contextReqSale.put(SAVE, saveSale);
+        contextReqSale.put(LIST, listSale);
 		
 		// Book Requirements to contexts
         Map<String, List<IStrategy>> contextReqCart = new HashMap();
@@ -332,6 +338,7 @@ public class Facade implements IFacade {
 		// Sale Persistence 
 		Map<String, IDao> contextPersSale = new HashMap();
         contextPersSale.put(LIST, saleDao);
+        contextPersSale.put(SAVE, saleDao);
 		
 		// Persistences
         persistence = new HashMap();

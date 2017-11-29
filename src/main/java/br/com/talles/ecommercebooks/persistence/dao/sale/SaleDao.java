@@ -3,12 +3,15 @@ package br.com.talles.ecommercebooks.persistence.dao.sale;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.sale.Sale;
 import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
+import br.com.talles.ecommercebooks.persistence.dao.IDao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SaleDao extends AbstractDao {
 
@@ -55,7 +58,41 @@ public class SaleDao extends AbstractDao {
 
 	@Override
 	public boolean save(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		Sale sale = (Sale) entity;
+
+		// TODO: Add id_promotionalCoupon
+		String sql = "INSERT INTO Sales (enabled, saleNumber, date, price, totalAmount, deliveryForecast, "
+				+ "status, id_deliveryAddress, id_chargeAddress, id_creditCard, id_customer) "
+				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+		try {
+			openConnection();
+
+			PreparedStatement statement = conn.prepareStatement(sql);
+
+			statement.setBoolean(1, sale.isEnabled());
+			statement.setString(2, sale.getSaleNumber());
+			statement.setDate(3, new java.sql.Date(sale.getDate().getTime()));
+			statement.setDouble(4, sale.getPrice());
+			statement.setInt(5, sale.getTotalAmount());
+			statement.setDate(6, new java.sql.Date(sale.getDeliveryForecast().getTime()));
+			statement.setString(7, sale.getStatus().getName());
+
+			statement.setLong(8, sale.getDeliveryAddress().getId());
+			statement.setLong(9, sale.getChargeAddress().getId());
+			statement.setLong(10, sale.getCreditCard().getId());
+			statement.setLong(11, sale.getCustomer().getId());
+
+			statement.execute();
+			statement.close();
+
+			return true;
+		} catch (SQLException ex) {
+			Logger.getLogger(SaleDao.class.getName()).log(Level.SEVERE, null, ex);
+			return false;
+		} finally {
+			closeConnection();
+		}
 	}
 
 	@Override

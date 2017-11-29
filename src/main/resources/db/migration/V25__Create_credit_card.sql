@@ -2,11 +2,11 @@
 	Create credit-card table
 */
 CREATE TABLE CreditCards (
-    id INT NOT NULL AUTO_INCREMENT,
+  id INT NOT NULL AUTO_INCREMENT,
 	enabled BOOLEAN NOT NULL,
-    number VARCHAR(255) NOT NULL,
-    printedName VARCHAR(255) NOT NULL,
-    securityCode VARCHAR(255) NOT NULL,
+  number VARCHAR(255) NOT NULL,
+  printedName VARCHAR(255) NOT NULL,
+  securityCode VARCHAR(255) NOT NULL,
 	expirationDate DATE NOT NULL,
 
 	id_cardCompany INT NOT NULL,

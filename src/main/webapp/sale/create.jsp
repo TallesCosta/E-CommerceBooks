@@ -21,7 +21,7 @@
         result = (Result) request.getAttribute("result");
 
         Sale sale = new Sale("", new Date(), 0.0, 0, new Status(), new Date(), new PromotionalCoupon(),
-                new Address(), new Address(), new CreditCard(), new Customer(), new ArrayList<SaleItem>());
+                new DeliveryAddress(), new Address(), new CreditCard(), new Customer(), new ArrayList<SaleItem>());
 
         if (result != null) {
             if (result.getKeys().contains(Sale.class.getSimpleName())) {
@@ -37,36 +37,52 @@
             }
         }
     %>
-    <form action="<% out.print(request.getContextPath().concat("/action='save'")); %>" method="POST" >
-        <label for="idDeliveryAddress">Endereço de Entrega*: </label>
-        <select name="idDeliveryAddress" id="idDeliveryAddress">
-            <%
-                for(Entity entity : result.getEntities(DeliveryAddress.class.getSimpleName())){
-                    DeliveryAddress deliveryAddress = (DeliveryAddress) entity;
-                    out.print("<option value='" + deliveryAddress.getId() + "'>" + deliveryAddress.getAlias() + "</option>");
-                }
-            %>
-        </select>
+    <div id="app">
+        <h1 id="create-sale">Finalizar Compras!</h1>
 
-        <label for="idChargeAddress">Endereço de Cobrança*: </label>
-        <select name="idChargeAddress" id="idChargeAddress">
-            <%
-                for(Entity entity : result.getEntities(Address.class.getSimpleName())){
-                    Address chargeAddress = (Address) entity;
-                    out.print("<option value='" + chargeAddress.getId() + "'>" + chargeAddress.getAlias() + "</option>");
-                }
-            %>
-        </select>
+        <form action="<% out.print("save"); %>" method="POST" >
+            <fieldset>
 
-        <label for="idCreditCard">Cartão de Crédito*: </label>
-        <select name="idCreditCard" id="idCreditCard">
-            <%
-                for(Entity entity : result.getEntities(CreditCard.class.getSimpleName())){
-                    CreditCard creditCard = (CreditCard) entity;
-                    out.print("<option value='" + creditCard.getId() + "'>" + creditCard.getNumber() + "(" + creditCard.getCardCompany().getName() + ")" + "</option>");
-                }
-            %>
-        </select>
-    </form>
+                <div>
+                    <label for="idDeliveryAddress">Endereço de Entrega*: </label>
+                    <select name="idDeliveryAddress" id="idDeliveryAddress">
+                        <%
+                            for(Entity entity : result.getEntities(DeliveryAddress.class.getSimpleName())){
+                                DeliveryAddress deliveryAddress = (DeliveryAddress) entity;
+                                out.print("<option value='" + deliveryAddress.getId() + "'>" + deliveryAddress.getAlias() + "</option>");
+                            }
+                        %>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="idChargeAddress">Endereço de Cobrança*: </label>
+                    <select name="idChargeAddress" id="idChargeAddress">
+                        <%
+                            for(Entity entity : result.getEntities(Address.class.getSimpleName())){
+                                Address chargeAddress = (Address) entity;
+                                out.print("<option value='" + chargeAddress.getId() + "'>" + chargeAddress.getAlias() + "</option>");
+                            }
+                        %>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="idCreditCard">Cartão de Crédito*: </label>
+                    <select name="idCreditCard" id="idCreditCard">
+                        <%
+                            for(Entity entity : result.getEntities(CreditCard.class.getSimpleName())){
+                                CreditCard creditCard = (CreditCard) entity;
+                                out.print("<option value='" + creditCard.getId() + "'>" + creditCard.getNumber() + "</option>");
+                            }
+                        %>
+                    </select>
+                </div>
+            </fieldset>
+
+            <input type="hidden" name="operation" id="operation-sale" value="SAVE" />
+            <button type="submit">Concluir</button>
+        </form>
+    </div>
 </body>
 </html>

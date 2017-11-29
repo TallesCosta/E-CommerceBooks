@@ -2,6 +2,9 @@ package br.com.talles.ecommercebooks.controll.viewHelper;
 
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
+import br.com.talles.ecommercebooks.domain.customer.Address;
+import br.com.talles.ecommercebooks.domain.customer.CreditCard;
+import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
 import br.com.talles.ecommercebooks.domain.sale.Sale;
 
 import java.io.IOException;
@@ -41,6 +44,9 @@ public class SaleVh implements IViewHelper {
 				break;
 			
 			case "SAVE":
+				sale.setDeliveryAddress(new DeliveryAddress(idDeliveryAddress));
+				sale.setChargeAddress(new Address(idChargeAddress));
+				sale.setCreditCard(new CreditCard(idCreditCard));
 				break;
 
 			case "LIST":
@@ -79,9 +85,12 @@ public class SaleVh implements IViewHelper {
 		try {
 			switch(request.getParameter("operation")) {
 				case "CREATE" :
+					dispatcher = request.getRequestDispatcher("/sale/create.jsp");
+					dispatcher.forward(request, response);
 					break;
 					
 				case "SAVE":
+					response.sendRedirect("/E-CommerceBooks/stocks/list?operation=LIST");
 					break;
 
 				case "LIST":

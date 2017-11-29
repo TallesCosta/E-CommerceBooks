@@ -299,7 +299,16 @@ public class Customer extends Entity {
 	public boolean deliveryAddressesAreEmpty(){
 		return this.deliveryAddresses.isEmpty();
 	}
-	
+
+	public void removeDeliveryAddress(int amount) {
+		int i = this.deliveryAddresses.size() - 1;
+		while (amount > 0) {
+			this.deliveryAddresses.remove(i);
+			i -= 2;
+			amount--;
+		}
+	}
+
 	public List<CreditCard> getCreditCards() {
 		return this.creditCards;
 	}
@@ -310,6 +319,29 @@ public class Customer extends Entity {
 	
 	public void setCreditCards(List<CreditCard> creditCard) {
 		this.creditCards = creditCard;
+	}
+
+	public void addCreditCard(CreditCard creditCard){
+		this.creditCards.add(creditCard);
+	}
+
+	public void addCreditCards(List<CreditCard> creditCards){
+		for(CreditCard creditCard : creditCards){
+			this.creditCards.add(creditCard);
+		}
+	}
+
+	public int countCreditCards(){
+		return this.creditCards.size();
+	}
+
+	public void removeCreditCards(int amount) {
+		int i = this.creditCards.size() - 1;
+		while (amount > 0) {
+			this.creditCards.remove(i);
+			i--;
+			amount--;
+		}
 	}
 
 	public List<Sale> getSales() {

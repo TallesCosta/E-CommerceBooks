@@ -18,7 +18,6 @@ public class CustomerFragment implements IStrategy {
 
     @Override
     public Result process(Entity entity, Result result) {
-        List<Entity> entities = new ArrayList<>();
         HttpSession session = result.getTransaction().getRequest().getSession();
         User userSession = (User) session.getAttribute("user");
 
@@ -26,21 +25,25 @@ public class CustomerFragment implements IStrategy {
         List<Entity> customers = dao.select(true, new Customer(userSession));
         Customer customer = (Customer) customers.get(0);
 
+        // Remove duplicate registries
+        customer.removeDeliveryAddress(customer.countDeliveryAddresses() / 2);
+        customer.removeCreditCards(customer.countCreditCards() / 2);
+
         // Get DeliveryAddresses that Customer
+        List<Entity> daEntities = new ArrayList<>();
         List<DeliveryAddress> deliveryAddresses = customer.getDeliveryAddresses();
         for (DeliveryAddress deliveryAddress : deliveryAddresses) {
-            entities.add(deliveryAddress);
+            daEntities.add(deliveryAddress);
         }
-        result.addEntities(entities);
-        entities.clear();
+        result.addEntities(daEntities);
 
         // Get CreditCards that Customer
+        List<Entity> ccEntities = new ArrayList<>();
         List<CreditCard> creditCards = customer.getCreditCards();
         for (CreditCard creditCard : creditCards) {
-            entities.add(creditCard);
+            ccEntities.add(creditCard);
         }
-        result.addEntities(entities);
-        entities.clear();
+        result.addEntities(ccEntities);
 
         // TODO: Contemple n ChageAddresses
         result.addEntity(customer.getChargeAddress());

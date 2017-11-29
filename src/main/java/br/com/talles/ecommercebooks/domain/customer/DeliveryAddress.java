@@ -8,6 +8,10 @@ public class DeliveryAddress extends Address {
 		super();
 	}
 
+	public DeliveryAddress(long id) {
+		super(id);
+	}
+
 	public DeliveryAddress(String alias, long id) {
 		super(alias, id);
 	}

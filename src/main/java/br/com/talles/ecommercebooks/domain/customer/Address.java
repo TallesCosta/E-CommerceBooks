@@ -18,6 +18,10 @@ public class Address extends Entity {
 		super(true);
 	}
 
+	public Address(long id) {
+		super(id, true);
+	}
+
 	public Address(String alias, long id) {
 		super(id, true);
 		this.alias = alias;

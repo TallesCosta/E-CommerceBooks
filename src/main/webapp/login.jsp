@@ -80,7 +80,14 @@
 		<script>
             // With the page ready, set the URL next
             $(function() {
-                $("#next").val(window.location.pathname + window.location.search);
+                url = window.location.pathname;
+                if (url != "/E-CommerceBooks/log-in") {
+                	$("#next").val(url + window.location.search);
+				} else {
+                    url = document.referrer;
+					url = url.replace("http://localhost:8080", "");
+                    $("#next").val(url);
+				}
             });
 		</script>
     </body>

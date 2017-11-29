@@ -1,15 +1,7 @@
 package br.com.talles.ecommercebooks.persistence.dao.customer;
 
 import br.com.talles.ecommercebooks.domain.Entity;
-import br.com.talles.ecommercebooks.domain.customer.Address;
-import br.com.talles.ecommercebooks.domain.customer.City;
-import br.com.talles.ecommercebooks.domain.customer.Country;
-import br.com.talles.ecommercebooks.domain.customer.Customer;
-import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
-import br.com.talles.ecommercebooks.domain.customer.Gender;
-import br.com.talles.ecommercebooks.domain.customer.Phone;
-import br.com.talles.ecommercebooks.domain.customer.State;
-import br.com.talles.ecommercebooks.domain.customer.User;
+import br.com.talles.ecommercebooks.domain.customer.*;
 import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 
@@ -32,15 +24,17 @@ public class CustomerDao extends AbstractDao {
 		
         String sql = "SELECT c.*, p.*, u.*, "
 				+ "ha.alias as haAlias, ha.id as haId, ca.alias as caAlias, ca.id as caId, "
-				+ "GROUP_CONCAT(da.alias SEPARATOR '-') AS daAlias, GROUP_CONCAT(da.id SEPARATOR '-') as daId "
+				+ "GROUP_CONCAT(da.alias SEPARATOR '-') AS daAlias, GROUP_CONCAT(da.id SEPARATOR '-') as daId, "
+				+ "GROUP_CONCAT(cc.number SEPARATOR '-') AS ccNumber, GROUP_CONCAT(cc.id SEPARATOR '-') as ccId "
 				+ "FROM Customers c "
 				+ "INNER JOIN Phones p ON c.id_phone = p.id "
 				+ "INNER JOIN Users u ON c.id_user = u.id "
 				+ "INNER JOIN Addresses ha ON c.id_homeAddress = ha.id "
 				+ "INNER JOIN Addresses ca ON c.id_chargeAddress = ca.id "
 				+ "INNER JOIN DeliveryAddresses da ON c.id = da.id_customer "
+				+ "INNER JOIN CreditCards cc ON c.id = cc.id_customer "
 				+ "WHERE c.enabled = ? " + where
-				+ "GROUP BY da.id_customer";
+				+ "GROUP BY da.id_customer, cc.id_customer";
         
         try {
 			openConnection();
@@ -74,6 +68,12 @@ public class CustomerDao extends AbstractDao {
 				String[] deliveryAddressesId = result.getString("daId").split("-");
 				for(int i = 0; i < deliveryAddresses.length; i++){
 					customer.addDeliveryAddress(new DeliveryAddress(deliveryAddresses[i], new Long(deliveryAddressesId[i])));
+				}
+				// Credit Card
+				String[] creditCards = result.getString("ccNumber").split("-");
+				String[] creditCardsId = result.getString("ccId").split("-");
+				for(int i = 0; i < creditCards.length; i++){
+					customer.addCreditCard(new CreditCard(creditCards[i], new Long(creditCardsId[i])));
 				}
 				
 				customers.add(customer);

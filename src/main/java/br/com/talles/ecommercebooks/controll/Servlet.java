@@ -65,6 +65,7 @@ public class Servlet extends HttpServlet {
 		viewHelpers.put("/E-CommerceBooks/carts/delete", new CartVh());
 		// Sales Request
 		viewHelpers.put("/E-CommerceBooks/sales/create", new SaleVh());
+		viewHelpers.put("/E-CommerceBooks/sales/save", new SaleVh());
 		// Orders Request
 		viewHelpers.put("/E-CommerceBooks/orders/list", new SaleVh());
 

@@ -11,8 +11,9 @@ CREATE TABLE Sales (
 	totalAmount INT NOT NULL,
 	deliveryForecast DATE NOT NULL,
 
-	id_status INT NOT NULL,
-	id_promotionalCoupon INT NOT NULL,
+  status VARCHAR(255) NOT NULL,
+	/*id_status INT NOT NULL,*/
+	id_promotionalCoupon INT,
 	id_deliveryAddress INT NOT NULL,
 	id_chargeAddress INT NOT NULL,
 	id_creditCard INT NOT NULL,
@@ -21,7 +22,7 @@ CREATE TABLE Sales (
 	CONSTRAINT PK_Sale PRIMARY KEY (id)
 );
 
-ALTER TABLE Sales ADD FOREIGN KEY (id_status) REFERENCES Status(id);
+/*ALTER TABLE Sales ADD FOREIGN KEY (id_status) REFERENCES Status(id);*/
 ALTER TABLE Sales ADD FOREIGN KEY (id_promotionalCoupon) REFERENCES PromotionalCoupons(id);
 ALTER TABLE Sales ADD FOREIGN KEY (id_deliveryAddress) REFERENCES Addresses(id);
 ALTER TABLE Sales ADD FOREIGN KEY (id_chargeAddress) REFERENCES Addresses(id);

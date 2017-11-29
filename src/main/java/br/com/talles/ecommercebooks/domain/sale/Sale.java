@@ -26,9 +26,12 @@ public class Sale extends Entity {
 	private List<SaleItem> saleItems;
 
 	// Constructors
-	public Sale() { }
+	public Sale() {
+		super(true);
+	}
 
 	public Sale(String saleNumber, Date date, double price, int totalAmount, Status status, Date deliveryForecast, PromotionalCoupon promotionalCoupon, DeliveryAddress deliveryAddress, Address chargeAddress, CreditCard creditCard, Customer customer, List<SaleItem> saleItems) {
+		super(true);
 		this.saleNumber = saleNumber;
 		this.date = date;
 		this.price = price;

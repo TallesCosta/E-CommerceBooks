@@ -15,6 +15,15 @@ public class CreditCard extends Entity {
 		super(true);
 	}
 
+	public CreditCard(long id) {
+		super(id, true);
+	}
+
+	public CreditCard(String number, long id) {
+		super(id, true);
+		this.number = number;
+	}
+
 	public CreditCard(String number, String printedName, String securityCode, Date expirationDate, CardCompany cardCompany, long id) {
 		super(id, true);
 		this.number = number;
