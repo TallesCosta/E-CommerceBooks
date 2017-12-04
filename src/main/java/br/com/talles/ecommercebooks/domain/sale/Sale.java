@@ -17,10 +17,8 @@ public class Sale extends Entity {
 	private double price;
 	private int totalAmount;
 	private Status status;
-	private Date deliveryForecast;
-	private ShippingCost shippingCost;
+	private Delivery delivery;
 	private PromotionalCoupon promotionalCoupon;
-	private DeliveryAddress deliveryAddress;
 	private CreditCard creditCard;
 	private Customer customer;
 	private List<SaleItem> saleItems;
@@ -30,24 +28,23 @@ public class Sale extends Entity {
 		super(true);
 	}
 
-	public Sale(String saleNumber, Date date, double price, int totalAmount, Status status, Date deliveryForecast, ShippingCost shippingCost, PromotionalCoupon promotionalCoupon, DeliveryAddress deliveryAddress, Address chargeAddress, CreditCard creditCard, Customer customer, List<SaleItem> saleItems) {
+	// Getters
+
+	public Sale(String saleNumber, Date date, double price, int totalAmount, Status status, Delivery delivery, PromotionalCoupon promotionalCoupon, CreditCard creditCard, Customer customer, List<SaleItem> saleItems) {
 		super(true);
 		this.saleNumber = saleNumber;
 		this.date = date;
 		this.price = price;
 		this.totalAmount = totalAmount;
 		this.status = status;
-		this.deliveryForecast = deliveryForecast;
-		this.shippingCost = shippingCost;
+		this.delivery = delivery;
 		this.promotionalCoupon = promotionalCoupon;
-		this.deliveryAddress = deliveryAddress;
 		this.creditCard = creditCard;
 		this.customer = customer;
-		
+
 		this.saleItems = saleItems;
 	}
 
-	// Getters
 	public String getSaleNumber() {
 		return saleNumber;
 	}
@@ -63,25 +60,17 @@ public class Sale extends Entity {
 	public int getTotalAmount() {
 		return totalAmount;
 	}
-	
+
 	public Status getStatus() {
 		return status;
 	}
 
-	public Date getDeliveryForecast() {
-		return deliveryForecast;
-	}
-
-	public ShippingCost getShippingCost() {
-		return shippingCost;
+	public Delivery getDelivery() {
+		return delivery;
 	}
 
 	public PromotionalCoupon getPromotionalCoupon() {
 		return promotionalCoupon;
-	}
-
-	public Address getDeliveryAddress() {
-		return deliveryAddress;
 	}
 
 	public CreditCard getCreditCard() {
@@ -112,25 +101,17 @@ public class Sale extends Entity {
 	public void setTotalAmount(int totalAmount) {
 		this.totalAmount = totalAmount;
 	}
-	
+
 	public void setStatus(Status status) {
 		this.status = status;
 	}
 
-	public void setDeliveryForecast(Date deliveryForecast) {
-		this.deliveryForecast = deliveryForecast;
-	}
-
-	public void setShippingCost(ShippingCost shippingCost) {
-		this.shippingCost = shippingCost;
+	public void setDelivery(Delivery delivery) {
+		this.delivery = delivery;
 	}
 
 	public void setPromotionalCoupon(PromotionalCoupon promotionalCoupon) {
 		this.promotionalCoupon = promotionalCoupon;
-	}
-
-	public void setDeliveryAddress(DeliveryAddress deliveryAddress) {
-		this.deliveryAddress = deliveryAddress;
 	}
 
 	public void setCreditCard(CreditCard creditCard) {

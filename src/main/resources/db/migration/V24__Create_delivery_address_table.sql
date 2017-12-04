@@ -15,7 +15,7 @@ CREATE TABLE DeliveryAddresses (
   homeType VARCHAR(255) NOT NULL,
 
 	id_city INT NOT NULL,
-	id_customer INT NOT NULL,
+	id_customer INT,
 	
 	CONSTRAINT PK_DeliveryAddress PRIMARY KEY (id)
 );

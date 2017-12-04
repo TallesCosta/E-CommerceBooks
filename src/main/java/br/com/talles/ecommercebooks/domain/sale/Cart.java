@@ -86,13 +86,21 @@ public class Cart extends Entity {
 	
 	// Updates the cart when a new sale-item is added.
 	private void updateValues() {
-		if (saleItems.isEmpty()) {
-			price = 0.0;
-			totalAmount = 0;
+		if (this.saleItems.isEmpty()) {
+			this.price = 0.0;
+			this.totalAmount = 0;
 		} else {
-			SaleItem saleItem = saleItems.get(saleItems.size() - 1);
-			price += saleItem.getUnitaryPrice() * saleItem.getAmount();
-			totalAmount += 1;
+			SaleItem saleItem = this.saleItems.get(saleItems.size() - 1);
+
+			this.price = 0;
+			this.totalAmount = 0;
+			for (SaleItem si : this.saleItems) {
+				this.price += si.getUnitaryPrice() * si.getAmount();
+				this.totalAmount += si.getAmount();
+			}
+
+			//this.price += saleItem.getUnitaryPrice() * saleItem.getAmount();
+			//this.totalAmount += this.saleItems.get(this.saleItems.size() - 1).getAmount();
 		}
 	}
 	

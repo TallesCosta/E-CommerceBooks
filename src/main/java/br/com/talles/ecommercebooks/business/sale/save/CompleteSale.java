@@ -1,4 +1,4 @@
-package br.com.talles.ecommercebooks.business.sale.create;
+package br.com.talles.ecommercebooks.business.sale.save;
 
 import br.com.talles.ecommercebooks.business.IStrategy;
 import br.com.talles.ecommercebooks.controll.Result;
@@ -26,12 +26,12 @@ public class CompleteSale implements IStrategy {
         sale.setDate(new Date());
         Date date = new Date();
         date.setTime(date.getTime() + 5000000000L);
-        sale.setDeliveryForecast(date);
+        sale.getDelivery().setDeliveryForecast(date);
 
         HttpSession session = result.getTransaction().getRequest().getSession();
         Cart cartSession = (Cart) session.getAttribute("cart");
 
-        sale.setPrice(cartSession.getPrice() * cartSession.getTotalAmount());
+        sale.setPrice(cartSession.getPrice());
         sale.setTotalAmount(cartSession.getTotalAmount());
         sale.setSaleItems(cartSession.getSaleItems());
 
@@ -41,7 +41,7 @@ public class CompleteSale implements IStrategy {
         List<Entity> entities = dao.select(true, customer);
         sale.setCustomer((Customer) entities.get(0));
 
-        sale.setStatus(new Status("Aguardando pagamento"));
+        sale.setStatus(new Status("EM PROCESSAMENTO"));
 
         return result;
     }

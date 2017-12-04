@@ -5,7 +5,9 @@ import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.customer.Address;
 import br.com.talles.ecommercebooks.domain.customer.CreditCard;
 import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
+import br.com.talles.ecommercebooks.domain.sale.Delivery;
 import br.com.talles.ecommercebooks.domain.sale.Sale;
+import br.com.talles.ecommercebooks.domain.sale.ShippingCost;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -31,6 +33,16 @@ public class SaleVh implements IViewHelper {
 		if (!(idCreditCardS == null || idCreditCardS.equals("")))
 			idCreditCard = Long.valueOf(idCreditCardS);
 
+		String shippingCostS = request.getParameter("shippingCost");
+		double shippingCost = 0.0;
+		if (!(shippingCostS == null || shippingCostS.equals("")))
+			shippingCost = Double.valueOf(shippingCostS);
+
+		String totalS = request.getParameter("total");
+		double total = 0.0;
+		if (!(totalS == null || totalS.equals("")))
+			total = Double.valueOf(totalS);
+
 		// Sale
 		Sale sale = new Sale();
 		
@@ -39,7 +51,8 @@ public class SaleVh implements IViewHelper {
 				break;
 			
 			case "SAVE":
-				sale.setDeliveryAddress(new DeliveryAddress(idDeliveryAddress));
+				sale.setDelivery(new Delivery(new ShippingCost(shippingCost),
+						new DeliveryAddress(idDeliveryAddress)));
 				sale.setCreditCard(new CreditCard(idCreditCard));
 				break;
 

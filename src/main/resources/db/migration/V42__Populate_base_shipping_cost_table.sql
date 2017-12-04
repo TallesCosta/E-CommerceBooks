@@ -1,7 +1,7 @@
 /*
   Populate shipping cost base value
 */
-INSERT INTO ShippingCosts (enabled, baseValue, baseAdditionValue, id_state) VALUES
+INSERT INTO BaseShippingCosts (enabled, baseValue, baseAdditionValue, id_state) VALUES
 (true, 26, 0.9, 1),
 (true, 27, 0.7, 2),
 (true, 22, 0.5, 3),

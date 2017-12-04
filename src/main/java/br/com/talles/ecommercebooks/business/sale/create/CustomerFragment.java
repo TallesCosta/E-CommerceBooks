@@ -7,8 +7,10 @@ import br.com.talles.ecommercebooks.domain.customer.CreditCard;
 import br.com.talles.ecommercebooks.domain.customer.Customer;
 import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
 import br.com.talles.ecommercebooks.domain.customer.User;
+import br.com.talles.ecommercebooks.domain.sale.Delivery;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 import br.com.talles.ecommercebooks.persistence.dao.customer.CustomerDao;
+import br.com.talles.ecommercebooks.persistence.dao.sale.BaseShippingCostDao;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -30,12 +32,16 @@ public class CustomerFragment implements IStrategy {
         customer.removeCreditCards(customer.countCreditCards() / 2);
 
         // Get DeliveryAddresses that Customer
-        List<Entity> daEntities = new ArrayList<>();
+        dao = new BaseShippingCostDao();
+        List<Entity> deEntities = new ArrayList<>();
         List<DeliveryAddress> deliveryAddresses = customer.getDeliveryAddresses();
         for (DeliveryAddress deliveryAddress : deliveryAddresses) {
-            daEntities.add(deliveryAddress);
+            Delivery delivery = new Delivery();
+            delivery.setDeliveryAddress(deliveryAddress);
+            dao.find(delivery);
+            deEntities.add(delivery);
         }
-        result.addEntities(daEntities);
+        result.addEntities(deEntities);
 
         // Get CreditCards that Customer
         List<Entity> ccEntities = new ArrayList<>();
@@ -44,9 +50,6 @@ public class CustomerFragment implements IStrategy {
             ccEntities.add(creditCard);
         }
         result.addEntities(ccEntities);
-
-        // TODO: Contemple n ChageAddresses
-        result.addEntity(customer.getChargeAddress());
 
         return result;
     }

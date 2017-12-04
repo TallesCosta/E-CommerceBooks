@@ -13,7 +13,7 @@ import br.com.talles.ecommercebooks.business.cart.save.CompleteCart;
 import br.com.talles.ecommercebooks.business.cart.save.UpdateStock;
 import br.com.talles.ecommercebooks.business.cart.save.ValidateAmount;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
-import br.com.talles.ecommercebooks.business.sale.create.CompleteSale;
+import br.com.talles.ecommercebooks.business.sale.save.CompleteSale;
 import br.com.talles.ecommercebooks.business.sale.create.CustomerFragment;
 import br.com.talles.ecommercebooks.business.user.list.FoundUser;
 import br.com.talles.ecommercebooks.business.customer.save.CustomerValidateSave;

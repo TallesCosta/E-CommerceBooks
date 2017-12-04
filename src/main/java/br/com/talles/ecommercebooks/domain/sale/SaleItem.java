@@ -11,14 +11,23 @@ public class SaleItem extends Entity {
 	private Book book;
 
 	// Constructors
-	public SaleItem() { }
+	public SaleItem() { super(true); }
 
 	public SaleItem(double unitaryPrice, int amount) {
+		super(true);
 		this.unitaryPrice = unitaryPrice;
 		this.amount = amount;
 	}
 	
 	public SaleItem(double unitaryPrice, int amount, Book book) {
+		super(true);
+		this.unitaryPrice = unitaryPrice;
+		this.amount = amount;
+		this.book = book;
+	}
+
+	public SaleItem(long id, double unitaryPrice, int amount, Book book) {
+		super(id, true);
 		this.unitaryPrice = unitaryPrice;
 		this.amount = amount;
 		this.book = book;

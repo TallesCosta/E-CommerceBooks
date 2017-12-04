@@ -1,7 +1,9 @@
 package br.com.talles.ecommercebooks.persistence.dao.sale;
 
 import br.com.talles.ecommercebooks.domain.Entity;
+import br.com.talles.ecommercebooks.domain.sale.Delivery;
 import br.com.talles.ecommercebooks.domain.sale.Sale;
+import br.com.talles.ecommercebooks.domain.sale.SaleItem;
 import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 
@@ -40,7 +42,7 @@ public class SaleDao extends AbstractDao {
 				sale.setDate(result.getDate("sales.date"));
 				sale.setPrice(result.getDouble("sales.price"));
 				sale.setTotalAmount(result.getInt("sales.totalAmount"));
-				sale.setDeliveryForecast(result.getDate("sales.deliveryForecast"));
+				sale.setDelivery(new Delivery(result.getDate("sales.deliveryForecast")));
 				
 				sales.add(sale);
             }
@@ -61,9 +63,9 @@ public class SaleDao extends AbstractDao {
 		Sale sale = (Sale) entity;
 
 		// TODO: Add id_promotionalCoupon
-		String sql = "INSERT INTO Sales (enabled, saleNumber, date, price, totalAmount, deliveryForecast, "
-				+ "status, id_deliveryAddress, id_creditCard, id_customer) "
-				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO Sales (enabled, saleNumber, date, price, totalAmount, status, "
+				+ "deliveryForecast, shippingCost, id_deliveryAddress, id_creditCard, id_customer) "
+				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			openConnection();
@@ -75,23 +77,55 @@ public class SaleDao extends AbstractDao {
 			statement.setDate(3, new java.sql.Date(sale.getDate().getTime()));
 			statement.setDouble(4, sale.getPrice());
 			statement.setInt(5, sale.getTotalAmount());
-			statement.setDate(6, new java.sql.Date(sale.getDeliveryForecast().getTime()));
-			statement.setString(7, sale.getStatus().getName());
+			statement.setString(6, sale.getStatus().getName());
+			statement.setDate(7, new java.sql.Date(sale.getDelivery().getDeliveryForecast().getTime()));
+			statement.setDouble(8, sale.getDelivery().getShippingCost().getValue());
 
-			statement.setLong(8, sale.getDeliveryAddress().getId());
-			statement.setLong(9, sale.getCreditCard().getId());
-			statement.setLong(10, sale.getCustomer().getId());
+			statement.setLong(9, sale.getDelivery().getDeliveryAddress().getId());
+			statement.setLong(10, sale.getCreditCard().getId());
+			statement.setLong(11, sale.getCustomer().getId());
 
 			statement.execute();
 			statement.close();
 
-			return true;
 		} catch (SQLException ex) {
 			Logger.getLogger(SaleDao.class.getName()).log(Level.SEVERE, null, ex);
 			return false;
 		} finally {
 			closeConnection();
 		}
+
+		Sale lastSale = (Sale) findLast();
+		sale.setId(lastSale.getId());
+
+		sql = "INSERT INTO SaleItems (enabled, unitaryPrice, amount, id_sale, id_book) "
+				+ "VALUES(?, ?, ?, ?, ?)";
+
+		try {
+			openConnection();
+
+			PreparedStatement statement = conn.prepareStatement(sql);
+
+			for (SaleItem saleItem : sale.getSaleItems()) {
+				statement.setBoolean(1, saleItem.isEnabled());
+				statement.setDouble(2, saleItem.getUnitaryPrice());
+				statement.setInt(3, saleItem.getAmount());
+				statement.setLong(4, sale.getId());
+				statement.setLong(5, saleItem.getBook().getId());
+
+				statement.execute();
+			}
+
+			statement.close();
+
+		} catch (SQLException ex) {
+			Logger.getLogger(SaleDao.class.getName()).log(Level.SEVERE, null, ex);
+			return false;
+		} finally {
+			closeConnection();
+		}
+
+		return true;
 	}
 
 	@Override
@@ -111,7 +145,28 @@ public class SaleDao extends AbstractDao {
 
 	@Override
 	public Entity findLast() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		Sale sale = new Sale();
+
+		String query = "SELECT * FROM Sales WHERE enabled = true ORDER BY ID DESC LIMIT 1";
+
+		try {
+			openConnection();
+
+			PreparedStatement stmt = conn.prepareStatement(query);
+
+			ResultSet result = stmt.executeQuery();
+			result.first();
+
+			sale.setId(result.getLong("id"));
+
+			stmt.close();
+
+			return sale;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
+		}
 	}
 	
 }
