@@ -62,8 +62,8 @@ public class SaleDao extends AbstractDao {
 
 		// TODO: Add id_promotionalCoupon
 		String sql = "INSERT INTO Sales (enabled, saleNumber, date, price, totalAmount, deliveryForecast, "
-				+ "status, id_deliveryAddress, id_chargeAddress, id_creditCard, id_customer) "
-				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "status, id_deliveryAddress, id_creditCard, id_customer) "
+				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			openConnection();
@@ -79,9 +79,8 @@ public class SaleDao extends AbstractDao {
 			statement.setString(7, sale.getStatus().getName());
 
 			statement.setLong(8, sale.getDeliveryAddress().getId());
-			statement.setLong(9, sale.getChargeAddress().getId());
-			statement.setLong(10, sale.getCreditCard().getId());
-			statement.setLong(11, sale.getCustomer().getId());
+			statement.setLong(9, sale.getCreditCard().getId());
+			statement.setLong(10, sale.getCustomer().getId());
 
 			statement.execute();
 			statement.close();

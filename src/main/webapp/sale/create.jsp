@@ -56,18 +56,6 @@
                 </div>
 
                 <div>
-                    <label for="idChargeAddress">Endereço de Cobrança*: </label>
-                    <select name="idChargeAddress" id="idChargeAddress">
-                        <%
-                            for(Entity entity : result.getEntities(Address.class.getSimpleName())){
-                                Address chargeAddress = (Address) entity;
-                                out.print("<option value='" + chargeAddress.getId() + "'>" + chargeAddress.getAlias() + "</option>");
-                            }
-                        %>
-                    </select>
-                </div>
-
-                <div>
                     <label for="idCreditCard">Cartão de Crédito*: </label>
                     <select name="idCreditCard" id="idCreditCard">
                         <%

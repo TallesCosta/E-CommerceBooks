@@ -26,11 +26,6 @@ public class SaleVh implements IViewHelper {
 		if (!(idDeliveryAddressS == null || idDeliveryAddressS.equals("")))
 			idDeliveryAddress = Long.valueOf(idDeliveryAddressS);
 
-		String idChargeAddressS = request.getParameter("idChargeAddress");
-		long idChargeAddress = 0L;
-		if (!(idChargeAddressS == null || idChargeAddressS.equals("")))
-			idChargeAddress = Long.valueOf(idChargeAddressS);
-
 		String idCreditCardS = request.getParameter("idCreditCard");
 		long idCreditCard = 0L;
 		if (!(idCreditCardS == null || idCreditCardS.equals("")))
@@ -45,7 +40,6 @@ public class SaleVh implements IViewHelper {
 			
 			case "SAVE":
 				sale.setDeliveryAddress(new DeliveryAddress(idDeliveryAddress));
-				sale.setChargeAddress(new Address(idChargeAddress));
 				sale.setCreditCard(new CreditCard(idCreditCard));
 				break;
 

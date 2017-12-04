@@ -15,16 +15,13 @@ CREATE TABLE Sales (
 	/*id_status INT NOT NULL,*/
 	id_promotionalCoupon INT,
 	id_deliveryAddress INT NOT NULL,
-	id_chargeAddress INT NOT NULL,
 	id_creditCard INT NOT NULL,
 	id_customer INT NOT NULL,
 	
 	CONSTRAINT PK_Sale PRIMARY KEY (id)
 );
 
-/*ALTER TABLE Sales ADD FOREIGN KEY (id_status) REFERENCES Status(id);*/
 ALTER TABLE Sales ADD FOREIGN KEY (id_promotionalCoupon) REFERENCES PromotionalCoupons(id);
 ALTER TABLE Sales ADD FOREIGN KEY (id_deliveryAddress) REFERENCES Addresses(id);
-ALTER TABLE Sales ADD FOREIGN KEY (id_chargeAddress) REFERENCES Addresses(id);
 ALTER TABLE Sales ADD FOREIGN KEY (id_creditCard) REFERENCES CreditCards(id);
 ALTER TABLE Sales ADD FOREIGN KEY (id_customer) REFERENCES Customers(id);

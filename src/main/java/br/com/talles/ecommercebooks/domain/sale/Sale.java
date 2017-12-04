@@ -20,7 +20,6 @@ public class Sale extends Entity {
 	private Date deliveryForecast;
 	private PromotionalCoupon promotionalCoupon;
 	private DeliveryAddress deliveryAddress;
-	private Address chargeAddress;
 	private CreditCard creditCard;
 	private Customer customer;
 	private List<SaleItem> saleItems;
@@ -40,7 +39,6 @@ public class Sale extends Entity {
 		this.deliveryForecast = deliveryForecast;
 		this.promotionalCoupon = promotionalCoupon;
 		this.deliveryAddress = deliveryAddress;
-		this.chargeAddress = chargeAddress;
 		this.creditCard = creditCard;
 		this.customer = customer;
 		
@@ -78,10 +76,6 @@ public class Sale extends Entity {
 
 	public Address getDeliveryAddress() {
 		return deliveryAddress;
-	}
-
-	public Address getChargeAddress() {
-		return chargeAddress;
 	}
 
 	public CreditCard getCreditCard() {
@@ -127,10 +121,6 @@ public class Sale extends Entity {
 
 	public void setDeliveryAddress(DeliveryAddress deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
-	}
-
-	public void setChargeAddress(Address chargeAddress) {
-		this.chargeAddress = chargeAddress;
 	}
 
 	public void setCreditCard(CreditCard creditCard) {
