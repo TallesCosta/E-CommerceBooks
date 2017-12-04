@@ -18,6 +18,7 @@ public class Sale extends Entity {
 	private int totalAmount;
 	private Status status;
 	private Date deliveryForecast;
+	private ShippingCost shippingCost;
 	private PromotionalCoupon promotionalCoupon;
 	private DeliveryAddress deliveryAddress;
 	private CreditCard creditCard;
@@ -29,7 +30,7 @@ public class Sale extends Entity {
 		super(true);
 	}
 
-	public Sale(String saleNumber, Date date, double price, int totalAmount, Status status, Date deliveryForecast, PromotionalCoupon promotionalCoupon, DeliveryAddress deliveryAddress, Address chargeAddress, CreditCard creditCard, Customer customer, List<SaleItem> saleItems) {
+	public Sale(String saleNumber, Date date, double price, int totalAmount, Status status, Date deliveryForecast, ShippingCost shippingCost, PromotionalCoupon promotionalCoupon, DeliveryAddress deliveryAddress, Address chargeAddress, CreditCard creditCard, Customer customer, List<SaleItem> saleItems) {
 		super(true);
 		this.saleNumber = saleNumber;
 		this.date = date;
@@ -37,6 +38,7 @@ public class Sale extends Entity {
 		this.totalAmount = totalAmount;
 		this.status = status;
 		this.deliveryForecast = deliveryForecast;
+		this.shippingCost = shippingCost;
 		this.promotionalCoupon = promotionalCoupon;
 		this.deliveryAddress = deliveryAddress;
 		this.creditCard = creditCard;
@@ -69,7 +71,11 @@ public class Sale extends Entity {
 	public Date getDeliveryForecast() {
 		return deliveryForecast;
 	}
-	
+
+	public ShippingCost getShippingCost() {
+		return shippingCost;
+	}
+
 	public PromotionalCoupon getPromotionalCoupon() {
 		return promotionalCoupon;
 	}
@@ -114,7 +120,11 @@ public class Sale extends Entity {
 	public void setDeliveryForecast(Date deliveryForecast) {
 		this.deliveryForecast = deliveryForecast;
 	}
-	
+
+	public void setShippingCost(ShippingCost shippingCost) {
+		this.shippingCost = shippingCost;
+	}
+
 	public void setPromotionalCoupon(PromotionalCoupon promotionalCoupon) {
 		this.promotionalCoupon = promotionalCoupon;
 	}

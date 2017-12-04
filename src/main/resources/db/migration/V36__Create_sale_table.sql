@@ -9,10 +9,10 @@ CREATE TABLE Sales (
 	date DATE NOT NULL,
 	price DOUBLE NOT NULL,
 	totalAmount INT NOT NULL,
-	deliveryForecast DATE NOT NULL,
-
   status VARCHAR(255) NOT NULL,
-	/*id_status INT NOT NULL,*/
+	deliveryForecast DATE NOT NULL,
+	shippingCost DOUBLE NOT NULL,
+
 	id_promotionalCoupon INT,
 	id_deliveryAddress INT NOT NULL,
 	id_creditCard INT NOT NULL,
