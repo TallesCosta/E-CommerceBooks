@@ -16,11 +16,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Log-in</title>
-		
+        <title>Login</title>
+
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+		<link rel="stylesheet" href="https://cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+		<link rel="stylesheet" href="https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
 		<style>
-			fieldset{
-				display: inline;
+			.center {
+				width: 450px;
+				margin: 150px auto auto auto;
 			}
 		</style>
     </head>
@@ -49,26 +53,24 @@
 				}
 			}			
 		%>
-        <h1></h1>
-		<form action="<% out.print(request.getContextPath().concat("/log-in")); %>" method="POST" >
-			<fieldset>
-				<legend>Usuário</legend>
-				<div>
-					<label for="email">E-mail: </label>
-					<input name="email" id="email" type="email" >
-				</div>
-				<div>
-					<label for="password">Senha: </label>
-					<input name="password" id="password" type="password" >
-				</div>
+			<div class="center">
+				<h1>Faça login</h1>
+				<form action="<% out.print(request.getContextPath().concat("/log-in")); %>" method="POST" >
+					<fieldset>
+						<label for="email">E-mail: </label>
+						<input name="email" id="email" type="email" >
 
-				<input type="hidden" name="next" id="next" value="" />
-				<input type="hidden" name="operation" id="operation-custumer" value="LIST" />
-				<button type="submit">Log-in</button>
-				<a class="create-customer" 
-				   href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">Cadastra</a>
-			</fieldset>
-		</form>
+						<label for="password">Senha: </label>
+						<input name="password" id="password" type="password" >
+
+						<input type="hidden" name="next" id="next" value="" />
+						<input type="hidden" name="operation" id="operation-custumer" value="LIST" />
+						<button type="submit">Login</button>
+						<a class="create-customer"
+						   href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">  Cadastra</a>
+					</fieldset>
+				</form>
+			</div>
 		
 		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
 
@@ -80,8 +82,8 @@
 		<script>
             // With the page ready, set the URL next
             $(function() {
-                url = window.location.pathname;
-                if (url != "/E-CommerceBooks/log-in") {
+                var url = window.location.pathname;
+                if (url !== "/E-CommerceBooks/log-in") {
                 	$("#next").val(url + window.location.search);
 				} else {
                     url = document.referrer;
