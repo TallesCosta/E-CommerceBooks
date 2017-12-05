@@ -31,9 +31,10 @@
 				background-color: white;
 			}
 
-			nav a {
+			nav a, nav a:visited, nav a:active {
 				color: white;
 				display: block;
+				text-decoration: none;
 			}
 
 			nav .item:hover a {
