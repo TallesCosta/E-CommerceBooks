@@ -33,8 +33,7 @@
                         <td>Status</td>
                         <td>Data</td>
                         <td>Código</td>
-                        <td>Preço</td>
-                        <td>Quantidade</td>
+                        <td>Valor</td>
                         <td>Visualizar</td>
                     </tr>
                     </thead>
@@ -48,10 +47,9 @@
 
                                 out.println("<tr>");
                                 out.println("<td>" + sale.getStatus().getName() + "</td>");
-                                out.println("<td>" + sale.getDate() + "</td>");
+                                out.println("<td>" + sale.getDate().toString().replace("-","/") + "</td>");
                                 out.println("<td>" + sale.getSaleNumber() + "</td>");
                                 out.println("<td>" + sale.getPrice() + "</td>");
-                                out.println("<td>" + sale.getTotalAmount() + "</td>");
                                 out.println("<td>"
                                         + "<a href='" + request.getContextPath() + "/sales/find?operation=FIND&id=" + sale.getId() + "'>"
                                         + "<i class='fa fa-eye' aria-hidden='true'></i>"
@@ -77,8 +75,7 @@
                             <td>Status</td>
                             <td>Data</td>
                             <td>Código</td>
-                            <td>Preço</td>
-                            <td>Quantidade</td>
+                            <td>Valor</td>
                             <td>Visualizar</td>
                         </tr>
                     </tfooter>

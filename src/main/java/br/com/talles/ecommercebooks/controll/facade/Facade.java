@@ -177,6 +177,7 @@ public class Facade implements IFacade {
 	 	saveSale.add(giveBackStock);
 
 	 	List<IStrategy> listSale = new ArrayList();
+	 	List<IStrategy> findSale = new ArrayList();
 
 		// Book Requirements to contexts
         Map<String, List<IStrategy>> contextReqBook = new HashMap();
@@ -217,6 +218,7 @@ public class Facade implements IFacade {
 		contextReqSale.put(CREATE, createSale);
 		contextReqSale.put(SAVE, saveSale);
         contextReqSale.put(LIST, listSale);
+        contextReqSale.put(FIND, findSale);
 		
 		// Book Requirements to contexts
         Map<String, List<IStrategy>> contextReqCart = new HashMap();
@@ -349,6 +351,7 @@ public class Facade implements IFacade {
 		Map<String, IDao> contextPersSale = new HashMap();
         contextPersSale.put(LIST, saleDao);
         contextPersSale.put(SAVE, saleDao);
+		 contextPersSale.put(FIND, saleDao);
 		
 		// Persistences
         persistence = new HashMap();
@@ -463,9 +466,12 @@ public class Facade implements IFacade {
             return result;
 		
 		// Loads create view datas
-		result = create(entity, new Transaction(transaction.getRequest(), CREATE));
-		result.setTransaction(transaction);
-		
+		validations = reqs.get(CREATE);
+		if (validations.contains(new CreateView())) {
+			result = create(entity, new Transaction(transaction.getRequest(), CREATE));
+			result.setTransaction(transaction);
+		}
+
 	    Map<String, IDao> daosEntity = persistence.get(entity.getClass().getSimpleName());
 		IDao dao = daosEntity.get(transaction.getOperation());
 	    result.addEntity(dao.find(entity));

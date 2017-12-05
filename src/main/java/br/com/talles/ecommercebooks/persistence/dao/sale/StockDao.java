@@ -166,7 +166,7 @@ public class StockDao extends AbstractDao {
 			result.close();
 			statement.close();
 
-			return  stock;
+			return stock;
 		} catch(SQLException e) {
 			throw new RuntimeException(e);
 		} finally {

@@ -23,6 +23,11 @@ public class SaleVh implements IViewHelper {
 	@Override
 	public Entity getEntity(HttpServletRequest request) {
 		// Sale datas
+		String idS = request.getParameter("id");
+		long id = 0L;
+		if (!(idS == null || idS.equals("")))
+			id = Long.valueOf(idS);
+
 		String idDeliveryAddressS = request.getParameter("idDeliveryAddress");
 		long idDeliveryAddress = 0L;
 		if (!(idDeliveryAddressS == null || idDeliveryAddressS.equals("")))
@@ -63,6 +68,7 @@ public class SaleVh implements IViewHelper {
 				break;
 
 			case "FIND":
+				sale.setId(id);
 				break;
 
 			case "HISTORY":
@@ -109,6 +115,8 @@ public class SaleVh implements IViewHelper {
 					break;
 					
 				case "FIND":
+					dispatcher = request.getRequestDispatcher("/sale/show.jsp");
+					dispatcher.forward(request, response);
 					break;
 
 				case "HISTORY":					

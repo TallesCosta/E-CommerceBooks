@@ -48,6 +48,16 @@ public class Customer extends Entity {
 		this.promotionalCoupons = new ArrayList<>();
 	}
 
+	public Customer(String name, long id){
+		super(id, true);
+		this.name = name;
+
+		this.deliveryAddresses = new ArrayList<>();
+		this.creditCards = new ArrayList<>();
+		this.sales = new ArrayList<>();
+		this.promotionalCoupons = new ArrayList<>();
+	}
+
 	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
 			Address homeAddress) {
 		super(true);

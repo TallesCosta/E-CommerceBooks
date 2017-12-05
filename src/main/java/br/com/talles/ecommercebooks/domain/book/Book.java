@@ -36,6 +36,13 @@ public class Book extends Entity {
 		this.categories = new ArrayList<>();
 	}
 
+	public Book(String title, long id) {
+		super(id, true);
+		this.title = title;
+
+		this.categories = new ArrayList<>();
+	}
+
 	public Book(long id, Stock stock) {
 		super(id, true);
 		this.stock = stock;
