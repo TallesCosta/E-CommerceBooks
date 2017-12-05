@@ -1,9 +1,11 @@
 package br.com.talles.ecommercebooks.persistence.dao.sale;
 
 import br.com.talles.ecommercebooks.domain.Entity;
-import br.com.talles.ecommercebooks.domain.sale.Delivery;
-import br.com.talles.ecommercebooks.domain.sale.Sale;
-import br.com.talles.ecommercebooks.domain.sale.SaleItem;
+import br.com.talles.ecommercebooks.domain.book.Book;
+import br.com.talles.ecommercebooks.domain.customer.CreditCard;
+import br.com.talles.ecommercebooks.domain.customer.Customer;
+import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
+import br.com.talles.ecommercebooks.domain.sale.*;
 import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 
@@ -40,6 +42,7 @@ public class SaleDao extends AbstractDao {
 				sale.setEnabled(result.getBoolean("sales.enabled"));
 				sale.setSaleNumber(result.getString("sales.saleNumber"));
 				sale.setDate(result.getDate("sales.date"));
+				sale.setStatus(new Status(result.getString("sales.status")));
 				sale.setPrice(result.getDouble("sales.price"));
 				sale.setTotalAmount(result.getInt("sales.totalAmount"));
 				sale.setDelivery(new Delivery(result.getDate("sales.deliveryForecast")));
@@ -135,7 +138,76 @@ public class SaleDao extends AbstractDao {
 
 	@Override
 	public Entity find(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		Sale sale = (Sale) entity;
+
+		String sql = "SELECT s.*, si.unitaryPrice, si.amount, b.id, b.title, " +
+				"c.id, c.name, cc.id, cc.number, da.id, da.alias " +
+				"FROM Sales s " +
+				"INNER JOIN SaleItems si on s.id = si.id_sale " +
+				"INNER JOIN Books b on si.id_book = b.id " +
+				"INNER JOIN Customers c on c.id = s.id_customer " +
+				"INNER JOIN CreditCards cc on cc.id = s.id_creditCard " +
+				"INNER JOIN DeliveryAddresses da on da.id = s.id_deliveryAddress " +
+				"WHERE s.id = ?;";
+
+		try {
+			openConnection();
+
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setLong(1, sale.getId());
+
+			ResultSet result = statement.executeQuery();
+
+			sale.setSaleItems(new ArrayList<SaleItem>());
+
+			if(result.first()){
+				// Sale datas
+				sale.setId(result.getLong("sales.id"));
+				sale.setEnabled(result.getBoolean("sales.enabled"));
+				sale.setSaleNumber(result.getString("sales.saleNumber"));
+				sale.setDate(result.getDate("sales.date"));
+				sale.setStatus(new Status(result.getString("sales.status")));
+				sale.setPrice(result.getDouble("sales.price"));
+				sale.setTotalAmount(result.getInt("sales.totalAmount"));
+
+				// Customer datas
+				sale.setCustomer(new Customer(
+						result.getString("customers.name"),
+						result.getLong("customers.id")));
+
+				// Delivery datas
+				sale.setDelivery(new Delivery(result.getDate("sales.deliveryForecast"),
+						new ShippingCost(result.getDouble("sales.shippingCost")),
+						new DeliveryAddress(
+								result.getString("deliveryaddresses.alias"),
+								result.getLong("deliveryaddresses.id"))));
+
+				// CreditCard datas
+				sale.setCreditCard(new CreditCard(
+						result.getString("creditcards.number"),
+						result.getLong("creditcards.id")));
+
+				do {
+					SaleItem saleItem = new SaleItem(
+							result.getDouble("saleitems.unitaryPrice"),
+							result.getInt("saleitems.amount"));
+					saleItem.setBook(new Book(
+							result.getString("books.title"),
+							result.getLong("books.id")));
+
+					sale.getSaleItems().add(saleItem);
+				} while(result.next());
+			}
+
+			result.close();
+			statement.close();
+
+			return sale;
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
+		}
 	}
 
 	@Override

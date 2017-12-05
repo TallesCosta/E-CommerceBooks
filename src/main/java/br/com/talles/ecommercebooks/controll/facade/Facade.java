@@ -187,6 +187,7 @@ public class Facade implements IFacade {
 	 	saveSale.add(giveBackStock);
 
 	 	List<IStrategy> listSale = new ArrayList();
+	 	List<IStrategy> findSale = new ArrayList();
 
 		// Book Requirements to contexts
         Map<String, List<IStrategy>> contextReqBook = new HashMap();
@@ -227,6 +228,7 @@ public class Facade implements IFacade {
 		contextReqSale.put(CREATE, createSale);
 		contextReqSale.put(SAVE, saveSale);
         contextReqSale.put(LIST, listSale);
+        contextReqSale.put(FIND, findSale);
 		
 		// Book Requirements to contexts
         Map<String, List<IStrategy>> contextReqCart = new HashMap();
@@ -242,25 +244,30 @@ public class Facade implements IFacade {
 		contextReqCart.put(DELETE, deleteCart);
 		
 		// Requirements Later
+		// Book Requirements Later
 		List<IStrategy> saveBookLater = new ArrayList();
 		saveBookLater.add(insertHistory);
 		
 		List<IStrategy> listBookLater = new ArrayList();
 		List<IStrategy> listDisableBookLater = new ArrayList();
-		
+
+		// Customer Requirements Later
 		List<IStrategy> saveCustomerLater = new ArrayList();
 		saveCustomerLater.add(insertHistory);
 		
 		List<IStrategy> listCustomerLater = new ArrayList();
 		List<IStrategy> listDisableCustomerLater = new ArrayList();
-		
+
+		// User Requirements Later
 		List<IStrategy> listUserLater = new ArrayList();
 		listUserLater.add(foundUser);
-		
+
+		// Stock Requirements Later
 		List<IStrategy> listStockLater = new ArrayList();
 		listStockLater.add(stockSession);
 		//listStockLater.add(new FoundUser()); What? Ctrl + C / Ctrl + V????
-		
+
+		// Sale Requirements Later
 		List<IStrategy> saveSaleLater = new ArrayList();
 		saveSaleLater.add(destroyCart);
 
@@ -354,6 +361,7 @@ public class Facade implements IFacade {
 		Map<String, IDao> contextPersSale = new HashMap();
         contextPersSale.put(LIST, saleDao);
         contextPersSale.put(SAVE, saleDao);
+		 contextPersSale.put(FIND, saleDao);
 		
 		// Persistences
         persistence = new HashMap();
@@ -468,9 +476,12 @@ public class Facade implements IFacade {
             return result;
 		
 		// Loads create view datas
-		result = create(entity, new Transaction(transaction.getRequest(), CREATE));
-		result.setTransaction(transaction);
-		
+		validations = reqs.get(CREATE);
+		if (validations.contains(new CreateView())) {
+			result = create(entity, new Transaction(transaction.getRequest(), CREATE));
+			result.setTransaction(transaction);
+		}
+
 	    Map<String, IDao> daosEntity = persistence.get(entity.getClass().getSimpleName());
 		IDao dao = daosEntity.get(transaction.getOperation());
 	    result.addEntity(dao.find(entity));

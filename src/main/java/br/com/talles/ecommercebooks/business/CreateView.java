@@ -91,5 +91,11 @@ public class CreateView implements IStrategy {
 		
 		return result;
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o || getClass() == o.getClass()) return true;
+		return false;
+	}
+
 }
