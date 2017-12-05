@@ -18,8 +18,10 @@ public class CartSession implements IStrategy {
 		Cart cart = (Cart) entity;
 		int i = cart.countSaleItems() - 1;
 
-		if (cartSession == null)
+		if (cartSession == null) {
 			cartSession = new Cart();
+			session.setMaxInactiveInterval(300);
+		}
 
 		cartSession.addSaleItems(cart.getSaleItems());
 		cart.getSaleItem(i).getBook().getStock().minusVirtualAmount(cart.getSaleItem(i).getAmount());

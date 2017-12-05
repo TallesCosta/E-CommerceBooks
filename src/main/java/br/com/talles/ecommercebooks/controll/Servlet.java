@@ -113,10 +113,4 @@ public class Servlet extends HttpServlet {
 		}		
 	}
 
-	@Override
-	public void destroy() {
-		super.destroy();
-
-	}
-
 }

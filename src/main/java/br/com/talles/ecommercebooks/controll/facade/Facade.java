@@ -253,7 +253,6 @@ public class Facade implements IFacade {
 		//listStockLater.add(new FoundUser()); What? Ctrl + C / Ctrl + V????
 		
 		List<IStrategy> saveSaleLater = new ArrayList();
-		saveSaleLater.add(giveBackStock);
 		saveSaleLater.add(destroyCart);
 
 		List<IStrategy> listSaleLater = new ArrayList();

@@ -9,16 +9,23 @@ import br.com.talles.ecommercebooks.domain.sale.Stock;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.StockDao;
 
+import javax.servlet.http.HttpSession;
+
 public class GiveBackStock implements IStrategy {
 
     @Override
     public Result process(Entity entity, Result result) {
+        HttpSession session = result.getTransaction().getRequest().getSession();
+        Cart cartSession = (Cart) session.getAttribute("cart");
+
         IDao dao = new StockDao();
 
-        Cart cart = (Cart) entity;
-        for (SaleItem saleItem : cart.getSaleItems()) {
+        int i = 0;
+        for (SaleItem saleItem : cartSession.getSaleItems()) {
             Stock stock = saleItem.getBook().getStock();
+            stock.setVirtualAmount(stock.getVirtualAmount() + cartSession.getSaleItem(i).getAmount());
             dao.update(stock, "UPDATE");
+            i++;
         }
 
         return result;
