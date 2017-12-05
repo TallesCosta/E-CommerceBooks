@@ -24,11 +24,12 @@
 			<li>
 				<a class="list-disable-customer" href="<% out.print(request.getContextPath().concat("/customers/list-disable?operation=LIST-DISABLE")); %>">Listagem de Clientes Inativos</a>
 			</li>
+
+			<br><br>
+			<li>
+				<a class="list-sale" href="<% out.print(request.getContextPath().concat("/sales/list?operation=LIST")); %>">Listagem de Vendas</a>
+			</li>
 		</ul>
-		
-		<%
-			/*}*/
-		%>
 		
 		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
     </body>

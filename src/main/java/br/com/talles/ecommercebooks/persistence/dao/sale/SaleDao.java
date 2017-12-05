@@ -4,6 +4,7 @@ import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.sale.Delivery;
 import br.com.talles.ecommercebooks.domain.sale.Sale;
 import br.com.talles.ecommercebooks.domain.sale.SaleItem;
+import br.com.talles.ecommercebooks.domain.sale.Status;
 import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 
@@ -40,6 +41,7 @@ public class SaleDao extends AbstractDao {
 				sale.setEnabled(result.getBoolean("sales.enabled"));
 				sale.setSaleNumber(result.getString("sales.saleNumber"));
 				sale.setDate(result.getDate("sales.date"));
+				sale.setStatus(new Status(result.getString("sales.status")));
 				sale.setPrice(result.getDouble("sales.price"));
 				sale.setTotalAmount(result.getInt("sales.totalAmount"));
 				sale.setDelivery(new Delivery(result.getDate("sales.deliveryForecast")));

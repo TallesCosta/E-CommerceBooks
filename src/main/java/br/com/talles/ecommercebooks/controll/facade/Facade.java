@@ -232,25 +232,30 @@ public class Facade implements IFacade {
 		contextReqCart.put(DELETE, deleteCart);
 		
 		// Requirements Later
+		// Book Requirements Later
 		List<IStrategy> saveBookLater = new ArrayList();
 		saveBookLater.add(insertHistory);
 		
 		List<IStrategy> listBookLater = new ArrayList();
 		List<IStrategy> listDisableBookLater = new ArrayList();
-		
+
+		// Customer Requirements Later
 		List<IStrategy> saveCustomerLater = new ArrayList();
 		saveCustomerLater.add(insertHistory);
 		
 		List<IStrategy> listCustomerLater = new ArrayList();
 		List<IStrategy> listDisableCustomerLater = new ArrayList();
-		
+
+		// User Requirements Later
 		List<IStrategy> listUserLater = new ArrayList();
 		listUserLater.add(foundUser);
-		
+
+		// Stock Requirements Later
 		List<IStrategy> listStockLater = new ArrayList();
 		listStockLater.add(stockSession);
 		//listStockLater.add(new FoundUser()); What? Ctrl + C / Ctrl + V????
-		
+
+		// Sale Requirements Later
 		List<IStrategy> saveSaleLater = new ArrayList();
 		saveSaleLater.add(destroyCart);
 

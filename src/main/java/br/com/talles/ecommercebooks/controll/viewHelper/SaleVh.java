@@ -101,7 +101,7 @@ public class SaleVh implements IViewHelper {
 					break;
 
 				case "LIST":
-					dispatcher = request.getRequestDispatcher("/order/list.jsp");
+					dispatcher = request.getRequestDispatcher("/sale/list.jsp");
 					dispatcher.forward(request, response);
 					break;
 
