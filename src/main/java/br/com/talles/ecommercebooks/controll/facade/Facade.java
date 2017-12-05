@@ -7,10 +7,12 @@ import br.com.talles.ecommercebooks.business.UpdateHistory;
 import br.com.talles.ecommercebooks.business.book.ModifyStatus;
 import br.com.talles.ecommercebooks.business.book.save.BookValidateSave;
 import br.com.talles.ecommercebooks.business.book.update.BookValidateUpdate;
+import br.com.talles.ecommercebooks.business.cart.DestroyCart;
+import br.com.talles.ecommercebooks.business.cart.GiveBackStock;
 import br.com.talles.ecommercebooks.business.cart.delete.CartWithoutSession;
 import br.com.talles.ecommercebooks.business.cart.save.CartSession;
 import br.com.talles.ecommercebooks.business.cart.save.CompleteCart;
-import br.com.talles.ecommercebooks.business.cart.save.UpdateStock;
+import br.com.talles.ecommercebooks.business.cart.save.UpdateStockLastManipulation;
 import br.com.talles.ecommercebooks.business.cart.save.ValidateAmount;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
 import br.com.talles.ecommercebooks.business.sale.save.CompleteSale;
@@ -81,11 +83,13 @@ public class Facade implements IFacade {
  		IStrategy completeCart = new CompleteCart();
 	 	IStrategy validateAmount = new ValidateAmount();
 	 	IStrategy cartSession = new CartSession();
-	 	IStrategy updateStock = new UpdateStock();
+	 	IStrategy updateStockLastManipulation = new UpdateStockLastManipulation();
 	 	IStrategy cartWithoutSession = new CartWithoutSession();
 	 	// Sale Strategies
 	 	IStrategy customerFragment = new CustomerFragment();
 	 	IStrategy completeSale = new CompleteSale();
+	 	IStrategy giveBackStock = new GiveBackStock();
+	 	IStrategy destroyCart = new DestroyCart();
 
 		// Book Requirements
 		List<IStrategy> createBook = new ArrayList();
@@ -148,7 +152,7 @@ public class Facade implements IFacade {
 		saveCart.add(completeCart);
 		saveCart.add(validateAmount);
 		saveCart.add(cartSession);
-		saveCart.add(updateStock);
+		saveCart.add(updateStockLastManipulation);
 		
 		List<IStrategy> listCart = new ArrayList();
 		List<IStrategy> listDisableCart = new ArrayList();
@@ -249,6 +253,9 @@ public class Facade implements IFacade {
 		//listStockLater.add(new FoundUser()); What? Ctrl + C / Ctrl + V????
 		
 		List<IStrategy> saveSaleLater = new ArrayList();
+		saveSaleLater.add(giveBackStock);
+		saveSaleLater.add(destroyCart);
+
 		List<IStrategy> listSaleLater = new ArrayList();
 		
 		// Requirements Book Later

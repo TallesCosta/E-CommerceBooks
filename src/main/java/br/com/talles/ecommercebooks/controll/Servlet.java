@@ -93,7 +93,7 @@ public class Servlet extends HttpServlet {
 
 			String operation = request.getParameter("operation");
 			ICommand command = commands.get(operation);
-			
+
 			Transaction transaction = new Transaction(request, operation);
 			Result result = command.execute(entity, transaction);
 
@@ -112,5 +112,11 @@ public class Servlet extends HttpServlet {
 			out.println("</html>");
 		}		
 	}
-	
+
+	@Override
+	public void destroy() {
+		super.destroy();
+
+	}
+
 }

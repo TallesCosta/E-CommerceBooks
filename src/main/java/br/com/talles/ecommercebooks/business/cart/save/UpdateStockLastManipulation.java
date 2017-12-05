@@ -8,7 +8,7 @@ import br.com.talles.ecommercebooks.domain.sale.Stock;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.StockDao;
 
-public class UpdateStock implements IStrategy {
+public class UpdateStockLastManipulation implements IStrategy {
 
     @Override
     public Result process(Entity entity, Result result) {

@@ -18,6 +18,7 @@ public class CartWithoutSession implements IStrategy {
 			cart = new Cart();
 		
 		cart.removeSaleItem(cart.getSaleItem((int) cart.getId()));
+
 		
 		session.setAttribute("cart", cart);
 		return result;
