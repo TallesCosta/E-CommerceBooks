@@ -8,7 +8,7 @@ CREATE TABLE Stocks (
 	minimumPrice DOUBLE NOT NULL,
 	salePrice DOUBLE NOT NULL,
 	realAmount INT NOT NULL,
-	virtualAmount INT NOT NULL,
+	/*virtualAmount INT NOT NULL,*/
 	
 	id_book INT NOT NULL,
 

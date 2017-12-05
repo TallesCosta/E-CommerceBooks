@@ -23,7 +23,6 @@ public class GiveBackStock implements IStrategy {
         int i = 0;
         for (SaleItem saleItem : cartSession.getSaleItems()) {
             Stock stock = saleItem.getBook().getStock();
-            stock.setVirtualAmount(stock.getVirtualAmount() + cartSession.getSaleItem(i).getAmount());
             dao.update(stock, "UPDATE");
             i++;
         }

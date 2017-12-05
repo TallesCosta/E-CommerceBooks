@@ -57,7 +57,6 @@ public class StockDao extends AbstractDao {
 				stock.setMinimumPrice(result.getDouble("stocks.minimumPrice"));
 				stock.setSalePrice(result.getInt("stocks.salePrice"));
 				stock.setRealAmount(result.getInt("stocks.realAmount"));
-				stock.setVirtualAmount(result.getInt("stocks.virtualAmount"));
 				
 				stock.getBook().setId(result.getLong("books.id"));
 				stock.getBook().setEnabled(result.getBoolean("books.enabled"));
@@ -140,8 +139,6 @@ public class StockDao extends AbstractDao {
 				stock.setMinimumPrice(result.getDouble("stocks.minimumPrice"));
 				stock.setSalePrice(result.getDouble("stocks.salePrice"));
 				stock.setRealAmount(result.getInt("stocks.realAmount"));
-				stock.setVirtualAmount(result.getInt("stocks.virtualAmount"));
-				stock.setVirtualAmount(result.getInt("stocks.virtualAmount"));
 
 				// Book of this stock
 				stock.getBook().setId(result.getLong("books.id"));
@@ -182,7 +179,7 @@ public class StockDao extends AbstractDao {
 		Stock stock = (Stock) entity;
 
 		String sql = "UPDATE Stocks "
-				+ "SET enabled = ?, averagePrice = ?, minimumPrice = ?, salePrice = ?, realAmount = ?, virtualAmount = ? "
+				+ "SET enabled = ?, averagePrice = ?, minimumPrice = ?, salePrice = ?, realAmount = ?/*, virtualAmount = ?*/ "
 				+ "WHERE id = ?";
 
 		try {
@@ -195,9 +192,8 @@ public class StockDao extends AbstractDao {
 			statement.setDouble(3, stock.getMinimumPrice());
 			statement.setDouble(4, stock.getSalePrice());
 			statement.setInt(5, stock.getRealAmount());
-			statement.setInt(6, stock.getVirtualAmount());
 
-			statement.setLong(7, stock.getId());
+			statement.setLong(6, stock.getId());
 
 			statement.execute();
 			statement.close();

@@ -11,12 +11,11 @@ import br.com.talles.ecommercebooks.business.cart.DestroyCart;
 import br.com.talles.ecommercebooks.business.cart.GiveBackStock;
 import br.com.talles.ecommercebooks.business.cart.delete.CartWithoutSession;
 import br.com.talles.ecommercebooks.business.cart.save.CartSession;
-import br.com.talles.ecommercebooks.business.cart.save.CompleteCart;
-import br.com.talles.ecommercebooks.business.cart.save.UpdateStockLastManipulation;
 import br.com.talles.ecommercebooks.business.cart.save.ValidateAmount;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
 import br.com.talles.ecommercebooks.business.sale.save.CompleteSale;
 import br.com.talles.ecommercebooks.business.sale.create.CustomerFragment;
+import br.com.talles.ecommercebooks.business.stock.list.StockSession;
 import br.com.talles.ecommercebooks.business.user.list.FoundUser;
 import br.com.talles.ecommercebooks.business.customer.save.CustomerValidateSave;
 import br.com.talles.ecommercebooks.business.customer.update.CustomerValidateUpdate;
@@ -80,16 +79,16 @@ public class Facade implements IFacade {
 		// User Strategies
 		FoundUser foundUser = new FoundUser();
 		// Cart Strategies
- 		IStrategy completeCart = new CompleteCart();
 	 	IStrategy validateAmount = new ValidateAmount();
 	 	IStrategy cartSession = new CartSession();
-	 	IStrategy updateStockLastManipulation = new UpdateStockLastManipulation();
 	 	IStrategy cartWithoutSession = new CartWithoutSession();
 	 	// Sale Strategies
 	 	IStrategy customerFragment = new CustomerFragment();
 	 	IStrategy completeSale = new CompleteSale();
 	 	IStrategy giveBackStock = new GiveBackStock();
 	 	IStrategy destroyCart = new DestroyCart();
+	 	// Stock Strategies
+		IStrategy stockSession = new StockSession();
 
 		// Book Requirements
 		List<IStrategy> createBook = new ArrayList();
@@ -149,10 +148,8 @@ public class Facade implements IFacade {
 		List<IStrategy> createCart = new ArrayList();
 		
 		List<IStrategy> saveCart = new ArrayList();
-		saveCart.add(completeCart);
 		saveCart.add(validateAmount);
 		saveCart.add(cartSession);
-		saveCart.add(updateStockLastManipulation);
 		
 		List<IStrategy> listCart = new ArrayList();
 		List<IStrategy> listDisableCart = new ArrayList();
@@ -167,7 +164,7 @@ public class Facade implements IFacade {
 		
 		// User Requirements
 		List<IStrategy> listUser = new ArrayList();
-		
+
 		// Stock Requirements
 		List<IStrategy> listStock = new ArrayList();
 		
@@ -177,6 +174,7 @@ public class Facade implements IFacade {
 
 	 	List<IStrategy> saveSale = new ArrayList();
 	 	saveSale.add(completeSale);
+	 	saveSale.add(giveBackStock);
 
 	 	List<IStrategy> listSale = new ArrayList();
 
@@ -250,6 +248,7 @@ public class Facade implements IFacade {
 		listUserLater.add(foundUser);
 		
 		List<IStrategy> listStockLater = new ArrayList();
+		listStockLater.add(stockSession);
 		//listStockLater.add(new FoundUser()); What? Ctrl + C / Ctrl + V????
 		
 		List<IStrategy> saveSaleLater = new ArrayList();

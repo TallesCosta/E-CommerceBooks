@@ -13,7 +13,6 @@ public class Stock extends Entity {
 	private double minimumPrice;
 	private double salePrice;
 	private int realAmount;
-	private int virtualAmount;
 	private Book book;
 	private List<StockItem> stockItems;
 
@@ -32,27 +31,25 @@ public class Stock extends Entity {
 		this.stockItems = new ArrayList<>();
 	}
 
-	public Stock(double averagePrice, double minimumPrice, double salePrice, int realAmount, int virtualAmount, 
+	public Stock(double averagePrice, double minimumPrice, double salePrice, int realAmount,
 			Book book, List<StockItem> stockItems) {
 		super(true);
 		this.averagePrice = averagePrice;
 		this.minimumPrice = minimumPrice;
 		this.salePrice = salePrice;
 		this.realAmount = realAmount;
-		this.virtualAmount = virtualAmount;
 		this.book = book;
 		
 		this.stockItems = stockItems;
 	}
 
-	public Stock(long id, double averagePrice, double minimumPrice, double salePrice, int realAmount, int virtualAmount,
+	public Stock(long id, double averagePrice, double minimumPrice, double salePrice, int realAmount,
 				 Book book, List<StockItem> stockItems) {
 		super(id, true);
 		this.averagePrice = averagePrice;
 		this.minimumPrice = minimumPrice;
 		this.salePrice = salePrice;
 		this.realAmount = realAmount;
-		this.virtualAmount = virtualAmount;
 		this.book = book;
 
 		this.stockItems = stockItems;
@@ -73,10 +70,6 @@ public class Stock extends Entity {
 
 	public int getRealAmount() {
 		return realAmount;
-	}
-
-	public int getVirtualAmount() {
-		return virtualAmount;
 	}
 
 	public Book getBook() {
@@ -104,10 +97,6 @@ public class Stock extends Entity {
 		this.realAmount = realAmount;
 	}
 
-	public void setVirtualAmount(int virtualAmount) {
-		this.virtualAmount = virtualAmount;
-	}
-
 	public void setStockItems(List<StockItem> stockItems) {
 		this.stockItems = stockItems;
 	}
@@ -117,8 +106,8 @@ public class Stock extends Entity {
 	}
 
 	// Others Methods
-	public void minusVirtualAmount(int value) {
-		this.virtualAmount = this.virtualAmount - value;
+	public void minusRealAmount(int value) {
+		this.realAmount = this.realAmount - value;
 	}
 
 }
