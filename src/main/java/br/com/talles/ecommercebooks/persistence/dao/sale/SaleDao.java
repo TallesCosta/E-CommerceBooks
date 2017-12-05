@@ -212,7 +212,31 @@ public class SaleDao extends AbstractDao {
 
 	@Override
 	public boolean update(Entity entity, String operation) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Sale sale = (Sale) entity;
+
+        String sql = "UPDATE Sales "
+                + "SET enabled = ?, status = ? "
+                + "WHERE id = ?";
+
+        try {
+            openConnection();
+
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setBoolean(1, sale.isEnabled());
+            statement.setString(2, sale.getStatus().getName());
+
+			statement.setLong(3, sale.getId());
+
+            statement.execute();
+            statement.close();
+
+            return true;
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            closeConnection();
+        }
 	}
 
 	@Override

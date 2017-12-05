@@ -179,7 +179,7 @@ public class StockDao extends AbstractDao {
 		Stock stock = (Stock) entity;
 
 		String sql = "UPDATE Stocks "
-				+ "SET enabled = ?, averagePrice = ?, minimumPrice = ?, salePrice = ?, realAmount = ?/*, virtualAmount = ?*/ "
+				+ "SET enabled = ?, averagePrice = ?, minimumPrice = ?, salePrice = ?, realAmount = ? "
 				+ "WHERE id = ?";
 
 		try {

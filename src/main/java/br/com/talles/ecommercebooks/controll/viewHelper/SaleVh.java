@@ -8,6 +8,7 @@ import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
 import br.com.talles.ecommercebooks.domain.sale.Delivery;
 import br.com.talles.ecommercebooks.domain.sale.Sale;
 import br.com.talles.ecommercebooks.domain.sale.ShippingCost;
+import br.com.talles.ecommercebooks.domain.sale.Status;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -43,6 +44,8 @@ public class SaleVh implements IViewHelper {
 		if (!(shippingCostS == null || shippingCostS.equals("")))
 			shippingCost = Double.valueOf(shippingCostS);
 
+		String status = request.getParameter("status");
+
 		String totalS = request.getParameter("total");
 		double total = 0.0;
 		if (!(totalS == null || totalS.equals("")))
@@ -75,6 +78,8 @@ public class SaleVh implements IViewHelper {
 				break;
 				
 			case "UPDATE":
+				sale.setId(id);
+				sale.setStatus(new Status(status));
 				break;
 
 			case "DISABLE":
@@ -123,6 +128,7 @@ public class SaleVh implements IViewHelper {
 					break;
 					
 				case "UPDATE":
+					response.sendRedirect("/E-CommerceBooks/sales/list?operation=LIST");
 					break;
 
 				case "DISABLE":

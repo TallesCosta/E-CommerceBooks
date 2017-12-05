@@ -34,20 +34,32 @@
 
             <div>
                 <% out.println("<p>Status: " + sale.getStatus().getName() + "</p>"); %>
+            <%
+                switch (sale.getStatus().getName()) {
+                    case "EM PROCESSAMENTO":
+                        out.print("<a class='update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=APROVADO") + "'>Aprovar</a>");
+                        out.print("<a class='update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=REPROVADO") + "'>Reprovar</a>");
+                        break;
+                    case "APROVADO":
+                        out.print("<a class='update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=EM TRANSITO") + "'>Despachar</a>");
+                        break;
+                }
+            %>
+
                 <% out.println("<p>Data: " + sale.getDate().toString().replace("-","/") + "</p>"); %>
                 <% out.println("<p>Previsão de Entrega: " + sale.getDelivery().getDeliveryForecast().toString().replace("-","/") + "</p>"); %>
                 <% out.println("<p>Código: " + sale.getSaleNumber() + "</p>"); %>
                 <% out.println("<p>Cliente: " + sale.getCustomer().getName() + "</p>"); %>
                 <% out.println("<p>Cartão de Crédito: " + sale.getCreditCard().getNumber() + "</p>"); %>
                 <hr>
-                <%
-                    for (SaleItem saleItem : sale.getSaleItems()) {
-                        out.println("<dt>" + saleItem.getBook().getTitle() + "</dt>");
-                        out.println("<dd>Preço Unitário: R$ " + saleItem.getUnitaryPrice() + "</dd>");
-                        out.println("<dd>Quantidade: " + saleItem.getAmount() + "</dd>");
-                        out.println("<dd>Subtotal: R$ " + saleItem.getAmount() * saleItem.getUnitaryPrice() + "</dd>");
-                    }
-                %>
+            <%
+                for (SaleItem saleItem : sale.getSaleItems()) {
+                    out.println("<dt>" + saleItem.getBook().getTitle() + "</dt>");
+                    out.println("<dd>Preço Unitário: R$ " + saleItem.getUnitaryPrice() + "</dd>");
+                    out.println("<dd>Quantidade: " + saleItem.getAmount() + "</dd>");
+                    out.println("<dd>Subtotal: R$ " + saleItem.getAmount() * saleItem.getUnitaryPrice() + "</dd>");
+                }
+            %>
                 <% out.println("<p>Quantidade total: " + sale.getTotalAmount() + "</p>"); %>
                 <% out.println("<p>Frete R$: " + sale.getDelivery().getShippingCost().getValue() + "</p>"); %>
                 <% out.println("<p>Subtotal Geral R$: " + sale.getPrice() + "</p>"); %>
