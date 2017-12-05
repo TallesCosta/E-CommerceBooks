@@ -1,102 +1,103 @@
 <%@page import="br.com.talles.ecommercebooks.domain.sale.SaleItem"%>
 <%@page import="br.com.talles.ecommercebooks.domain.sale.Cart"%>
+<%@page import="java.text.NumberFormat"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Carrinho</title>
+
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+		<link rel="stylesheet" href="https://cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+		<link rel="stylesheet" href="https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<style>
+			.finish {
+				float
+			}
+		</style>
     </head>
     <body>
-		<div>
+		<div class="container">
 			<h1>Carrinho de Compras!</h1>
 			<%
 				Cart cart = (Cart) request.getSession().getAttribute("cart");
+				NumberFormat formatter = NumberFormat.getCurrencyInstance();
 			%>
-			<div>
-				<table class='u-full-width'>
-					<thead>
+			<div class="row">
+				<div class="column">
+
+					<table>
+						<thead>
 						<tr>
-							<td>Nome</td>
-							<td>Preço Unitário</td>
-							<td>Quantidade</td>
-							<td>Remover</td>
+							<th>Nome</th>
+							<th>Preço Unitário</th>
+							<th>Quantidade</th>
+							<th>Remover</th>
 						</tr>
-					</thead>
+						</thead>
 
-					<tbody>
-			<%
-				if(cart == null || !cart.hasSaleItem()){
-					out.println("<tr>");
+						<tbody>
+						<%
+							if(cart == null || !cart.hasSaleItem()){
+								out.println("<tr>");
 
-					for(int j = 0; j <= 3; j++){
-						out.println("<td> - </td>");
-					}
+								for(int j = 0; j <= 3; j++){
+									out.println("<td> - </td>");
+								}
 
-					out.println("</tr>");
-				} else {
-					int i = 0;
+								out.println("</tr>");
+							} else {
+								int i = 0;
 
-					for(SaleItem saleItem : cart.getSaleItems()) {
-						out.println("<tr>");
-						out.println("<td>xxx</td>");
-						out.println("<td>" + saleItem.getUnitaryPrice() + "</td>");
-						out.println("<td>" + saleItem.getAmount()+ "</td>");
-						out.println("<td>"
-										+ "<a href='" + request.getContextPath() + "/carts/delete?operation=DELETE&id=" + i + "'>"
+								for(SaleItem saleItem : cart.getSaleItems()) {
+									out.println("<tr>");
+									out.println("<td>xxx</td>");
+									out.println("<td>" + saleItem.getUnitaryPrice() + "</td>");
+									out.println("<td>" + saleItem.getAmount()+ "</td>");
+									out.println("<td>"
+											+ "<a href='" + request.getContextPath() + "/carts/delete?operation=DELETE&id=" + i + "'>"
 											+ "<i class='fa fa-times' aria-hidden='true'></i>"
-										+ "</a>"
-									+ "</td>");
-						out.println("</tr>");
+											+ "</a>"
+											+ "</td>");
+									out.println("</tr>");
 
-						i++;
-					}
-				}
-			%>
-					</tbody>
+									i++;
+								}
+							}
+						%>
+						</tbody>
 
-					<tfooter>
-						<tr>
-							<td>Nome</td>
-							<td>Preço Unitário</td>
-							<td>Quantidade</td>
-							<td>Remover</td>
-						</tr>
-					</tfooter>
-				</table>
+						<tfoot>
+							<tr>
+								<td></td>
+								<td></td>
+								<td>
+									<%
+										String itemQuantity = "0";
+										if(cart != null)
+										    itemQuantity = "" + cart.getTotalAmount();
+
+										out.println("Quantidade de Itens: <b>" + itemQuantity + "</b>");
+									%>
+								</td>
+								<td>
+									<%
+										String price = formatter.format(0L);
+										if(cart != null)
+											price = formatter.format(cart.getTotalAmount());
+
+										out.println("Valor Parcial: <b>" + price + "</b>");
+									%>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
 			</div>
 
-			<div>
-				<table class='u-full-width'>
-					<tbody>
-			<%
-				if(cart != null){
-					out.println("<tr>");
-					out.println("<td>");
-					out.println("<p>Quantidade de Itens: " + cart.getTotalAmount() + "</p>");
-					out.println("</td>");
-
-					out.println("<td>");
-					out.println("<p>Valor Parcial: R$ " + cart.getPrice() + "</p>");
-					out.println("</td>");
-					out.println("</tr>");
-				} else {
-					out.println("<tr>");
-					out.println("<td>");
-					out.println("<p>Quantidade de Itens: 0</p>");
-					out.println("</td>");
-
-					out.println("<td>");
-					out.println("<p>Valor Parcial: R$ 0.00</p>");
-					out.println("</td>");
-					out.println("</tr>");
-				}
-			%>
-					</tbody>
-				</table>
-			</div>
-
-			<% out.print("<a href='" + request.getContextPath() + "/sales/create?operation=CREATE'>Finalizar Compras</a>"); %>
+			<% out.print("<a class='finish button' href='" + request.getContextPath() + "/sales/create?operation=CREATE'>Finalizar Compras</a>"); %>
 		</div>
 				
 		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
