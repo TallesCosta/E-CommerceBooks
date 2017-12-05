@@ -1,6 +1,7 @@
 package br.com.talles.ecommercebooks.controll.facade;
 
 import br.com.talles.ecommercebooks.business.IStrategy;
+<<<<<<< HEAD
 import br.com.talles.ecommercebooks.business.CreateView;
 import br.com.talles.ecommercebooks.business.InsertHistory;
 import br.com.talles.ecommercebooks.business.UpdateHistory;
@@ -20,6 +21,15 @@ import br.com.talles.ecommercebooks.business.user.list.FoundUser;
 import br.com.talles.ecommercebooks.business.customer.save.CustomerValidateSave;
 import br.com.talles.ecommercebooks.business.customer.update.CustomerValidateUpdate;
 import br.com.talles.ecommercebooks.controll.Transaction;
+=======
+import br.com.talles.ecommercebooks.business.IsbnUnique;
+import br.com.talles.ecommercebooks.business.Logger;
+import br.com.talles.ecommercebooks.business.view.SelectAuthor;
+import br.com.talles.ecommercebooks.business.view.SelectCategory;
+import br.com.talles.ecommercebooks.business.view.SelectPriceGroup;
+import br.com.talles.ecommercebooks.business.view.SelectActivationCategory;
+import br.com.talles.ecommercebooks.business.view.SelectDeactivationCategory;
+>>>>>>> c771ae6c6ec2c4fbb1fe9c3e3bd60ae856c9e6bb
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.book.Book;
 import br.com.talles.ecommercebooks.domain.Entity;
@@ -67,7 +77,7 @@ public class Facade implements IFacade {
 		String sale = Sale.class.getSimpleName();
 		String stock = Stock.class.getSimpleName();
 		String cart = Cart.class.getSimpleName();
-        
+
         // General Strategies
 		IStrategy createView = new CreateView();
 		IStrategy insertHistory = new InsertHistory();
