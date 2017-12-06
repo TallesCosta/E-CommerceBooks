@@ -8,11 +8,12 @@
     <head>
 		<title>Listagem de Clientes Inativos</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<%@include file="../commons/admin/menu-css.jsp"%>tu
     </head>
     <body>
+		<%@include file="../commons/admin/menu-html.jsp"%>
 		<%
-			Result result = new Result();
-			result = (Result) request.getAttribute("result");
+			Result result = (Result) request.getAttribute("result");
 
 			if (result != null) {
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -26,75 +27,19 @@
 				}
 		%>
 		
-		<div id="app">
+		<div class="container">
 			<h1 id="list-disable-customer">Listagem de Clientes Inativos</h1>
-			
+
 			<div>
 				<form action="" method="POST">
-					<button name="" value="">Filtrar</button>
+					<button class="button button-outline" name="" value="">Filtrar</button>
 				</form>
 			</div>
-				
-			<br><br>
-			<div>
-				<table class='u-full-width'>
-					<thead>
-						<tr>
-							<td>CPF</td>
-							<td>Nome</td>
-							<td>Data de Nasc.</td>
-							<td>Gênero</td>
-							<td>Telefone</td>
-							<td>E-mail</td>
-							<td>End. Residencial</td>
-							<td>End. Cobrança</td>
-							<td>Editar</td>
-							<td>Excluir</td>
-						</tr>
-					</thead>
-					
-					<tbody>
-			<%
-				int i = 0;
-				if(result.hasEntities() && result.getKeys().contains(Customer.class.getSimpleName())){
-					for(Entity entity : result.getEntities(Customer.class.getSimpleName())){
-						Customer customer = (Customer) entity;
 
-						out.println("<tr>");
-						out.println("<td>" + customer.getRegistry() + "</td>");
-						out.println("<td>" + customer.getName() + "</td>");
-						out.println("<td>" + dateFormat.format(customer.getBirthDate()) + "</td>");
-						out.println("<td>" + customer.getGender().getName() + "</td>");
-						out.println("<td>" + customer.getPhone().toString() + "</td>");
-						out.println("<td>" + customer.getUser().getEmail() + "</td>");
-						out.println("<td>" + customer.getHomeAddress().getAlias() + "</td>");
-						out.println("<td>" + customer.getChargeAddress().getAlias() + "</td>");
-						out.println("<td>"
-										+ "<a id='edit-" + customer.getId() + "' href='" + request.getContextPath() + "/customers/find?operation=FIND&id=" + customer.getId() + "'>"
-											+ "<i class='fa fa-pencil' aria-hidden='true'></i>"
-										+ "</a>"
-									+ "</td>");
-						out.println("<td>"
-										+ "<a id='enable-" + customer.getId() + "' href='" + request.getContextPath() + "/customers/enable?operation=ENABLE&id=" + customer.getId() + "'>"
-											+ "<i class='fa fa-plus' aria-hidden='true'></i>"
-										+ "</a>"
-									+ "</td>");
-						out.println("</tr>");
-						i++;
-					}
-				} else {
-					out.println("<tr>");
-					
-					for(int j = 0; j <= 9; j++){
-						out.println("<td> - </td>");
-					}
-					
-					out.println("</tr>");
-				}
-			%>
-					</tbody>
-					
-					<tfooter>
+			<div class="row">
+				<div class="column">
+					<table>
+						<thead>
 						<tr>
 							<td>CPF</td>
 							<td>Nome</td>
@@ -107,10 +52,65 @@
 							<td>Editar</td>
 							<td>Excluir</td>
 						</tr>
-					</tfooter>
-				</table>
-					
-				<p><% out.println(i); %> registros encontrados.</p>
+						</thead>
+
+						<tbody>
+						<%
+							int i = 0;
+							if(result.hasEntities() && result.getKeys().contains(Customer.class.getSimpleName())){
+								for(Entity entity : result.getEntities(Customer.class.getSimpleName())){
+									Customer customer = (Customer) entity;
+
+									out.println("<tr>");
+									out.println("<td>" + customer.getRegistry() + "</td>");
+									out.println("<td>" + customer.getName() + "</td>");
+									out.println("<td>" + dateFormat.format(customer.getBirthDate()) + "</td>");
+									out.println("<td>" + customer.getGender().getName() + "</td>");
+									out.println("<td>" + customer.getPhone().toString() + "</td>");
+									out.println("<td>" + customer.getUser().getEmail() + "</td>");
+									out.println("<td>" + customer.getHomeAddress().getAlias() + "</td>");
+									out.println("<td>" + customer.getChargeAddress().getAlias() + "</td>");
+									out.println("<td>"
+											+ "<a id='edit-" + customer.getId() + "' href='" + request.getContextPath() + "/customers/find?operation=FIND&id=" + customer.getId() + "'>"
+											+ "<i class='fa fa-pencil' aria-hidden='true'></i>"
+											+ "</a>"
+											+ "</td>");
+									out.println("<td>"
+											+ "<a id='enable-" + customer.getId() + "' href='" + request.getContextPath() + "/customers/enable?operation=ENABLE&id=" + customer.getId() + "'>"
+											+ "<i class='fa fa-plus' aria-hidden='true'></i>"
+											+ "</a>"
+											+ "</td>");
+									out.println("</tr>");
+									i++;
+								}
+							} else {
+								out.println("<tr>");
+
+								for(int j = 0; j <= 9; j++){
+									out.println("<td> - </td>");
+								}
+
+								out.println("</tr>");
+							}
+						%>
+						</tbody>
+
+						<tfoot>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><b><% out.println(i); %></b> registros encontrados.</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
 			</div>
 			
 			<a class="create-customer" href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">Criar Cliente</a>
@@ -119,7 +119,5 @@
 		<%
 			}
 		%>
-		
-		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
     </body>
 </html>
