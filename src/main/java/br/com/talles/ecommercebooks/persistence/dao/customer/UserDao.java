@@ -16,30 +16,33 @@ public class UserDao extends AbstractDao {
 
 	@Override
 	public List<Entity> select(boolean enabled, Entity entity) {
+		User user = (User) entity;
 		List<Entity> users = new ArrayList();
-		String where = queryBuilder(entity);
+		//String where = queryBuilder(entity);
 		
         String sql = "SELECT u.*"
 				+ "FROM Users u "
-				+ "WHERE u.enabled = ? " + where;
-        
+				+ "WHERE u.enabled = ? AND u.email = ? AND u.password = ?";
+
         try {
 			openConnection();
 			
             PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setBoolean(1, enabled);
+			statement.setString(2, user.getEmail());
+			statement.setString(3, user.getPassword());
 			
             ResultSet result = statement.executeQuery();
             			
             while (result.next()) {
-				User user = new User();
+				User u = new User();
 				
-				user.setId(result.getLong("id"));
-				user.setEnabled(result.getBoolean("enabled"));
-				user.setEmail(result.getString("email"));
-				user.setPassword(result.getString("password"));
+				u.setId(result.getLong("id"));
+				u.setEnabled(result.getBoolean("enabled"));
+				u.setEmail(result.getString("email"));
+				u.setPassword(result.getString("password"));
 				
-				users.add(user);
+				users.add(u);
             }
             
             result.close();
@@ -149,7 +152,7 @@ public class UserDao extends AbstractDao {
 		}
 	}
 	
-	public String queryBuilder(Entity entity) {
+	/*public String queryBuilder(Entity entity) {
 		User user = (User) entity;
 		String where = "";
 		
@@ -159,6 +162,6 @@ public class UserDao extends AbstractDao {
 			where += "AND u.password = '" + user.getPassword()+ "' ";
 		
 		return where;
-	}
+	}*/
 	
 }

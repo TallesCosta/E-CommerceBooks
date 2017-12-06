@@ -46,6 +46,8 @@ public class CartVh implements IViewHelper {
 		if (!(idBookS == null || idBookS.equals("")))
 			idBook = Integer.valueOf(idBookS);
 
+		String title_book = request.getParameter("title_book");
+
 		// Cart
 		Cart cart = new Cart();
 		
@@ -54,7 +56,7 @@ public class CartVh implements IViewHelper {
 				break;
 			
 			case "SAVE":
-				cart.addSaleItem(new SaleItem(unitaryPrice, amount, new Book(idBook, new Stock(idStock))));
+				cart.addSaleItem(new SaleItem(unitaryPrice, amount, new Book(idBook, title_book, new Stock(idStock))));
 				break;
 
 			case "LIST":

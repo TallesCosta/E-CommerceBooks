@@ -108,6 +108,10 @@ public class SaleVh implements IViewHelper {
 		try {
 			switch(request.getParameter("operation")) {
 				case "CREATE" :
+					if (result.hasMsg()) {
+						dispatcher = request.getRequestDispatcher("/cart/list.jsp");
+						dispatcher.forward(request, response);
+					}
 					dispatcher = request.getRequestDispatcher("/sale/create.jsp");
 					dispatcher.forward(request, response);
 					break;
