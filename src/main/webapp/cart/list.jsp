@@ -114,6 +114,7 @@
 				</div>
 			</div>
 
+			<% out.print("<a class='finish button' style='float: left;' href='" + request.getContextPath() + "/stocks/list?operation=LIST'>Continuar Comprando</a>"); %>
 			<% out.print("<a class='finish button' href='" + request.getContextPath() + "/sales/create?operation=CREATE'>Finalizar Compras</a>"); %>
 		</div>
 				
