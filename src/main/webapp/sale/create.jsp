@@ -161,11 +161,10 @@
                     console.log(obj);
 
                     if(obj.data("code") == c) {
-                        discount = obj.data("value");
+                        discount = parseFloat(obj.data("value"));
                         cupomId = ($("#" + c).data("id"));
                     }
                 });
-
 
                 $promotionCouponValue.text("R$ " + discount.toFixed(2));
                 $promotionalCoupon.val(cupomId);
