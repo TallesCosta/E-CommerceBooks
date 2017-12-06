@@ -46,7 +46,6 @@
 			<div class="row">
 				<%
 					Result result = (Result) request.getAttribute("result");
-
 					NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
 					if (result != null) {

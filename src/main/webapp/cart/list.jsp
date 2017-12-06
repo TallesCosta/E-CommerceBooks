@@ -54,7 +54,7 @@
 								for(SaleItem saleItem : cart.getSaleItems()) {
 									out.println("<tr>");
 									out.println("<td>xxx</td>");
-									out.println("<td>" + saleItem.getUnitaryPrice() + "</td>");
+									out.println("<td>" + formatter.format(saleItem.getUnitaryPrice()) + "</td>");
 									out.println("<td>" + saleItem.getAmount()+ "</td>");
 									out.println("<td>"
 											+ "<a href='" + request.getContextPath() + "/carts/delete?operation=DELETE&id=" + i + "'>"
@@ -86,7 +86,7 @@
 									<%
 										String price = formatter.format(0L);
 										if(cart != null)
-											price = formatter.format(cart.getTotalAmount());
+											price = formatter.format(cart.getPrice());
 
 										out.println("Valor Parcial: <b>" + price + "</b>");
 									%>

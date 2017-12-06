@@ -65,10 +65,15 @@ public class SaleDao extends AbstractDao {
 	public boolean save(Entity entity) {
 		Sale sale = (Sale) entity;
 
-		// TODO: Add id_promotionalCoupon
-		String sql = "INSERT INTO Sales (enabled, saleNumber, date, price, totalAmount, status, "
-				+ "deliveryForecast, shippingCost, id_deliveryAddress, id_creditCard, id_customer) "
-				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "";
+		if (sale.getPromotionalCoupon().getId() == 0L)
+			sql = "INSERT INTO Sales (enabled, saleNumber, date, price, totalAmount, status, "
+					+ "deliveryForecast, shippingCost, id_deliveryAddress, id_creditCard, id_customer) "
+					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		else
+			sql = "INSERT INTO Sales (enabled, saleNumber, date, price, totalAmount, status, "
+					+ "deliveryForecast, shippingCost, id_deliveryAddress, id_creditCard, id_customer, id_promotionalCoupon) "
+					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			openConnection();
@@ -87,6 +92,9 @@ public class SaleDao extends AbstractDao {
 			statement.setLong(9, sale.getDelivery().getDeliveryAddress().getId());
 			statement.setLong(10, sale.getCreditCard().getId());
 			statement.setLong(11, sale.getCustomer().getId());
+
+			if (sale.getPromotionalCoupon().getId() != 0L)
+				statement.setLong(12, sale.getPromotionalCoupon().getId());
 
 			statement.execute();
 			statement.close();

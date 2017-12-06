@@ -9,7 +9,7 @@ CREATE TABLE Sales (
 	date DATE NOT NULL,
 	price DOUBLE NOT NULL,
 	totalAmount INT NOT NULL,
-  status VARCHAR(255) NOT NULL,
+    status VARCHAR(255) NOT NULL,
 	deliveryForecast DATE NOT NULL,
 	shippingCost DOUBLE NOT NULL,
 

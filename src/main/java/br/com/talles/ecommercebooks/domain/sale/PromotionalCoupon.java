@@ -9,9 +9,20 @@ public class PromotionalCoupon extends Entity {
 	private double value;
 
 	// Constructors
-	public PromotionalCoupon() { }
+	public PromotionalCoupon() { super(true); }
+
+	public PromotionalCoupon(long id) {
+		super(id, true);
+	}
 
 	public PromotionalCoupon(String code, double value) {
+		super(true);
+		this.code = code;
+		this.value = value;
+	}
+
+	public PromotionalCoupon(long id, String code, double value) {
+		super(id, true);
 		this.code = code;
 		this.value = value;
 	}

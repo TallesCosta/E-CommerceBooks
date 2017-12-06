@@ -8,9 +8,11 @@ import br.com.talles.ecommercebooks.domain.customer.Customer;
 import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
 import br.com.talles.ecommercebooks.domain.customer.User;
 import br.com.talles.ecommercebooks.domain.sale.Delivery;
+import br.com.talles.ecommercebooks.domain.sale.PromotionalCoupon;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 import br.com.talles.ecommercebooks.persistence.dao.customer.CustomerDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.BaseShippingCostDao;
+import br.com.talles.ecommercebooks.persistence.dao.sale.PromotionalCouponDao;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -50,6 +52,10 @@ public class CustomerFragment implements IStrategy {
             ccEntities.add(creditCard);
         }
         result.addEntities(ccEntities);
+
+        // Get all PromotionalCoupons to possible validates
+        dao = new PromotionalCouponDao();
+        result.addEntities(dao.select(true, new PromotionalCoupon()));
 
         return result;
     }

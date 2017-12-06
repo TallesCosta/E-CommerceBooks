@@ -55,7 +55,7 @@ public class StockDao extends AbstractDao {
 				stock.setEnabled(result.getBoolean("stocks.enabled"));
 				stock.setAveragePrice(result.getDouble("stocks.averagePrice"));
 				stock.setMinimumPrice(result.getDouble("stocks.minimumPrice"));
-				stock.setSalePrice(result.getInt("stocks.salePrice"));
+				stock.setSalePrice(result.getDouble("stocks.salePrice"));
 				stock.setRealAmount(result.getInt("stocks.realAmount"));
 				
 				stock.getBook().setId(result.getLong("books.id"));

@@ -55,6 +55,7 @@
                                 }
                             %>
                         </select>
+
                         <label for="idCreditCard">Cartão de Crédito*: </label>
                         <select name="idCreditCard" id="idCreditCard">
                             <%
@@ -64,6 +65,18 @@
                                 }
                             %>
                         </select>
+
+                        <label for="promotionalCoupon">Cupom de Descontro: </label>
+                        <input type="text" id="promotionalCoupon" name="promotionalCoupon" />
+                         <input type="hidden" id="idPromotionalCoupon" name="idPromotionalCoupon" value="0" />
+                        <button id="validateCoupon" type="button">Validar</button>
+
+                        <%
+                            for(Entity entity : result.getEntities(PromotionalCoupon.class.getSimpleName())){
+                                PromotionalCoupon promotionalCoupon = (PromotionalCoupon) entity;
+                                out.print("<input type='hidden' id='" + promotionalCoupon.getCode() + "' class='coupons' data-id='" + promotionalCoupon.getId() + "' data-code='" + promotionalCoupon.getCode() + "' data-value='" + promotionalCoupon.getValue() + "' />");
+                            }
+                        %>
 
                         <%
                             Cart cart = (Cart) request.getSession().getAttribute("cart");
@@ -78,6 +91,7 @@
             <div class="column">
                 <%
                     out.println("<p id='subtotalSale'>Subtotal: " + formatter.format(cart.getPrice()) + "</p>");
+                    out.print("<p id='promotionalCoupon'>Desconto: <span id='promotionalCouponValue'>R$ 0.00</span></p>");
                     out.println("<p id='shippingCostSale'>Frete: </p>");
                     out.println("<p id='totalSale'>Total: </p>");
                 %>
@@ -91,6 +105,12 @@
     </script>
     <script>
         function updateValues(options) {
+            var discount = options.discount || "0.00";
+            discount = discount.replace(/[A-Za-z: R$]*/, "");
+            discount = parseFloat(discount);
+
+            console.log(discount);
+
             var base = parseFloat(options.base);
             var addition = parseFloat(options.addition);
             var quantity = parseInt(options.quantity);
@@ -99,7 +119,7 @@
             var textShippingCost = "Frete: R$ " + totalShippingCost.toFixed(2);
 
             var subtotal = parseFloat( $("#subtotalSale").text().replace(/[A-Za-z: R$]*/, "").replace(",", ".") );
-            var total = parseFloat(totalShippingCost + subtotal).toFixed(2);
+            var total = parseFloat(totalShippingCost + subtotal - discount).toFixed(2);
             var textTotal = "Total: R$ " + total;
 
             $("#shippingCostSale").text(textShippingCost);
@@ -121,7 +141,31 @@
                 updateValues({
                     base: selected.data("baseShippingCost"),
                     addition: selected.data("baseShippingCostItem"),
-                    quantity: $("#amount").val()
+                    quantity: $("#amount").val(),
+                    discount: $("#promotionalCouponValue").text()
+                });
+            });
+
+            $("#validateCoupon").click(function() {
+                var selected = $("#idDeliveryAddress option:selected");
+                var discount = 0.00;
+
+                var c = $("#promotionalCoupon").val();
+                $(".coupons").each(function (_, obj) {
+                    obj = $(obj);
+
+                    if(obj.data("code") == c)
+                        discount = obj.data("value");
+                });
+
+                $("#promotionalCouponValue").text("R$ " + discount);
+                $("#idPromotionalCoupon").val($("#" + c).data("id"));
+
+                updateValues({
+                    base: selected.data("baseShippingCost"),
+                    addition: selected.data("baseShippingCostItem"),
+                    quantity: $("#amount").val(),
+                    discount: $("#promotionalCouponValue").text()
                 });
             });
         });

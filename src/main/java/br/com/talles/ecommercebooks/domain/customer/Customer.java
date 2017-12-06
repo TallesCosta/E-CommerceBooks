@@ -22,14 +22,14 @@ public class Customer extends Entity {
 	private List<DeliveryAddress> deliveryAddresses;
 	private List<CreditCard> creditCards;
 	private List<Sale> sales;
-	private List<PromotionalCoupon> promotionalCoupons;
+	//private List<PromotionalCoupon> promotionalCoupons;
 
 	public Customer() {
 		super(true);
 		this.deliveryAddresses = new ArrayList<>();
 		this.creditCards = new ArrayList<>();
 		this.sales = new ArrayList<>();
-		this.promotionalCoupons = new ArrayList<>();
+		//this.promotionalCoupons = new ArrayList<>();
 	}
 
 	public Customer(User user) {
@@ -45,7 +45,7 @@ public class Customer extends Entity {
 		this.deliveryAddresses = new ArrayList<>();
 		this.creditCards = new ArrayList<>();
 		this.sales = new ArrayList<>();
-		this.promotionalCoupons = new ArrayList<>();
+		//this.promotionalCoupons = new ArrayList<>();
 	}
 
 	public Customer(String name, long id){
@@ -55,7 +55,7 @@ public class Customer extends Entity {
 		this.deliveryAddresses = new ArrayList<>();
 		this.creditCards = new ArrayList<>();
 		this.sales = new ArrayList<>();
-		this.promotionalCoupons = new ArrayList<>();
+		//this.promotionalCoupons = new ArrayList<>();
 	}
 
 	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
@@ -72,7 +72,7 @@ public class Customer extends Entity {
 		this.deliveryAddresses = new ArrayList<>();
 		this.creditCards = new ArrayList<>();
 		this.sales = new ArrayList<>();
-		this.promotionalCoupons = new ArrayList<>();
+		//this.promotionalCoupons = new ArrayList<>();
 	}
 	
 	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
@@ -90,7 +90,7 @@ public class Customer extends Entity {
 		this.deliveryAddresses = new ArrayList<>();
 		this.creditCards = new ArrayList<>();
 		this.sales = new ArrayList<>();
-		this.promotionalCoupons = new ArrayList<>();
+		//this.promotionalCoupons = new ArrayList<>();
 	}
 	
 	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
@@ -107,7 +107,7 @@ public class Customer extends Entity {
 		this.creditCards = creditCards;
 		this.deliveryAddresses = new ArrayList<>();
 		this.sales = new ArrayList<>();
-		this.promotionalCoupons = new ArrayList<>();
+		//this.promotionalCoupons = new ArrayList<>();
 	}
 	
 	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
@@ -124,7 +124,7 @@ public class Customer extends Entity {
 		this.creditCards = creditCards;
 		this.deliveryAddresses = new ArrayList<>();
 		this.sales = new ArrayList<>();
-		this.promotionalCoupons = new ArrayList<>();
+		//this.promotionalCoupons = new ArrayList<>();
 	}
 	
 	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
@@ -142,7 +142,7 @@ public class Customer extends Entity {
 		this.deliveryAddresses = new ArrayList<>();
 		this.creditCards = creditCard;
 		this.sales = new ArrayList<>();
-		this.promotionalCoupons = new ArrayList<>();
+		//this.promotionalCoupons = new ArrayList<>();
 	}
 	
 	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, User user, 
@@ -160,7 +160,7 @@ public class Customer extends Entity {
 		this.deliveryAddresses = deliveryAddresses;
 		this.creditCards = creditCard;
 		this.sales = new ArrayList<>();
-		this.promotionalCoupons = new ArrayList<>();
+		//this.promotionalCoupons = new ArrayList<>();
 	}
 
 	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, 
@@ -179,7 +179,7 @@ public class Customer extends Entity {
 		this.deliveryAddresses = deliveryAddresses;
 		this.creditCards = creditCard;
 		this.sales = new ArrayList<>();
-		this.promotionalCoupons = new ArrayList<>();
+		//this.promotionalCoupons = new ArrayList<>();
 	}
 
 	public Customer(String registry, String name, Date birthDate, Gender gender, Phone phone, 
@@ -198,7 +198,7 @@ public class Customer extends Entity {
 		this.deliveryAddresses = deliveryAddresses;
 		this.creditCards = creditCard;
 		this.sales = sales;
-		this.promotionalCoupons = promotionalCoupons;
+		//this.promotionalCoupons = promotionalCoupons;
 	}
 	
 	public String getRegistry() {
@@ -366,6 +366,7 @@ public class Customer extends Entity {
 		this.sales = sale;
 	}
 
+	/*
 	public List<PromotionalCoupon> getPromotionalCoupons() {
 		return promotionalCoupons;
 	}
@@ -377,6 +378,7 @@ public class Customer extends Entity {
 	public void setPromotionalCoupons(List<PromotionalCoupon> promotionalCoupons) {
 		this.promotionalCoupons = promotionalCoupons;
 	}
+	*/
 	
 	
 	

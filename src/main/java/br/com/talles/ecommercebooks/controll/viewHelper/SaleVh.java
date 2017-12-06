@@ -50,6 +50,11 @@ public class SaleVh implements IViewHelper {
 		if (!(totalS == null || totalS.equals("")))
 			total = Double.valueOf(totalS);
 
+		String idPromotionalCouponS = request.getParameter("idPromotionalCoupon");
+		long idPromotionalCoupon = 0L;
+		if (!(idPromotionalCouponS == null || idPromotionalCouponS.equals("")))
+			idPromotionalCoupon = Long.valueOf(idPromotionalCouponS);
+
 		// Sale
 		Sale sale = new Sale();
 		
@@ -61,6 +66,7 @@ public class SaleVh implements IViewHelper {
 				sale.setDelivery(new Delivery(new ShippingCost(shippingCost),
 						new DeliveryAddress(idDeliveryAddress)));
 				sale.setCreditCard(new CreditCard(idCreditCard));
+				sale.setPromotionalCoupon(new PromotionalCoupon(idPromotionalCoupon));
 				break;
 
 			case "LIST":
