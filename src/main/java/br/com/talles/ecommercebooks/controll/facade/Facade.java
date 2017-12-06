@@ -180,6 +180,10 @@ public class Facade implements IFacade {
 	 	List<IStrategy> findSale = new ArrayList();
 	 	List<IStrategy> updateSale = new ArrayList();
 
+	 	// Orders Requirements
+	 	List<IStrategy> listOrder = new ArrayList();
+	 	List<IStrategy> findOrder = new ArrayList();
+
 		// Book Requirements to contexts
         Map<String, List<IStrategy>> contextReqBook = new HashMap();
         contextReqBook.put(CREATE, createBook);
@@ -220,9 +224,14 @@ public class Facade implements IFacade {
 		contextReqSale.put(SAVE, saveSale);
         contextReqSale.put(LIST, listSale);
         contextReqSale.put(FIND, findSale);
-		 contextReqSale.put(UPDATE, updateSale);
+        contextReqSale.put(UPDATE, updateSale);
 
-		 // Book Requirements to contexts
+        // Order Requirements to contexts
+		Map<String, List<IStrategy>> contextReqOrder = new HashMap();
+		contextReqOrder.put(LIST, listOrder);
+		contextReqOrder.put(FIND, findOrder);
+
+		// Book Requirements to contexts
         Map<String, List<IStrategy>> contextReqCart = new HashMap();
         contextReqCart.put(CREATE, createCart);
 		contextReqCart.put(SAVE, saveCart);

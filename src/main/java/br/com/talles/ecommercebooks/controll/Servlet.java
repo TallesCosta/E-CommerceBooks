@@ -1,19 +1,13 @@
 package br.com.talles.ecommercebooks.controll;
 
 import br.com.talles.ecommercebooks.controll.command.CreateCmd;
-import br.com.talles.ecommercebooks.controll.viewHelper.BookVh;
-import br.com.talles.ecommercebooks.controll.viewHelper.CustomerVh;
-import br.com.talles.ecommercebooks.controll.viewHelper.IViewHelper;
+import br.com.talles.ecommercebooks.controll.viewHelper.*;
 import br.com.talles.ecommercebooks.controll.command.ICommand;
 import br.com.talles.ecommercebooks.controll.command.ListCmd;
 import br.com.talles.ecommercebooks.controll.command.SaveCmd;
 import br.com.talles.ecommercebooks.controll.command.DeleteCmd;
 import br.com.talles.ecommercebooks.controll.command.FindCmd;
 import br.com.talles.ecommercebooks.controll.command.UpdateCmd;
-import br.com.talles.ecommercebooks.controll.viewHelper.CartVh;
-import br.com.talles.ecommercebooks.controll.viewHelper.SaleVh;
-import br.com.talles.ecommercebooks.controll.viewHelper.StockVh;
-import br.com.talles.ecommercebooks.controll.viewHelper.UserVh;
 import br.com.talles.ecommercebooks.domain.Entity;
 
 import java.io.IOException;
@@ -70,7 +64,7 @@ public class Servlet extends HttpServlet {
 		viewHelpers.put("/E-CommerceBooks/sales/find", new SaleVh());
 		viewHelpers.put("/E-CommerceBooks/sales/update", new SaleVh());
 		// Orders Request
-		viewHelpers.put("/E-CommerceBooks/orders/list", new SaleVh());
+		viewHelpers.put("/E-CommerceBooks/orders/list", new OrderVh());
 
 		commands = new HashMap();
 		commands.put("CREATE", new CreateCmd());

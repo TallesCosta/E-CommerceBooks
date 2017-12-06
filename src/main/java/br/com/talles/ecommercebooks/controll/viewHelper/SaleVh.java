@@ -5,10 +5,8 @@ import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.customer.Address;
 import br.com.talles.ecommercebooks.domain.customer.CreditCard;
 import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
-import br.com.talles.ecommercebooks.domain.sale.Delivery;
-import br.com.talles.ecommercebooks.domain.sale.Sale;
-import br.com.talles.ecommercebooks.domain.sale.ShippingCost;
-import br.com.talles.ecommercebooks.domain.sale.Status;
+import br.com.talles.ecommercebooks.domain.customer.User;
+import br.com.talles.ecommercebooks.domain.sale.*;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -18,6 +16,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class SaleVh implements IViewHelper {
 
