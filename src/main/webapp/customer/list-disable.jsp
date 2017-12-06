@@ -8,7 +8,7 @@
     <head>
 		<title>Listagem de Clientes Inativos</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<%@include file="../commons/admin/menu-css.jsp"%>tu
+		<%@include file="../commons/admin/menu-css.jsp"%>
     </head>
     <body>
 		<%@include file="../commons/admin/menu-html.jsp"%>
@@ -41,16 +41,16 @@
 					<table>
 						<thead>
 						<tr>
-							<td>CPF</td>
-							<td>Nome</td>
-							<td>Data de Nasc.</td>
-							<td>Gênero</td>
-							<td>Telefone</td>
-							<td>E-mail</td>
-							<td>End. Residencial</td>
-							<td>End. Cobrança</td>
-							<td>Editar</td>
-							<td>Excluir</td>
+							<th>CPF</th>
+							<th>Nome</th>
+							<th>Data de Nasc.</th>
+							<th>Gênero</th>
+							<th>Telefone</th>
+							<th>E-mail</th>
+							<th>End. Residencial</th>
+							<th>End. Cobrança</th>
+							<th>Editar</th>
+							<th>Excluir</th>
 						</tr>
 						</thead>
 

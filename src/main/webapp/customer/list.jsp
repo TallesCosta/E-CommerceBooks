@@ -18,11 +18,12 @@
 				display: inline-block;
 			}
 		</style>
+		<%@include file="../commons/admin/menu-css.jsp"%>
     </head>
     <body>
+		<%@include file="../commons/admin/menu-html.jsp"%>
 		<%
-			Result result = new Result();
-			result = (Result) request.getAttribute("result");
+			Result result = (Result) request.getAttribute("result");
 
 			if (result != null) {
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -36,184 +37,121 @@
 				}
 		%>
 		
-		<div id="app">
+		<div class="container">
 			<h1 id="list-customer">Listagem de Clientes</h1>
-			
-			<div>
-				<form action="list" method="POST">
-					<fieldset>
-						<legend>Dados da filtragem</legend>
-						
-						<fieldset>
-							<legend>Dados básicos</legend>
-								<label for="registry">CPF: </label>
-								<input name="registry" id="registry" type="text" >
-								<label for="name">Nome: </label>
-								<input name="name" id="name" type="text" >
-								<label for="birthDate">Data Nasc.: </label>
-								<input name="birthDate" id="birthDate" type="date" >
-								
-								<label for="gender">Gênero: </label>
-								<input name="gender" id="female" value="Feminino" type="radio">
-								<label for="female">Feminino</label>
-								<input name="gender" id="male" value="Masculino" type="radio">
-								<label for="male">Masculino</label>
-								<input name="gender" id="other" value="Outro" type="radio">
-								<label for="other">Outro</label>
-						</fieldset>
-						
-						<fieldset>
-							<legend>Telefone</legend>
-							<label for="ddd">DDD: </label>
-							<input name="ddd" id="ddd" type="text" >
-							<label for="phoneNumber">Número: </label>
-							<input name="phoneNumber" id="phoneNumber" type="text" >
-							<label for="phoneType">Tipo: </label>
-							<input name="phoneType" id="phoneType" type="text" >
-						</fieldset>
-						
-						<fieldset>
-							<legend>Usuário</legend>
-							<input type="hidden" name="idUser" id="idUser" >
-							<label for="email">E-mail: </label>
-							<input name="email" id="email" type="email" >
-							<label for="password">Senha: </label>
-							<input name="password" id="password" type="password" >
-						</fieldset>
-						
-						<fieldset>
-							<legend>Endereço Residencial</legend>
-							<label for="homeAlias">Apelido: </label>
-							<input name="homeAlias" id="homeAlias" type="text" >
-							<label for="homeObservation">Observações: </label>
-							<textarea name="homeObservation" id="homeObservation"></textarea>
-							<label for="homeHomeType">Tipo de Residência: </label>
-							<input name="homeHomeType" id="homeHomeType" type="text" placeholder="Casa, Apartamento, etc.">
-							
-							<br>
-							
-							<label for="homePublicPlaceType">Tipo de Logradouro: </label>
-							<input name="homePublicPlaceType" id="homePublicPlaceType" type="text" placeholder="Rua, Av., Tr., etc.">
-							<label for="homePublicPlace">Logradouro: </label>
-							<input name="homePublicPlace" id="homePublicPlace" type="text" >
-							<label for="homeNumber">Número: </label>
-							<input name="homeNumber" id="homeNumber" type="text" >
-							<label for="homeDistrict">Bairro: </label>
-							<input name="homeDistrict" id="homeDistrict" type="text" >
-							<label for="homePostalCode">CEP: </label>
-							<input name="homePostalCode" id="homePostalCode" type="text" >
-							
-							<br>
-							
-							<label for="homeCity">Cidade: </label>
-							<select name="homeCity" id="homeCity">
-			<%	
-				for(Entity entity : result.getEntities(City.class.getSimpleName())){
-					City city = (City) entity;
-					out.print("<option value='" + city.getId() + "'>" + city.getName() + "</option>");
-				}
-			%>
-							</select>
-							
-							<label for="homeState">Estado: </label>
-							<select name="homeState" id="homeState">
-			<%	
-				for(Entity entity : result.getEntities(State.class.getSimpleName())){
-					State state = (State) entity;
-					out.print("<option value='" + state.getId() + "'>" + state.getName() + "</option>");
-				}
-			%>
-							</select>
-							
-							<label for="homeCountry">País: </label>
-							<select name="homeCountry" id="homeCountry">
-			<%	
-				for(Entity entity : result.getEntities(Country.class.getSimpleName())){
-					Country country = (Country) entity;
-					out.print("<option value='" + country.getId() + "'>" + country.getName() + "</option>");
-				}
-			%>
-							</select>
-						</fieldset>
-						
-						<button name="operation" value="LIST" type="submit">Filtrar</button>
-					</fieldset>
-				</form>
-			</div>
-				
-			<br><br>
-			<div>
-				<table class='u-full-width'>
-					<thead>
-						<tr>
-							<td>CPF</td>
-							<td>Nome</td>
-							<td>Data de Nasc.</td>
-							<td>Gênero</td>
-							<td>Telefone</td>
-							<td>E-mail</td>
-							<td>End. Residencial</td>
-							<td>End. Cobrança</td>
-							<td>End(s). Entrega</td>
-							<td>Editar</td>
-							<td>Excluir</td>
-							<td>Histórico</td>
-						</tr>
-					</thead>
-					
-					<tbody>
-			<%
-				int i = 0;
-				if(result.hasEntities() && result.getKeys().contains(Customer.class.getSimpleName())){
-					for(Entity entity : result.getEntities(Customer.class.getSimpleName())){
-						Customer customer = (Customer) entity;
 
-						String deliveryAddresses = "";
-						for(DeliveryAddress deliveryAddress : customer.getDeliveryAddresses()){
-							deliveryAddresses += deliveryAddress.getAlias()+ ", ";
-						}
-						
-						out.println("<tr>");
-						out.println("<td>" + customer.getRegistry() + "</td>");
-						out.println("<td>" + customer.getName() + "</td>");
-						out.println("<td>" + dateFormat.format(customer.getBirthDate()) + "</td>");
-						out.println("<td>" + customer.getGender().getName() + "</td>");
-						out.println("<td>" + customer.getPhone().toString() + "</td>");
-						out.println("<td>" + customer.getUser().getEmail() + "</td>");
-						out.println("<td>" + customer.getHomeAddress().getAlias() + "</td>");
-						out.println("<td>" + customer.getChargeAddress().getAlias() + "</td>");
-						out.println("<td>" + deliveryAddresses.substring(0, deliveryAddresses.length() - 2) + "</td>");
-						out.println("<td>"
-										+ "<a id='edit-" + customer.getId() + "' href='" + request.getContextPath() + "/customers/find?operation=FIND&id=" + customer.getId() + "'>"
-											+ "<i class='fa fa-pencil' aria-hidden='true'></i>"
-										+ "</a>"
-									+ "</td>");
-						out.println("<td>"
-										+ "<a id='disable-" + customer.getId() + "' href='" + request.getContextPath() + "/customers/disable?operation=DISABLE&id=" + customer.getId() + "'>"
-											+ "<i class='fa fa-trash' aria-hidden='true'></i>"
-										+ "</a>"
-									+ "</td>");
-						out.println("<td>"
-										+ "<a href='" + request.getContextPath() + "/customers/history?operation=HISTORY&id=" + customer.getId() + "'>"
-											+ "<i class='fa fa-history' aria-hidden='true'></i>"
-										+ "</a>"
-									+ "</td>");
-						out.println("</tr>");
-						i++;
-					}
-				} else {
-					out.println("<tr>");
-					
-					for(int j = 0; j <= 11; j++){
-						out.println("<td> - </td>");
-					}
-					
-					out.println("</tr>");
-				}
-			%>
-					</tbody>
-					
-					<tfooter>
+			<form action="list" method="POST">
+				<legend>Dados da filtragem</legend>
+				<div class="row">
+					<fieldset class="column">
+						<legend>Dados básicos</legend>
+						<label for="registry">CPF: </label>
+						<input name="registry" id="registry" type="text" >
+						<label for="name">Nome: </label>
+						<input name="name" id="name" type="text" >
+						<label for="birthDate">Data Nasc.: </label>
+						<input name="birthDate" id="birthDate" type="date" >
+
+						<fieldset>
+							<legend>Gênero:</legend>
+
+
+							<input name="gender" id="female" value="Feminino" type="radio">
+							<label for="female">Feminino</label>
+
+							<input name="gender" id="male" value="Masculino" type="radio">
+							<label for="male">Masculino</label>
+
+							<input name="gender" id="other" value="Outro" type="radio">
+							<label for="other">Outro</label>
+						</fieldset>
+					</fieldset>
+					<fieldset class="column">
+						<legend>Telefone</legend>
+						<label for="ddd">DDD: </label>
+						<input name="ddd" id="ddd" type="text" >
+						<label for="phoneNumber">Número: </label>
+						<input name="phoneNumber" id="phoneNumber" type="text" >
+						<label for="phoneType">Tipo: </label>
+						<input name="phoneType" id="phoneType" type="text" >
+					</fieldset>
+				</div>
+
+				<div class="row">
+					<fieldset class="column">
+						<legend>Usuário</legend>
+						<input type="hidden" name="idUser" id="idUser" >
+						<label for="email">E-mail: </label>
+						<input name="email" id="email" type="email" >
+						<label for="password">Senha: </label>
+						<input name="password" id="password" type="password" >
+					</fieldset>
+				</div>
+
+				<div class="row">
+					<fieldset class="column">
+						<legend>Endereço Residencial</legend>
+						<label for="homeAlias">Apelido: </label>
+						<input name="homeAlias" id="homeAlias" type="text" >
+						<label for="homeObservation">Observações: </label>
+						<textarea name="homeObservation" id="homeObservation"></textarea>
+						<label for="homeHomeType">Tipo de Residência: </label>
+						<input name="homeHomeType" id="homeHomeType" type="text" placeholder="Casa, Apartamento, etc.">
+
+						<br>
+
+						<label for="homePublicPlaceType">Tipo de Logradouro: </label>
+						<input name="homePublicPlaceType" id="homePublicPlaceType" type="text" placeholder="Rua, Av., Tr., etc.">
+						<label for="homePublicPlace">Logradouro: </label>
+						<input name="homePublicPlace" id="homePublicPlace" type="text" >
+						<label for="homeNumber">Número: </label>
+						<input name="homeNumber" id="homeNumber" type="text" >
+						<label for="homeDistrict">Bairro: </label>
+						<input name="homeDistrict" id="homeDistrict" type="text" >
+						<label for="homePostalCode">CEP: </label>
+						<input name="homePostalCode" id="homePostalCode" type="text" >
+
+						<br>
+
+						<label for="homeCity">Cidade: </label>
+						<select name="homeCity" id="homeCity">
+							<%
+								for(Entity entity : result.getEntities(City.class.getSimpleName())){
+									City city = (City) entity;
+									out.print("<option value='" + city.getId() + "'>" + city.getName() + "</option>");
+								}
+							%>
+						</select>
+
+						<label for="homeState">Estado: </label>
+						<select name="homeState" id="homeState">
+							<%
+								for(Entity entity : result.getEntities(State.class.getSimpleName())){
+									State state = (State) entity;
+									out.print("<option value='" + state.getId() + "'>" + state.getName() + "</option>");
+								}
+							%>
+						</select>
+
+						<label for="homeCountry">País: </label>
+						<select name="homeCountry" id="homeCountry">
+							<%
+								for(Entity entity : result.getEntities(Country.class.getSimpleName())){
+									Country country = (Country) entity;
+									out.print("<option value='" + country.getId() + "'>" + country.getName() + "</option>");
+								}
+							%>
+						</select>
+					</fieldset>
+				</div>
+
+				<button name="operation" value="LIST" type="submit">Filtrar</button>
+			</form>
+
+			<div class="row">
+				<div class="column">
+					<table class='u-full-width'>
+						<thead>
 						<tr>
 							<td>CPF</td>
 							<td>Nome</td>
@@ -228,10 +166,78 @@
 							<td>Excluir</td>
 							<td>Histórico</td>
 						</tr>
-					</tfooter>
-				</table>
-					
-				<p><% out.println(i); %> registros encontrados.</p>
+						</thead>
+
+						<tbody>
+						<%
+							int i = 0;
+							if(result.hasEntities() && result.getKeys().contains(Customer.class.getSimpleName())){
+								for(Entity entity : result.getEntities(Customer.class.getSimpleName())){
+									Customer customer = (Customer) entity;
+
+									String deliveryAddresses = "";
+									for(DeliveryAddress deliveryAddress : customer.getDeliveryAddresses()){
+										deliveryAddresses += deliveryAddress.getAlias()+ ", ";
+									}
+
+									out.println("<tr>");
+									out.println("<td>" + customer.getRegistry() + "</td>");
+									out.println("<td>" + customer.getName() + "</td>");
+									out.println("<td>" + dateFormat.format(customer.getBirthDate()) + "</td>");
+									out.println("<td>" + customer.getGender().getName() + "</td>");
+									out.println("<td>" + customer.getPhone().toString() + "</td>");
+									out.println("<td>" + customer.getUser().getEmail() + "</td>");
+									out.println("<td>" + customer.getHomeAddress().getAlias() + "</td>");
+									out.println("<td>" + customer.getChargeAddress().getAlias() + "</td>");
+									out.println("<td>" + deliveryAddresses.substring(0, deliveryAddresses.length() - 2) + "</td>");
+									out.println("<td>"
+											+ "<a id='edit-" + customer.getId() + "' href='" + request.getContextPath() + "/customers/find?operation=FIND&id=" + customer.getId() + "'>"
+											+ "<i class='fa fa-pencil' aria-hidden='true'></i>"
+											+ "</a>"
+											+ "</td>");
+									out.println("<td>"
+											+ "<a id='disable-" + customer.getId() + "' href='" + request.getContextPath() + "/customers/disable?operation=DISABLE&id=" + customer.getId() + "'>"
+											+ "<i class='fa fa-trash' aria-hidden='true'></i>"
+											+ "</a>"
+											+ "</td>");
+									out.println("<td>"
+											+ "<a href='" + request.getContextPath() + "/customers/history?operation=HISTORY&id=" + customer.getId() + "'>"
+											+ "<i class='fa fa-history' aria-hidden='true'></i>"
+											+ "</a>"
+											+ "</td>");
+									out.println("</tr>");
+									i++;
+								}
+							} else {
+								out.println("<tr>");
+
+								for(int j = 0; j <= 11; j++){
+									out.println("<td> - </td>");
+								}
+
+								out.println("</tr>");
+							}
+						%>
+						</tbody>
+
+						<tfoot>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><b><% out.println(i); %></b> registros encontrados.</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
 		<%
 			}
 		%>
@@ -240,8 +246,7 @@
 			<a class="create-customer" href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">Criar Cliente</a>
 			<a class="list-disable-customer" href="<% out.print(request.getContextPath().concat("/customers/list-disable?operation=LIST-DISABLE")); %>">Listar Inativos</a>
 		</div>
-		
-		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
+
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"
 			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 			crossorigin="anonymous">
