@@ -1,6 +1,7 @@
 <%@page import="br.com.talles.ecommercebooks.domain.sale.SaleItem"%>
 <%@page import="br.com.talles.ecommercebooks.domain.sale.Cart"%>
 <%@page import="java.text.NumberFormat"%>
+<%@ page import="br.com.talles.ecommercebooks.controll.Result" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -27,7 +28,23 @@
 			%>
 			<div class="row">
 				<div class="column">
+					<%
+						if (cart == null) {
+						    out.println("<p><i class='fa fa-exclamation-triangle' aria-hidden='true' style='color: #FFFF00;'></i> Carrinho ainda vazio ou removido por inatividade!</p>");
+						}
 
+						Result result = new Result();
+						result = (Result) request.getAttribute("result");
+						if (result != null) {
+							if (result.hasMsg()) {
+								String[] msgs = result.getMsg().split("\n");
+								out.print("<p>");
+								for(String msg : msgs)
+									out.print("<i class='fa fa-times' aria-hidden='true' style='color: #FF0000;'></i> " + msg + "<br/>");
+								out.print("</p>");
+							}
+						}
+					%>
 					<table>
 						<thead>
 						<tr>
@@ -40,7 +57,7 @@
 
 						<tbody>
 						<%
-							if(cart == null || !cart.hasSaleItem()){
+							if (cart == null || !cart.hasSaleItem()) {
 								out.println("<tr>");
 
 								for(int j = 0; j <= 3; j++){

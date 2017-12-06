@@ -12,6 +12,7 @@ import br.com.talles.ecommercebooks.business.cart.GiveBackStock;
 import br.com.talles.ecommercebooks.business.cart.delete.CartWithoutSession;
 import br.com.talles.ecommercebooks.business.cart.save.CartSession;
 import br.com.talles.ecommercebooks.business.cart.save.ValidateAmount;
+import br.com.talles.ecommercebooks.business.cart.save.ValidateCart;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
 import br.com.talles.ecommercebooks.business.sale.save.CompleteSale;
 import br.com.talles.ecommercebooks.business.sale.create.CustomerFragment;
@@ -79,10 +80,11 @@ public class Facade implements IFacade {
 		// User Strategies
 		FoundUser foundUser = new FoundUser();
 		// Cart Strategies
-	 	IStrategy validateAmount = new ValidateAmount();
+		IStrategy validateAmount = new ValidateAmount();
 	 	IStrategy cartSession = new CartSession();
 	 	IStrategy cartWithoutSession = new CartWithoutSession();
 	 	// Sale Strategies
+		IStrategy validateCart = new ValidateCart();
 	 	IStrategy customerFragment = new CustomerFragment();
 	 	IStrategy completeSale = new CompleteSale();
 	 	IStrategy giveBackStock = new GiveBackStock();
@@ -171,6 +173,7 @@ public class Facade implements IFacade {
 		// Sales Requirements
 		List<IStrategy> createSale = new ArrayList();
 		createSale.add(customerFragment);
+		createSale.add(validateCart);
 
 	 	List<IStrategy> saveSale = new ArrayList();
 	 	saveSale.add(completeSale);
