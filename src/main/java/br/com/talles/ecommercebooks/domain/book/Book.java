@@ -160,6 +160,7 @@ public class Book extends Entity {
 		this.publishingCompany = publishingCompany;
 		this.saleParameterization = saleParameterization;
 		this.changeStatus = changeStatus;
+		this.author = author;
 
 		this.categories = new ArrayList<>();
 		this.categories = categories;
