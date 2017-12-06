@@ -7,11 +7,14 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Listagem de Pedidos</title>
+
+        <%@include file="../commons/admin/menu-css.jsp"%>
     </head>
     <body>
+        <%@include file="../commons/admin/menu-html.jsp"%>
+
         <%
-            Result result = new Result();
-            result = (Result) request.getAttribute("result");
+            Result result = (Result) request.getAttribute("result");
 
             if (result != null) {
                 if (result.hasMsg()) {
@@ -23,73 +26,69 @@
                 }
         %>
 
-        <div id="app">
+        <div class="container">
             <h1 id="list-sale">Listagem de Vendas</h1>
 
-            <div>
-                <table class='u-full-width'>
-                    <thead>
-                    <tr>
-                        <td>Status</td>
-                        <td>Data</td>
-                        <td>Código</td>
-                        <td>Valor</td>
-                        <td>Visualizar</td>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    <%
-                        int i = 0;
-                        if(result.hasEntities() && result.getKeys().contains(Sale.class.getSimpleName())){
-                            for(Entity entity : result.getEntities(Sale.class.getSimpleName())){
-                                Sale sale = (Sale) entity;
-
-                                out.println("<tr>");
-                                out.println("<td>" + sale.getStatus().getName() + "</td>");
-                                out.println("<td>" + sale.getDate().toString().replace("-","/") + "</td>");
-                                out.println("<td>" + sale.getSaleNumber() + "</td>");
-                                out.println("<td>" + sale.getPrice() + "</td>");
-                                out.println("<td>"
-                                        + "<a href='" + request.getContextPath() + "/sales/find?operation=FIND&id=" + sale.getId() + "'>"
-                                        + "<i class='fa fa-eye' aria-hidden='true'></i>"
-                                        + "</a>"
-                                        + "</td>");
-                                out.println("</tr>");
-                                i++;
-                            }
-                        } else {
-                            out.println("<tr>");
-
-                            for(int j = 0; j <= 5; j++){
-                                out.println("<td> - </td>");
-                            }
-
-                            out.println("</tr>");
-                        }
-                    %>
-                    </tbody>
-
-                    <tfooter>
+            <div class="row">
+                <div class="column">
+                    <table>
+                        <thead>
                         <tr>
-                            <td>Status</td>
-                            <td>Data</td>
-                            <td>Código</td>
-                            <td>Valor</td>
-                            <td>Visualizar</td>
+                            <th>Status</th>
+                            <th>Data</th>
+                            <th>Código</th>
+                            <th>Valor</th>
+                            <th>Visualizar</th>
                         </tr>
-                    </tfooter>
-                </table>
+                        </thead>
 
-                <p><% out.println(i); %> registros encontrados.</p>
+                        <tbody>
+                        <%
+                            int i = 0;
+                            if(result.hasEntities() && result.getKeys().contains(Sale.class.getSimpleName())){
+                                for(Entity entity : result.getEntities(Sale.class.getSimpleName())){
+                                    Sale sale = (Sale) entity;
+
+                                    out.println("<tr>");
+                                    out.println("<td>" + sale.getStatus().getName() + "</td>");
+                                    out.println("<td>" + sale.getDate().toString().replace("-","/") + "</td>");
+                                    out.println("<td>" + sale.getSaleNumber() + "</td>");
+                                    out.println("<td>" + sale.getPrice() + "</td>");
+                                    out.println("<td>"
+                                            + "<a href='" + request.getContextPath() + "/sales/find?operation=FIND&id=" + sale.getId() + "'>"
+                                            + "<i class='fa fa-eye' aria-hidden='true'></i>"
+                                            + "</a>"
+                                            + "</td>");
+                                    out.println("</tr>");
+                                    i++;
+                                }
+                            } else {
+                                out.println("<tr>");
+
+                                for(int j = 0; j < 5; j++){
+                                    out.println("<td> - </td>");
+                                }
+
+                                out.println("</tr>");
+                            }
+                        %>
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><b><% out.println(i); %>registros encontrados.</b></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         <%
             }
         %>
-
-            <a class="dashborad" href="<% out.print(request.getContextPath().concat("/dash-board.jsp")); %>">DashBoard</a>
         </div>
-
-        <script src="https://use.fontawesome.com/51922b6b29.js"></script>
     </body>
 </html>
