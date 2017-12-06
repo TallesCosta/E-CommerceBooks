@@ -30,5 +30,10 @@
                 Vendas
             </a>
         </div>
+        <div class="item">
+            <a class="logout" href="<% out.print(request.getContextPath() + "/log-out?operation=DELETE"); %>">
+                Logout
+            </a>
+        </div>
     </div>
 </nav>

@@ -109,7 +109,7 @@
 					<fieldset>
 						<legend>Identificação</legend>
 						<label for="isbn">ISBN: </label>
-						<input name="isbn" for="isbn" type="text">
+						<input name="isbn" id="isbn" type="text">
 						<label for="ean13">Código de barras: </label>
 						<input name="ean13" id="ean13" type="text">
 					</fieldset>
@@ -166,7 +166,7 @@
 							<td>Precificação</td>
 							<td>Categoria(s)</td>
 							<td>Editar</td>
-							<td>Excluir</td>
+							<td>Ativar</td>
 						</tr>
 					</thead>
 					
@@ -241,7 +241,7 @@
 							<td>Precificação</td>
 							<td>Categoria(s)</td>
 							<td>Editar</td>
-							<td>Excluir</td>
+							<td>Ativar</td>
 						</tr>
 					</tfooter>
 				</table>

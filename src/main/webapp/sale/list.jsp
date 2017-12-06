@@ -1,6 +1,7 @@
 <%@ page import="br.com.talles.ecommercebooks.controll.Result" %>
 <%@ page import="br.com.talles.ecommercebooks.domain.Entity" %>
 <%@ page import="br.com.talles.ecommercebooks.domain.sale.Sale" %>
+<%@ page import="java.text.NumberFormat" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,6 +16,7 @@
 
         <%
             Result result = (Result) request.getAttribute("result");
+            NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
             if (result != null) {
                 if (result.hasMsg()) {
@@ -53,7 +55,7 @@
                                     out.println("<td>" + sale.getStatus().getName() + "</td>");
                                     out.println("<td>" + sale.getDate().toString().replace("-","/") + "</td>");
                                     out.println("<td>" + sale.getSaleNumber() + "</td>");
-                                    out.println("<td>" + sale.getPrice() + "</td>");
+                                    out.println("<td>" + formatter.format( sale.getPrice() ) + "</td>");
                                     out.println("<td>"
                                             + "<a href='" + request.getContextPath() + "/sales/find?operation=FIND&id=" + sale.getId() + "'>"
                                             + "<i class='fa fa-eye' aria-hidden='true'></i>"

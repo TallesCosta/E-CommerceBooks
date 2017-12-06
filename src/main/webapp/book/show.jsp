@@ -190,17 +190,19 @@
 				</div>
 			</fieldset>
 
+			<!--
 			<fieldset>
 				<legend>Status de Mudança</legend>
 				<div>
 					<label>Justicativa: </label>
-					<span> <% out.print(((Book) book.getHistory().getEntity()).getChangeStatus().getJustification()); %> </span>
+					<span> <% //out.print(((Book) book.getHistory().getEntity()).getChangeStatus().getJustification()); %> </span>
 				</div>
 				<div>
 					<label>Categoria de Ativação: </label>
-					<span> <% out.print(((Book) book.getHistory().getEntity()).getChangeStatus().getStatusCategory().getName()); %> </span>
+					<span> <% //out.print(((Book) book.getHistory().getEntity()).getChangeStatus().getStatusCategory().getName()); %> </span>
 				</div>
 			</fieldset>
+			-->
 
 			<a href="javascript:window.history.go(-1)">Voltar</a>
 		</div>

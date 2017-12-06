@@ -16,17 +16,15 @@
     <head>
         <title>Listagem de Livros</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		
-		<style>
-			fieldset {
-				display: inline-block;
-			}
-		</style>
+
+		<%@include file="../commons/admin/form-css.jsp"%>
+
+		<%@include file="../commons/admin/menu-css.jsp"%>
     </head>
     <body>
+		<%@include file="../commons/admin/menu-html.jsp"%>
 		<%
-			Result result = new Result();
-			result = (Result) request.getAttribute("result");
+			Result result = (Result) request.getAttribute("result");
 
 			if (result != null) {
 				

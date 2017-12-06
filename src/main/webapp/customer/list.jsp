@@ -6,18 +6,17 @@
 <%@page import="br.com.talles.ecommercebooks.domain.customer.Customer"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
 <%@page import="br.com.talles.ecommercebooks.controll.Result"%>
+<%@ page import="java.util.Set" %>
+<%@ page import="java.util.HashSet" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
 		<title>Listagem de Clientes</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		
-		<style>
-			fieldset {
-				display: inline-block;
-			}
-		</style>
+
+		<%@include file="../commons/admin/form-css.jsp"%>
+
 		<%@include file="../commons/admin/menu-css.jsp"%>
     </head>
     <body>
@@ -42,28 +41,36 @@
 
 			<form action="list" method="POST">
 				<legend>Dados da filtragem</legend>
-				<div class="row">
+				<div class="row form-container">
 					<fieldset class="column">
 						<legend>Dados básicos</legend>
 						<label for="registry">CPF: </label>
 						<input name="registry" id="registry" type="text" >
 						<label for="name">Nome: </label>
 						<input name="name" id="name" type="text" >
-						<label for="birthDate">Data Nasc.: </label>
+						<label class="label-inline" for="birthDate">Data Nasc.: </label>
 						<input name="birthDate" id="birthDate" type="date" >
 
 						<fieldset>
 							<legend>Gênero:</legend>
 
-
 							<input name="gender" id="female" value="Feminino" type="radio">
-							<label for="female">Feminino</label>
+							<label class="label-inline" for="female">Feminino</label>
 
 							<input name="gender" id="male" value="Masculino" type="radio">
-							<label for="male">Masculino</label>
+							<label class="label-inline" for="male">Masculino</label>
 
 							<input name="gender" id="other" value="Outro" type="radio">
-							<label for="other">Outro</label>
+							<label class="label-inline" for="other">Outro</label>
+						</fieldset>
+
+						<fieldset>
+							<legend>Usuário</legend>
+							<input type="hidden" name="idUser" id="idUser" >
+							<label for="email">E-mail: </label>
+							<input name="email" id="email" type="email" >
+							<label for="password">Senha: </label>
+							<input name="password" id="password" type="password" >
 						</fieldset>
 					</fieldset>
 					<fieldset class="column">
@@ -77,75 +84,68 @@
 					</fieldset>
 				</div>
 
-				<div class="row">
-					<fieldset class="column">
-						<legend>Usuário</legend>
-						<input type="hidden" name="idUser" id="idUser" >
-						<label for="email">E-mail: </label>
-						<input name="email" id="email" type="email" >
-						<label for="password">Senha: </label>
-						<input name="password" id="password" type="password" >
-					</fieldset>
-				</div>
-
-				<div class="row">
-					<fieldset class="column">
+				<!--
+				<div class="row form-container">
+					<div class="column">
 						<legend>Endereço Residencial</legend>
 						<label for="homeAlias">Apelido: </label>
 						<input name="homeAlias" id="homeAlias" type="text" >
-						<label for="homeObservation">Observações: </label>
-						<textarea name="homeObservation" id="homeObservation"></textarea>
-						<label for="homeHomeType">Tipo de Residência: </label>
-						<input name="homeHomeType" id="homeHomeType" type="text" placeholder="Casa, Apartamento, etc.">
-
-						<br>
 
 						<label for="homePublicPlaceType">Tipo de Logradouro: </label>
 						<input name="homePublicPlaceType" id="homePublicPlaceType" type="text" placeholder="Rua, Av., Tr., etc.">
+
 						<label for="homePublicPlace">Logradouro: </label>
 						<input name="homePublicPlace" id="homePublicPlace" type="text" >
-						<label for="homeNumber">Número: </label>
-						<input name="homeNumber" id="homeNumber" type="text" >
-						<label for="homeDistrict">Bairro: </label>
-						<input name="homeDistrict" id="homeDistrict" type="text" >
+
 						<label for="homePostalCode">CEP: </label>
 						<input name="homePostalCode" id="homePostalCode" type="text" >
 
-						<br>
+						<label for="homeNumber">Número: </label>
+						<input name="homeNumber" id="homeNumber" type="text" >
 
+						<label for="homeHomeType">Tipo de Residência: </label>
+						<input name="homeHomeType" id="homeHomeType" type="text" placeholder="Casa, Apartamento, etc.">
+					</div>
+					<div class="column">
 						<label for="homeCity">Cidade: </label>
 						<select name="homeCity" id="homeCity">
-							<%
+							<%/*
 								for(Entity entity : result.getEntities(City.class.getSimpleName())){
 									City city = (City) entity;
 									out.print("<option value='" + city.getId() + "'>" + city.getName() + "</option>");
 								}
-							%>
+							*/%>
 						</select>
 
 						<label for="homeState">Estado: </label>
 						<select name="homeState" id="homeState">
-							<%
+							<%/*
 								for(Entity entity : result.getEntities(State.class.getSimpleName())){
 									State state = (State) entity;
 									out.print("<option value='" + state.getId() + "'>" + state.getName() + "</option>");
 								}
-							%>
+							*/%>
 						</select>
 
 						<label for="homeCountry">País: </label>
 						<select name="homeCountry" id="homeCountry">
-							<%
+							<%/*
 								for(Entity entity : result.getEntities(Country.class.getSimpleName())){
 									Country country = (Country) entity;
 									out.print("<option value='" + country.getId() + "'>" + country.getName() + "</option>");
 								}
-							%>
+							*/%>
 						</select>
-					</fieldset>
-				</div>
+						<label for="homeDistrict">Bairro: </label>
+						<input name="homeDistrict" id="homeDistrict" type="text" >
 
-				<button name="operation" value="LIST" type="submit">Filtrar</button>
+						<label for="homeObservation">Observações: </label>
+						<textarea name="homeObservation" id="homeObservation"></textarea>
+					</div>
+				</div>
+				-->
+
+				<button class="float-right" name="operation" value="LIST" type="submit">Filtrar</button>
 			</form>
 
 			<div class="row">
@@ -176,7 +176,9 @@
 									Customer customer = (Customer) entity;
 
 									String deliveryAddresses = "";
-									for(DeliveryAddress deliveryAddress : customer.getDeliveryAddresses()){
+
+									Set<DeliveryAddress> noRepeat = new HashSet<>(customer.getDeliveryAddresses());
+									for(DeliveryAddress deliveryAddress : noRepeat){
 										deliveryAddresses += deliveryAddress.getAlias()+ ", ";
 									}
 
