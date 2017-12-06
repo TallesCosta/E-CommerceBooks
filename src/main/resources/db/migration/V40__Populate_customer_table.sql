@@ -12,7 +12,7 @@ VALUES (true, 'Casa I', 'Rua', 'Travessa Armando da Silva', '996', 'Centro', '98
 
 // Charge Address
 INSERT INTO Addresses (enabled, alias, publicPlaceType, publicPlace, number, district, postalCode, homeType, id_city)
-VALUES (true, 'Casa I', 'Rua', 'Travessa Armando da Silva', '996', 'Centro', '985.25-308', 'Casa', 26);
+VALUES (true, 'Casa I', 'Rua', 'Travessa Armando da Silva', '996', 'Centro', '985.25-308', 'Casa', 5);
 
 // User
 INSERT INTO Users (enabled, email, password)

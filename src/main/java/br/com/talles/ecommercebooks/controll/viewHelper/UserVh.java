@@ -110,6 +110,7 @@ public class UserVh implements IViewHelper {
 					break;		
 					
 				case "DELETE":
+					response.sendRedirect("/E-CommerceBooks/stocks/list?operation=LIST");
 					break;
 			}
 		} catch (ServletException | IOException ex) {

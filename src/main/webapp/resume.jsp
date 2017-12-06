@@ -2,6 +2,7 @@
 <%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
 <%@page import="br.com.talles.ecommercebooks.domain.sale.Stock"%>
 <%@page import="java.text.NumberFormat"%>
+<%@ page import="br.com.talles.ecommercebooks.domain.customer.User" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -40,7 +41,13 @@
 				<div class="column">
 					<h1>Bora às compras!</h1>
 					<% out.print("<a href='" + request.getContextPath() + "/cart/list.jsp'>Carrinho</a>"); %>
-					<% out.print("<a href='" + request.getContextPath() + "/login.jsp'>Login!</a>"); %>
+					<%
+						User user = (User) request.getSession().getAttribute("user");
+						if (user == null)
+							out.print("<a href='" + request.getContextPath() + "/login.jsp'>Login!</a>");
+						else
+							out.print("<a href='" + request.getContextPath() + "/log-out?operation=DELETE'>Logout!</a>");
+					%>
 				</div>
 			</div>
 			<div class="row">

@@ -17,6 +17,7 @@ import br.com.talles.ecommercebooks.business.customer.FindCustomer;
 import br.com.talles.ecommercebooks.business.sale.save.CompleteSale;
 import br.com.talles.ecommercebooks.business.sale.create.CustomerFragment;
 import br.com.talles.ecommercebooks.business.stock.list.StockSession;
+import br.com.talles.ecommercebooks.business.user.delete.DestroyUser;
 import br.com.talles.ecommercebooks.business.user.list.FoundUser;
 import br.com.talles.ecommercebooks.business.customer.save.CustomerValidateSave;
 import br.com.talles.ecommercebooks.business.customer.update.CustomerValidateUpdate;
@@ -78,7 +79,8 @@ public class Facade implements IFacade {
 		// Customer Strategies
 		IStrategy custumerFind = new FindCustomer();
 		// User Strategies
-		FoundUser foundUser = new FoundUser();
+		IStrategy foundUser = new FoundUser();
+		IStrategy destroyUser = new DestroyUser();
 		// Cart Strategies
 		IStrategy validateAmount = new ValidateAmount();
 	 	IStrategy cartSession = new CartSession();
@@ -167,6 +169,9 @@ public class Facade implements IFacade {
 		// User Requirements
 		List<IStrategy> listUser = new ArrayList();
 
+		List<IStrategy> deleteUser = new ArrayList();
+		deleteUser.add(destroyUser);
+
 		// Stock Requirements
 		List<IStrategy> listStock = new ArrayList();
 		
@@ -215,9 +220,10 @@ public class Facade implements IFacade {
 		
 		// User Requirements to contexts
 		Map<String, List<IStrategy>> contextReqUser = new HashMap();
-        contextReqUser.put(LIST, listUser);
-		
-		// Stock Requirements to contexts
+		contextReqUser.put(LIST, listUser);
+		contextReqUser.put(DELETE, deleteUser);
+
+		 // Stock Requirements to contexts
 		Map<String, List<IStrategy>> contextReqStock = new HashMap();
         contextReqStock.put(LIST, listStock);
 		
@@ -458,11 +464,14 @@ public class Facade implements IFacade {
 	    Map<String, IDao> daosEntity = persistence.get(entity.getClass().getSimpleName());
 		if (daosEntity != null){
 			IDao dao = daosEntity.get(transaction.getOperation());
-			boolean resultDao = dao.delete(entity);
 
-			if(!resultDao)
-				result.addMsg("An error has occurred in the process of your operation, "
-						+ "it has been noted and will be resolved soon!");
+			if (dao != null) {
+				boolean resultDao = dao.delete(entity);
+
+				if(!resultDao)
+					result.addMsg("An error has occurred in the process of your operation, "
+							+ "it has been noted and will be resolved soon!");
+			}
 		}
 		
 	    return result;
