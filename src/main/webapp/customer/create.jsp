@@ -17,8 +17,7 @@
 <!DOCTYPE html>
 <html>
 	<%
-		Result result = new Result();
-		result = (Result) request.getAttribute("result");
+		Result result = (Result) request.getAttribute("result");
 			
 		if (result != null) {
 	%>
