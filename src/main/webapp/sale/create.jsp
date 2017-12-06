@@ -107,9 +107,8 @@
         function updateValues(options) {
             var discount = options.discount || "0.00";
             discount = discount.replace(/[A-Za-z: R$]*/, "");
-            discount = parseFloat(discount);
 
-            console.log(discount);
+            discount = parseFloat(discount);
 
             var base = parseFloat(options.base);
             var addition = parseFloat(options.addition);
@@ -149,23 +148,33 @@
             $("#validateCoupon").click(function() {
                 var selected = $("#idDeliveryAddress option:selected");
                 var discount = 0.00;
+                var cupomId = "";
+                var $promotionCouponValue = $("#promotionalCouponValue");
+                var $promotionCouponInput = $("#promotionalCoupon");
+                var $promotionalCoupon = $("#idPromotionalCoupon");
 
-                var c = $("#promotionalCoupon").val();
+                var c = $promotionCouponInput.val();
+                console.log("CLICOU e DIGITOU " + c);
+
                 $(".coupons").each(function (_, obj) {
                     obj = $(obj);
+                    console.log(obj);
 
-                    if(obj.data("code") == c)
+                    if(obj.data("code") == c) {
                         discount = obj.data("value");
+                        cupomId = ($("#" + c).data("id"));
+                    }
                 });
 
-                $("#promotionalCouponValue").text("R$ " + discount);
-                $("#idPromotionalCoupon").val($("#" + c).data("id"));
+
+                $promotionCouponValue.text("R$ " + discount.toFixed(2));
+                $promotionalCoupon.val(cupomId);
 
                 updateValues({
                     base: selected.data("baseShippingCost"),
                     addition: selected.data("baseShippingCostItem"),
                     quantity: $("#amount").val(),
-                    discount: $("#promotionalCouponValue").text()
+                    discount: $promotionCouponValue.text()
                 });
             });
         });
