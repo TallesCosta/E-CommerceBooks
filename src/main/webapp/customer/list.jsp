@@ -84,6 +84,7 @@
 					</fieldset>
 				</div>
 
+				<!--
 				<div class="row form-container">
 					<div class="column">
 						<legend>Endereço Residencial</legend>
@@ -108,32 +109,32 @@
 					<div class="column">
 						<label for="homeCity">Cidade: </label>
 						<select name="homeCity" id="homeCity">
-							<%
+							<%/*
 								for(Entity entity : result.getEntities(City.class.getSimpleName())){
 									City city = (City) entity;
 									out.print("<option value='" + city.getId() + "'>" + city.getName() + "</option>");
 								}
-							%>
+							*/%>
 						</select>
 
 						<label for="homeState">Estado: </label>
 						<select name="homeState" id="homeState">
-							<%
+							<%/*
 								for(Entity entity : result.getEntities(State.class.getSimpleName())){
 									State state = (State) entity;
 									out.print("<option value='" + state.getId() + "'>" + state.getName() + "</option>");
 								}
-							%>
+							*/%>
 						</select>
 
 						<label for="homeCountry">País: </label>
 						<select name="homeCountry" id="homeCountry">
-							<%
+							<%/*
 								for(Entity entity : result.getEntities(Country.class.getSimpleName())){
 									Country country = (Country) entity;
 									out.print("<option value='" + country.getId() + "'>" + country.getName() + "</option>");
 								}
-							%>
+							*/%>
 						</select>
 						<label for="homeDistrict">Bairro: </label>
 						<input name="homeDistrict" id="homeDistrict" type="text" >
@@ -142,6 +143,7 @@
 						<textarea name="homeObservation" id="homeObservation"></textarea>
 					</div>
 				</div>
+				-->
 
 				<button class="float-right" name="operation" value="LIST" type="submit">Filtrar</button>
 			</form>
