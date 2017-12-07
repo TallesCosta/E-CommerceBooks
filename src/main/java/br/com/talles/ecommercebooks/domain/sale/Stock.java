@@ -110,4 +110,8 @@ public class Stock extends Entity {
 		this.realAmount = this.realAmount - value;
 	}
 
+	public void plusRealAmount(int value) {
+		this.realAmount = this.realAmount + value;
+	}
+
 }

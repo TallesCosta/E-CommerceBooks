@@ -122,13 +122,13 @@ public class StockDao extends AbstractDao {
 		String sql = "SELECT s.*, b.* "
 				+ "FROM Stocks s "
 				+ "INNER JOIN Books b on s.id_book = b.id "
-				+ "WHERE s.id = ? ";
+				+ "WHERE s.id_book = ? ";
 
 		try {
 			openConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setLong(1, stock.getId());
+			statement.setLong(1, stock.getBook().getId());
 
 			ResultSet result = statement.executeQuery();
 

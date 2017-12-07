@@ -28,7 +28,8 @@ public class ExchangeStatusSale implements IStrategy {
                 }
                 else {
                     if (exchange.getDestination() != null && exchange.getDestination().equals("stock")){
-                        // TODO: STRATEGY PARA DAR ENTRADA NO STOCK!
+                        IStrategy checkinStock = new CheckinStock();
+                        checkinStock.process(exchange.getOrder(), result);
                     }
                     exchange.getOrder().setStatus(new Status("TROCA APROVADA"));
                 }
