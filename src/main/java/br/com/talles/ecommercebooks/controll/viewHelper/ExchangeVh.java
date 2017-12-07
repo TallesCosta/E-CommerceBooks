@@ -24,6 +24,11 @@ public class ExchangeVh implements IViewHelper {
         if (!(idSaleS == null || idSaleS.equals("")))
             idOrder = Long.valueOf(idSaleS);
 
+        String acceptedS = request.getParameter("accepted");
+        Boolean accepted = null;
+        if (!(acceptedS == null || acceptedS.equals("")))
+            accepted = Boolean.valueOf(acceptedS);
+
         String justification = request.getParameter("justification");
 
         // Exchange datas
@@ -52,6 +57,8 @@ public class ExchangeVh implements IViewHelper {
                 break;
 
             case "UPDATE":
+                exchange.setOrder(new Order(idOrder));
+                exchange.setAccepted(accepted);
                 break;
 
             case "DISABLE":
@@ -96,6 +103,7 @@ public class ExchangeVh implements IViewHelper {
                     break;
 
                 case "UPDATE":
+                    response.sendRedirect("/E-CommerceBooks/sales/list?operation=LIST");
                     break;
 
                 case "DISABLE":

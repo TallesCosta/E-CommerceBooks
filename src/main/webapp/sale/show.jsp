@@ -37,11 +37,17 @@
             <%
                 switch (sale.getStatus().getName()) {
                     case "EM PROCESSAMENTO":
-                        out.print("<a class='update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=APROVADO") + "'>Aprovar</a>");
+                        out.print("<a class='update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=APROVADO") + "'>Aprovar</a><br>");
                         out.print("<a class='update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=REPROVADO") + "'>Reprovar</a>");
                         break;
                     case "APROVADO":
                         out.print("<a class='update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=EM TRANSITO") + "'>Despachar</a>");
+                        break;
+                    case "TROCA EM ANÁLISE":
+                        out.print("<span>Motivo alegado: " + sale.getExchange().getJustification() + "</span><br>");
+                        out.print("<a class='update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=EM TRANSITO") + "'>Aprovar e voltar ao estoque</a><br>");
+                        out.print("<a class='update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=EM TRANSITO") + "'>Aprovar e descartar os livros</a><br>");
+                        out.print("<a class='update-sale' href='" + request.getContextPath().concat("/exchanges/update?operation=UPDATE&idSale=" + sale.getId() + "&accepted=false") + "'>Reprovar solicitação</a>");
                         break;
                 }
             %>

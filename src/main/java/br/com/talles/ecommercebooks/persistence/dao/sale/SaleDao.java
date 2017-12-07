@@ -212,12 +212,19 @@ public class SaleDao extends AbstractDao {
 			result.close();
 			statement.close();
 
-			return order;
 		} catch(SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
 			closeConnection();
 		}
+
+		if (order.getStatus().getName().equals("TROCA EM ANÁLISE")) {
+			IDao dao = new ExchangeDao();
+			order.setExchange(new Exchange(new Order(order.getId())));
+			dao.find(order.getExchange());
+		}
+
+		return order;
 	}
 
 	@Override

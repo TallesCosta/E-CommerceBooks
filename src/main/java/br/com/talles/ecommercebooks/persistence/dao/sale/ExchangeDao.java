@@ -5,6 +5,7 @@ import br.com.talles.ecommercebooks.domain.sale.Exchange;
 import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -60,12 +61,67 @@ public class ExchangeDao extends AbstractDao {
 
     @Override
     public Entity find(Entity entity) {
-        return null;
+        Exchange exchange = (Exchange) entity;
+
+        String sql = "SELECT e.* " +
+                "FROM Exchanges e " +
+                "WHERE e.id_sale = ?;";
+
+        try {
+            openConnection();
+
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setLong(1, exchange.getOrder().getId());
+
+            ResultSet result = statement.executeQuery();
+
+            if(result.first()){
+                // Exchange datas
+                exchange.setId(result.getLong("exchanges.id"));
+                exchange.setEnabled(result.getBoolean("exchanges.enabled"));
+                exchange.setAccepted(result.getBoolean("exchanges.accepted"));
+                exchange.setJustification(result.getString("exchanges.justification"));
+            }
+
+            result.close();
+            statement.close();
+
+            return exchange;
+
+        } catch(SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeConnection();
+        }
     }
 
     @Override
     public boolean update(Entity entity, String operation) {
-        return false;
+        Exchange exchange = (Exchange) entity;
+
+        String sql = "UPDATE Exchanges "
+                + "SET enabled = ?, accepted = ? "
+                + "WHERE id_sale = ?";
+
+        try {
+            openConnection();
+
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setBoolean(1, exchange.isEnabled());
+            statement.setBoolean(2, exchange.isAccepted());
+
+            statement.setLong(3, exchange.getId());
+
+            statement.execute();
+            statement.close();
+
+            return true;
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            closeConnection();
+        }
     }
 
     @Override

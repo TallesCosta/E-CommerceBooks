@@ -29,7 +29,7 @@
 %>
 
 <div id="app">
-  <h1 id="show-orderRequest">Exibição de Venda</h1>
+  <h1 id="show-orderRequest">Exibição de Pedido</h1>
 
   <div>
     <% out.println("<p>Status: " + orderRequest.getStatus().getName() + "</p>"); %>

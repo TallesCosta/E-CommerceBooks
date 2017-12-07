@@ -22,6 +22,10 @@ public class Exchange extends Entity {
         this.accepted = false;
     }
 
+    public Exchange(Order order) {
+        this.order = order;
+    }
+
     public Exchange(boolean accepted, String justification) {
         this.accepted = accepted;
         this.justification = justification;

@@ -42,7 +42,7 @@
         <div class="row">
             <div class="column">
                 <h1 id="create-sale">Finalizar Compras!</h1>
-                <form action="<% out.print("save"); %>" method="POST" >
+                <form action="save" method="POST" >
                     <fieldset>
                         <label for="idDeliveryAddress">Endereço de Entrega*: </label>
                         <select name="idDeliveryAddress" id="idDeliveryAddress">

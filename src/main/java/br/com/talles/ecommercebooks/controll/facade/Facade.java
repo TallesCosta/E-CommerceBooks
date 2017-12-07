@@ -16,6 +16,7 @@ import br.com.talles.ecommercebooks.business.cart.save.ValidateCart;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
 import br.com.talles.ecommercebooks.business.exchange.create.FoundSale;
 import br.com.talles.ecommercebooks.business.exchange.save.ExchangeStatusSale;
+import br.com.talles.ecommercebooks.business.exchange.update.ExchangeReprovedStatusSale;
 import br.com.talles.ecommercebooks.business.order.list.ChooseCustomer;
 import br.com.talles.ecommercebooks.business.sale.save.CompleteSale;
 import br.com.talles.ecommercebooks.business.sale.create.CustomerFragment;
@@ -103,6 +104,7 @@ public class Facade implements IFacade {
 		IStrategy foundSale = new FoundSale();
 		// Exchange
 		IStrategy exchangeStatusSale = new ExchangeStatusSale();
+		IStrategy exchangeReprovedStatusSale = new ExchangeReprovedStatusSale();
 
 		// Book Requirements
 		List<IStrategy> createBook = new ArrayList();
@@ -211,6 +213,7 @@ public class Facade implements IFacade {
         createExchange.add(foundSale);
 
 		List<IStrategy> saveExchange = new ArrayList();
+
 		List<IStrategy> updateExchange = new ArrayList();
 
 		// Book Requirements to contexts
@@ -319,6 +322,9 @@ public class Facade implements IFacade {
         List<IStrategy> saveExchangeLater = new ArrayList();
         saveExchangeLater.add(exchangeStatusSale);
 
+		List<IStrategy> updateExchangeLater = new ArrayList();
+		updateExchangeLater.add(exchangeReprovedStatusSale);
+
 		// Requirements Book Later to contexts
         Map<String, List<IStrategy>> contextReqBookLater = new HashMap();
 		contextReqBookLater.put(SAVE, saveBookLater);
@@ -351,6 +357,7 @@ public class Facade implements IFacade {
 		// Requirements Exchange Later to contexts
         Map<String, List<IStrategy>> contextReqExchangeLater = new HashMap();
         contextReqExchangeLater.put(SAVE, saveExchangeLater);
+		contextReqExchangeLater.put(UPDATE, updateExchangeLater);
 
 		// Requirements
         requirements = new HashMap<>();
@@ -426,6 +433,7 @@ public class Facade implements IFacade {
         // Exchange Persistence
 		Map<String, IDao> contextPersExchange = new HashMap();
 		contextPersExchange.put(SAVE, exchangeDao);
+		contextPersExchange.put(UPDATE, exchangeDao);
 
 		// Persistences
         persistence = new HashMap();
@@ -584,6 +592,15 @@ public class Facade implements IFacade {
         if(!resultDao)
             result.addMsg("An error has occurred in the process of your operation, "
 					+ "it has been noted and will be resolved soon!");
+
+		Map<String, List<IStrategy>> reqsLater = requirementsLater.get(entity.getClass().getSimpleName());
+		if (reqsLater != null) {
+			List<IStrategy> validationsLater = reqsLater.get(transaction.getOperation());
+			if (validationsLater != null) {
+				result.setTransaction(transaction);
+				result = executeValidations(entity, validationsLater);
+			}
+		}
 
         return result;
     }

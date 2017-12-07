@@ -74,6 +74,7 @@ public class Servlet extends HttpServlet {
 		// Exchanges Request
 		viewHelpers.put("/E-CommerceBooks/exchanges/create", new ExchangeVh());
 		viewHelpers.put("/E-CommerceBooks/exchanges/save", new ExchangeVh());
+		viewHelpers.put("/E-CommerceBooks/exchanges/update", new ExchangeVh());
 
 		commands = new HashMap();
 		commands.put("CREATE", new CreateCmd());
