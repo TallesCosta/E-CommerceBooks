@@ -15,8 +15,7 @@ import br.com.talles.ecommercebooks.business.cart.save.ValidateAmount;
 import br.com.talles.ecommercebooks.business.cart.save.ValidateCart;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
 import br.com.talles.ecommercebooks.business.exchange.create.FoundSale;
-import br.com.talles.ecommercebooks.business.exchange.save.ExchangeStatusSale;
-import br.com.talles.ecommercebooks.business.exchange.update.ExchangeReprovedStatusSale;
+import br.com.talles.ecommercebooks.business.exchange.ExchangeStatusSale;
 import br.com.talles.ecommercebooks.business.order.list.ChooseCustomer;
 import br.com.talles.ecommercebooks.business.sale.save.CompleteSale;
 import br.com.talles.ecommercebooks.business.sale.create.CustomerFragment;
@@ -40,7 +39,6 @@ import br.com.talles.ecommercebooks.persistence.dao.customer.UserDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.ExchangeDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.SaleDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.StockDao;
-import org.omg.CosNaming.IstringHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,7 +102,6 @@ public class Facade implements IFacade {
 		IStrategy foundSale = new FoundSale();
 		// Exchange
 		IStrategy exchangeStatusSale = new ExchangeStatusSale();
-		IStrategy exchangeReprovedStatusSale = new ExchangeReprovedStatusSale();
 
 		// Book Requirements
 		List<IStrategy> createBook = new ArrayList();
@@ -323,7 +320,7 @@ public class Facade implements IFacade {
         saveExchangeLater.add(exchangeStatusSale);
 
 		List<IStrategy> updateExchangeLater = new ArrayList();
-		updateExchangeLater.add(exchangeReprovedStatusSale);
+		updateExchangeLater.add(exchangeStatusSale);
 
 		// Requirements Book Later to contexts
         Map<String, List<IStrategy>> contextReqBookLater = new HashMap();

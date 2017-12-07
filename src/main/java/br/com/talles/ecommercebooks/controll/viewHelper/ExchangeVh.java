@@ -30,6 +30,7 @@ public class ExchangeVh implements IViewHelper {
             accepted = Boolean.valueOf(acceptedS);
 
         String justification = request.getParameter("justification");
+        String destination = request.getParameter("destination");
 
         // Exchange datas
         Exchange exchange = new Exchange();
@@ -59,6 +60,7 @@ public class ExchangeVh implements IViewHelper {
             case "UPDATE":
                 exchange.setOrder(new Order(idOrder));
                 exchange.setAccepted(accepted);
+                exchange.setDestination(destination);
                 break;
 
             case "DISABLE":

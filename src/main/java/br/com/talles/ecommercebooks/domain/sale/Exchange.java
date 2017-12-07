@@ -6,6 +6,7 @@ public class Exchange extends Entity {
 
     private Boolean accepted;
     private String justification;
+    private String destination;
     private Order order;
 
     public Exchange() {
@@ -47,6 +48,10 @@ public class Exchange extends Entity {
         return justification;
     }
 
+    public String getDestination() {
+        return destination;
+    }
+
     public Order getOrder() {
         return order;
     }
@@ -58,6 +63,10 @@ public class Exchange extends Entity {
 
     public void setAccepted(Boolean accepted) {
         this.accepted = accepted;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
     }
 
     public void setOrder(Order order) {
