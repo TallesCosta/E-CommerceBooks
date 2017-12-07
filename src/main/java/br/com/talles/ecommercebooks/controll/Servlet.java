@@ -15,6 +15,8 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -98,16 +100,13 @@ public class Servlet extends HttpServlet {
 			viewHelper.setView(result, request, response);
 			
 		} catch(Exception ex){
-			PrintWriter out = response.getWriter();
-			out.println("<html>");
-			out.println("<head>");
-			out.println("<title>Erro 500</title>");
-			out.println("</head>");
-			out.println("<body>");
-			out.println("<h1>Infelizmente, ocorreu um erro!</h1>");
-			out.println("<p>Tente novamente mais tarde, contataremos o administrador.</p>");
-			out.println("</body>");
-			out.println("</html>");
+			RequestDispatcher dispatcher;
+			dispatcher = request.getRequestDispatcher("/error/generic.jsp");
+			try {
+				dispatcher.forward(request, response);
+			} catch (ServletException e) {
+				e.printStackTrace();
+			}
 		}		
 	}
 
