@@ -21,8 +21,8 @@
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         Result result = (Result) request.getAttribute("result");
 
-        Order sale = new Order("", new Date(), 0.0, 0, new Status(), new Delivery(),
-                new PromotionalCoupon(), new CreditCard(), new Customer(), new ArrayList<SaleItem>());
+        Order sale = new Order("", new Date(), 0.0, 0, new Status(), new Delivery(), new PromotionalCoupon(),
+                new CreditCard(), new Customer(), new Exchange(), new ArrayList<SaleItem>());
 
         if (result != null) {
             if (result.getKeys().contains(Sale.class.getSimpleName())) {

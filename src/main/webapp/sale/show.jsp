@@ -46,7 +46,7 @@
                 }
             %>
 
-                <% out.println("<p>Data: " + sale.getDate().toString().replace("-","/") + "</p>"); %>
+                <% out.println("<p>Data da Compra: " + sale.getDate().toString().replace("-","/") + "</p>"); %>
                 <% out.println("<p>Previsão de Entrega: " + sale.getDelivery().getDeliveryForecast().toString().replace("-","/") + "</p>"); %>
                 <% out.println("<p>Código: " + sale.getSaleNumber() + "</p>"); %>
                 <% out.println("<p>Cliente: " + sale.getCustomer().getName() + "</p>"); %>

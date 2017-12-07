@@ -22,7 +22,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "Servlet", urlPatterns = {"/log-in", "/log-out", "/books/*", "/customers/*", "/stocks/*", "/carts/*", "/sales/*", "/orders/*"})
+@WebServlet(name = "Servlet", urlPatterns = {"/log-in", "/log-out",
+		"/books/*", "/customers/*", "/stocks/*", "/carts/*", "/sales/*", "/orders/*", "/exchanges/*"})
 public class Servlet extends HttpServlet {
 
 	private Map<String, IViewHelper> viewHelpers;
@@ -68,6 +69,10 @@ public class Servlet extends HttpServlet {
 		viewHelpers.put("/E-CommerceBooks/sales/update", new SaleVh());
 		// Orders Request
 		viewHelpers.put("/E-CommerceBooks/orders/list", new OrderVh());
+		viewHelpers.put("/E-CommerceBooks/orders/find", new OrderVh());
+		viewHelpers.put("/E-CommerceBooks/orders/update", new OrderVh());
+		// Exchanges Request
+		viewHelpers.put("/E-CommerceBooks/exchanges/create", new ExchangeVh());
 
 		commands = new HashMap();
 		commands.put("CREATE", new CreateCmd());

@@ -19,6 +19,7 @@ public class Order extends Entity {
     private PromotionalCoupon promotionalCoupon;
     private CreditCard creditCard;
     private Customer customer;
+    private Exchange exchange;
     private List<SaleItem> saleItems;
 
     // Constructors
@@ -26,7 +27,11 @@ public class Order extends Entity {
         super(true);
     }
 
-    public Order(String saleNumber, Date date, double price, int totalAmount, Status status, Delivery delivery, PromotionalCoupon promotionalCoupon, CreditCard creditCard, Customer customer, List<SaleItem> saleItems) {
+    public Order(long id) {
+        super(id, true);
+    }
+
+    public Order(String saleNumber, Date date, double price, int totalAmount, Status status, Delivery delivery, PromotionalCoupon promotionalCoupon, CreditCard creditCard, Customer customer, Exchange exchange, List<SaleItem> saleItems) {
         super(true);
         this.saleNumber = saleNumber;
         this.date = date;
@@ -37,6 +42,7 @@ public class Order extends Entity {
         this.promotionalCoupon = promotionalCoupon;
         this.creditCard = creditCard;
         this.customer = customer;
+        this.exchange = exchange;
 
         this.saleItems = saleItems;
     }
@@ -78,6 +84,10 @@ public class Order extends Entity {
         return customer;
     }
 
+    public Exchange getExchange() {
+        return exchange;
+    }
+
     public List<SaleItem> getSaleItems() {
         return saleItems;
     }
@@ -117,6 +127,10 @@ public class Order extends Entity {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public void setExchange(Exchange exchange) {
+        this.exchange = exchange;
     }
 
     public void setSaleItems(List<SaleItem> saleItems) {

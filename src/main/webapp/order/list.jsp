@@ -1,6 +1,5 @@
 <%@ page import="br.com.talles.ecommercebooks.controll.Result" %>
 <%@ page import="br.com.talles.ecommercebooks.domain.Entity" %>
-<%@ page import="br.com.talles.ecommercebooks.domain.sale.Sale" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="br.com.talles.ecommercebooks.domain.sale.OrderRequest" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -27,7 +26,7 @@
 %>
 
 <div class="container">
-    <h1 id="list-sale">Seus Pedidos!</h1>
+    <h1 id="list-orderRequest">Seus Pedidos!</h1>
 
     <div class="row">
         <div class="column">

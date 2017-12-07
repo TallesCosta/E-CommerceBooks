@@ -2,9 +2,10 @@ package br.com.talles.ecommercebooks.controll.viewHelper;
 
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
-import br.com.talles.ecommercebooks.domain.customer.CreditCard;
-import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
-import br.com.talles.ecommercebooks.domain.sale.*;
+import br.com.talles.ecommercebooks.domain.sale.Exchange;
+import br.com.talles.ecommercebooks.domain.sale.Order;
+import br.com.talles.ecommercebooks.domain.sale.Sale;
+import br.com.talles.ecommercebooks.domain.sale.Status;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,26 +15,25 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class OrderVh implements IViewHelper {
+public class ExchangeVh implements IViewHelper {
 
     @Override
     public Entity getEntity(HttpServletRequest request) {
-        // OrderRequest datas
-        String idS = request.getParameter("id");
-        long id = 0L;
-        if (!(idS == null || idS.equals("")))
-            id = Long.valueOf(idS);
+        String idSaleS = request.getParameter("idSale");
+        long idOrder = 0L;
+        if (!(idSaleS == null || idSaleS.equals("")))
+            idOrder = Long.valueOf(idSaleS);
 
-        String status = request.getParameter("status");
-
-        // OrderRequest
-        OrderRequest orderRequest = new OrderRequest();
+        // Exchange datas
+        Exchange exchange = new Exchange();
 
         switch(request.getParameter("operation")) {
             case "CREATE" :
+                exchange.setOrder(new Order(idOrder));
                 break;
 
             case "SAVE":
+                exchange.setOrder(new Order(idOrder));
                 break;
 
             case "LIST":
@@ -43,15 +43,12 @@ public class OrderVh implements IViewHelper {
                 break;
 
             case "FIND":
-                orderRequest.setId(id);
                 break;
 
             case "HISTORY":
                 break;
 
             case "UPDATE":
-                orderRequest.setId(id);
-                orderRequest.setStatus(new Status(status));
                 break;
 
             case "DISABLE":
@@ -64,7 +61,7 @@ public class OrderVh implements IViewHelper {
                 break;
         }
 
-        return orderRequest;
+        return exchange;
     }
 
     @Override
@@ -75,29 +72,26 @@ public class OrderVh implements IViewHelper {
         try {
             switch(request.getParameter("operation")) {
                 case "CREATE" :
+                    dispatcher = request.getRequestDispatcher("/exchange/create.jsp");
+                    dispatcher.forward(request, response);
                     break;
 
                 case "SAVE":
                     break;
 
                 case "LIST":
-                    dispatcher = request.getRequestDispatcher("/order/list.jsp");
-                    dispatcher.forward(request, response);
                     break;
 
                 case "LIST-DISABLE":
                     break;
 
                 case "FIND":
-                    dispatcher = request.getRequestDispatcher("/order/show.jsp");
-                    dispatcher.forward(request, response);
                     break;
 
                 case "HISTORY":
                     break;
 
                 case "UPDATE":
-                    response.sendRedirect("/E-CommerceBooks/orders/list?operation=LIST");
                     break;
 
                 case "DISABLE":
