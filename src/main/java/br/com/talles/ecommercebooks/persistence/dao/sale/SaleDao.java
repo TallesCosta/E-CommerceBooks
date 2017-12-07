@@ -21,11 +21,13 @@ public class SaleDao extends AbstractDao {
 
 	@Override
 	public List<Entity> select(boolean enabled, Entity entity) {
-		List<Entity> sales = new ArrayList();
+		List<Entity> orders = new ArrayList();
+		String where = queryBuilder(entity);
 		
         String sql = "SELECT s.* "
 				+ "FROM Sales s "
-				+ "WHERE s.enabled = ? ";
+				+ "INNER JOIN Customers c on s.id_customer = c.id "
+				+ "WHERE s.enabled = ? " + where;
         
         try {
 			openConnection();
@@ -34,26 +36,26 @@ public class SaleDao extends AbstractDao {
 			statement.setBoolean(1, enabled);
 			
             ResultSet result = statement.executeQuery();
-            			
+
             while (result.next()) {
-				Sale sale = new Sale();
+                Order order = entity instanceof Sale ? new Sale() : new OrderRequest();
 				
-				sale.setId(result.getLong("sales.id"));
-				sale.setEnabled(result.getBoolean("sales.enabled"));
-				sale.setSaleNumber(result.getString("sales.saleNumber"));
-				sale.setDate(result.getDate("sales.date"));
-				sale.setStatus(new Status(result.getString("sales.status")));
-				sale.setPrice(result.getDouble("sales.price"));
-				sale.setTotalAmount(result.getInt("sales.totalAmount"));
-				sale.setDelivery(new Delivery(result.getDate("sales.deliveryForecast")));
+				order.setId(result.getLong("sales.id"));
+				order.setEnabled(result.getBoolean("sales.enabled"));
+				order.setSaleNumber(result.getString("sales.saleNumber"));
+				order.setDate(result.getDate("sales.date"));
+				order.setStatus(new Status(result.getString("sales.status")));
+				order.setPrice(result.getDouble("sales.price"));
+				order.setTotalAmount(result.getInt("sales.totalAmount"));
+				order.setDelivery(new Delivery(result.getDate("sales.deliveryForecast")));
 				
-				sales.add(sale);
+				orders.add(order);
             }
             
             result.close();
             statement.close();
             
-            return  sales;
+            return orders;
         } catch (SQLException e) {
             throw new RuntimeException (e);   
         } finally {
@@ -63,10 +65,10 @@ public class SaleDao extends AbstractDao {
 
 	@Override
 	public boolean save(Entity entity) {
-		Sale sale = (Sale) entity;
+        Order order = (Order) entity;
 
 		String sql = "";
-		if (sale.getPromotionalCoupon().getId() == 0L)
+		if (order.getPromotionalCoupon().getId() == 0L)
 			sql = "INSERT INTO Sales (enabled, saleNumber, date, price, totalAmount, status, "
 					+ "deliveryForecast, shippingCost, id_deliveryAddress, id_creditCard, id_customer) "
 					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -80,21 +82,21 @@ public class SaleDao extends AbstractDao {
 
 			PreparedStatement statement = conn.prepareStatement(sql);
 
-			statement.setBoolean(1, sale.isEnabled());
-			statement.setString(2, sale.getSaleNumber());
-			statement.setDate(3, new java.sql.Date(sale.getDate().getTime()));
-			statement.setDouble(4, sale.getPrice());
-			statement.setInt(5, sale.getTotalAmount());
-			statement.setString(6, sale.getStatus().getName());
-			statement.setDate(7, new java.sql.Date(sale.getDelivery().getDeliveryForecast().getTime()));
-			statement.setDouble(8, sale.getDelivery().getShippingCost().getValue());
+			statement.setBoolean(1, order.isEnabled());
+			statement.setString(2, order.getSaleNumber());
+			statement.setDate(3, new java.sql.Date(order.getDate().getTime()));
+			statement.setDouble(4, order.getPrice());
+			statement.setInt(5, order.getTotalAmount());
+			statement.setString(6, order.getStatus().getName());
+			statement.setDate(7, new java.sql.Date(order.getDelivery().getDeliveryForecast().getTime()));
+			statement.setDouble(8, order.getDelivery().getShippingCost().getValue());
 
-			statement.setLong(9, sale.getDelivery().getDeliveryAddress().getId());
-			statement.setLong(10, sale.getCreditCard().getId());
-			statement.setLong(11, sale.getCustomer().getId());
+			statement.setLong(9, order.getDelivery().getDeliveryAddress().getId());
+			statement.setLong(10, order.getCreditCard().getId());
+			statement.setLong(11, order.getCustomer().getId());
 
-			if (sale.getPromotionalCoupon().getId() != 0L)
-				statement.setLong(12, sale.getPromotionalCoupon().getId());
+			if (order.getPromotionalCoupon().getId() != 0L)
+				statement.setLong(12, order.getPromotionalCoupon().getId());
 
 			statement.execute();
 			statement.close();
@@ -106,8 +108,8 @@ public class SaleDao extends AbstractDao {
 			closeConnection();
 		}
 
-		Sale lastSale = (Sale) findLast();
-		sale.setId(lastSale.getId());
+		Order lastSale = (Order) findLast();
+		order.setId(lastSale.getId());
 
 		sql = "INSERT INTO SaleItems (enabled, unitaryPrice, amount, id_sale, id_book) "
 				+ "VALUES(?, ?, ?, ?, ?)";
@@ -117,11 +119,11 @@ public class SaleDao extends AbstractDao {
 
 			PreparedStatement statement = conn.prepareStatement(sql);
 
-			for (SaleItem saleItem : sale.getSaleItems()) {
+			for (SaleItem saleItem : order.getSaleItems()) {
 				statement.setBoolean(1, saleItem.isEnabled());
 				statement.setDouble(2, saleItem.getUnitaryPrice());
 				statement.setInt(3, saleItem.getAmount());
-				statement.setLong(4, sale.getId());
+				statement.setLong(4, order.getId());
 				statement.setLong(5, saleItem.getBook().getId());
 
 				statement.execute();
@@ -146,7 +148,7 @@ public class SaleDao extends AbstractDao {
 
 	@Override
 	public Entity find(Entity entity) {
-		Sale sale = (Sale) entity;
+		Order order = (Order) entity;
 
 		String sql = "SELECT s.*, si.unitaryPrice, si.amount, b.id, b.title, " +
 				"c.id, c.name, cc.id, cc.number, da.id, da.alias " +
@@ -162,36 +164,36 @@ public class SaleDao extends AbstractDao {
 			openConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setLong(1, sale.getId());
+			statement.setLong(1, order.getId());
 
 			ResultSet result = statement.executeQuery();
 
-			sale.setSaleItems(new ArrayList<SaleItem>());
+			order.setSaleItems(new ArrayList<SaleItem>());
 
 			if(result.first()){
 				// Sale datas
-				sale.setId(result.getLong("sales.id"));
-				sale.setEnabled(result.getBoolean("sales.enabled"));
-				sale.setSaleNumber(result.getString("sales.saleNumber"));
-				sale.setDate(result.getDate("sales.date"));
-				sale.setStatus(new Status(result.getString("sales.status")));
-				sale.setPrice(result.getDouble("sales.price"));
-				sale.setTotalAmount(result.getInt("sales.totalAmount"));
+				order.setId(result.getLong("sales.id"));
+				order.setEnabled(result.getBoolean("sales.enabled"));
+				order.setSaleNumber(result.getString("sales.saleNumber"));
+				order.setDate(result.getDate("sales.date"));
+				order.setStatus(new Status(result.getString("sales.status")));
+				order.setPrice(result.getDouble("sales.price"));
+				order.setTotalAmount(result.getInt("sales.totalAmount"));
 
 				// Customer datas
-				sale.setCustomer(new Customer(
+				order.setCustomer(new Customer(
 						result.getString("customers.name"),
 						result.getLong("customers.id")));
 
 				// Delivery datas
-				sale.setDelivery(new Delivery(result.getDate("sales.deliveryForecast"),
+				order.setDelivery(new Delivery(result.getDate("sales.deliveryForecast"),
 						new ShippingCost(result.getDouble("sales.shippingCost")),
 						new DeliveryAddress(
 								result.getString("deliveryaddresses.alias"),
 								result.getLong("deliveryaddresses.id"))));
 
 				// CreditCard datas
-				sale.setCreditCard(new CreditCard(
+				order.setCreditCard(new CreditCard(
 						result.getString("creditcards.number"),
 						result.getLong("creditcards.id")));
 
@@ -203,14 +205,14 @@ public class SaleDao extends AbstractDao {
 							result.getString("books.title"),
 							result.getLong("books.id")));
 
-					sale.getSaleItems().add(saleItem);
+					order.getSaleItems().add(saleItem);
 				} while(result.next());
 			}
 
 			result.close();
 			statement.close();
 
-			return sale;
+			return order;
 		} catch(SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
@@ -220,7 +222,7 @@ public class SaleDao extends AbstractDao {
 
 	@Override
 	public boolean update(Entity entity, String operation) {
-        Sale sale = (Sale) entity;
+        Order order = (Order) entity;
 
         String sql = "UPDATE Sales "
                 + "SET enabled = ?, status = ? "
@@ -231,10 +233,10 @@ public class SaleDao extends AbstractDao {
 
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setBoolean(1, sale.isEnabled());
-            statement.setString(2, sale.getStatus().getName());
+            statement.setBoolean(1, order.isEnabled());
+            statement.setString(2, order.getStatus().getName());
 
-			statement.setLong(3, sale.getId());
+			statement.setLong(3, order.getId());
 
             statement.execute();
             statement.close();
@@ -249,7 +251,7 @@ public class SaleDao extends AbstractDao {
 
 	@Override
 	public Entity findLast() {
-		Sale sale = new Sale();
+		Order order = new Order();
 
 		String query = "SELECT * FROM Sales WHERE enabled = true ORDER BY ID DESC LIMIT 1";
 
@@ -261,16 +263,26 @@ public class SaleDao extends AbstractDao {
 			ResultSet result = stmt.executeQuery();
 			result.first();
 
-			sale.setId(result.getLong("id"));
+			order.setId(result.getLong("id"));
 
 			stmt.close();
 
-			return sale;
+			return order;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
 			closeConnection();
 		}
+	}
+
+	public String queryBuilder(Entity entity) {
+		Order order = (Order) entity;
+		String where = "";
+
+		if (order.getCustomer() != null && order.getCustomer().getId() != 0L)
+			where += "AND c.id = '" + order.getCustomer().getId() + "' ";
+
+		return where;
 	}
 	
 }

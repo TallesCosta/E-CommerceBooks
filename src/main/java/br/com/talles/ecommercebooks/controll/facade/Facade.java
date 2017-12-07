@@ -14,6 +14,7 @@ import br.com.talles.ecommercebooks.business.cart.save.CartSession;
 import br.com.talles.ecommercebooks.business.cart.save.ValidateAmount;
 import br.com.talles.ecommercebooks.business.cart.save.ValidateCart;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
+import br.com.talles.ecommercebooks.business.order.list.ChooseCustomer;
 import br.com.talles.ecommercebooks.business.sale.save.CompleteSale;
 import br.com.talles.ecommercebooks.business.sale.create.CustomerFragment;
 import br.com.talles.ecommercebooks.business.stock.list.StockSession;
@@ -28,6 +29,7 @@ import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.customer.Customer;
 import br.com.talles.ecommercebooks.domain.customer.User;
 import br.com.talles.ecommercebooks.domain.sale.Cart;
+import br.com.talles.ecommercebooks.domain.sale.OrderRequest;
 import br.com.talles.ecommercebooks.domain.sale.Sale;
 import br.com.talles.ecommercebooks.domain.sale.Stock;
 import br.com.talles.ecommercebooks.persistence.dao.HistoryDao;
@@ -62,13 +64,14 @@ public class Facade implements IFacade {
     private static final String DELETE = "DELETE";
 	
 	 public Facade() {
-		// Contexts
-        String book = Book.class.getSimpleName();
-        String customer = Customer.class.getSimpleName();
+	 	// Contexts
+	 	String book = Book.class.getSimpleName();
+	 	String customer = Customer.class.getSimpleName();
 		String user = User.class.getSimpleName();
 		String sale = Sale.class.getSimpleName();
 		String stock = Stock.class.getSimpleName();
 		String cart = Cart.class.getSimpleName();
+		String orderRequest = OrderRequest.class.getSimpleName();
 
         // General Strategies
 		IStrategy createView = new CreateView();
@@ -93,18 +96,20 @@ public class Facade implements IFacade {
 	 	IStrategy destroyCart = new DestroyCart();
 	 	// Stock Strategies
 		IStrategy stockSession = new StockSession();
+		// Order Strategies
+		IStrategy chooseCustomer = new ChooseCustomer();
 
 		// Book Requirements
 		List<IStrategy> createBook = new ArrayList();
 		createBook.add(createView);
 		
-        List<IStrategy> saveBook = new ArrayList();
+		List<IStrategy> saveBook = new ArrayList();
 		saveBook.add(new BookValidateSave());
 		
-        List<IStrategy> listBook = new ArrayList();
+		List<IStrategy> listBook = new ArrayList();
 		listBook.add(createView);
 		
-        List<IStrategy> listDisableBook = new ArrayList();
+		List<IStrategy> listDisableBook = new ArrayList();
 		listDisableBook.add(createView);
 		        
 		List<IStrategy> findBook = new ArrayList();
@@ -177,8 +182,8 @@ public class Facade implements IFacade {
 		
 		// Sales Requirements
 		List<IStrategy> createSale = new ArrayList();
-		createSale.add(customerFragment);
 		createSale.add(validateCart);
+		createSale.add(customerFragment);
 
 	 	List<IStrategy> saveSale = new ArrayList();
 	 	saveSale.add(completeSale);
@@ -188,9 +193,11 @@ public class Facade implements IFacade {
 	 	List<IStrategy> findSale = new ArrayList();
 	 	List<IStrategy> updateSale = new ArrayList();
 
-	 	// Orders Requirements
-	 	List<IStrategy> listOrder = new ArrayList();
-	 	List<IStrategy> findOrder = new ArrayList();
+	 	// OrderRequests Requirements
+	 	List<IStrategy> listOrderRequest = new ArrayList();
+		listOrderRequest.add(chooseCustomer);
+
+	 	List<IStrategy> findOrderRequest = new ArrayList();
 
 		// Book Requirements to contexts
         Map<String, List<IStrategy>> contextReqBook = new HashMap();
@@ -236,9 +243,9 @@ public class Facade implements IFacade {
         contextReqSale.put(UPDATE, updateSale);
 
         // Order Requirements to contexts
-		Map<String, List<IStrategy>> contextReqOrder = new HashMap();
-		contextReqOrder.put(LIST, listOrder);
-		contextReqOrder.put(FIND, findOrder);
+		Map<String, List<IStrategy>> contextReqOrderRequest = new HashMap();
+		contextReqOrderRequest.put(LIST, listOrderRequest);
+		contextReqOrderRequest.put(FIND, findOrderRequest);
 
 		// Book Requirements to contexts
         Map<String, List<IStrategy>> contextReqCart = new HashMap();
@@ -282,32 +289,39 @@ public class Facade implements IFacade {
 		saveSaleLater.add(destroyCart);
 
 		List<IStrategy> listSaleLater = new ArrayList();
-		
-		// Requirements Book Later
+
+		// OrderRequest Requirements Later
+		List<IStrategy> listOrderRequestLater = new ArrayList();
+
+		// Requirements Book Later to contexts
         Map<String, List<IStrategy>> contextReqBookLater = new HashMap();
 		contextReqBookLater.put(SAVE, saveBookLater);
 		contextReqBookLater.put(LIST, listBookLater);
 		contextReqBookLater.put(LIST_DISABLE, listDisableBookLater);
 		
-		// Requirements Customer Later
+		// Requirements Customer Later to contexts
 		Map<String, List<IStrategy>> contextReqCustomerLater = new HashMap();
         contextReqCustomerLater.put(SAVE, saveCustomerLater);
         contextReqCustomerLater.put(LIST, listCustomerLater);
         contextReqCustomerLater.put(LIST_DISABLE, listDisableCustomerLater);
 		
-		// Requirements User Later
+		// Requirements User Later to contexts
 		Map<String, List<IStrategy>> contextReqUserLater = new HashMap();
         contextReqUserLater.put(LIST, listUserLater);
 		
-		// Requirements Stock Later
+		// Requirements Stock Later to contexts
 		Map<String, List<IStrategy>> contextReqStockLater = new HashMap();
         contextReqStockLater.put(LIST, listStockLater);
 		
-		// Requirements Sale Later
+		// Requirements Sale Later to contexts
 		Map<String, List<IStrategy>> contextReqSaleLater = new HashMap();
 		contextReqSaleLater.put(SAVE, saveSaleLater);
         contextReqSaleLater.put(LIST, listSaleLater);
-		
+
+        // Requirements OrderRequest Later to contexts
+		Map<String, List<IStrategy>> contextReqOrderRequestLater = new HashMap();
+		contextReqOrderRequestLater.put(LIST, listOrderRequestLater);
+
 		// Requirements
         requirements = new HashMap<>();
         requirements.put(book, contextReqBook);
@@ -316,6 +330,7 @@ public class Facade implements IFacade {
         requirements.put(stock, contextReqStock);
         requirements.put(sale, contextReqSale);
         requirements.put(cart, contextReqCart);
+        requirements.put(orderRequest, contextReqOrderRequest);
         
 		// Requirements Later
 		requirementsLater = new HashMap<>();
@@ -324,6 +339,7 @@ public class Facade implements IFacade {
         requirementsLater.put(user, contextReqUserLater);
         requirementsLater.put(stock, contextReqStockLater);
         requirementsLater.put(sale, contextReqSaleLater);
+        requirementsLater.put(orderRequest, contextReqOrderRequestLater);
 		
 		// All DAOs
 		IDao historyDao = new HistoryDao();
@@ -381,6 +397,7 @@ public class Facade implements IFacade {
         persistence.put(stock, contextPersStock);
         persistence.put(user, contextPersUser);
         persistence.put(sale, contextPersSale);
+		persistence.put(orderRequest, contextPersSale);
 
         this.result = new Result();
     }

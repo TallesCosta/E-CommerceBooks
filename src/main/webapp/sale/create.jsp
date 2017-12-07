@@ -21,7 +21,7 @@
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         Result result = (Result) request.getAttribute("result");
 
-        Sale sale = new Sale("", new Date(), 0.0, 0, new Status(), new Delivery(),
+        Order sale = new Order("", new Date(), 0.0, 0, new Status(), new Delivery(),
                 new PromotionalCoupon(), new CreditCard(), new Customer(), new ArrayList<SaleItem>());
 
         if (result != null) {

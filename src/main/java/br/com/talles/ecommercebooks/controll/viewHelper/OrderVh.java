@@ -4,10 +4,7 @@ import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.customer.CreditCard;
 import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
-import br.com.talles.ecommercebooks.domain.sale.Delivery;
-import br.com.talles.ecommercebooks.domain.sale.Sale;
-import br.com.talles.ecommercebooks.domain.sale.ShippingCost;
-import br.com.talles.ecommercebooks.domain.sale.Status;
+import br.com.talles.ecommercebooks.domain.sale.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,14 +18,14 @@ public class OrderVh implements IViewHelper {
 
     @Override
     public Entity getEntity(HttpServletRequest request) {
-        // Sale datas
+        // OrderRequest datas
         String idS = request.getParameter("id");
         long id = 0L;
         if (!(idS == null || idS.equals("")))
             id = Long.valueOf(idS);
 
-        // Sale
-        Sale sale = new Sale();
+        // OrderRequest
+        OrderRequest orderRequest = new OrderRequest();
 
         switch(request.getParameter("operation")) {
             case "CREATE" :
@@ -44,7 +41,7 @@ public class OrderVh implements IViewHelper {
                 break;
 
             case "FIND":
-                sale.setId(id);
+                orderRequest.setId(id);
                 break;
 
             case "HISTORY":
@@ -63,7 +60,7 @@ public class OrderVh implements IViewHelper {
                 break;
         }
 
-        return sale;
+        return orderRequest;
     }
 
     @Override
