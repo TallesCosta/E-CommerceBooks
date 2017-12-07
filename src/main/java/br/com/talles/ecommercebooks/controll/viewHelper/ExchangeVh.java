@@ -24,6 +24,8 @@ public class ExchangeVh implements IViewHelper {
         if (!(idSaleS == null || idSaleS.equals("")))
             idOrder = Long.valueOf(idSaleS);
 
+        String justification = request.getParameter("justification");
+
         // Exchange datas
         Exchange exchange = new Exchange();
 
@@ -34,6 +36,7 @@ public class ExchangeVh implements IViewHelper {
 
             case "SAVE":
                 exchange.setOrder(new Order(idOrder));
+                exchange.setJustification(justification);
                 break;
 
             case "LIST":
@@ -77,6 +80,7 @@ public class ExchangeVh implements IViewHelper {
                     break;
 
                 case "SAVE":
+                    response.sendRedirect("/E-CommerceBooks/orders/list?operation=LIST");
                     break;
 
                 case "LIST":

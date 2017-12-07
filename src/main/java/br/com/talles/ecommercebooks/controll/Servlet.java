@@ -73,6 +73,7 @@ public class Servlet extends HttpServlet {
 		viewHelpers.put("/E-CommerceBooks/orders/update", new OrderVh());
 		// Exchanges Request
 		viewHelpers.put("/E-CommerceBooks/exchanges/create", new ExchangeVh());
+		viewHelpers.put("/E-CommerceBooks/exchanges/save", new ExchangeVh());
 
 		commands = new HashMap();
 		commands.put("CREATE", new CreateCmd());

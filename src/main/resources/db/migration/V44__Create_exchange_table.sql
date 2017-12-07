@@ -7,7 +7,6 @@ CREATE TABLE Exchanges (
 
   accepted BOOLEAN,
 	justification VARCHAR(255) NOT NULL,
-	date DATE NOT NULL,
 
 	id_sale INT NOT NULL,
 

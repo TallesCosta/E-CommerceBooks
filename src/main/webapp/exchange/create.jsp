@@ -54,11 +54,13 @@
 
     <div>
         <h1 id="create-exchange">Solicitação de Troca</h1>
-        <form action="" method="post"></form>
+        <form action="<% /*out.print(request.getContextPath().concat("/exchanges/save"));*/ %>save" method="post">
             <input type="hidden" name="idSale" id="idSale" value="<% out.print(order.getId()); %>" />
             <label for="justification">Justificativa: </label>
             <textarea name="justification" id="justification" maxlength="255"></textarea>
-            <input type="submit" />
+
+            <input type="hidden" name="operation" id="operation-exchange" value="SAVE" />
+            <button type="submit">Solicitar</button>
         </form>
     </div>
     <%
