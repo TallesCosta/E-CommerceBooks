@@ -3,10 +3,7 @@ package br.com.talles.ecommercebooks.business.sale.create;
 import br.com.talles.ecommercebooks.business.IStrategy;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
-import br.com.talles.ecommercebooks.domain.customer.CreditCard;
-import br.com.talles.ecommercebooks.domain.customer.Customer;
-import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
-import br.com.talles.ecommercebooks.domain.customer.User;
+import br.com.talles.ecommercebooks.domain.customer.*;
 import br.com.talles.ecommercebooks.domain.sale.Delivery;
 import br.com.talles.ecommercebooks.domain.sale.PromotionalCoupon;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
@@ -29,29 +26,55 @@ public class CustomerFragment implements IStrategy {
         List<Entity> customers = dao.select(true, new Customer(userSession));
         Customer customer = (Customer) customers.get(0);
 
-        // Remove duplicate registries
-        customer.removeDeliveryAddress(customer.countDeliveryAddresses() / 2);
-        customer.removeCreditCards(customer.countCreditCards() / 2);
-
-        // Get DeliveryAddresses that Customer
-        dao = new BaseShippingCostDao();
-        List<Entity> deEntities = new ArrayList<>();
-        List<DeliveryAddress> deliveryAddresses = customer.getDeliveryAddresses();
-        for (DeliveryAddress deliveryAddress : deliveryAddresses) {
-            Delivery delivery = new Delivery();
-            delivery.setDeliveryAddress(deliveryAddress);
-            dao.find(delivery);
-            deEntities.add(delivery);
+        // Remove duplicate registries ChargeAddresses
+        List<ChargeAddress> casReapeat = customer.getChargeAddresses();
+        List<ChargeAddress> cas = new ArrayList<>();
+        for(ChargeAddress chargeAddress : casReapeat) {
+            if (!cas.contains(chargeAddress))
+                cas.add(chargeAddress);
         }
-        result.addEntities(deEntities);
+
+        // Remove duplicate registries DeliveryAddresses
+        List<DeliveryAddress> dasReapeat = customer.getDeliveryAddresses();
+        List<DeliveryAddress> das = new ArrayList<>();
+        for(DeliveryAddress deliveryAddress : dasReapeat) {
+            if (!das.contains(deliveryAddress))
+                das.add(deliveryAddress);
+        }
+
+        // Remove duplicate registries CreditCards
+        List<CreditCard> ccsReapeat = customer.getCreditCards();
+        List<CreditCard> ccs = new ArrayList<>();
+        for(CreditCard creditCard : ccsReapeat) {
+            if (!ccs.contains(creditCard))
+                ccs.add(creditCard);
+        }
+
+        // Get ChargeAddresses that Customer
+        List<Entity> caEntities = new ArrayList<>();
+        List<ChargeAddress> chargeAddresses = customer.getChargeAddresses();
+        for (ChargeAddress chargeAddress : chargeAddresses) {
+            caEntities.add(chargeAddress);
+        }
+        result.addEntities(caEntities);
 
         // Get CreditCards that Customer
         List<Entity> ccEntities = new ArrayList<>();
-        List<CreditCard> creditCards = customer.getCreditCards();
-        for (CreditCard creditCard : creditCards) {
+        for (CreditCard creditCard : ccs) {
             ccEntities.add(creditCard);
         }
         result.addEntities(ccEntities);
+
+        // Get DeliveryAddresses with shipping-cost value that Customer
+        dao = new BaseShippingCostDao();
+        List<Entity> daEntities = new ArrayList<>();
+        for (DeliveryAddress deliveryAddress : das) {
+            Delivery delivery = new Delivery();
+            delivery.setDeliveryAddress(deliveryAddress);
+            dao.find(delivery);
+            daEntities.add(delivery);
+        }
+        result.addEntities(daEntities);
 
         // Get all PromotionalCoupons to possible validates
         dao = new PromotionalCouponDao();

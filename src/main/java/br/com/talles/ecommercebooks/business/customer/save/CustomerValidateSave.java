@@ -1,6 +1,7 @@
 package br.com.talles.ecommercebooks.business.customer.save;
 
 import br.com.talles.ecommercebooks.business.IStrategy;
+import br.com.talles.ecommercebooks.business.customer.AddressNotBlank;
 import br.com.talles.ecommercebooks.business.customer.CreditCardNotBlank;
 import br.com.talles.ecommercebooks.business.customer.CustomerNotBlank;
 import br.com.talles.ecommercebooks.business.customer.PasswordValidate;
@@ -15,10 +16,13 @@ public class CustomerValidateSave implements IStrategy {
 		Customer customer = (Customer) entity;
 		
 		IStrategy customerNotBlank = new CustomerNotBlank();
+		IStrategy addressNotBlank = new AddressNotBlank();
 		IStrategy creditCardNotBlank = new CreditCardNotBlank();
 		IStrategy passwordValidate = new PasswordValidate();
 		
 		result = customerNotBlank.process(customer, result);
+		// At this time, chargeAddress and deliveryAddress are equals.
+		result = addressNotBlank.process(customer.getChargeAddress(0), result);
 		result = creditCardNotBlank.process(customer.getCreditCard(0), result);
 		result = passwordValidate.process(customer.getUser(), result);
 		

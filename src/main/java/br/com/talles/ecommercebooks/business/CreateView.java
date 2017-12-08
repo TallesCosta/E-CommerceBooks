@@ -55,20 +55,17 @@ public class CreateView implements IStrategy {
 				
 		// Datas needed to create Customer view
 		List<IDao> createCustomer = new ArrayList<>();
-		createCustomer.add(new CityDao());
 		createCustomer.add(new StateDao());
 		createCustomer.add(new CountryDao());
 		createCustomer.add(new CardCompanyDao());
 		
 		// Datas needed to list Customer view
 		List<IDao> listCustomer = new ArrayList<>();
-		listCustomer.add(new CityDao());
 		listCustomer.add(new StateDao());
 		listCustomer.add(new CountryDao());
 		
 		// Datas needed to list-disable Customer view
 		List<IDao> listDisableCustomer = new ArrayList<>();
-		listDisableCustomer.add(new CityDao());
 		listDisableCustomer.add(new StateDao());
 		listDisableCustomer.add(new CountryDao());
 

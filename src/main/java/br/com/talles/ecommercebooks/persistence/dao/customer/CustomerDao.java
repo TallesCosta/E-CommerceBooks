@@ -21,16 +21,15 @@ public class CustomerDao extends AbstractDao {
 	public List<Entity> select(boolean enabled, Entity entity) {
 		List<Entity> customers = new ArrayList();
 		String where = queryBuilder(entity);
-		
+
         String sql = "SELECT c.*, p.*, u.*, "
-				+ "ha.alias as haAlias, ha.id as haId, ca.alias as caAlias, ca.id as caId, "
+				+ "GROUP_CONCAT(ca.alias SEPARATOR '-') AS caAlias, GROUP_CONCAT(ca.id SEPARATOR '-') as caId, "
 				+ "GROUP_CONCAT(da.alias SEPARATOR '-') AS daAlias, GROUP_CONCAT(da.id SEPARATOR '-') as daId, "
 				+ "GROUP_CONCAT(cc.number SEPARATOR '-') AS ccNumber, GROUP_CONCAT(cc.id SEPARATOR '-') as ccId "
 				+ "FROM Customers c "
 				+ "INNER JOIN Phones p ON c.id_phone = p.id "
 				+ "INNER JOIN Users u ON c.id_user = u.id "
-				+ "INNER JOIN Addresses ha ON c.id_homeAddress = ha.id "
-				+ "INNER JOIN Addresses ca ON c.id_chargeAddress = ca.id "
+				+ "INNER JOIN ChargeAddresses ca ON c.id = ca.id_customer "
 				+ "INNER JOIN DeliveryAddresses da ON c.id = da.id_customer "
 				+ "INNER JOIN CreditCards cc ON c.id = cc.id_customer "
 				+ "WHERE c.enabled = ? " + where
@@ -59,10 +58,12 @@ public class CustomerDao extends AbstractDao {
 				// User
 				customer.setUser(new User(result.getString("users.email"), result.getString("users.password"),
 						result.getString("users.password"), result.getLong("users.id")));
-				// Home Address
-				customer.setHomeAddress(new Address(result.getString("haAlias"), result.getLong("haId")));
 				// Charge Address
-				customer.setChargeAddress(new Address(result.getString("caAlias"), result.getLong("caId")));
+				String[] chargeAddresses = result.getString("caAlias").split("-");
+				String[] chargeAddressesId = result.getString("caId").split("-");
+				for(int i = 0; i < chargeAddresses.length; i++){
+					customer.addChargeAddress(new ChargeAddress(chargeAddresses[i], new Long(chargeAddressesId[i])));
+				}
 				// Delivery Address
 				String[] deliveryAddresses = result.getString("daAlias").split("-");
 				String[] deliveryAddressesId = result.getString("daId").split("-");
@@ -108,23 +109,10 @@ public class CustomerDao extends AbstractDao {
         }		
 		customer.setUser((User) userDao.findLast());
 		
-		// Persists the Home Address
-		IDao addressDao = new AddressDao();
-        if(!addressDao.save(customer.getHomeAddress())){
-            return false;
-        }		
-		customer.setHomeAddress((Address) addressDao.findLast());
-		
-		// Persists the Charge Address
-        if(!addressDao.save(customer.getChargeAddress())){
-            return false;
-        }		
-		customer.setChargeAddress((Address) addressDao.findLast());
-		
 		// SQL query
         String sql = "INSERT INTO Customers (enabled, registry, name, birthDate, gender, "
-				+ "id_phone, id_user, id_homeAddress, id_chargeAddress) "
-				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "id_phone, id_user) "
+				+ "VALUES(?, ?, ?, ?, ?, ?, ?)";
         
         try {
 			openConnection();
@@ -139,8 +127,6 @@ public class CustomerDao extends AbstractDao {
             
 			statement.setLong(6, customer.getPhone().getId());
 			statement.setLong(7, customer.getUser().getId());
-			statement.setLong(8, customer.getHomeAddress().getId());
-			statement.setLong(9, customer.getChargeAddress().getId());
             
             statement.execute();
 			statement.close();
@@ -156,8 +142,11 @@ public class CustomerDao extends AbstractDao {
 		customer.setId(lastCustomer.getId());
 		
 		// Persists the DeliveryAddress
-		IDao deliveryAddressDao = new DeliveryAddressDao();
-		if (!deliveryAddressDao.save(customer.getDeliveryAddress(0)))
+		IDao addressDao = new AddressDao();
+		if (!addressDao.save(customer.getDeliveryAddress(0)))
+			return false;
+		// Persists the ChargeAddress
+		if (!addressDao.save(customer.getChargeAddress(0)))
 			return false;
 		
 		// Persists the CreditCard
@@ -174,27 +163,32 @@ public class CustomerDao extends AbstractDao {
 	public Entity find(Entity entity) {
 		Customer customer = (Customer) entity;
 		
-		String query = "SELECT c.*, p.*, u.*, "
-				+ "ha.alias as haAlias, ha.observation as haObservation, ha.publicPlaceType as haPublicPlaceType, "
-				+ "ha.publicPlace as haPublicPlace, ha.number as haNumber, ha.district as haDistrict, "
-				+ "ha.postalCode as haPostalCode, ha.homeType as haHomeType, ha.id_city as haId_city, ha.id as haId, "
-				+ "haCity.id as haCity, haState.id as haState, haCountry.id as haCountry, "
-				+ "ca.alias as caAlias, ca.observation as caObservation, ca.publicPlaceType as caPublicPlaceType, "
-				+ "ca.publicPlace as caPublicPlace, ca.number as caNumber, ca.district as caDistrict, "
-				+ "ca.postalCode as caPostalCode, ca.homeType as caHomeType, ca.id_city as caId_city, ca.id as caId, "
-				+ "caCity.id as caCity, caState.id as caState, caCountry.id as caCountry "
-				+ "FROM Customers c "
-				+ "INNER JOIN Phones p ON c.id_phone = p.id "
-				+ "INNER JOIN Users u ON c.id_user = u.id "
-				+ "INNER JOIN Addresses ha ON c.id_homeAddress = ha.id "
-				+ "INNER JOIN Cities haCity ON ha.id_city = haCity.id "
-				+ "INNER JOIN States haState ON haCity.id_state = haState.id "
-				+ "INNER JOIN Countries haCountry ON haState.id_country = haCountry.id "
-				+ "INNER JOIN Addresses ca ON c.id_chargeAddress = ca.id "
-				+ "INNER JOIN Cities caCity ON ca.id_city = caCity.id "
-				+ "INNER JOIN States caState ON caCity.id_state = caState.id "
-				+ "INNER JOIN Countries caCountry ON caState.id_country = caCountry.id "
-				+ "WHERE c.id = ?";
+		/*String query = "SELECT c.*, p.*, u.*,\n" +
+				"ca.alias as caAlias, ca.observation as caObservation, ca.publicPlaceType as caPublicPlaceType,\n" +
+				"ca.publicPlace as caPublicPlace, ca.number as caNumber, ca.district as caDistrict,\n" +
+				"ca.postalCode as caPostalCode, ca.homeType as caHomeType, ca.city as caCity, ca.id as caId,\n" +
+				"caState.id as caState, caCountry.id as caCountry,\n" +
+				"da.alias as daAlias, da.observation as dabservation, da.publicPlaceType as daPublicPlaceType,\n" +
+				"da.publicPlace as daPublicPlace, da.number as daNumber, da.district as daDistrict,\n" +
+				"da.postalCode as daPostalCode, da.homeType as daHomeType, da.city as daCity, da.id as daId,\n" +
+				"caState.id as caState, caCountry.id as caCountry\n" +
+				"FROM Customers c\n" +
+				"INNER JOIN Phones p ON c.id_phone = p.id\n" +
+				"INNER JOIN Users u ON c.id_user = u.id\n" +
+				"INNER JOIN ChargeAddresses ca ON c.id = ca.id_customer\n" +
+				"  INNER JOIN States caState ON ca.id_state = caState.id\n" +
+				"  INNER JOIN Countries caCountry ON caState.id_country = caCountry.id\n" +
+				"INNER JOIN DeliveryAddresses da ON c.id = da.id_customer\n" +
+				"  INNER JOIN States daState ON da.id_state = daState.id\n" +
+				"  INNER JOIN Countries daCountry ON daState.id_country = daCountry.id\n" +
+				"INNER JOIN CreditCards cc ON c.id = cc.id_customer\n" +
+				"WHERE c.id = ?";*/
+
+		String query = "SELECT c.*, p.*, u.*\n" +
+				"FROM Customers c\n" +
+				"INNER JOIN Phones p ON c.id_phone = p.id\n" +
+				"INNER JOIN Users u ON c.id_user = u.id\n" +
+				"WHERE c.id = ?";
 		
 		try {
 			openConnection();
@@ -214,18 +208,6 @@ public class CustomerDao extends AbstractDao {
 						result.getString("phones.phoneType"), result.getLong("phones.id")));
 				customer.setUser(new User(result.getString("users.email"), result.getString("users.password"),
 						result.getString("users.password"), result.getLong("users.id")));
-				customer.setHomeAddress(new Address(result.getString("haAlias"), result.getString("haObservation"),
-						result.getString("haPublicPlaceType"), result.getString("haPublicPlace"), result.getString("haNumber"), 
-						result.getString("haDistrict"), result.getString("haPostalCode"), result.getString("haHomeType"), 
-						new City(result.getLong("haCity"), 
-								new State(result.getLong("haState"), 
-										new Country(result.getLong("haCountry")))), result.getLong("haId")));
-				customer.setChargeAddress(new Address(result.getString("caAlias"), result.getString("caObservation"),
-						result.getString("caPublicPlaceType"), result.getString("caPublicPlace"), result.getString("caNumber"), 
-						result.getString("caDistrict"), result.getString("caPostalCode"), result.getString("caHomeType"), 
-						new City(result.getLong("haCity"), 
-								new State(result.getLong("haState"), 
-										new Country(result.getLong("haCountry")))), result.getLong("caId")));
 			}
 			
 			stmt.close();
@@ -252,18 +234,6 @@ public class CustomerDao extends AbstractDao {
 			// Updates the User
 			UserDao userDao = new UserDao();
 			if(!userDao.update(customer.getUser(), operation)){
-				return false;
-			}
-
-			AddressDao addressDao = new AddressDao();
-
-			// Updates the Home Address
-			if(!addressDao.update(customer.getHomeAddress(), operation)){
-				return false;
-			}
-
-			// Updates the Charge Address
-			if(!addressDao.update(customer.getChargeAddress(), operation)){
 				return false;
 			}
 		}
@@ -345,42 +315,28 @@ public class CustomerDao extends AbstractDao {
 			where += "AND u.email = '" + customer.getUser().getEmail() + "' ";
 		if (customer.getUser().getPassword() != null && !customer.getUser().getPassword().equals(""))
 			where += "AND u.password = '" + customer.getUser().getPassword() + "' ";
-		// Home Address
-		if (customer.getHomeAddress().getAlias() != null && !customer.getHomeAddress().getAlias().equals(""))
-			where += "AND haAlias = '" + customer.getHomeAddress().getAlias() + "' "
-					+ "OR caAlias = '" + customer.getHomeAddress().getAlias() + "' "
-					+ "OR daAlias = '" + customer.getHomeAddress().getAlias() + "' ";
-		if (customer.getHomeAddress().getObservation() != null && !customer.getHomeAddress().getObservation().equals(""))
-			where += "AND ha.observation = '" + customer.getHomeAddress().getObservation() + "' ";
-		if (customer.getHomeAddress().getPublicPlaceType() != null && !customer.getHomeAddress().getPublicPlaceType().equals(""))
-			where += "AND ha.publicPlaceType = '" + customer.getHomeAddress().getPublicPlaceType() + "' ";
-		if (customer.getHomeAddress().getPublicPlace() != null && !customer.getHomeAddress().getPublicPlace().equals(""))
-			where += "AND ha.publicPlace = '" + customer.getHomeAddress().getPublicPlace() + "' ";
-		if (customer.getHomeAddress().getNumber() != null && !customer.getHomeAddress().getNumber().equals(""))
-			where += "AND ha.number = '" + customer.getHomeAddress().getNumber() + "' ";
-		if (customer.getHomeAddress().getDistrict() != null && !customer.getHomeAddress().getDistrict().equals(""))
-			where += "AND ha.district = '" + customer.getHomeAddress().getDistrict() + "' ";
-		if (customer.getHomeAddress().getPostalCode() != null && !customer.getHomeAddress().getPostalCode().equals(""))
-			where += "AND ha.postalCode = '" + customer.getHomeAddress().getPostalCode() + "' ";
-		if (customer.getHomeAddress().getHomeType() != null && !customer.getHomeAddress().getHomeType().equals(""))
-			where += "AND ha.homeType = '" + customer.getHomeAddress().getHomeType() + "' ";
-//		// Charge Address
-//		if (customer.getChargeAddress().getAlias() != null && !customer.getChargeAddress().getAlias().equals(""))
-//			where += "AND caAlias = " + customer.getChargeAddress().getAlias() + " ";
-//		if (customer.getChargeAddress().getObservation() != null && !customer.getChargeAddress().getObservation().equals(""))
-//			where += "AND ca.observation = " + customer.getChargeAddress().getObservation() + " ";
-//		if (customer.getChargeAddress().getPublicPlaceType() != null && !customer.getChargeAddress().getPublicPlaceType().equals(""))
-//			where += "AND ca.publicPlaceType = " + customer.getChargeAddress().getPublicPlaceType() + " ";
-//		if (customer.getChargeAddress().getPublicPlace() != null && !customer.getChargeAddress().getPublicPlace().equals(""))
-//			where += "AND ca.publicPlace = " + customer.getChargeAddress().getPublicPlace() + " ";
-//		if (customer.getChargeAddress().getNumber() != null && !customer.getChargeAddress().getNumber().equals(""))
-//			where += "AND ca.number = " + customer.getChargeAddress().getNumber() + " ";
-//		if (customer.getChargeAddress().getDistrict() != null && !customer.getChargeAddress().getDistrict().equals(""))
-//			where += "AND ca.district = " + customer.getChargeAddress().getDistrict() + " ";
-//		if (customer.getChargeAddress().getPostalCode() != null && !customer.getChargeAddress().getPostalCode().equals(""))
-//			where += "AND ca.postalCode = " + customer.getChargeAddress().getPostalCode() + " ";
-//		if (customer.getChargeAddress().getHomeType() != null && !customer.getChargeAddress().getHomeType().equals(""))
-//			where += "AND ca.homeType = " + customer.getChargeAddress().getHomeType() + " ";
+
+        /*
+        Addresses
+		if (customer.getDeliveryAddress(0).getAlias() != null && !customer.getDeliveryAddress(0).getAlias().equals(""))
+			where += "AND haAlias = '" + customer.getDeliveryAddress(0).getAlias() + "' "
+					+ "OR caAlias = '" + customer.getDeliveryAddress(0).getAlias() + "' "
+					+ "OR daAlias = '" + customer.getDeliveryAddress(0).getAlias() + "' ";
+		if (customer.getDeliveryAddress(0).getObservation() != null && !customer.getDeliveryAddress(0).getObservation().equals(""))
+			where += "AND ha.observation = '" + customer.getDeliveryAddress(0).getObservation() + "' ";
+		if (customer.getDeliveryAddress(0).getPublicPlaceType() != null && !customer.getDeliveryAddress(0).getPublicPlaceType().equals(""))
+			where += "AND ha.publicPlaceType = '" + customer.getDeliveryAddress(0).getPublicPlaceType() + "' ";
+		if (customer.getDeliveryAddress(0).getPublicPlace() != null && !customer.getDeliveryAddress(0).getPublicPlace().equals(""))
+			where += "AND ha.publicPlace = '" + customer.getDeliveryAddress(0).getPublicPlace() + "' ";
+		if (customer.getDeliveryAddress(0).getNumber() != null && !customer.getDeliveryAddress(0).getNumber().equals(""))
+			where += "AND ha.number = '" + customer.getDeliveryAddress(0).getNumber() + "' ";
+		if (customer.getDeliveryAddress(0).getDistrict() != null && !customer.getDeliveryAddress(0).getDistrict().equals(""))
+			where += "AND ha.district = '" + customer.getDeliveryAddress(0).getDistrict() + "' ";
+		if (customer.getDeliveryAddress(0).getPostalCode() != null && !customer.getDeliveryAddress(0).getPostalCode().equals(""))
+			where += "AND ha.postalCode = '" + customer.getDeliveryAddress(0).getPostalCode() + "' ";
+		if (customer.getDeliveryAddress(0).getHomeType() != null && !customer.getDeliveryAddress(0).getHomeType().equals(""))
+			where += "AND ha.homeType = '" + customer.getDeliveryAddress(0).getHomeType() + "' ";
+        */
 		
 		return where;
 	}

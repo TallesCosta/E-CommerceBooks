@@ -1,16 +1,7 @@
-<%@page import="br.com.talles.ecommercebooks.domain.customer.CardCompany"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.CreditCard"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.Country"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.State"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.City"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.Phone"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.Gender"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Arrays"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.Address"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.User"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.Customer"%>
 <%@page import="br.com.talles.ecommercebooks.controll.Result"%>
+<%@ page import="br.com.talles.ecommercebooks.domain.customer.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -30,14 +21,12 @@
     </head>
     <body>
 		<%
-			Result result = new Result();
-			result = (Result) request.getAttribute("result");
-			
-			Customer customer = new Customer("", "", new Date(0L), new Gender(""), new Phone("", "", "", 0L), 
-			   new User("", "", "", 0L), 
-			   new Address("", "", "", "", "", "", "", "", new City(0L, new State(0L, new Country(0L))), 0L), 
-			   new Address("", "", "", "", "", "", "", "", new City(0L, new State(0L, new Country(0L))), 0L), 
-			   Arrays.asList(new CreditCard("", "", "", new Date(0L), new CardCompany(0L), 0L)), 0L);
+			Result result = (Result) request.getAttribute("result");
+
+			Customer customer = new Customer("", "", new Date(0L), new Gender(""), new Phone("", "", "", 0L), new User("", "", "", 0L),
+					Arrays.asList(new ChargeAddress("", "", "", "", "", "", "", "", "", new State(0L, new Country(0L)), 0L)),
+					Arrays.asList(new DeliveryAddress("", "", "", "", "", "", "", "", "", new State(0L, new Country(0L)), 0L)),
+					Arrays.asList(new CreditCard("", "", "", new Date(0L), new CardCompany(0L), 0L)), 0L);
 
 			if (result != null) {
 				if (result.getKeys().contains(Customer.class.getSimpleName())) {
@@ -67,7 +56,7 @@
 						<input type="hidden" name="operation" id="operation-custumer" value="LIST" />
 						<button type="submit">Login</button>
 						<a class="create-customer"
-						   href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">  Cadastra</a>
+						   href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">  Cadastre-se</a>
 					</fieldset>
 				</form>
 			</div>

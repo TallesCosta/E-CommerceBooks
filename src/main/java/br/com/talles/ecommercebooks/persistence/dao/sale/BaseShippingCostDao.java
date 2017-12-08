@@ -31,12 +31,11 @@ public class BaseShippingCostDao extends AbstractDao {
     public Entity find(Entity entity) {
         Delivery delivery = (Delivery) entity;
 
-        String sql = "SELECT bsc.* "
-                + "FROM DeliveryAddresses da "
-                + "INNER JOIN Cities c on da.id_city = c.id "
-                + "INNER JOIN States s on c.id_state = s.id "
-                + "INNER JOIN BaseShippingCosts bsc on s.id = bsc.id_state "
-                + "WHERE da.id = ? ";
+        String sql = "SELECT bsc.*\n" +
+                "FROM DeliveryAddresses da\n" +
+                "INNER JOIN States s on da.id_state = s.id\n" +
+                "INNER JOIN BaseShippingCosts bsc on s.id = bsc.id_state\n" +
+                "WHERE da.id = ?";
 
         try {
             openConnection();

@@ -13,7 +13,6 @@ public class CustomerNotBlank implements IStrategy {
 		
 		IStrategy phoneNotBlank = new PhoneNotBlank();
 		IStrategy userNotBlank = new UserNotBlank();
-		IStrategy addressNotBlank = new AddressNotBlank();
 		
         if (customer.getRegistry() == null || customer.getRegistry().trim().isEmpty()) {
             result.addMsg("CPF é um campo obrigatório!\n");
@@ -27,7 +26,6 @@ public class CustomerNotBlank implements IStrategy {
 		
 		result = phoneNotBlank.process(customer.getPhone(), result);
 		result = userNotBlank.process(customer.getUser(), result);
-		result = addressNotBlank.process(customer.getHomeAddress(), result);
 		
 		return result;
 	}

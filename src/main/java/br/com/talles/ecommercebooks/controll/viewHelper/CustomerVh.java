@@ -3,17 +3,7 @@ package br.com.talles.ecommercebooks.controll.viewHelper;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.History;
-import br.com.talles.ecommercebooks.domain.customer.CardCompany;
-import br.com.talles.ecommercebooks.domain.customer.Address;
-import br.com.talles.ecommercebooks.domain.customer.Customer;
-import br.com.talles.ecommercebooks.domain.customer.City;
-import br.com.talles.ecommercebooks.domain.customer.State;
-import br.com.talles.ecommercebooks.domain.customer.Country;
-import br.com.talles.ecommercebooks.domain.customer.CreditCard;
-import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
-import br.com.talles.ecommercebooks.domain.customer.Gender;
-import br.com.talles.ecommercebooks.domain.customer.Phone;
-import br.com.talles.ecommercebooks.domain.customer.User;
+import br.com.talles.ecommercebooks.domain.customer.*;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -74,7 +64,7 @@ public class CustomerVh implements IViewHelper {
 		if (!(idUserS == null || idUserS.equals("")))
 			idUser = Long.valueOf(idUserS);
 		
-		// Home's Address datas
+		// Charge/Delivery's Address datas
 		String homeAlias = request.getParameter("homeAlias");
 		String homeObservation = request.getParameter("homeObservation");
 		String homePublicPlaceType = request.getParameter("homePublicPlaceType");
@@ -83,11 +73,7 @@ public class CustomerVh implements IViewHelper {
 		String homeDistrict = request.getParameter("homeDistrict");
 		String homePostalCode = request.getParameter("homePostalCode");
 		String homeHomeType = request.getParameter("homeHomeType");
-		
-		String idHomeCityS = request.getParameter("homeCity");
-		long idHomeCity = 0L;
-		if (!(idHomeCityS == null || idHomeCityS.equals("")))
-			idHomeCity = Long.valueOf(idHomeCityS);
+		String homeCity = request.getParameter("homeCity");
 		
 		String idHomeStateS = request.getParameter("homeState");
 		long idHomeState = 0L;
@@ -103,36 +89,6 @@ public class CustomerVh implements IViewHelper {
 		long idHome = 0L;
 		if (!(idHomeS == null || idHomeS.equals("")))
 			idHome = Long.valueOf(idUserS);
-		
-		// Charge's Address datas - Only update view
-		String chargeAlias = request.getParameter("chargeAlias");
-		String chargeObservation = request.getParameter("chargeObservation");
-		String chargePublicPlaceType = request.getParameter("chargePublicPlaceType");
-		String chargePublicPlace = request.getParameter("chargePublicPlace");
-		String chargeNumber = request.getParameter("chargeNumber");
-		String chargeDistrict = request.getParameter("chargeDistrict");
-		String chargePostalCode = request.getParameter("chargePostalCode");
-		String chargeHomeType = request.getParameter("chargeHomeType");
-		
-		String idChargeCityS = request.getParameter("chargeCity");
-		long idChargeCity = 0L;
-		if (!(idChargeCityS == null || idChargeCityS.equals("")))
-			idChargeCity = Long.valueOf(idChargeCityS);
-		
-		String idChargeStateS = request.getParameter("chargeState");
-		long idChargeState = 0L;
-		if (!(idChargeStateS == null || idChargeStateS.equals("")))
-			idChargeState = Long.valueOf(idChargeStateS);
-		
-		String idChargeCountryS = request.getParameter("chargeCountry");
-		long idChargeCountry = 0L;
-		if (!(idChargeCountryS == null || idChargeCountryS.equals("")))
-			idChargeCountry = Long.valueOf(idChargeCountryS);
-		
-		String idChargeS = request.getParameter("idCharge");
-		long idCharge = 0L;
-		if (!(idChargeS == null || idChargeS.equals("")))
-			idCharge = Long.valueOf(idChargeS);
 		
 		// Credit Carde datas
 		String cardNumber = request.getParameter("cardNumber");
@@ -178,18 +134,14 @@ public class CustomerVh implements IViewHelper {
 				customer.setPhone(new Phone(ddd, phoneNumber, phoneType));
 				// User
 				customer.setUser(new User(email, password, passwordVerify));
-				// Home Address
-				customer.setHomeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
-						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
-						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry)))));
 				// Charge Address
-				customer.setChargeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
-						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
-						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry)))));
+				customer.setChargeAddresses(Arrays.asList(new ChargeAddress(homeAlias, homeObservation, homePublicPlaceType,
+						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, homeCity,
+						new State(idHomeState, new Country(idHomeCountry)))));
 				// Delivery Address
-				customer.setDeliveryAddresses(Arrays.asList(new DeliveryAddress(true, homeAlias, homeObservation, 
-						homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, 
-						homeHomeType, new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry))))));
+				customer.setDeliveryAddresses(Arrays.asList(new DeliveryAddress(homeAlias, homeObservation, homePublicPlaceType,
+						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, homeCity,
+						new State(idHomeState, new Country(idHomeCountry)))));
 				// Credit Card
 				customer.setCreditCards(Arrays.asList(new CreditCard(cardNumber, printedName, securityCode, 
 						expirationDate, new CardCompany(idCardCompany))));
@@ -205,10 +157,14 @@ public class CustomerVh implements IViewHelper {
 				customer.setPhone(new Phone(ddd, phoneNumber, phoneType));
 				// User
 				customer.setUser(new User(email, password));
-				// Home Address
-				customer.setHomeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
-						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
-						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry)))));
+				// Charge Address
+				customer.setChargeAddresses(Arrays.asList(new ChargeAddress(homeAlias, homeObservation,
+						homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode,
+						homeHomeType, homeCity, new State(idHomeState, new Country(idHomeCountry)))));
+				// Delivery Address
+				customer.setDeliveryAddresses(Arrays.asList(new DeliveryAddress(homeAlias, homeObservation, homePublicPlaceType,
+						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, homeCity,
+						new State(idHomeState, new Country(idHomeCountry)))));
 				// Credit Card
 				customer.setCreditCards(Arrays.asList(new CreditCard(cardNumber, printedName, securityCode, 
 						expirationDate, new CardCompany(idCardCompany))));
@@ -224,18 +180,14 @@ public class CustomerVh implements IViewHelper {
 				customer.setPhone(new Phone(ddd, phoneNumber, phoneType));
 				// User
 				customer.setUser(new User(email, password));
-				// Home Address
-				customer.setHomeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
-						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
-						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry)))));
 				// Charge Address
-				customer.setChargeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
-						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
-						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry)))));
+				customer.setChargeAddresses(Arrays.asList(new ChargeAddress(homeAlias, homeObservation,
+						homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode,
+						homeHomeType, homeCity, new State(idHomeState, new Country(idHomeCountry)))));
 				// Delivery Address
-				customer.setDeliveryAddresses(Arrays.asList(new DeliveryAddress(true, homeAlias, homeObservation, 
+				customer.setDeliveryAddresses(Arrays.asList(new DeliveryAddress(homeAlias, homeObservation,
 						homePublicPlaceType, homePublicPlace, homeNumber, homeDistrict, homePostalCode, 
-						homeHomeType, new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry))))));
+						homeHomeType, homeCity, new State(idHomeState, new Country(idHomeCountry)))));
 				// Credit Card
 				customer.setCreditCards(Arrays.asList(new CreditCard(cardNumber, printedName, securityCode, 
 						expirationDate, new CardCompany(idCardCompany))));
@@ -260,14 +212,6 @@ public class CustomerVh implements IViewHelper {
 				customer.setPhone(new Phone(ddd, phoneNumber, phoneType, idPhone));
 				// User
 				customer.setUser(new User(email, password, passwordVerify, idUser));
-				// Home Address
-				customer.setHomeAddress(new Address(homeAlias, homeObservation, homePublicPlaceType, 
-						homePublicPlace, homeNumber, homeDistrict, homePostalCode, homeHomeType, 
-						new City(idHomeCity, new State(idHomeState, new Country(idHomeCountry))), idHome));
-				// Change Address
-				customer.setChargeAddress(new Address(chargeAlias, chargeObservation, chargePublicPlaceType, 
-						chargePublicPlace, chargeNumber, chargeDistrict, chargePostalCode, chargeHomeType, 
-						new City(idChargeCity, new State(idChargeState, new Country(idChargeCountry))), idCharge));
 				break;
 
 			case "DISABLE":
@@ -297,74 +241,70 @@ public class CustomerVh implements IViewHelper {
 			HttpSession session = request.getSession();
 			User userSession = (User) session.getAttribute("user");
 
-			if (userSession == null || userSession.getId() != 1) {
-				response.sendRedirect("/E-CommerceBooks/stocks/list?operation=LIST");
-			} else {
-				switch(request.getParameter("operation")) {
-					case "CREATE" :
+			switch(request.getParameter("operation")) {
+				case "CREATE" :
+					dispatcher = request.getRequestDispatcher("/customer/create.jsp");
+					dispatcher.forward(request, response);
+					break;
+
+				case "SAVE":
+					if (!result.hasMsg())
+						response.sendRedirect("/E-CommerceBooks/customers/list?operation=LIST");
+					else{
 						dispatcher = request.getRequestDispatcher("/customer/create.jsp");
 						dispatcher.forward(request, response);
-						break;
+					}
+					break;
 
-					case "SAVE":
-						if (!result.hasMsg())
-							response.sendRedirect("/E-CommerceBooks/customers/list?operation=LIST");
-						else{
-							dispatcher = request.getRequestDispatcher("/customer/create.jsp");
-							dispatcher.forward(request, response);
-						}
-						break;
+				case "LIST":
+					dispatcher = request.getRequestDispatcher("/customer/list.jsp");
+					dispatcher.forward(request, response);
+					break;
 
-					case "LIST":
+				case "LIST-DISABLE":
+					dispatcher = request.getRequestDispatcher("/customer/list-disable.jsp");
+					dispatcher.forward(request, response);
+					break;
+
+				case "FIND":
+					dispatcher = request.getRequestDispatcher("/customer/create.jsp");
+					dispatcher.forward(request, response);
+					break;
+
+				case "HISTORY":
+					dispatcher = request.getRequestDispatcher("/customer/show.jsp");
+					dispatcher.forward(request, response);
+					break;
+
+				case "UPDATE":
+					if (!result.hasMsg()) {
+						response.sendRedirect("/E-CommerceBooks/customers/list?operation=LIST");
+					} else {
+						dispatcher = request.getRequestDispatcher("/customer/create.jsp");
+						dispatcher.forward(request, response);
+					}
+					break;
+
+				case "DISABLE":
+					if (!result.hasMsg()) {
+						response.sendRedirect("/E-CommerceBooks/customers/list?operation=LIST");
+					} else {
 						dispatcher = request.getRequestDispatcher("/customer/list.jsp");
 						dispatcher.forward(request, response);
-						break;
+					}
+					break;
 
-					case "LIST-DISABLE":
+				case "ENABLE":
+					if (!result.hasMsg()) {
+						response.sendRedirect("/E-CommerceBooks/customers/list-disable?operation=LIST-DISABLE");
+					} else {
 						dispatcher = request.getRequestDispatcher("/customer/list-disable.jsp");
 						dispatcher.forward(request, response);
-						break;
+					}
+					break;
 
-					case "FIND":
-						dispatcher = request.getRequestDispatcher("/customer/create.jsp");
-						dispatcher.forward(request, response);
-						break;
-
-					case "HISTORY":
-						dispatcher = request.getRequestDispatcher("/customer/show.jsp");
-						dispatcher.forward(request, response);
-						break;
-
-					case "UPDATE":
-						if (!result.hasMsg()) {
-							response.sendRedirect("/E-CommerceBooks/customers/list?operation=LIST");
-						} else {
-							dispatcher = request.getRequestDispatcher("/customer/create.jsp");
-							dispatcher.forward(request, response);
-						}
-						break;
-
-					case "DISABLE":
-						if (!result.hasMsg()) {
-							response.sendRedirect("/E-CommerceBooks/customers/list?operation=LIST");
-						} else {
-							dispatcher = request.getRequestDispatcher("/customer/list.jsp");
-							dispatcher.forward(request, response);
-						}
-						break;
-
-					case "ENABLE":
-						if (!result.hasMsg()) {
-							response.sendRedirect("/E-CommerceBooks/customers/list-disable?operation=LIST-DISABLE");
-						} else {
-							dispatcher = request.getRequestDispatcher("/customer/list-disable.jsp");
-							dispatcher.forward(request, response);
-						}
-						break;
-
-					case "DELETE":
-						break;
-				}
+				case "DELETE":
+					break;
 			}
 
 		} catch (ServletException | IOException ex) {

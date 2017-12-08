@@ -1,18 +1,9 @@
-<%@page import="br.com.talles.ecommercebooks.domain.customer.CreditCard"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.Address"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.CardCompany"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.Country"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.State"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.City"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.User"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.Phone"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.Gender"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.Customer"%>
 <%@page import="br.com.talles.ecommercebooks.controll.Result"%>
+<%@ page import="br.com.talles.ecommercebooks.domain.customer.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -30,10 +21,9 @@
     </head>
     <body>
 		<%
-			Customer customer = new Customer("", "", new Date(0L), new Gender(""), new Phone("", "", "", 0L), 
-					new User("", "", "", 0L), 
-					new Address("", "", "", "", "", "", "", "", new City(0L, new State(0L, new Country(0L))), 0L), 
-					new Address("", "", "", "", "", "", "", "", new City(0L, new State(0L, new Country(0L))), 0L), 
+			Customer customer = new Customer("", "", new Date(0L), new Gender(""), new Phone("", "", "", 0L), new User("", "", "", 0L),
+					Arrays.asList(new ChargeAddress("", "", "", "", "", "", "", "", "", new State(0L, new Country(0L)), 0L)),
+					Arrays.asList(new DeliveryAddress("", "", "", "", "", "", "", "", "", new State(0L, new Country(0L)), 0L)),
 					Arrays.asList(new CreditCard("", "", "", new Date(0L), new CardCompany(0L), 0L)), 0L);
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -135,178 +125,73 @@
 							   value="<% out.print(customer.getUser().getPasswordVerify()); %>">
 					</div>
 				</fieldset>
-				
+
+			<%
+				if (!result.getTransaction().getOperation().equals("FIND")) {
+			%>
 				<fieldset>
-					<legend>Endereço Residencial</legend>
-					<input type="hidden" name="idHome" id="idHome" 
-						   <% out.print("value='" + customer.getHomeAddress().getId() + "'"); %> >
+					<legend>Endereço</legend>
+					<input type="hidden" name="idHome" id="idHome" >
 					<div>
 						<label for="homeAlias">Apelido*: </label>
-						<input name="homeAlias" id="homeAlias" type="text"
-							   value="<% out.print(customer.getHomeAddress().getAlias()); %>">
+						<input name="homeAlias" id="homeAlias" type="text">
 					</div>
 					<div>
 						<label for="homeObservation">Observações: </label>
-						<textarea name="homeObservation" id="homeObservation"><% out.print(customer.getHomeAddress().getObservation()); %></textarea>
+						<textarea name="homeObservation" id="homeObservation"></textarea>
 					</div>
 					<div>
 						<label for="homePublicPlaceType">Tipo de Logradouro*: </label>
 						<input name="homePublicPlaceType" id="homePublicPlaceType" type="text"
-							   value="<% out.print(customer.getHomeAddress().getPublicPlaceType()); %>"
 							   placeholder="Rua, Av., Tr., etc.">
 					</div>
 					<div>
 						<label for="homePublicPlace">Logradouro*: </label>
-						<input name="homePublicPlace" id="homePublicPlace" type="text"
-							   value="<% out.print(customer.getHomeAddress().getPublicPlace()); %>">
+						<input name="homePublicPlace" id="homePublicPlace" type="text" >
 					</div>
 					<div>
 						<label for="homeNumber">Número*: </label>
-						<input name="homeNumber" id="homeNumber" type="text"
-							   value="<% out.print(customer.getHomeAddress().getNumber()); %>">
+						<input name="homeNumber" id="homeNumber" type="text" >
 					</div>
 					<div>
 						<label for="homeDistrict">Bairro*: </label>
-						<input name="homeDistrict" id="homeDistrict" type="text"
-							   value="<% out.print(customer.getHomeAddress().getDistrict()); %>">
+						<input name="homeDistrict" id="homeDistrict" type="text" >
 					</div>
 					<div>
 						<label for="homePostalCode">CEP*: </label>
-						<input name="homePostalCode" id="homePostalCode" type="text"
-							   value="<% out.print(customer.getHomeAddress().getPostalCode()); %>">
+						<input name="homePostalCode" id="homePostalCode" type="text" >
 					</div>
 					<div>
 						<label for="homeHomeType">Tipo de Residência*: </label>
 						<input name="homeHomeType" id="homeHomeType" type="text"
-							   value="<% out.print(customer.getHomeAddress().getHomeType()); %>"
 							   placeholder="Casa, Apartamento, etc.">
 					</div>
 					<div>
-						<input type="hidden" name="idHomeCity" id="idHomeCity" 
-							   <% out.print("value='" + customer.getHomeAddress().getCity().getId() + "'"); %> >
 						<label for="homeCity">Cidade*: </label>
-						<select name="homeCity" id="homeCity">
-		<%	
-			for(Entity entity : result.getEntities(City.class.getSimpleName())){
-				City city = (City) entity;
-				out.print("<option value='" + city.getId() + "'>" + city.getName() + "</option>");
-			}
-		%>
-						</select>
+						<input name="homeCity" id="homeCity" type="text" >
 					</div>
 					<div>
-						<input type="hidden" name="idHomeState" id="idHomeState" 
-							   <% out.print("value='" + customer.getHomeAddress().getCity().getState().getId() + "'"); %> >
+						<input type="hidden" name="idHomeState" id="idHomeState" >
 						<label for="homeState">Estado*: </label>
 						<select name="homeState" id="homeState">
-		<%	
-			for(Entity entity : result.getEntities(State.class.getSimpleName())){
-				State state = (State) entity;
-				out.print("<option value='" + state.getId() + "'>" + state.getName() + "</option>");
-			}
-		%>
+				<%
+					for(Entity entity : result.getEntities(State.class.getSimpleName())){
+						State state = (State) entity;
+						out.print("<option value='" + state.getId() + "'>" + state.getName() + "</option>");
+					}
+				%>
 						</select>
 					</div>
 					<div>
-						<input type="hidden" name="idHomeCountry" id="idHomeCountry" 
-							   <% out.print("value='" + customer.getHomeAddress().getCity().getState().getCountry().getId() + "'"); %> >
+						<input type="hidden" name="idHomeCountry" id="idHomeCountry" >
 						<label for="homeCountry">País*: </label>
 						<select name="homeCountry" id="homeCountry">
-		<%	
-			for(Entity entity : result.getEntities(Country.class.getSimpleName())){
-				Country country = (Country) entity;
-				out.print("<option value='" + country.getId() + "'>" + country.getName() + "</option>");
-			}
-		%>
-						</select>
-					</div>
-				</fieldset>
-				
-		<%
-			if (result.getTransaction().getOperation().equals("FIND")) {
-		%>
-				<fieldset>
-					<legend>Endereço de Cobrança</legend>
-					<input type="hidden" name="idCharge" id="idCharge" 
-						   <% out.print("value='" + customer.getChargeAddress().getId() + "'"); %> >
-					<div>
-						<label for="chargeAlias">Apelido*: </label>
-						<input name="chargeAlias" id="chargeAlias" type="text"
-							   value="<% out.print(customer.getChargeAddress().getAlias()); %>">
-					</div>
-					<div>
-						<label for="chargeObservation">Observações: </label>
-						<textarea name="chargeObservation" id="chargeObservation"><% out.print(customer.getChargeAddress().getObservation()); %></textarea>
-					</div>
-					<div>
-						<label for="chargePublicPlaceType">Tipo de Logradouro*: </label>
-						<input name="chargePublicPlaceType" id="chargePublicPlaceType" type="text"
-							   value="<% out.print(customer.getChargeAddress().getPublicPlaceType()); %>"
-							   placeholder="Rua, Av., Tr., etc.">
-					</div>
-					<div>
-						<label for="chargePublicPlace">Logradouro*: </label>
-						<input name="chargePublicPlace" id="chargePublicPlace" type="text"
-							   value="<% out.print(customer.getChargeAddress().getPublicPlace()); %>">
-					</div>
-					<div>
-						<label for="chargeNumber">Número*: </label>
-						<input name="chargeNumber" id="chargeNumber" type="text"
-							   value="<% out.print(customer.getChargeAddress().getNumber()); %>">
-					</div>
-					<div>
-						<label for="chargeDistrict">Bairro*: </label>
-						<input name="chargeDistrict" id="chargeDistrict" type="text"
-							   value="<% out.print(customer.getChargeAddress().getDistrict()); %>">
-					</div>
-					<div>
-						<label for="chargePostalCode">CEP*: </label>
-						<input name="chargePostalCode" id="chargePostalCode" type="text"
-							   value="<% out.print(customer.getChargeAddress().getPostalCode()); %>">
-					</div>
-					<div>
-						<label for="chargeHomeType">Tipo de Residência*: </label>
-						<input name="chargeHomeType" id="chargeHomeType" type="text"
-							   value="<% out.print(customer.getChargeAddress().getHomeType()); %>" 
-							   placeholder="Casa, Apartamento, etc.">
-					</div>
-					<div>
-						<input type="hidden" name="idChargeCity" id="idChargeCity" 
-							   <% out.print("value='" + customer.getChargeAddress().getCity().getId() + "'"); %> >
-						<label for="chargeCity">Cidade*: </label>
-						<select name="chargeCity" id="chargeCity">
-			<%	
-				for(Entity entity : result.getEntities(City.class.getSimpleName())){
-					City city = (City) entity;
-					out.print("<option value='" + city.getId() + "'>" + city.getName() + "</option>");
-				}
-			%>
-						</select>
-					</div>
-					<div>
-						<input type="hidden" name="idChargeState" id="idChargeState" 
-							   <% out.print("value='" + customer.getChargeAddress().getCity().getState().getId() + "'"); %> >
-						<label for="chargeState">Estado*: </label>
-						<select name="chargeState" id="chargeState">
-			<%	
-				for(Entity entity : result.getEntities(State.class.getSimpleName())){
-					State state = (State) entity;
-					out.print("<option value='" + state.getId() + "'>" + state.getName() + "</option>");
-				}
-			%>
-						</select>
-					</div>
-					<div>
-						<input type="hidden" name="idChargeCountry" id="idChargeCountry" 
-							   <% out.print("value='" + customer.getChargeAddress().getCity().getState().getCountry().getId() + "'"); %> >
-						<label for="chargeCountry">País*: </label>
-						<select name="chargeCountry" id="chargeCountry">
-			<%	
-				for(Entity entity : result.getEntities(Country.class.getSimpleName())){
-					Country country = (Country) entity;
-					out.print("<option value='" + country.getId() + "'>" + country.getName() + "</option>");
-				}
-			%>
+				<%
+					for(Entity entity : result.getEntities(Country.class.getSimpleName())){
+						Country country = (Country) entity;
+						out.print("<option value='" + country.getId() + "'>" + country.getName() + "</option>");
+					}
+				%>
 						</select>
 					</div>
 				</fieldset>
@@ -319,28 +204,22 @@
 					<legend>Cartão de Crédito</legend>
 					<div>
 						<label for="cardNumber">Número*: </label>
-						<input name="cardNumber" id="cardNumber" type="text"
-							   value="<% out.print(customer.getCreditCard(0).getNumber()); %>">
+						<input name="cardNumber" id="cardNumber" type="text" >
 					</div>
 					<div>
 						<label for="printedName">Nome Impresso*: </label>
-						<input name="printedName" id="printedName" type="text"
-							   value="<% out.print(customer.getCreditCard(0).getPrintedName()); %>">
+						<input name="printedName" id="printedName" type="text" >
 					</div>
 					<div>
 						<label for="securityCode">Código de Segurança*: </label>
-						<input name="securityCode" id="securityCode" type="text"
-							   value="<% out.print(customer.getCreditCard(0).getSecurityCode()); %>">
+						<input name="securityCode" id="securityCode" type="text" >
 					</div>
 					<div>
 						<label for="expirationDate">Data Exp.*: </label>
-						<input name="expirationDate" id="expirationDate" type="date"
-							   value="<% out.print(dateFormat.format(customer.getCreditCard(0).getExpirationDate())); %>"
+						<input name="expirationDate" id="expirationDate" type="date" />
 					</div>
 					<div>
-						<input type="hidden" name="idCardCompany" id="idCardCompany" 
-							   <% out.print("value='" + customer.getCreditCard(0)
-									   .getCardCompany().getId() + "'"); %> >
+						<input type="hidden" name="idCardCompany" id="idCardCompany" >
 						<label for="cardCompany">Bandeira*: </label>
 						<select name="cardCompany" id="cardCompany">
 			<%	
@@ -377,23 +256,11 @@
 		<script>
 			// With the page ready, selects the options in combo-boxes
 			$(function() {
-				var idHomeCity = $("#idHomeCity").val();
-				$("#homeCity").val(idHomeCity);
-								
 				var idHomeState = $("#idHomeState").val();
 				$("#homeState").val(idHomeState);
 				
 				var idHomeCountry = $("#idHomeCountry").val();
 				$("#homeCountry").val(idHomeCountry);
-				
-				var idChargeCity = $("#idChargeCity").val();
-				$("#chargeCity").val(idChargeCity);
-								
-				var idChargeState = $("#idChargeState").val();
-				$("#chargeState").val(idChargeState);
-				
-				var idChargeCountry = $("#idChargeCountry").val();
-				$("#chargeCountry").val(idChargeCountry);
 				
 				var idCreditCard = $("#idCreditCard").val();
 				$("#creditCard").val(idCreditCard);

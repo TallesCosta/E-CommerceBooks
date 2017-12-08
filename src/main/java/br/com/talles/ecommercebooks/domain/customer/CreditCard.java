@@ -81,5 +81,13 @@ public class CreditCard extends Entity {
 	public void setCardCompany(CardCompany cardCompany) {
 		this.cardCompany = cardCompany;
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) return false;
+		CreditCard creditCard = (CreditCard) o;
+		return number.equals(creditCard.number) &&
+				getId() == creditCard.getId();
+	}
+
 }

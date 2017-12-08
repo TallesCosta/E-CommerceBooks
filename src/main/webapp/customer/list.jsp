@@ -1,13 +1,12 @@
-<%@page import="br.com.talles.ecommercebooks.domain.customer.DeliveryAddress"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.Country"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.State"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.City"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="br.com.talles.ecommercebooks.domain.customer.Customer"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
 <%@page import="br.com.talles.ecommercebooks.controll.Result"%>
 <%@ page import="java.util.Set" %>
 <%@ page import="java.util.HashSet" %>
+<%@ page import="br.com.talles.ecommercebooks.domain.customer.*" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="br.com.talles.ecommercebooks.domain.sale.Delivery" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -87,7 +86,7 @@
 				<!--
 				<div class="row form-container">
 					<div class="column">
-						<legend>Endereço Residencial</legend>
+						<legend>Endereço</legend>
 						<label for="homeAlias">Apelido: </label>
 						<input name="homeAlias" id="homeAlias" type="text" >
 
@@ -159,8 +158,7 @@
 							<td>Gênero</td>
 							<td>Telefone</td>
 							<td>E-mail</td>
-							<td>End. Residencial</td>
-							<td>End. Cobrança</td>
+							<td>End(s). Cobrança</td>
 							<td>End(s). Entrega</td>
 							<td>Editar</td>
 							<td>Excluir</td>
@@ -175,11 +173,25 @@
 								for(Entity entity : result.getEntities(Customer.class.getSimpleName())){
 									Customer customer = (Customer) entity;
 
+									String chargeAddresses = "";
 									String deliveryAddresses = "";
 
-									Set<DeliveryAddress> noRepeat = new HashSet<>(customer.getDeliveryAddresses());
-									for(DeliveryAddress deliveryAddress : noRepeat){
-										deliveryAddresses += deliveryAddress.getAlias()+ ", ";
+									List<ChargeAddress> casReapeat = customer.getChargeAddresses();
+									List<ChargeAddress> cas = new ArrayList<>();
+									for(ChargeAddress chargeAddress : casReapeat) {
+									    if (!cas.contains(chargeAddress)){
+											cas.add(chargeAddress);
+											chargeAddresses += chargeAddress.getAlias()+ ", ";
+										}
+									}
+
+									List<DeliveryAddress> dasReapeat = customer.getDeliveryAddresses();
+									List<DeliveryAddress> das = new ArrayList<>();
+									for(DeliveryAddress deliveryAddress : dasReapeat) {
+										if (!das.contains(deliveryAddress)){
+											das.add(deliveryAddress);
+											deliveryAddresses += deliveryAddress.getAlias()+ ", ";
+										}
 									}
 
 									out.println("<tr>");
@@ -189,8 +201,7 @@
 									out.println("<td>" + customer.getGender().getName() + "</td>");
 									out.println("<td>" + customer.getPhone().toString() + "</td>");
 									out.println("<td>" + customer.getUser().getEmail() + "</td>");
-									out.println("<td>" + customer.getHomeAddress().getAlias() + "</td>");
-									out.println("<td>" + customer.getChargeAddress().getAlias() + "</td>");
+									out.println("<td>" + chargeAddresses.substring(0, chargeAddresses.length() - 2) + "</td>");
 									out.println("<td>" + deliveryAddresses.substring(0, deliveryAddresses.length() - 2) + "</td>");
 									out.println("<td>"
 											+ "<a id='edit-" + customer.getId() + "' href='" + request.getContextPath() + "/customers/find?operation=FIND&id=" + customer.getId() + "'>"
@@ -213,7 +224,7 @@
 							} else {
 								out.println("<tr>");
 
-								for(int j = 0; j <= 11; j++){
+								for(int j = 0; j <= 10; j++){
 									out.println("<td> - </td>");
 								}
 

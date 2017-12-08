@@ -23,8 +23,12 @@ public class AddressNotBlank implements IStrategy {
             result.addMsg("Bairro é um campo obrigatório!\n");
 		} if (address.getPostalCode() == null || address.getPublicPlace().trim().isEmpty()) {
             result.addMsg("CEP é um campo obrigatório!\n");
-		} if (address.getCity().getId() == 0L) {
-            result.addMsg("A escolha de uma cidade é obrigatória!\n");
+		} if (address.getCity() == null || address.getCity().trim().isEmpty()) {
+			result.addMsg("Cidate é um campo obrigatório!\n");
+		} if (address.getState().getId() == 0L) {
+            result.addMsg("A escolha de um estado é obrigatório!\n");
+		} if (address.getState().getCountry().getId() == 0L) {
+			result.addMsg("A escolha de um país é obrigatório!\n");
 		}
 		
 		return result;

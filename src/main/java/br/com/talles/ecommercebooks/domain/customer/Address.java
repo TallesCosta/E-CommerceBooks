@@ -2,6 +2,8 @@ package br.com.talles.ecommercebooks.domain.customer;
 
 import br.com.talles.ecommercebooks.domain.Entity;
 
+import java.util.Objects;
+
 public class Address extends Entity {
 
 	private String alias;
@@ -12,7 +14,8 @@ public class Address extends Entity {
 	private String district;
 	private String postalCode;
 	private String homeType;
-	private City city;
+	private String city;
+	private State state;
 
 	public Address() {
 		super(true);
@@ -54,7 +57,7 @@ public class Address extends Entity {
 	}
 	
 	public Address(String alias, String observation, String publicPlaceType, String publicPlace, String number, 
-			String district, String postalCode, String homeType, City city) {
+			String district, String postalCode, String homeType, String city, State state) {
 		super(true);
 		this.alias = alias;
 		this.observation = observation;
@@ -65,10 +68,11 @@ public class Address extends Entity {
 		this.postalCode = postalCode;
 		this.homeType = homeType;
 		this.city = city;
+		this.state = state;
 	}
 
 	public Address(String alias, String observation, String publicPlaceType, String publicPlace, String number, 
-			String district, String postalCode, String homeType, City city, long id) {
+			String district, String postalCode, String homeType, String city, State state, long id) {
 		super(id, true);
 		this.alias = alias;
 		this.observation = observation;
@@ -79,6 +83,7 @@ public class Address extends Entity {
 		this.postalCode = postalCode;
 		this.homeType = homeType;
 		this.city = city;
+		this.state = state;
 	}
 
 	public String getAlias() {
@@ -145,12 +150,28 @@ public class Address extends Entity {
 		this.publicPlaceType = publicPlaceType;
 	}
 
-	public City getCity() {
+	public String getCity() {
 		return city;
 	}
 
-	public void setCity(City city) {
+	public void setCity(String city) {
 		this.city = city;
 	}
-	
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) return false;
+		Address address = (Address) o;
+		return alias.equals(address.alias) &&
+				getId() == address.getId();
+	}
+
 }

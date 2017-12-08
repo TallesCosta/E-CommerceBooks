@@ -15,11 +15,9 @@ public class CustomerValidateUpdate implements IStrategy {
 		Customer customer = (Customer) entity;
 		
 		IStrategy customerNotBlank = new CustomerNotBlank();
-		IStrategy addressNotBlank = new AddressNotBlank();
 		IStrategy passwordValidate = new PasswordValidate();
 		
 		result = customerNotBlank.process(customer, result);
-		result = addressNotBlank.process(customer.getChargeAddress(), result);
 		result = passwordValidate.process(customer.getUser(), result);
 		
 		return result;

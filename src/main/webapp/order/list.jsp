@@ -83,6 +83,8 @@
                 </tr>
                 </tfoot>
             </table>
+
+            <a href='<% request.getContextPath() + "/delivery-addresses/find?operation=FIND&id=" + orderRequest.getId(); %>'>
         </div>
     </div>
     <%

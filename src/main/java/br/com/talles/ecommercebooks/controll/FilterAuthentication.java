@@ -10,7 +10,11 @@ import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter(filterName = "FilterAuthentication", urlPatterns = { "/books/*", "/customers/*", "/sales/*" })
+@WebFilter(filterName = "FilterAuthentication",
+        urlPatterns = {
+        "/customers/list", "/customers/list-disable", "/customers/history", "/customers/find",
+        "/customers/update", "/customers/disable", "/customers/enable", "/customers/delete",
+        "/books/*", "/sales/*", "/orders/*", "/exchanges/*" })
 public class FilterAuthentication implements Filter {
 
     @Override
