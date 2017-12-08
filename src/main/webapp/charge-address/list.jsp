@@ -6,6 +6,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seus Endereços de Cobrança</title>
+
+    <%@include file="../commons/customer/menu-css.jsp"%>
 </head>
 <body>
 
@@ -21,6 +23,7 @@
             out.println("</p>");
         }
 %>
+<%@include file="../commons/customer/menu-html.jsp"%>
 
 <div class="container">
     <h1 id="list-charge-address">Seus Endereços de Cobrança</h1>
@@ -95,7 +98,7 @@
                 </tfoot>
             </table>
 
-            <a href='<% out.print(request.getContextPath().concat("/charge-addresses/create?operation=CREATE")); %>'>Novo Endereços de Cobrança</a>
+            <a class="pull-right button" href='<% out.print(request.getContextPath().concat("/charge-addresses/create?operation=CREATE")); %>'>Novo Endereços de Cobrança</a>
         </div>
     </div>
     <%

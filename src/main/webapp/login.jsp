@@ -12,6 +12,7 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 		<link rel="stylesheet" href="https://cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
 		<link rel="stylesheet" href="https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<style>
 			.center {
 				width: 450px;
@@ -60,8 +61,6 @@
 					</fieldset>
 				</form>
 			</div>
-		
-		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
 
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"
 				integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -69,12 +68,14 @@
 		</script>
 
 		<script>
-            // With the page ready, set the URL next
+            // With the page ready, set the next URL
             $(function() {
                 var url = window.location.pathname;
                 if (url !== "/E-CommerceBooks/log-in") {
+                    console.log("if url = " + url);
                 	$("#next").val(url + window.location.search);
 				} else {
+                    console.log("else url = " + url);
                     url = document.referrer;
 					url = url.replace("http://localhost:8080", "");
                     $("#next").val(url);

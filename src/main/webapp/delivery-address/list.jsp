@@ -6,6 +6,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seus Endereços de Entrega</title>
+
+    <%@include file="../commons/customer/menu-css.jsp"%>
 </head>
 <body>
 
@@ -21,6 +23,7 @@
             out.println("</p>");
         }
 %>
+<%@include file="../commons/customer/menu-html.jsp"%>
 
 <div class="container">
     <h1 id="list-delivery-address">Seus Endereços de Entrega</h1>
@@ -36,7 +39,7 @@
                     <th>Número</th>
                     <th>Bairro</th>
                     <th>Cidade</th>
-                    <th>Tipo Rediência</th>
+                    <th>Tipo Residência</th>
                     <th>Estado</th>
                     <th>País</th>
                     <th>CEP</th>
@@ -95,7 +98,7 @@
                 </tfoot>
             </table>
 
-            <a href='<% out.print(request.getContextPath().concat("/delivery-addresses/create?operation=CREATE")); %>'>Novo Endereços de Entrega</a>
+            <a class="pull-right button" href='<% out.print(request.getContextPath().concat("/delivery-addresses/create?operation=CREATE")); %>'>Novo Endereço de Entrega</a>
         </div>
     </div>
     <%

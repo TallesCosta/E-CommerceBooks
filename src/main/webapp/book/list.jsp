@@ -168,7 +168,6 @@
 					</fieldset>
 				</div>
 			</form>
-		</div>
 			
 			<br><br>
 			<div>

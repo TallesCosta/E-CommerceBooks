@@ -6,6 +6,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seus Carteõs de Crédito</title>
+
+    <%@include file="../commons/customer/menu-css.jsp"%>
 </head>
 <body>
 
@@ -21,9 +23,10 @@
             out.println("</p>");
         }
 %>
+<%@include file="../commons/customer/menu-html.jsp"%>
 
 <div class="container">
-    <h1 id="list-credit-cart">Seus Carteõs de Crédito</h1>
+    <h1 id="list-credit-cart">Seus Cartões de Crédito</h1>
 
     <div class="row">
         <div class="column">
@@ -77,7 +80,7 @@
                 </tfoot>
             </table>
 
-            <a href='<% out.print(request.getContextPath().concat("/credit-cards/create?operation=CREATE")); %>'>Novo Endereços de Entrega</a>
+            <a class="pull-right button" href='<% out.print(request.getContextPath().concat("/credit-cards/create?operation=CREATE")); %>'>Novo Cartão de Crédito</a>
         </div>
     </div>
     <%
