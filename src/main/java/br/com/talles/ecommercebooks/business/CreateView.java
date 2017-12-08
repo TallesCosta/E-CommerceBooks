@@ -77,15 +77,17 @@ public class CreateView implements IStrategy {
 
 		// Datas needed to create view ChargeAddress
 		List<IDao> createChargeAddress = new ArrayList<>();
-		createChargeAddress.add(new AddressDao());
+		createChargeAddress.add(new StateDao());
+		createChargeAddress.add(new CountryDao());
 
 		// Datas needed to create view DeliveryAddress
 		List<IDao> createDeliveryAddress = new ArrayList<>();
-		createDeliveryAddress.add(new AddressDao());
+		createDeliveryAddress.add(new StateDao());
+		createDeliveryAddress.add(new CountryDao());
 
 		// Datas needed to create view CreditCard
 		List<IDao> createCreditCard = new ArrayList<>();
-		createCreditCard.add(new CreditCardDao());
+		createCreditCard.add(new CardCompanyDao());
 
 		persistence = new HashMap();
 		persistence.put(book + CREATE, createBook);
