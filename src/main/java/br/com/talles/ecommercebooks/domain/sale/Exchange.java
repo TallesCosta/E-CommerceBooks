@@ -13,7 +13,7 @@ public class Exchange extends Entity {
         super(true);
     }
 
-    public Exchange(boolean accepted) {
+    public Exchange(Boolean accepted) {
         this.accepted = accepted;
     }
 
@@ -27,12 +27,12 @@ public class Exchange extends Entity {
         this.order = order;
     }
 
-    public Exchange(boolean accepted, String justification) {
+    public Exchange(Boolean accepted, String justification) {
         this.accepted = accepted;
         this.justification = justification;
     }
 
-    public Exchange(long id, boolean accepted, String justification, Order order) {
+    public Exchange(long id, Boolean accepted, String justification, Order order) {
         super(id, true);
         this.justification = justification;
         this.accepted = accepted;
@@ -72,4 +72,5 @@ public class Exchange extends Entity {
     public void setOrder(Order order) {
         this.order = order;
     }
+
 }

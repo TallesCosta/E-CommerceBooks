@@ -27,7 +27,8 @@ public class ExchangeVh implements IViewHelper {
         String acceptedS = request.getParameter("accepted");
         Boolean accepted = null;
         if (!(acceptedS == null || acceptedS.equals("")))
-            accepted = Boolean.valueOf(acceptedS);
+            accepted = acceptedS.equals("true") ? true : false;
+
 
         String justification = request.getParameter("justification");
         String destination = request.getParameter("destination");

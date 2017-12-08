@@ -11,7 +11,6 @@ import br.com.talles.ecommercebooks.controll.command.UpdateCmd;
 import br.com.talles.ecommercebooks.domain.Entity;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,8 +21,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "Servlet", urlPatterns = {"/log-in", "/log-out",
-		"/books/*", "/customers/*", "/stocks/*", "/carts/*", "/sales/*", "/orders/*", "/exchanges/*"})
+@WebServlet(name = "Servlet", urlPatterns = {"/log-in", "/log-out", "/books/*", "/customers/*",
+		"/stocks/*", "/carts/*", "/sales/*", "/orders/*", "/exchanges/*"})
 public class Servlet extends HttpServlet {
 
 	private Map<String, IViewHelper> viewHelpers;

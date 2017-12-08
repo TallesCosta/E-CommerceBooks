@@ -4,8 +4,6 @@
 CREATE TABLE Exchanges (
 	id INT NOT NULL AUTO_INCREMENT,
 	enabled BOOLEAN NOT NULL,
-
-  accepted BOOLEAN,
 	justification VARCHAR(255) NOT NULL,
 
 	id_sale INT NOT NULL,

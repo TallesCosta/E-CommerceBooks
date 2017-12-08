@@ -1,11 +1,14 @@
 package br.com.talles.ecommercebooks.business.exchange;
 
 import br.com.talles.ecommercebooks.business.IStrategy;
+import br.com.talles.ecommercebooks.business.exchangeCoupon.GenerateExchangeCoupon;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.sale.Exchange;
 import br.com.talles.ecommercebooks.domain.sale.Status;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
+import br.com.talles.ecommercebooks.persistence.dao.sale.ExchangeCouponDao;
+import br.com.talles.ecommercebooks.persistence.dao.sale.ExchangeDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.SaleDao;
 
 public class ExchangeStatusSale implements IStrategy {
@@ -31,7 +34,10 @@ public class ExchangeStatusSale implements IStrategy {
                         IStrategy checkinStock = new CheckinStock();
                         checkinStock.process(exchange.getOrder(), result);
                     }
+
                     exchange.getOrder().setStatus(new Status("TROCA APROVADA"));
+                    IStrategy generateExchangeCoupon = new GenerateExchangeCoupon();
+                    generateExchangeCoupon.process(exchange.getOrder(), result);
                 }
                 break;
         }
