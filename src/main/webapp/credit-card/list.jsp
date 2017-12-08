@@ -1,6 +1,5 @@
 <%@ page import="br.com.talles.ecommercebooks.controll.Result" %>
 <%@ page import="br.com.talles.ecommercebooks.domain.Entity" %>
-<%@ page import="br.com.talles.ecommercebooks.domain.customer.DeliveryAddress" %>
 <%@ page import="br.com.talles.ecommercebooks.domain.customer.CreditCard" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -78,7 +77,7 @@
                 </tfoot>
             </table>
 
-            <a href='<% out.print(request.getContextPath().concat("/delivery-addresses/create?operation=CREATE")); %>'>Novo Endereços de Entrega</a>
+            <a href='<% out.print(request.getContextPath().concat("/credit-cards/create?operation=CREATE")); %>'>Novo Endereços de Entrega</a>
         </div>
     </div>
     <%

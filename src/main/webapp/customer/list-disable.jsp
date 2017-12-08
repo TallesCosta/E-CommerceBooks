@@ -4,10 +4,8 @@
 <%@page import="br.com.talles.ecommercebooks.controll.Result"%>
 <%@ page import="br.com.talles.ecommercebooks.domain.customer.ChargeAddress" %>
 <%@ page import="br.com.talles.ecommercebooks.domain.customer.DeliveryAddress" %>
-<%@ page import="java.util.Set" %>
-<%@ page import="java.util.HashSet" %>
-<%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -95,7 +93,7 @@
 									out.println("<td>" + customer.getGender().getName() + "</td>");
 									out.println("<td>" + customer.getPhone().toString() + "</td>");
 									out.println("<td>" + customer.getUser().getEmail() + "</td>");
-									out.println("<td>" + chargeAddresses.substring(0, deliveryAddresses.length() - 2) + "</td>");
+									out.println("<td>" + chargeAddresses.substring(0, chargeAddresses.length() - 2) + "</td>");
 									out.println("<td>" + deliveryAddresses.substring(0, deliveryAddresses.length() - 2) + "</td>");
 									out.println("<td>"
 											+ "<a id='edit-" + customer.getId() + "' href='" + request.getContextPath() + "/customers/find?operation=FIND&id=" + customer.getId() + "'>"
