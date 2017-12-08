@@ -13,78 +13,54 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class AddressDao extends AbstractDao {
+public class ChargeAddressDao extends AbstractDao {
 
 	@Override
 	public List<Entity> select(boolean enabled, Entity entity) {
-		List<Entity> addresses = new ArrayList();
+		ChargeAddress chargeAddress = (ChargeAddress) entity;
+		List<Entity> chargeAddresses = new ArrayList();
 
-		String sql = "";
-		if (entity instanceof ChargeAddress)
-			sql = "SELECT ca.*, s.*, c.* "
+		String sql = "SELECT ca.*, s.*, c.* "
 				+ "FROM ChargeAddresses ca "
+				+ "INNER JOIN Customers cus on ca.id_customer = cus.id "
 				+ "INNER JOIN States s on ca.id_state = s.id "
 				+ "INNER JOIN Countries c on s.id_country = c.id "
-				+ "WHERE ca.enabled = ? ";
-		else
-			sql = "SELECT da.*, s.*, c.* "
-					+ "FROM DeliveryAddresses da "
-					+ "INNER JOIN States s on da.id_state = s.id "
-					+ "INNER JOIN Countries c on s.id_country = c.id "
-					+ "WHERE da.enabled = ? ";
+				+ "WHERE ca.enabled = ? AND cus.id = ?";
 
 		try {
 			openConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setBoolean(1, enabled);
+			statement.setLong(2, chargeAddress.getCustomer().getId());
+
 
 			ResultSet result = statement.executeQuery();
 
 			while (result.next()) {
-				Address a;
+				ChargeAddress ca = new ChargeAddress();
 
-				if (entity instanceof ChargeAddress) {
-					a = new ChargeAddress();
+				ca.setId(result.getLong("chargeAddresses.id"));
+				ca.setEnabled(result.getBoolean("chargeAddresses.enabled"));
+				ca.setAlias(result.getString("chargeAddresses.alias"));
+				ca.setCity(result.getString("chargeAddresses.city"));
+				ca.setDistrict(result.getString("chargeAddresses.district"));
+				ca.setHomeType(result.getString("chargeAddresses.homeType"));
+				ca.setNumber(result.getString("chargeAddresses.number"));
+				ca.setObservation(result.getString("chargeAddresses.observation"));
+				ca.setPostalCode(result.getString("chargeAddresses.postalCode"));
+				ca.setPublicPlace(result.getString("chargeAddresses.publicPlace"));
+				ca.setPublicPlaceType(result.getString("chargeAddresses.publicPlaceType"));
+				ca.setState(new State(result.getString("states.name"),
+						new Country(result.getString("countries.name"))));
 
-					a.setId(result.getLong("chargeAddresses.id"));
-					a.setEnabled(result.getBoolean("chargeAddresses.enabled"));
-					a.setAlias(result.getString("chargeAddresses.alias"));
-					a.setCity(result.getString("chargeAddresses.city"));
-					a.setDistrict(result.getString("chargeAddresses.district"));
-					a.setHomeType(result.getString("chargeAddresses.homeType"));
-					a.setNumber(result.getString("chargeAddresses.number"));
-					a.setObservation(result.getString("chargeAddresses.observation"));
-					a.setPostalCode(result.getString("chargeAddresses.postalCode"));
-					a.setPublicPlace(result.getString("chargeAddresses.publicPlace"));
-					a.setPublicPlaceType(result.getString("chargeAddresses.publicPlaceType"));
-					a.setState(new State(result.getString("states.name"),
-							new Country(result.getString("contries.name"))));
-				}
-				else {
-					a = new DeliveryAddress();
-					a.setId(result.getLong("deliveryAddress.id"));
-					a.setEnabled(result.getBoolean("deliveryAddress.enabled"));
-					a.setAlias(result.getString("deliveryAddress.alias"));
-					a.setCity(result.getString("deliveryAddress.city"));
-					a.setDistrict(result.getString("deliveryAddress.district"));
-					a.setHomeType(result.getString("deliveryAddress.homeType"));
-					a.setNumber(result.getString("deliveryAddress.number"));
-					a.setObservation(result.getString("deliveryAddress.observation"));
-					a.setPostalCode(result.getString("deliveryAddress.postalCode"));
-					a.setPublicPlace(result.getString("deliveryAddress.publicPlace"));
-					a.setPublicPlaceType(result.getString("deliveryAddress.publicPlaceType"));
-					a.setState(new State(result.getString("states.name"),
-							new Country(result.getString("contries.name"))));
-				}
-
-				addresses.add(a);
+				chargeAddresses.add(ca);
 			}
 
 			result.close();
 			statement.close();
 
-			return addresses;
+			return chargeAddresses;
 		} catch (SQLException e) {
 			throw new RuntimeException (e);
 		} finally {
@@ -94,14 +70,9 @@ public class AddressDao extends AbstractDao {
 
 	@Override
 	public boolean save(Entity entity) {
-		Address address = (Address) entity;
+		ChargeAddress chargeAddress = (ChargeAddress) entity;
 
-		String sql = "";
-		if (address instanceof ChargeAddress)
-			sql = "INSERT INTO ChargeAddresses (enabled, alias, observation, publicPlaceType, publicPlace, number, district, postalCode, homeType, city, id_state, id_customer)"
-					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		else
-			sql = "INSERT INTO DeliveryAddresses (enabled, alias, observation, publicPlaceType, publicPlace, number, district, postalCode, homeType, city, id_state, id_customer)"
+		String sql = "INSERT INTO ChargeAddresses (enabled, alias, observation, publicPlaceType, publicPlace, number, district, postalCode, homeType, city, id_state, id_customer)"
 					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		// Find the last customer register to get its id
@@ -113,18 +84,18 @@ public class AddressDao extends AbstractDao {
 			
 			PreparedStatement statement = conn.prepareStatement(sql);
 
-			statement.setBoolean(1, address.isEnabled());
-			statement.setString(2, address.getAlias());
-			statement.setString(3, address.getObservation());
-			statement.setString(4, address.getPublicPlaceType());
-			statement.setString(5, address.getPublicPlace());
-			statement.setString(6, address.getNumber());
-			statement.setString(7, address.getDistrict());
-			statement.setString(8, address.getPostalCode());
-			statement.setString(9, address.getHomeType());
-			statement.setString(10, address.getCity());
+			statement.setBoolean(1, chargeAddress.isEnabled());
+			statement.setString(2, chargeAddress.getAlias());
+			statement.setString(3, chargeAddress.getObservation());
+			statement.setString(4, chargeAddress.getPublicPlaceType());
+			statement.setString(5, chargeAddress.getPublicPlace());
+			statement.setString(6, chargeAddress.getNumber());
+			statement.setString(7, chargeAddress.getDistrict());
+			statement.setString(8, chargeAddress.getPostalCode());
+			statement.setString(9, chargeAddress.getHomeType());
+			statement.setString(10, chargeAddress.getCity());
 			
-			statement.setLong(11, address.getState().getId());
+			statement.setLong(11, chargeAddress.getState().getId());
 			statement.setLong(12, lastCustomer.getId());
 						
 			statement.execute();

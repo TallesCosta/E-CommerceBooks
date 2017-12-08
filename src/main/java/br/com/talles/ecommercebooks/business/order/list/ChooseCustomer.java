@@ -27,6 +27,7 @@ public class ChooseCustomer implements IStrategy {
 
         order.setCustomer(customer);
 
+        result.addEntity(customer);
         return result;
     }
 

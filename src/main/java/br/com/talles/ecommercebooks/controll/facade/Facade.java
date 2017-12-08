@@ -35,12 +35,10 @@ import br.com.talles.ecommercebooks.domain.sale.*;
 import br.com.talles.ecommercebooks.persistence.dao.HistoryDao;
 import br.com.talles.ecommercebooks.persistence.dao.book.BookDao;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
-import br.com.talles.ecommercebooks.persistence.dao.customer.CustomerDao;
-import br.com.talles.ecommercebooks.persistence.dao.customer.UserDao;
+import br.com.talles.ecommercebooks.persistence.dao.customer.*;
 import br.com.talles.ecommercebooks.persistence.dao.sale.ExchangeDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.SaleDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.StockDao;
-import sun.plugin.javascript.navig.Array;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -226,21 +224,27 @@ public class Facade implements IFacade {
 		createChargeAddress.add(createView);
 
 		List<IStrategy> listChargeAddress = new ArrayList();
+
 		List<IStrategy> saveChargeAddress = new ArrayList();
+		saveChargeAddress.add(addressNotBlank);
 
 		// DeliveryAdresses Requirements
 		List<IStrategy> createDeliveryAddress = new ArrayList();
 		createDeliveryAddress.add(createView);
 
 		List<IStrategy> listDeliveryAddress = new ArrayList();
+
 		List<IStrategy> saveDeliveryAddress = new ArrayList();
+		saveDeliveryAddress.add(addressNotBlank);
 
 		// CreditCards Requirements
 		List<IStrategy> createCreditCard = new ArrayList();
 		createCreditCard.add(createView);
 
 		List<IStrategy> listCreditCard = new ArrayList();
+
 		List<IStrategy> saveCreditCard = new ArrayList();
+		saveCreditCard.add(creditCardNotBlank);
 
 		// Book Requirements to contexts
         Map<String, List<IStrategy>> contextReqBook = new HashMap();
@@ -313,21 +317,21 @@ public class Facade implements IFacade {
 
 		// ChargeAddress to contexts
 		Map<String, List<IStrategy>> contextReqChargeAddress = new HashMap();
-		contextReqExchange.put(CREATE, createChargeAddress);
-		contextReqExchange.put(SAVE, saveChargeAddress);
-		contextReqExchange.put(LIST, listChargeAddress);
+        contextReqChargeAddress.put(CREATE, createChargeAddress);
+        contextReqChargeAddress.put(SAVE, saveChargeAddress);
+        contextReqChargeAddress.put(LIST, listChargeAddress);
 
 		// DeliveryAddress to contexts
 		Map<String, List<IStrategy>> contextReqDeliveryAddress = new HashMap();
-		contextReqExchange.put(CREATE, createDeliveryAddress);
-		contextReqExchange.put(SAVE, saveDeliveryAddress);
-		contextReqExchange.put(LIST, listDeliveryAddress);
+        contextReqDeliveryAddress.put(CREATE, createDeliveryAddress);
+        contextReqDeliveryAddress.put(SAVE, saveDeliveryAddress);
+        contextReqDeliveryAddress.put(LIST, listDeliveryAddress);
 
 		// CreditCard to contexts
 		Map<String, List<IStrategy>> contextReqCreditCard = new HashMap();
-		contextReqExchange.put(CREATE, createCreditCard);
-		contextReqExchange.put(SAVE, saveCreditCard);
-		contextReqExchange.put(LIST, listCreditCard);
+        contextReqCreditCard.put(CREATE, createCreditCard);
+        contextReqCreditCard.put(SAVE, saveCreditCard);
+        contextReqCreditCard.put(LIST, listCreditCard);
 
 		// Requirements Later
 		// Book Requirements Later
@@ -417,18 +421,18 @@ public class Facade implements IFacade {
 
 		// Requirements ChargeAddress Later to contexts
 		Map<String, List<IStrategy>> contextReqChargeAddressLater = new HashMap();
-		contextReqExchangeLater.put(SAVE, saveChargeAddressLater);
-		contextReqExchangeLater.put(LIST, listChargeAddressLater);
+        contextReqChargeAddressLater.put(SAVE, saveChargeAddressLater);
+        contextReqChargeAddressLater.put(LIST, listChargeAddressLater);
 
 		// Requirements DeliveryAddress Later to contexts
 		Map<String, List<IStrategy>> contextReqDeliveryAddressLater = new HashMap();
-		contextReqExchangeLater.put(SAVE, saveDeliveryAddressLater);
-		contextReqExchangeLater.put(LIST, listDeliveryAddressLater);
+        contextReqDeliveryAddressLater.put(SAVE, saveDeliveryAddressLater);
+        contextReqDeliveryAddressLater.put(LIST, listDeliveryAddressLater);
 
 		// Requirements CreditCard Later to contexts
 		Map<String, List<IStrategy>> contextReqCreditCardLater = new HashMap();
-		contextReqExchangeLater.put(SAVE, saveCreditCardLater);
-		contextReqExchangeLater.put(LIST, listCreditCardLater);
+        contextReqCreditCardLater.put(SAVE, saveCreditCardLater);
+        contextReqCreditCardLater.put(LIST, listCreditCardLater);
 
 		// Requirements
         requirements = new HashMap<>();
@@ -465,6 +469,9 @@ public class Facade implements IFacade {
 		IDao stockDao = new StockDao();
 		IDao saleDao = new SaleDao();
 		IDao exchangeDao = new ExchangeDao();
+		IDao chargeAddressDao = new ChargeAddressDao();
+		IDao deliveryAddressDao = new DeliveryAddressDao();
+		IDao creditCardDao = new CreditCardDao();
 		
 		// Book Persistence
 		Map<String, IDao> contextPersBook = new HashMap();
@@ -512,6 +519,21 @@ public class Facade implements IFacade {
 		contextPersExchange.put(SAVE, exchangeDao);
 		contextPersExchange.put(UPDATE, exchangeDao);
 
+		// ChargeAddress Persistence
+		Map<String, IDao> contextPersChargeAddress = new HashMap();
+		contextPersChargeAddress.put(SAVE, chargeAddressDao);
+		contextPersChargeAddress.put(LIST, chargeAddressDao);
+
+		// DeliveryAddress Persistence
+		Map<String, IDao> contextPersDeliveryAddress = new HashMap();
+		contextPersDeliveryAddress.put(SAVE, deliveryAddressDao);
+		contextPersDeliveryAddress.put(LIST, deliveryAddressDao);
+
+		// CreditCard Persistence
+		Map<String, IDao> contextPersCreditCard = new HashMap();
+		contextPersCreditCard.put(SAVE, creditCardDao);
+		contextPersCreditCard.put(LIST, creditCardDao);
+
 		// Persistences
         persistence = new HashMap();
         persistence.put(book, contextPersBook);
@@ -521,6 +543,9 @@ public class Facade implements IFacade {
         persistence.put(sale, contextPersSale);
 		persistence.put(orderRequest, contextPersSale);
 		persistence.put(exchange, contextPersExchange);
+		persistence.put(chargeAddress, contextPersChargeAddress);
+		persistence.put(deliveryAddress, contextPersDeliveryAddress);
+		persistence.put(creditCard, contextPersCreditCard);
 
         this.result = new Result();
     }

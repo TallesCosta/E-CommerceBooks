@@ -4,6 +4,7 @@ import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.customer.CardCompany;
 import br.com.talles.ecommercebooks.domain.customer.CreditCard;
+import br.com.talles.ecommercebooks.domain.customer.Customer;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -39,6 +40,11 @@ public class CreditCardVh implements IViewHelper {
             Logger.getLogger(CreditCardVh.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        String idCustomerS = request.getParameter("idCustomer");
+        long idCustomer = 0L;
+        if (!(idCustomerS == null || idCustomerS.equals("")))
+            idCustomer = Long.valueOf(idCustomerS);
+
         // CreditCard
         CreditCard creditCard = new CreditCard();
 
@@ -55,6 +61,7 @@ public class CreditCardVh implements IViewHelper {
                 break;
 
             case "LIST":
+                creditCard.setCustomer(new Customer(idCustomer));
                 break;
 
             case "LIST-DISABLE":

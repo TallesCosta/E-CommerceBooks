@@ -16,6 +16,7 @@ public class Address extends Entity {
 	private String homeType;
 	private String city;
 	private State state;
+	private Customer customer;
 
 	public Address() {
 		super(true);
@@ -84,6 +85,22 @@ public class Address extends Entity {
 		this.homeType = homeType;
 		this.city = city;
 		this.state = state;
+	}
+
+	public Address(String alias, String observation, String publicPlaceType, String publicPlace, String number,
+				   String district, String postalCode, String homeType, String city, State state, Customer customer, long id) {
+		super(id, true);
+		this.alias = alias;
+		this.observation = observation;
+		this.publicPlaceType = publicPlaceType;
+		this.publicPlace = publicPlace;
+		this.number = number;
+		this.district = district;
+		this.postalCode = postalCode;
+		this.homeType = homeType;
+		this.city = city;
+		this.state = state;
+		this.customer = customer;
 	}
 
 	public String getAlias() {
@@ -164,6 +181,14 @@ public class Address extends Entity {
 
 	public void setState(State state) {
 		this.state = state;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	@Override

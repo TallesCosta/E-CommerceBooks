@@ -126,7 +126,7 @@ public class Servlet extends HttpServlet {
 			} catch (ServletException e) {
 				e.printStackTrace();
 			}
-		}		
+		}
 	}
 
 }

@@ -18,33 +18,36 @@ public class CreditCardDao extends AbstractDao {
 
 	@Override
 	public List<Entity> select(boolean enabled, Entity entity) {
+		CreditCard creditCard = (CreditCard) entity;
 		List<Entity> creditCards = new ArrayList();
 
 		String sql = "SELECT cc.*, comp.* "
-					+ "FROM CreditCards cc "
-					+ "INNER JOIN CardCompanies comp on cc.id_cardCompany = comp.id "
-					+ "WHERE cc.enabled = ? ";
+				+ "FROM CreditCards cc "
+				+ "INNER JOIN Customers cus on cc.id_customer = cus.id "
+				+ "INNER JOIN CardCompanies comp on cc.id_cardCompany = comp.id "
+				+ "WHERE cc.enabled = ? AND cus.id = ?";
 
 		try {
 			openConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setBoolean(1, enabled);
+			statement.setLong(2, creditCard.getCustomer().getId());
 
 			ResultSet result = statement.executeQuery();
 
 			while (result.next()) {
-				CreditCard creditCard = new CreditCard();
+				CreditCard cc = new CreditCard();
 
-				creditCard.setId(result.getLong("creditCard.id"));
-				creditCard.setEnabled(result.getBoolean("creditCard.enabled"));
-				creditCard.setNumber(result.getString("creditCard.number"));
-				creditCard.setPrintedName(result.getString("creditCard.PrintedName"));
-				creditCard.setSecurityCode(result.getString("creditCard.securityCode"));
-				creditCard.setExpirationDate(result.getDate("creditCard.expirationDate"));
-				creditCard.setCardCompany(new CardCompany(result.getString("cardCompany.name")));
+				cc.setId(result.getLong("creditCards.id"));
+				cc.setEnabled(result.getBoolean("creditCards.enabled"));
+				cc.setNumber(result.getString("creditCards.number"));
+				cc.setPrintedName(result.getString("creditCards.PrintedName"));
+				cc.setSecurityCode(result.getString("creditCards.securityCode"));
+				cc.setExpirationDate(result.getDate("creditCards.expirationDate"));
+				cc.setCardCompany(new CardCompany(result.getString("cardCompanies.name")));
 
-				creditCards.add(creditCard);
+				creditCards.add(cc);
 			}
 
 			result.close();

@@ -142,11 +142,13 @@ public class CustomerDao extends AbstractDao {
 		customer.setId(lastCustomer.getId());
 		
 		// Persists the DeliveryAddress
-		IDao addressDao = new AddressDao();
-		if (!addressDao.save(customer.getDeliveryAddress(0)))
+		IDao deliveryAddressDao = new DeliveryAddressDao();
+		if (!deliveryAddressDao.save(customer.getDeliveryAddress(0)))
 			return false;
+
 		// Persists the ChargeAddress
-		if (!addressDao.save(customer.getChargeAddress(0)))
+		IDao chargeAddressDao = new ChargeAddressDao();
+		if (!chargeAddressDao.save(customer.getChargeAddress(0)))
 			return false;
 		
 		// Persists the CreditCard

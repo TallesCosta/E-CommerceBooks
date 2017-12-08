@@ -33,6 +33,10 @@ public class Customer extends Entity {
 		this.exchangeCoupons = new ArrayList<>();
 	}
 
+	public Customer(long id) {
+		super(id, true);
+	}
+
 	public Customer(User user) {
 		super(true);
 		this.birthDate = new Date(0L);

@@ -3,6 +3,7 @@ package br.com.talles.ecommercebooks.controll.viewHelper;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.customer.ChargeAddress;
+import br.com.talles.ecommercebooks.domain.customer.Customer;
 import br.com.talles.ecommercebooks.domain.customer.State;
 
 import javax.servlet.RequestDispatcher;
@@ -32,6 +33,11 @@ public class ChargeAddressVh implements IViewHelper {
         if (!(idStateS == null || idStateS.equals("")))
             idState = Long.valueOf(idStateS);
 
+        String idCustomerS = request.getParameter("idCustomer");
+        long idCustomer = 0L;
+        if (!(idCustomerS == null || idCustomerS.equals("")))
+            idCustomer = Long.valueOf(idCustomerS);
+
         // ChargeAddress
         ChargeAddress chargeAddress = new ChargeAddress();
 
@@ -53,6 +59,7 @@ public class ChargeAddressVh implements IViewHelper {
                 break;
 
             case "LIST":
+                chargeAddress.setCustomer(new Customer(idCustomer));
                 break;
 
             case "LIST-DISABLE":

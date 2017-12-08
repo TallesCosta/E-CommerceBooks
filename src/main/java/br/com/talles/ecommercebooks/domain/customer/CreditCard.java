@@ -10,6 +10,7 @@ public class CreditCard extends Entity {
 	private String securityCode;
 	private Date expirationDate;
 	private CardCompany cardCompany;
+	private Customer customer;
 
 	public CreditCard() {
 		super(true);
@@ -24,7 +25,18 @@ public class CreditCard extends Entity {
 		this.number = number;
 	}
 
-	public CreditCard(String number, String printedName, String securityCode, Date expirationDate, CardCompany cardCompany, long id) {
+	public CreditCard(String number, String printedName, String securityCode, Date expirationDate,
+					  CardCompany cardCompany) {
+		super(true);
+		this.number = number;
+		this.printedName = printedName;
+		this.securityCode = securityCode;
+		this.expirationDate = expirationDate;
+		this.cardCompany = cardCompany;
+	}
+
+	public CreditCard(String number, String printedName, String securityCode, Date expirationDate,
+					  CardCompany cardCompany, long id) {
 		super(id, true);
 		this.number = number;
 		this.printedName = printedName;
@@ -33,13 +45,15 @@ public class CreditCard extends Entity {
 		this.cardCompany = cardCompany;
 	}
 
-	public CreditCard(String number, String printedName, String securityCode, Date expirationDate, CardCompany cardCompany) {
-		super(true);
+	public CreditCard(String number, String printedName, String securityCode, Date expirationDate,
+					  CardCompany cardCompany, Customer customer, long id) {
+		super(id, true);
 		this.number = number;
 		this.printedName = printedName;
 		this.securityCode = securityCode;
 		this.expirationDate = expirationDate;
 		this.cardCompany = cardCompany;
+		this.customer = customer;
 	}
 
 	public String getNumber() {
@@ -80,6 +94,14 @@ public class CreditCard extends Entity {
 
 	public void setCardCompany(CardCompany cardCompany) {
 		this.cardCompany = cardCompany;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	@Override
