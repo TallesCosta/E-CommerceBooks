@@ -7,6 +7,8 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Exibição de Venda</title>
+
+  <%@include file="../commons/customer/menu-css.jsp"%>
 </head>
 <body>
 <%
@@ -27,50 +29,52 @@
       out.println("</p>");
     }
 %>
+<%@include file="../commons/customer/menu-html.jsp"%>
 
-<div id="app">
+<div class="container">
   <h1 id="show-orderRequest">Exibição de Pedido</h1>
 
-  <div>
-    <% out.println("<p>Status: " + orderRequest.getStatus().getName() + "</p>"); %>
+  <div class="row">
+
+    <div class="column">
+      <% out.println("<p>Status: " + orderRequest.getStatus().getName() + "</p>"); %>
+      <%
+        switch (orderRequest.getStatus().getName()) {
+          case "EM TRANSITO":
+            out.print("<a class='update-orderRequest' href='" + request.getContextPath().concat("/orders/update?operation=UPDATE&id=" + orderRequest.getId() + "&status=ENTREGUE") + "'>Recebido</a>");
+            break;
+          case "ENTREGUE":
+            out.print("<a class='update-orderRequest' href='" + request.getContextPath().concat("/exchanges/create?operation=CREATE&idSale=" + orderRequest.getId() + "") + "'>Solicitar Troca</a>");
+            break;
+        }
+      %>
+
+      <% out.println("<p>Data: " + orderRequest.getDate().toString().replace("-","/") + "</p>"); %>
+      <% out.println("<p>Previsão de Entrega: " + orderRequest.getDelivery().getDeliveryForecast().toString().replace("-","/") + "</p>"); %>
+      <% out.println("<p>Código: " + orderRequest.getSaleNumber() + "</p>"); %>
+      <% out.println("<p>Cliente: " + orderRequest.getCustomer().getName() + "</p>"); %>
+      <% out.println("<p>Cartão de Crédito: " + orderRequest.getCreditCard().getNumber() + "</p>"); %>
+      <hr>
+      <%
+        for (SaleItem saleItem : orderRequest.getSaleItems()) {
+          out.println("<dt>" + saleItem.getBook().getTitle() + "</dt>");
+          out.println("<dd>Preço Unitário: R$ " + saleItem.getUnitaryPrice() + "</dd>");
+          out.println("<dd>Quantidade: " + saleItem.getAmount() + "</dd>");
+          out.println("<dd>Subtotal: R$ " + saleItem.getAmount() * saleItem.getUnitaryPrice() + "</dd>");
+        }
+      %>
+      <% out.println("<p>Quantidade total: " + orderRequest.getTotalAmount() + "</p>"); %>
+      <% out.println("<p>Frete R$: " + orderRequest.getDelivery().getShippingCost().getValue() + "</p>"); %>
+      <% out.println("<p>Subtotal Geral R$: " + orderRequest.getPrice() + "</p>"); %>
+      <% out.println("<p>Preço Total R$: " + (orderRequest.getPrice() + orderRequest.getDelivery().getShippingCost().getValue()) + "</p>"); %>
+    </div>
     <%
-      switch (orderRequest.getStatus().getName()) {
-        case "EM TRANSITO":
-          out.print("<a class='update-orderRequest' href='" + request.getContextPath().concat("/orders/update?operation=UPDATE&id=" + orderRequest.getId() + "&status=ENTREGUE") + "'>Recebido</a>");
-          break;
-        case "ENTREGUE":
-          out.print("<a class='update-orderRequest' href='" + request.getContextPath().concat("/exchanges/create?operation=CREATE&idSale=" + orderRequest.getId() + "") + "'>Solicitar Troca</a>");
-          break;
       }
     %>
 
-    <% out.println("<p>Data: " + orderRequest.getDate().toString().replace("-","/") + "</p>"); %>
-    <% out.println("<p>Previsão de Entrega: " + orderRequest.getDelivery().getDeliveryForecast().toString().replace("-","/") + "</p>"); %>
-    <% out.println("<p>Código: " + orderRequest.getSaleNumber() + "</p>"); %>
-    <% out.println("<p>Cliente: " + orderRequest.getCustomer().getName() + "</p>"); %>
-    <% out.println("<p>Cartão de Crédito: " + orderRequest.getCreditCard().getNumber() + "</p>"); %>
-    <hr>
-    <%
-      for (SaleItem saleItem : orderRequest.getSaleItems()) {
-        out.println("<dt>" + saleItem.getBook().getTitle() + "</dt>");
-        out.println("<dd>Preço Unitário: R$ " + saleItem.getUnitaryPrice() + "</dd>");
-        out.println("<dd>Quantidade: " + saleItem.getAmount() + "</dd>");
-        out.println("<dd>Subtotal: R$ " + saleItem.getAmount() * saleItem.getUnitaryPrice() + "</dd>");
-      }
-    %>
-    <% out.println("<p>Quantidade total: " + orderRequest.getTotalAmount() + "</p>"); %>
-    <% out.println("<p>Frete R$: " + orderRequest.getDelivery().getShippingCost().getValue() + "</p>"); %>
-    <% out.println("<p>Subtotal Geral R$: " + orderRequest.getPrice() + "</p>"); %>
-    <% out.println("<p>Preço Total R$: " + (orderRequest.getPrice() + orderRequest.getDelivery().getShippingCost().getValue()) + "</p>"); %>
+    <a class="list-sale" href="<% out.print(request.getContextPath().concat("/orders/list?operation=LIST")); %>">Voltar</a>
   </div>
-  <%
-    }
-  %>
-
-  <a class="list-sale" href="<% out.print(request.getContextPath().concat("/orders/list?operation=LIST")); %>">Voltar</a>
 </div>
 
-
-<script src="https://use.fontawesome.com/51922b6b29.js"></script>
 </body>
 </html>
