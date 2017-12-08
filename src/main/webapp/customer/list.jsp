@@ -1,12 +1,9 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
 <%@page import="br.com.talles.ecommercebooks.controll.Result"%>
-<%@ page import="java.util.Set" %>
-<%@ page import="java.util.HashSet" %>
 <%@ page import="br.com.talles.ecommercebooks.domain.customer.*" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="br.com.talles.ecommercebooks.domain.sale.Delivery" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

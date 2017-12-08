@@ -159,7 +159,6 @@
 					</fieldset>
 				</div>
 			</form>
-		</div>
 			
 			<br><br>
 			<div>
@@ -299,6 +298,7 @@
 				</form>
 			</div>
 			<br><br><br><br><br>
+		</div>
 		
 		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
 		

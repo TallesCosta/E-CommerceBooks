@@ -8,7 +8,9 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seus Pedidos</title>
+    <title>Meus Pedidos</title>
+
+    <%@include file="../commons/admin/menu-css.jsp"%>
 </head>
 <body>
 

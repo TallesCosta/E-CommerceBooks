@@ -45,8 +45,10 @@
 						User user = (User) request.getSession().getAttribute("user");
 						if (user == null)
 							out.print("<a href='" + request.getContextPath() + "/login.jsp'>Login!</a>");
-						else
+						else {
+							out.print("<a href='" + request.getContextPath() + "/orders/list?operation=LIST'>Meus pedidos</a>");
 							out.print("<a href='" + request.getContextPath() + "/log-out?operation=DELETE'>Logout!</a>");
+						}
 					%>
 				</div>
 			</div>
