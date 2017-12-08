@@ -3,7 +3,10 @@ package br.com.talles.ecommercebooks.business;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.book.Book;
+import br.com.talles.ecommercebooks.domain.customer.ChargeAddress;
+import br.com.talles.ecommercebooks.domain.customer.CreditCard;
 import br.com.talles.ecommercebooks.domain.customer.Customer;
+import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 import br.com.talles.ecommercebooks.persistence.dao.book.StatusCategoryDao;
 import br.com.talles.ecommercebooks.persistence.dao.book.AuthorDao;
@@ -29,7 +32,10 @@ public class CreateView implements IStrategy {
 		// Context = Entity + Operation		
 		String book = Book.class.getSimpleName();
 		String customer = Customer.class.getSimpleName();
-		
+		String chargeAddress = ChargeAddress.class.getSimpleName();
+		String deliveryAddress = DeliveryAddress.class.getSimpleName();
+		String creditCard = CreditCard.class.getSimpleName();
+
 		// Datas needed to create view Book
 		List<IDao> createBook = new ArrayList<>();
 		createBook.add(new AuthorDao());
@@ -69,6 +75,18 @@ public class CreateView implements IStrategy {
 		listDisableCustomer.add(new StateDao());
 		listDisableCustomer.add(new CountryDao());
 
+		// Datas needed to create view ChargeAddress
+		List<IDao> createChargeAddress = new ArrayList<>();
+		createChargeAddress.add(new AddressDao());
+
+		// Datas needed to create view DeliveryAddress
+		List<IDao> createDeliveryAddress = new ArrayList<>();
+		createDeliveryAddress.add(new AddressDao());
+
+		// Datas needed to create view CreditCard
+		List<IDao> createCreditCard = new ArrayList<>();
+		createCreditCard.add(new CreditCardDao());
+
 		persistence = new HashMap();
 		persistence.put(book + CREATE, createBook);
 		persistence.put(book + LIST, listBook);
@@ -76,6 +94,9 @@ public class CreateView implements IStrategy {
 		persistence.put(customer + CREATE, createCustomer);
 		persistence.put(customer + LIST, listCustomer);
 		persistence.put(customer + LIST_DISABLE, listDisableCustomer);
+		persistence.put(chargeAddress + CREATE, createChargeAddress);
+		persistence.put(deliveryAddress + CREATE, createDeliveryAddress);
+		persistence.put(creditCard + CREATE, createCreditCard);
 	}
 	
 	@Override

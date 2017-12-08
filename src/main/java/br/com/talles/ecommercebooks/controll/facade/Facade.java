@@ -13,6 +13,8 @@ import br.com.talles.ecommercebooks.business.cart.delete.CartWithoutSession;
 import br.com.talles.ecommercebooks.business.cart.save.CartSession;
 import br.com.talles.ecommercebooks.business.cart.save.ValidateAmount;
 import br.com.talles.ecommercebooks.business.cart.save.ValidateCart;
+import br.com.talles.ecommercebooks.business.customer.AddressNotBlank;
+import br.com.talles.ecommercebooks.business.customer.CreditCardNotBlank;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
 import br.com.talles.ecommercebooks.business.exchange.create.FoundSale;
 import br.com.talles.ecommercebooks.business.exchange.ExchangeStatusSale;
@@ -28,8 +30,7 @@ import br.com.talles.ecommercebooks.controll.Transaction;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.book.Book;
 import br.com.talles.ecommercebooks.domain.Entity;
-import br.com.talles.ecommercebooks.domain.customer.Customer;
-import br.com.talles.ecommercebooks.domain.customer.User;
+import br.com.talles.ecommercebooks.domain.customer.*;
 import br.com.talles.ecommercebooks.domain.sale.*;
 import br.com.talles.ecommercebooks.persistence.dao.HistoryDao;
 import br.com.talles.ecommercebooks.persistence.dao.book.BookDao;
@@ -39,6 +40,7 @@ import br.com.talles.ecommercebooks.persistence.dao.customer.UserDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.ExchangeDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.SaleDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.StockDao;
+import sun.plugin.javascript.navig.Array;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,6 +75,9 @@ public class Facade implements IFacade {
 		String cart = Cart.class.getSimpleName();
 		String orderRequest = OrderRequest.class.getSimpleName();
         String exchange = Exchange.class.getSimpleName();
+        String chargeAddress = ChargeAddress.class.getSimpleName();
+		String deliveryAddress = DeliveryAddress.class.getSimpleName();
+		String creditCard = CreditCard.class.getSimpleName();
 
         // General Strategies
 		IStrategy createView = new CreateView();
@@ -102,6 +107,10 @@ public class Facade implements IFacade {
 		IStrategy foundSale = new FoundSale();
 		// Exchange
 		IStrategy exchangeStatusSale = new ExchangeStatusSale();
+		// Address
+		IStrategy addressNotBlank = new AddressNotBlank();
+		// CreditCard
+		IStrategy creditCardNotBlank = new CreditCardNotBlank();
 
 		// Book Requirements
 		List<IStrategy> createBook = new ArrayList();
@@ -205,13 +214,33 @@ public class Facade implements IFacade {
 		List<IStrategy> createOrderRequest = new ArrayList();
 		List<IStrategy> updateOrderRequest = new ArrayList();
 
-		// Exchange Requirements
+		// Exchanges Requirements
         List<IStrategy> createExchange = new ArrayList();
         createExchange.add(foundSale);
 
 		List<IStrategy> saveExchange = new ArrayList();
-
 		List<IStrategy> updateExchange = new ArrayList();
+
+		// ChargeAdresses Requirements
+		List<IStrategy> createChargeAddress = new ArrayList();
+		createChargeAddress.add(createView);
+
+		List<IStrategy> listChargeAddress = new ArrayList();
+		List<IStrategy> saveChargeAddress = new ArrayList();
+
+		// DeliveryAdresses Requirements
+		List<IStrategy> createDeliveryAddress = new ArrayList();
+		createDeliveryAddress.add(createView);
+
+		List<IStrategy> listDeliveryAddress = new ArrayList();
+		List<IStrategy> saveDeliveryAddress = new ArrayList();
+
+		// CreditCards Requirements
+		List<IStrategy> createCreditCard = new ArrayList();
+		createCreditCard.add(createView);
+
+		List<IStrategy> listCreditCard = new ArrayList();
+		List<IStrategy> saveCreditCard = new ArrayList();
 
 		// Book Requirements to contexts
         Map<String, List<IStrategy>> contextReqBook = new HashMap();
@@ -263,12 +292,6 @@ public class Facade implements IFacade {
 		contextReqOrderRequest.put(CREATE, createOrderRequest);
 		contextReqOrderRequest.put(UPDATE, updateOrderRequest);
 
-        // Exchanges to contexts
-        Map<String, List<IStrategy>> contextReqExchange = new HashMap();
-        contextReqExchange.put(CREATE, createExchange);
-		contextReqExchange.put(SAVE, saveExchange);
-		contextReqExchange.put(UPDATE, updateExchange);
-
 		// Cart Requirements to contexts
         Map<String, List<IStrategy>> contextReqCart = new HashMap();
         contextReqCart.put(CREATE, createCart);
@@ -281,7 +304,31 @@ public class Facade implements IFacade {
         contextReqCart.put(DISABLE, disableCart);
         contextReqCart.put(ENABLE, enableCart);
 		contextReqCart.put(DELETE, deleteCart);
-		
+
+        // Exchanges to contexts
+        Map<String, List<IStrategy>> contextReqExchange = new HashMap();
+        contextReqExchange.put(CREATE, createExchange);
+		contextReqExchange.put(SAVE, saveExchange);
+		contextReqExchange.put(UPDATE, updateExchange);
+
+		// ChargeAddress to contexts
+		Map<String, List<IStrategy>> contextReqChargeAddress = new HashMap();
+		contextReqExchange.put(CREATE, createChargeAddress);
+		contextReqExchange.put(SAVE, saveChargeAddress);
+		contextReqExchange.put(LIST, listChargeAddress);
+
+		// DeliveryAddress to contexts
+		Map<String, List<IStrategy>> contextReqDeliveryAddress = new HashMap();
+		contextReqExchange.put(CREATE, createDeliveryAddress);
+		contextReqExchange.put(SAVE, saveDeliveryAddress);
+		contextReqExchange.put(LIST, listDeliveryAddress);
+
+		// CreditCard to contexts
+		Map<String, List<IStrategy>> contextReqCreditCard = new HashMap();
+		contextReqExchange.put(CREATE, createCreditCard);
+		contextReqExchange.put(SAVE, saveCreditCard);
+		contextReqExchange.put(LIST, listCreditCard);
+
 		// Requirements Later
 		// Book Requirements Later
 		List<IStrategy> saveBookLater = new ArrayList();
@@ -322,6 +369,18 @@ public class Facade implements IFacade {
 		List<IStrategy> updateExchangeLater = new ArrayList();
 		updateExchangeLater.add(exchangeStatusSale);
 
+		// ChargeAddress Requiremensts Later
+		List<IStrategy> listChargeAddressLater = new ArrayList();
+		List<IStrategy> saveChargeAddressLater = new ArrayList();
+
+		// DeliveryAddress Requiremensts Later
+		List<IStrategy> listDeliveryAddressLater = new ArrayList();
+		List<IStrategy> saveDeliveryAddressLater = new ArrayList();
+
+		// CreditCard Requiremensts Later
+		List<IStrategy> listCreditCardLater = new ArrayList();
+		List<IStrategy> saveCreditCardLater = new ArrayList();
+
 		// Requirements Book Later to contexts
         Map<String, List<IStrategy>> contextReqBookLater = new HashMap();
 		contextReqBookLater.put(SAVE, saveBookLater);
@@ -356,6 +415,21 @@ public class Facade implements IFacade {
         contextReqExchangeLater.put(SAVE, saveExchangeLater);
 		contextReqExchangeLater.put(UPDATE, updateExchangeLater);
 
+		// Requirements ChargeAddress Later to contexts
+		Map<String, List<IStrategy>> contextReqChargeAddressLater = new HashMap();
+		contextReqExchangeLater.put(SAVE, saveChargeAddressLater);
+		contextReqExchangeLater.put(LIST, listChargeAddressLater);
+
+		// Requirements DeliveryAddress Later to contexts
+		Map<String, List<IStrategy>> contextReqDeliveryAddressLater = new HashMap();
+		contextReqExchangeLater.put(SAVE, saveDeliveryAddressLater);
+		contextReqExchangeLater.put(LIST, listDeliveryAddressLater);
+
+		// Requirements CreditCard Later to contexts
+		Map<String, List<IStrategy>> contextReqCreditCardLater = new HashMap();
+		contextReqExchangeLater.put(SAVE, saveCreditCardLater);
+		contextReqExchangeLater.put(LIST, listCreditCardLater);
+
 		// Requirements
         requirements = new HashMap<>();
         requirements.put(book, contextReqBook);
@@ -366,6 +440,9 @@ public class Facade implements IFacade {
         requirements.put(cart, contextReqCart);
         requirements.put(orderRequest, contextReqOrderRequest);
         requirements.put(exchange, contextReqExchange);
+		requirements.put(chargeAddress, contextReqChargeAddress);
+		requirements.put(deliveryAddress, contextReqDeliveryAddress);
+		requirements.put(creditCard, contextReqCreditCard);
         
 		// Requirements Later
 		requirementsLater = new HashMap<>();
@@ -376,6 +453,9 @@ public class Facade implements IFacade {
         requirementsLater.put(sale, contextReqSaleLater);
         requirementsLater.put(orderRequest, contextReqOrderRequestLater);
 		requirementsLater.put(exchange, contextReqExchangeLater);
+		requirementsLater.put(chargeAddress, contextReqChargeAddressLater);
+		requirementsLater.put(deliveryAddress, contextReqDeliveryAddressLater);
+		requirementsLater.put(creditCard, contextReqCreditCardLater);
 		
 		// All DAOs
 		IDao historyDao = new HistoryDao();
