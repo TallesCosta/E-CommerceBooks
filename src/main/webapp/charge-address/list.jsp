@@ -98,7 +98,7 @@
                 </tfoot>
             </table>
 
-            <a href='<% out.print(request.getContextPath().concat("/charge-addresses/create?operation=CREATE")); %>'>Novo Endereços de Cobrança</a>
+            <a class="pull-right button" href='<% out.print(request.getContextPath().concat("/charge-addresses/create?operation=CREATE")); %>'>Novo Endereços de Cobrança</a>
         </div>
     </div>
     <%

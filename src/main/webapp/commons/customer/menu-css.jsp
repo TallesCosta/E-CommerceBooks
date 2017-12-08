@@ -38,4 +38,8 @@
     tfoot td:last-child {
         text-align: end;
     }
+    .button {
+        background-color: #27B774;
+        border-color: #27B774;
+    }
 </style>

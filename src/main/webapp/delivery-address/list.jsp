@@ -39,7 +39,7 @@
                     <th>Número</th>
                     <th>Bairro</th>
                     <th>Cidade</th>
-                    <th>Tipo Rediência</th>
+                    <th>Tipo Residência</th>
                     <th>Estado</th>
                     <th>País</th>
                     <th>CEP</th>
@@ -98,7 +98,7 @@
                 </tfoot>
             </table>
 
-            <a href='<% out.print(request.getContextPath().concat("/delivery-addresses/create?operation=CREATE")); %>'>Novo Endereços de Entrega</a>
+            <a class="pull-right button" href='<% out.print(request.getContextPath().concat("/delivery-addresses/create?operation=CREATE")); %>'>Novo Endereço de Entrega</a>
         </div>
     </div>
     <%
