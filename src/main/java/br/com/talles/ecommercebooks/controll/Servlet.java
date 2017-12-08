@@ -22,7 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "Servlet", urlPatterns = {"/log-in", "/log-out", "/books/*", "/customers/*",
-		"/stocks/*", "/carts/*", "/sales/*", "/orders/*", "/exchanges/*"})
+		"/stocks/*", "/carts/*", "/sales/*", "/orders/*", "/exchanges/*",
+		"/delivery-addresses/*", "/charge-addresses/*", "/credit-cards/*"})
 public class Servlet extends HttpServlet {
 
 	private Map<String, IViewHelper> viewHelpers;
@@ -74,6 +75,18 @@ public class Servlet extends HttpServlet {
 		viewHelpers.put("/E-CommerceBooks/exchanges/create", new ExchangeVh());
 		viewHelpers.put("/E-CommerceBooks/exchanges/save", new ExchangeVh());
 		viewHelpers.put("/E-CommerceBooks/exchanges/update", new ExchangeVh());
+		// DeliveryAddresses Request
+		viewHelpers.put("/E-CommerceBooks/delivery-addresses/list", new DeliveryAddressVh());
+		viewHelpers.put("/E-CommerceBooks/delivery-addresses/create", new DeliveryAddressVh());
+		viewHelpers.put("/E-CommerceBooks/delivery-addresses/save", new DeliveryAddressVh());
+		// ChargeAddresses Request
+		viewHelpers.put("/E-CommerceBooks/charge-addresses/list", new ChargeAddressVh());
+		viewHelpers.put("/E-CommerceBooks/charge-addresses/create", new ChargeAddressVh());
+		viewHelpers.put("/E-CommerceBooks/charge-addresses/save", new ChargeAddressVh());
+		// CreditCards Request
+		viewHelpers.put("/E-CommerceBooks/credit-cards/list", new CreditCardVh());
+		viewHelpers.put("/E-CommerceBooks/credit-cards/create", new CreditCardVh());
+		viewHelpers.put("/E-CommerceBooks/credit-cards/save", new CreditCardVh());
 
 		commands = new HashMap();
 		commands.put("CREATE", new CreateCmd());
