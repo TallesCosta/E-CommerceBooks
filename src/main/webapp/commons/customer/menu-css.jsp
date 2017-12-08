@@ -7,7 +7,7 @@
     nav {
         width: 100%;
         height: 50px;
-        background-color: #60ca67;
+        background-color: #27b774;
         margin-bottom: 10px;
     }
 
@@ -21,7 +21,7 @@
     }
 
     nav .item:hover {
-        color: #60ca67;
+        color: #27b774;
         background-color: white;
     }
 

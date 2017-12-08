@@ -1,16 +1,17 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="br.com.talles.ecommercebooks.controll.Result" %>
 <%@ page import="br.com.talles.ecommercebooks.domain.Entity" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="br.com.talles.ecommercebooks.domain.sale.OrderRequest" %>
 <%@ page import="br.com.talles.ecommercebooks.domain.customer.Customer" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
     <title>Meus Pedidos</title>
 
-    <%@include file="../commons/admin/menu-css.jsp"%>
+    <%@include file="../commons/customer/menu-css.jsp"%>
 </head>
 <body>
 
@@ -27,9 +28,10 @@
             out.println("</p>");
         }
 %>
+<%@include file="../commons/customer/menu-html.jsp"%>
 
 <div class="container">
-    <h1 id="list-orderRequest">Seus Pedidos!</h1>
+    <h1 id="list-orderRequest">Seus Pedidos</h1>
 
     <div class="row">
         <div class="column">
@@ -86,19 +88,6 @@
                 </tr>
                 </tfoot>
             </table>
-
-        <%
-            if(result.hasEntities() && result.getKeys().contains(Customer.class.getSimpleName())){
-                for(Entity entity : result.getEntities(Customer.class.getSimpleName())) {
-                    Customer customer = (Customer) entity;
-        %>
-            <a href='<% out.print(request.getContextPath().concat("/charge-addresses/list?operation=LIST&idCustomer=") + customer.getId()); %>'>Gerenciar Endereços de Cobrança</a><br><br>
-            <a href='<% out.print(request.getContextPath().concat("/delivery-addresses/list?operation=LIST&idCustomer=") + customer.getId()); %>'>Gerenciar Endereços de Entrega</a><br><br>
-            <a href='<% out.print(request.getContextPath().concat("/credit-cards/list?operation=LIST&idCustomer=") + customer.getId()); %>'>Gerenciar Cartões de Crédito</a>
-        <%
-                }
-            }
-        %>
         </div>
     </div>
     <%

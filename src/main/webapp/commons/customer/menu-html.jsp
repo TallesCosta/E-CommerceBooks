@@ -1,8 +1,6 @@
 <%@ page import="br.com.talles.ecommercebooks.domain.customer.Customer" %>
 <%@ page import="br.com.talles.ecommercebooks.domain.Entity" %>
-<%@ page import="br.com.talles.ecommercebooks.controll.Result" %>
 <%
-    Result result = (Result) request.getAttribute("result");
     if(result.hasEntities() && result.getKeys().contains(Customer.class.getSimpleName())) {
         for(Entity entity : result.getEntities(Customer.class.getSimpleName())) {
             Customer customer = (Customer) entity;
