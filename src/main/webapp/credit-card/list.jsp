@@ -26,7 +26,7 @@
 <%@include file="../commons/customer/menu-html.jsp"%>
 
 <div class="container">
-    <h1 id="list-credit-cart">Seus Carteõs de Crédito</h1>
+    <h1 id="list-credit-cart">Seus Cartões de Crédito</h1>
 
     <div class="row">
         <div class="column">
