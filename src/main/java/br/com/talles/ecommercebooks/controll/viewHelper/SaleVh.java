@@ -2,10 +2,8 @@ package br.com.talles.ecommercebooks.controll.viewHelper;
 
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
-import br.com.talles.ecommercebooks.domain.customer.Address;
 import br.com.talles.ecommercebooks.domain.customer.CreditCard;
 import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
-import br.com.talles.ecommercebooks.domain.customer.User;
 import br.com.talles.ecommercebooks.domain.sale.*;
 
 import java.io.IOException;
@@ -16,7 +14,6 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class SaleVh implements IViewHelper {
 

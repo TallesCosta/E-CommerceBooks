@@ -4,12 +4,10 @@ import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.customer.Address;
 import br.com.talles.ecommercebooks.domain.customer.ChargeAddress;
 import br.com.talles.ecommercebooks.domain.customer.Customer;
-import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
 import br.com.talles.ecommercebooks.persistence.dao.AbstractDao;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
