@@ -8,6 +8,17 @@
 %>
 <nav>
     <div class="container">
+        <%
+            if(request.getRequestURL().indexOf("/orders/list") != -1) {
+        %>
+        <div class="item">
+            <a class="list-book" href="<% out.print(request.getContextPath().concat("/orders/list")); %>">
+                Voltar
+            </a>
+        </div>
+        <%
+            }
+        %>
         <div class="item">
             <a class="list-book" href="<% out.print(request.getContextPath().concat("/charge-addresses/list?operation=LIST&idCustomer=" + id)); %>">
                 End. Cobrança
@@ -26,6 +37,5 @@
     </div>
 </nav>
 <%
-        }
     }
 %>

@@ -6,6 +6,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seus Carteõs de Crédito</title>
+
+    <%@include file="../commons/customer/menu-css.jsp"%>
 </head>
 <body>
 
@@ -21,6 +23,7 @@
             out.println("</p>");
         }
 %>
+<%@include file="../commons/customer/menu-html.jsp"%>
 
 <div class="container">
     <h1 id="list-credit-cart">Seus Carteõs de Crédito</h1>

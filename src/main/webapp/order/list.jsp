@@ -3,7 +3,6 @@
 <%@ page import="br.com.talles.ecommercebooks.domain.Entity" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="br.com.talles.ecommercebooks.domain.sale.OrderRequest" %>
-<%@ page import="br.com.talles.ecommercebooks.domain.customer.Customer" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -94,8 +93,6 @@
         }
     %>
 </div>
-
-<script src="https://use.fontawesome.com/51922b6b29.js"></script>
 
 </body>
 </html>
