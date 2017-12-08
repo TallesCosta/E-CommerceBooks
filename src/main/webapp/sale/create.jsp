@@ -84,6 +84,8 @@
                         %>
                     </fieldset>
 
+                    <input type="hidden" name="shippingCost" id="shippingCost" />
+                    <input type="hidden" name="total" id="total" />
                     <input type="hidden" name="operation" id="operation-sale" value="SAVE" />
                     <button type="submit">Concluir</button>
                 </form>
@@ -118,7 +120,7 @@
             var textShippingCost = "Frete: R$ " + totalShippingCost.toFixed(2);
 
             var subtotal = parseFloat( $("#subtotalSale").text().replace(/[A-Za-z: R$]*/, "").replace(",", ".") );
-            var total = parseFloat(totalShippingCost + subtotal - discount).toFixed(2);
+            var total = ( subtotal - discount + totalShippingCost ).toFixed(2);
             var textTotal = "Total: R$ " + total;
 
             $("#shippingCostSale").text(textShippingCost);
