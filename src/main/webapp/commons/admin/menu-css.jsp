@@ -38,4 +38,8 @@
     tfoot td:last-child {
         text-align: end;
     }
+
+    .mr-8 {
+        margin-right: 8px
+    }
 </style>

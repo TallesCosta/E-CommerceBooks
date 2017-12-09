@@ -94,8 +94,5 @@
                 </div>
             </div>
         </div>
-
-
-        <script src="https://use.fontawesome.com/51922b6b29.js"></script>
     </body>
 </html>

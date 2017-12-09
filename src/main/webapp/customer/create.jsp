@@ -18,6 +18,8 @@
 			else if (result.getTransaction().getOperation().equals("FIND")) { out.print("Alteração de Cliente"); } %>
 		</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<%@include file="../commons/admin/menu-css.jsp"%>
     </head>
     <body>
 		<%
@@ -39,8 +41,9 @@
 				out.print("</p>");
 			}
 		%>
+		<%@include file="../commons/admin/menu-html.jsp"%>
 		
-		<div id="app">
+		<div class="container">
 			<h1 id="create-customer">
 				<% if (result.getTransaction().getOperation().equals("CREATE")) { out.print("Criação de Cliente"); }
 				else if (result.getTransaction().getOperation().equals("FIND")) { out.print("Alteração de Cliente"); } %>
@@ -71,16 +74,19 @@
 							   value="<% out.print(dateFormat.format(customer.getBirthDate())); %>">
 					</div>
 					<div>
-						<label for="gender">Gênero*: </label>
+						<label class="label-inline" for="gender">Gênero*: </label>
+
 						<input <% if (customer.getGender().getName().equals("Feminino")) { out.print("checked"); } %> 
 							name="gender" id="female" value="Feminino" type="radio">
-						<label for="female">Feminino</label>
-						<input <% if (customer.getGender().getName().equals("Masculino")) { out.print("checked"); } %> 
+						<label class="label-inline" for="female">Feminino</label>
+
+						<input <% if (customer.getGender().getName().equals("Masculino")) { out.print("checked"); } %>
 							name="gender" id="male" value="Masculino" type="radio">
-						<label for="male">Masculino</label>
-						<input <% if (customer.getGender().getName().equals("Outro")) { out.print("checked"); } %> 
+						<label class="label-inline" for="male">Masculino</label>
+
+						<input <% if (customer.getGender().getName().equals("Outro")) { out.print("checked"); } %>
 							name="gender" id="other" value="Outro" type="radio">
-						<label for="other">Outro</label>
+						<label class="label-inline" for="other">Outro</label>
 					</div>
 				</fieldset>
 
@@ -246,8 +252,7 @@
 	<%
 		}
 	%>
-		
-		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
+
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"
 			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 			crossorigin="anonymous">
