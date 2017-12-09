@@ -11,9 +11,11 @@ CREATE TABLE CreditCards (
 
 	id_cardCompany INT NOT NULL,
 	id_customer INT NOT NULL,
+	id_sale INT,
 	
 	CONSTRAINT PK_CreditCard PRIMARY KEY (id)
 );
 
 ALTER TABLE CreditCards ADD FOREIGN KEY (id_cardCompany) REFERENCES CardCompanies(id);
 ALTER TABLE CreditCards ADD FOREIGN KEY (id_customer) REFERENCES Customers(id);
+ALTER TABLE CreditCards ADD FOREIGN KEY (id_sale) REFERENCES Sales(id);

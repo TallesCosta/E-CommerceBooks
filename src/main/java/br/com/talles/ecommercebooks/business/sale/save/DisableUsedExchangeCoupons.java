@@ -12,7 +12,7 @@ import br.com.talles.ecommercebooks.persistence.dao.sale.ExchangeCouponDao;
 
 import java.util.Arrays;
 
-public class DisableExchangeCoupons implements IStrategy {
+public class DisableUsedExchangeCoupons implements IStrategy {
 
     @Override
     public Result process(Entity entity, Result result) {

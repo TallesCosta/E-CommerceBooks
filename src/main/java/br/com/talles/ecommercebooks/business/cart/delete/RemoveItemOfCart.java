@@ -5,9 +5,10 @@ import br.com.talles.ecommercebooks.business.IStrategy;
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.sale.Cart;
+
 import javax.servlet.http.HttpSession;
 
-public class CartWithoutSession implements IStrategy {
+public class RemoveItemOfCart implements IStrategy {
 
 	@Override
 	public Result process(Entity entity, Result result) {

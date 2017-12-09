@@ -7,7 +7,7 @@ import br.com.talles.ecommercebooks.domain.sale.Cart;
 
 import javax.servlet.http.HttpSession;
 
-public class ValidateCart implements IStrategy {
+public class ValidateEmpityCart implements IStrategy {
 
     @Override
     public Result process(Entity entity, Result result) {

@@ -9,25 +9,25 @@ import br.com.talles.ecommercebooks.business.book.ModifyStatus;
 import br.com.talles.ecommercebooks.business.book.save.BookValidateSave;
 import br.com.talles.ecommercebooks.business.book.update.BookValidateUpdate;
 import br.com.talles.ecommercebooks.business.cart.DestroyCart;
-import br.com.talles.ecommercebooks.business.cart.GiveBackStock;
-import br.com.talles.ecommercebooks.business.cart.delete.CartWithoutSession;
-import br.com.talles.ecommercebooks.business.cart.save.CartSession;
-import br.com.talles.ecommercebooks.business.cart.save.ValidateAmount;
-import br.com.talles.ecommercebooks.business.cart.save.ValidateCart;
+import br.com.talles.ecommercebooks.business.cart.CheckouStock;
+import br.com.talles.ecommercebooks.business.cart.delete.RemoveItemOfCart;
+import br.com.talles.ecommercebooks.business.cart.save.AddItemOfCart;
+import br.com.talles.ecommercebooks.business.cart.save.ValidateAmountStock;
+import br.com.talles.ecommercebooks.business.cart.save.ValidateEmpityCart;
 import br.com.talles.ecommercebooks.business.creditCard.save.RememberCustomerCreditCard;
-import br.com.talles.ecommercebooks.business.customer.AddressNotBlank;
-import br.com.talles.ecommercebooks.business.customer.CreditCardNotBlank;
+import br.com.talles.ecommercebooks.business.address.save.AddressNotBlank;
+import br.com.talles.ecommercebooks.business.creditCard.save.CreditCardNotBlank;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
-import br.com.talles.ecommercebooks.business.exchange.create.FoundSale;
+import br.com.talles.ecommercebooks.business.exchange.create.FoundSaleExchange;
 import br.com.talles.ecommercebooks.business.exchange.ExchangeStatusSale;
-import br.com.talles.ecommercebooks.business.order.list.ChooseCustomer;
-import br.com.talles.ecommercebooks.business.sale.save.CompleteSale;
-import br.com.talles.ecommercebooks.business.sale.create.CustomerFragment;
-import br.com.talles.ecommercebooks.business.sale.save.DisableExchangeCoupons;
+import br.com.talles.ecommercebooks.business.order.list.SetCustomerCurrent;
+import br.com.talles.ecommercebooks.business.sale.save.CompleteSaleData;
+import br.com.talles.ecommercebooks.business.sale.create.BuildDataForSaleScreen;
+import br.com.talles.ecommercebooks.business.sale.save.DisableUsedExchangeCoupons;
 import br.com.talles.ecommercebooks.business.sale.save.ValidatePayment;
-import br.com.talles.ecommercebooks.business.stock.list.StockSession;
+import br.com.talles.ecommercebooks.business.stock.list.MakeStockSession;
 import br.com.talles.ecommercebooks.business.user.delete.DestroyUser;
-import br.com.talles.ecommercebooks.business.user.list.FoundUser;
+import br.com.talles.ecommercebooks.business.user.list.LoginUser;
 import br.com.talles.ecommercebooks.business.customer.save.CustomerValidateSave;
 import br.com.talles.ecommercebooks.business.customer.update.CustomerValidateUpdate;
 import br.com.talles.ecommercebooks.controll.Transaction;
@@ -90,25 +90,25 @@ public class Facade implements IFacade {
 		// Customer Strategies
 		IStrategy custumerFind = new FindCustomer();
 		// User Strategies
-		IStrategy foundUser = new FoundUser();
+		IStrategy foundUser = new LoginUser();
 		IStrategy destroyUser = new DestroyUser();
 		// Cart Strategies
-		IStrategy validateAmount = new ValidateAmount();
-	 	IStrategy cartSession = new CartSession();
-	 	IStrategy cartWithoutSession = new CartWithoutSession();
+		IStrategy validateAmount = new ValidateAmountStock();
+	 	IStrategy cartSession = new AddItemOfCart();
+	 	IStrategy cartWithoutSession = new RemoveItemOfCart();
 	 	// Sale Strategies
-		IStrategy validateCart = new ValidateCart();
-	 	IStrategy customerFragment = new CustomerFragment();
-	 	IStrategy completeSale = new CompleteSale();
-	 	IStrategy giveBackStock = new GiveBackStock();
+		IStrategy validateCart = new ValidateEmpityCart();
+	 	IStrategy customerFragment = new BuildDataForSaleScreen();
+	 	IStrategy completeSale = new CompleteSaleData();
+	 	IStrategy giveBackStock = new CheckouStock();
 	 	IStrategy destroyCart = new DestroyCart();
-	 	IStrategy disableExchangeCoupons = new DisableExchangeCoupons();
+	 	IStrategy disableExchangeCoupons = new DisableUsedExchangeCoupons();
 	 	IStrategy validatePayment = new ValidatePayment();
 	 	// Stock Strategies
-		IStrategy stockSession = new StockSession();
+		IStrategy stockSession = new MakeStockSession();
 		// OrderRequest Strategies
-		IStrategy chooseCustomer = new ChooseCustomer();
-		IStrategy foundSale = new FoundSale();
+		IStrategy chooseCustomer = new SetCustomerCurrent();
+		IStrategy foundSale = new FoundSaleExchange();
 		// Exchange
 		IStrategy exchangeStatusSale = new ExchangeStatusSale();
 		// Address
@@ -363,7 +363,7 @@ public class Facade implements IFacade {
 		// Stock Requirements Later
 		List<IStrategy> listStockLater = new ArrayList();
 		listStockLater.add(stockSession);
-		//listStockLater.add(new FoundUser()); What? Ctrl + C / Ctrl + V????
+		//listStockLater.add(new LoginUser()); What? Ctrl + C / Ctrl + V????
 
 		// Sale Requirements Later
 		List<IStrategy> saveSaleLater = new ArrayList();

@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerFragment implements IStrategy {
+public class BuildDataForSaleScreen implements IStrategy {
 
     @Override
     public Result process(Entity entity, Result result) {

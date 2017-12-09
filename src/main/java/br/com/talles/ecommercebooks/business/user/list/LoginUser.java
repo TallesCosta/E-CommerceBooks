@@ -7,7 +7,7 @@ import br.com.talles.ecommercebooks.domain.customer.User;
 
 import javax.servlet.http.HttpSession;
 
-public class FoundUser implements IStrategy {
+public class LoginUser implements IStrategy {
 
 	@Override
 	public Result process(Entity entity, Result result) {

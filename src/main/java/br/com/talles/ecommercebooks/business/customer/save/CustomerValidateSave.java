@@ -1,8 +1,8 @@
 package br.com.talles.ecommercebooks.business.customer.save;
 
 import br.com.talles.ecommercebooks.business.IStrategy;
-import br.com.talles.ecommercebooks.business.customer.AddressNotBlank;
-import br.com.talles.ecommercebooks.business.customer.CreditCardNotBlank;
+import br.com.talles.ecommercebooks.business.address.save.AddressNotBlank;
+import br.com.talles.ecommercebooks.business.creditCard.save.CreditCardNotBlank;
 import br.com.talles.ecommercebooks.business.customer.CustomerNotBlank;
 import br.com.talles.ecommercebooks.business.customer.PasswordValidate;
 import br.com.talles.ecommercebooks.controll.Result;

@@ -11,6 +11,7 @@ public class CreditCard extends Entity {
 	private Date expirationDate;
 	private CardCompany cardCompany;
 	private Customer customer;
+	private double paymentValue;
 
 	public CreditCard() {
 		super(true);
@@ -23,6 +24,11 @@ public class CreditCard extends Entity {
 	public CreditCard(String number, long id) {
 		super(id, true);
 		this.number = number;
+	}
+
+	public CreditCard(double paymentValue, long id) {
+		super(id, true);
+		this.paymentValue = paymentValue;
 	}
 
 	public CreditCard(String number, String printedName, String securityCode, Date expirationDate,
@@ -102,6 +108,14 @@ public class CreditCard extends Entity {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+
+	public double getPaymentValue() {
+		return paymentValue;
+	}
+
+	public void setPaymentValue(double paymentValue) {
+		this.paymentValue = paymentValue;
 	}
 
 	@Override

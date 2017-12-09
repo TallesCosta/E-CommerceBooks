@@ -8,7 +8,7 @@ import br.com.talles.ecommercebooks.domain.sale.Stock;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class StockSession implements IStrategy {
+public class MakeStockSession implements IStrategy {
 
     @Override
     public Result process(Entity entity, Result result) {

@@ -70,12 +70,12 @@ public class SaleDao extends AbstractDao {
 		String sql = "";
 		if (order.getPromotionalCoupon().getId() == 0L)
 			sql = "INSERT INTO Sales (enabled, saleNumber, date, price, totalAmount, status, "
-					+ "deliveryForecast, shippingCost, id_deliveryAddress, id_creditCard, id_customer) "
-					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+					+ "deliveryForecast, shippingCost, id_deliveryAddress, id_customer) "
+					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		else
 			sql = "INSERT INTO Sales (enabled, saleNumber, date, price, totalAmount, status, "
-					+ "deliveryForecast, shippingCost, id_deliveryAddress, id_creditCard, id_customer, id_promotionalCoupon) "
-					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+					+ "deliveryForecast, shippingCost, id_deliveryAddress, id_customer, id_promotionalCoupon) "
+					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			openConnection();
@@ -92,11 +92,10 @@ public class SaleDao extends AbstractDao {
 			statement.setDouble(8, order.getDelivery().getShippingCost().getValue());
 
 			statement.setLong(9, order.getDelivery().getDeliveryAddress().getId());
-			statement.setLong(10, order.getCreditCard().getId());
-			statement.setLong(11, order.getCustomer().getId());
+			statement.setLong(10, order.getCustomer().getId());
 
 			if (order.getPromotionalCoupon().getId() != 0L)
-				statement.setLong(12, order.getPromotionalCoupon().getId());
+				statement.setLong(11, order.getPromotionalCoupon().getId());
 
 			statement.execute();
 			statement.close();
@@ -151,12 +150,11 @@ public class SaleDao extends AbstractDao {
 		Order order = (Order) entity;
 
 		String sql = "SELECT s.*, si.unitaryPrice, si.amount, b.id, b.title, " +
-				"c.id, c.name, cc.id, cc.number, da.id, da.alias " +
+				"c.id, c.name, da.id, da.alias " +
 				"FROM Sales s " +
 				"INNER JOIN SaleItems si on s.id = si.id_sale " +
 				"INNER JOIN Books b on si.id_book = b.id " +
 				"INNER JOIN Customers c on c.id = s.id_customer " +
-				"INNER JOIN CreditCards cc on cc.id = s.id_creditCard " +
 				"INNER JOIN DeliveryAddresses da on da.id = s.id_deliveryAddress " +
 				"WHERE s.id = ?;";
 
@@ -191,11 +189,6 @@ public class SaleDao extends AbstractDao {
 						new DeliveryAddress(
 								result.getString("deliveryaddresses.alias"),
 								result.getLong("deliveryaddresses.id"))));
-
-				// CreditCard datas
-				order.setCreditCard(new CreditCard(
-						result.getString("creditcards.number"),
-						result.getLong("creditcards.id")));
 
 				do {
 					SaleItem saleItem = new SaleItem(

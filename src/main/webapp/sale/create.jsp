@@ -22,7 +22,7 @@
         Result result = (Result) request.getAttribute("result");
 
         Order sale = new Order("", new Date(), 0.0, 0, new Status(), new Delivery(), new PromotionalCoupon(),
-                new CreditCard(), new Customer(), new Exchange(), new ArrayList<SaleItem>(), new ArrayList<ExchangeCoupon>());
+                new Customer(), new Exchange(), new ArrayList<CreditCard>(), new ArrayList<SaleItem>(), new ArrayList<ExchangeCoupon>());
 
         if (result != null) {
             if (result.getKeys().contains(Sale.class.getSimpleName())) {
@@ -67,17 +67,22 @@
                             }
                         %>
 
-                        <label for="idCreditCard">Cartão de Crédito*: </label>
-                        <select name="idCreditCard" id="idCreditCard">
-                            <%
-                                if (result.hasEntities() && result.getKeys().contains(CreditCard.class.getSimpleName())) {
-                                    for (Entity entity : result.getEntities(CreditCard.class.getSimpleName())) {
-                                        CreditCard creditCard = (CreditCard) entity;
-                                        out.print("<option value='" + creditCard.getId() + "'>" + creditCard.getNumber() + "</option>");
-                                    }
+                        <label>Cartão de Crédito: </label>
+                        <span>Divida entre o valor entre os cartões como preferir c:</span>
+                        <%
+                            if (result.hasEntities() && result.getKeys().contains(CreditCard.class.getSimpleName())) {
+                                int k = 0;
+                                for (Entity entity : result.getEntities(CreditCard.class.getSimpleName())) {
+                                    k++;
+                                    CreditCard creditCard = (CreditCard) entity;
+                        %>
+                        <label for="creditCard<% out.print(k); %>">Cartão <% out.print(k + ": " + creditCard.getNumber()); %></label>
+                        <input type="number" step="0.01" name="creditCard<% out.print(k); %>" id="creditCard<% out.print(k); %>" class="creditCard" value="0" placeholder="R$" />
+                        <input type="hidden" name="idCreditCard<% out.print(k); %>" id="idCreditCard<% out.print(k); %>" class="idCreditCard" value="<% out.print(creditCard.getId()); %>" />
+                        <%
                                 }
-                            %>
-                        </select>
+                            }
+                        %>
                         <%
                             if (result.hasEntities() && result.getKeys().contains(Customer.class.getSimpleName())) {
                                 for(Entity entity : result.getEntities(Customer.class.getSimpleName())){
@@ -87,6 +92,17 @@
                                 }
                             }
                         %>
+
+                        <!--<select name="idCreditCard" id="idCreditCard">
+                            <%
+                                /*if (result.hasEntities() && result.getKeys().contains(CreditCard.class.getSimpleName())) {
+                                    for (Entity entity : result.getEntities(CreditCard.class.getSimpleName())) {
+                                        CreditCard creditCard = (CreditCard) entity;
+                                        out.print("<option value='" + creditCard.getId() + "'>" + creditCard.getNumber() + "</option>");
+                                    }
+                                }*/
+                            %>
+                        </select>-->
 
                         <label for="promotionalCoupon">Cupom de Descontro: </label>
                         <input type="text" id="promotionalCoupon" name="promotionalCoupon" />
@@ -139,6 +155,7 @@
         </div>
     </div>
 
+    <script src="https://use.fontawesome.com/51922b6b29.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous">

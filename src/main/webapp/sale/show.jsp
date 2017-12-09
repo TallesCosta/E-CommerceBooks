@@ -35,10 +35,20 @@
         <div class="container">
             <div class="row">
                 <div class="column">
+                    <% out.println("<p><b>Data da Compra:</b> " + sale.getDate().toString().replace("-","/") + "</p>"); %>
+                    <% out.println("<p><b>Previsão de Entrega:</b> " + sale.getDelivery().getDeliveryForecast().toString().replace("-","/") + "</p>"); %>
+                    <% out.println("<p><b>Código:</b> " + sale.getSaleNumber() + "</p>"); %>
+                    <% out.println("<p><b>Cliente:</b> " + sale.getCustomer().getName() + "</p>"); %>
 
+                    <% out.println("<p><b>Subtotal Geral R$:</b> " + (sale.getPrice() - sale.getDelivery().getShippingCost().getValue()) + "</p>"); %>
+                    <% out.println("<p><b>Frete R$:</b> " + sale.getDelivery().getShippingCost().getValue() + "</p>"); %>
+                    <% out.println("<p><b>Preço Total R$:</b> " + sale.getPrice() + "</p>"); %>
+                </div>
+
+                <div class="column">
                     <h1 id="show-sale">Exibição de Venda</h1>
 
-                    <% out.println("<p>Status: " + sale.getStatus().getName() + "</p>"); %>
+                    <% out.println("<p><b>Status:</b> " + sale.getStatus().getName() + "</p>"); %>
                     <%
                         switch (sale.getStatus().getName()) {
                             case "EM PROCESSAMENTO":
@@ -56,19 +66,18 @@
                                 break;
                         }
                     %>
-
-                    <% out.println("<p><b>Data da Compra:</b> " + sale.getDate().toString().replace("-","/") + "</p>"); %>
-                    <% out.println("<p><b>Previsão de Entrega:</b> " + sale.getDelivery().getDeliveryForecast().toString().replace("-","/") + "</p>"); %>
-                    <% out.println("<p><b>Código:</b> " + sale.getSaleNumber() + "</p>"); %>
-                    <% out.println("<p><b>Cliente:</b> " + sale.getCustomer().getName() + "</p>"); %>
-                    <% out.println("<p><b>Cartão de Crédito:</b> " + sale.getCreditCard().getNumber() + "</p>"); %>
                     <hr>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="column">
                     <table>
                         <thead>
-                            <th>Título</th>
-                            <th>Valor Unitário</th>
-                            <th>Quantidade</th>
-                            <th>Subtotal</th>
+                        <th>Título</th>
+                        <th>Valor Unitário</th>
+                        <th>Quantidade</th>
+                        <th>Subtotal</th>
                         </thead>
                         <%
                             for (SaleItem saleItem : sale.getSaleItems()) {
@@ -78,21 +87,14 @@
                                 out.println("<td>R$ " + saleItem.getAmount() * saleItem.getUnitaryPrice() + "</td></tr>");
                             }
                         %>
-                        <tfoot>
-                            <% out.println("<td><b>Quantidade total:</b> " + sale.getTotalAmount() + "</td>"); %>
-                            <% out.println("<td><b>Frete</b> R$: " + sale.getDelivery().getShippingCost().getValue() + "</td>"); %>
-                            <% out.println("<td><b>Subtotal Geral</b> R$: " + sale.getPrice() + "</td>"); %>
-                            <% out.println("<td><b>Preço Total</b> R$: " + (sale.getPrice() + sale.getDelivery().getShippingCost().getValue()) + "</td>"); %>
-                        </tfoot>
                     </table>
-                </div>
-                <%
-                    }
-                %>
 
-                <a class="list-sale" href="<% out.print(request.getContextPath().concat("/sales/list?operation=LIST")); %>">Voltar</a>
-                </div>
+                    <a class="list-sale" href="<% out.print(request.getContextPath().concat("/sales/list?operation=LIST")); %>">Voltar</a>
+                <div>
             </div>
+        <%
+            }
+        %>
         </div>
     </body>
 </html>

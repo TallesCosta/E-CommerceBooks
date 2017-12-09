@@ -8,7 +8,7 @@ import br.com.talles.ecommercebooks.domain.sale.Stock;
 
 import javax.servlet.http.HttpSession;
 
-public class ValidateAmount implements IStrategy {
+public class ValidateAmountStock implements IStrategy {
 
     @Override
     public Result process(Entity entity, Result result) {

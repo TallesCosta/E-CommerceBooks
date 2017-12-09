@@ -105,7 +105,31 @@ public class CreditCardDao extends AbstractDao {
 
 	@Override
 	public boolean update(Entity entity, String operation) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        CreditCard creditCard = (CreditCard) entity;
+
+        String sql = "UPDATE CreditCards "
+                + "SET enabled = ?, id_sale = ? "
+                + "WHERE id = ?";
+
+        try {
+            openConnection();
+
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setBoolean(1, creditCard.isEnabled());
+            statement.setLong(2, creditCard.getCustomer().getSale(0).getId());
+
+            statement.setLong(3, creditCard.getId());
+
+            statement.execute();
+            statement.close();
+
+            return true;
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            closeConnection();
+        }
 	}
 
 	@Override

@@ -33,11 +33,6 @@ public class SaleVh implements IViewHelper {
 		if (!(idDeliveryAddressS == null || idDeliveryAddressS.equals("")))
 			idDeliveryAddress = Long.valueOf(idDeliveryAddressS);
 
-		String idCreditCardS = request.getParameter("idCreditCard");
-		long idCreditCard = 0L;
-		if (!(idCreditCardS == null || idCreditCardS.equals("")))
-			idCreditCard = Long.valueOf(idCreditCardS);
-
 		String shippingCostS = request.getParameter("shippingCost");
 		double shippingCost = 0.0;
 		if (!(shippingCostS == null || shippingCostS.equals("")))
@@ -54,6 +49,23 @@ public class SaleVh implements IViewHelper {
 		long idPromotionalCoupon = 0L;
 		if (!(idPromotionalCouponS == null || idPromotionalCouponS.equals("")))
 			idPromotionalCoupon = Long.valueOf(idPromotionalCouponS);
+
+		int k = 1;
+		List<CreditCard> creditCards = new ArrayList<>();
+		while (request.getParameter("creditCard" + k) != null) {
+			double paymentValue = Double.valueOf(request.getParameter("creditCard" + k));
+
+			if (paymentValue > 0d) {
+				long idCreditCard = Long.valueOf(request.getParameter("idCreditCard" + k));
+				creditCards.add(new CreditCard(paymentValue, idCreditCard));
+			}
+			k++;
+		}
+
+		String idCreditCardS = request.getParameter("idCreditCard");
+		long idCreditCard = 0L;
+		if (!(idCreditCardS == null || idCreditCardS.equals("")))
+			idCreditCard = Long.valueOf(idCreditCardS);
 
 		// ExchangeCoupon data
 		List<String> exchangeCouponS = new ArrayList<>();
@@ -82,9 +94,9 @@ public class SaleVh implements IViewHelper {
 			case "SAVE":
 				sale.setDelivery(new Delivery(new ShippingCost(shippingCost),
 						new DeliveryAddress(idDeliveryAddress)));
-				sale.setCreditCard(new CreditCard(idCreditCard));
-				sale.setPromotionalCoupon(new PromotionalCoupon(idPromotionalCoupon));
+				sale.setCreditCards(creditCards);
 				sale.setExchangeCoupons(exchangeCoupons);
+				sale.setPromotionalCoupon(new PromotionalCoupon(idPromotionalCoupon));
 				sale.setPrice(total);
 				break;
 

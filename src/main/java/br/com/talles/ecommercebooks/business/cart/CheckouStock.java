@@ -11,7 +11,7 @@ import br.com.talles.ecommercebooks.persistence.dao.sale.StockDao;
 
 import javax.servlet.http.HttpSession;
 
-public class GiveBackStock implements IStrategy {
+public class CheckouStock implements IStrategy {
 
     @Override
     public Result process(Entity entity, Result result) {

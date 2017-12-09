@@ -7,7 +7,7 @@ import br.com.talles.ecommercebooks.domain.sale.Exchange;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.SaleDao;
 
-public class FoundSale implements IStrategy {
+public class FoundSaleExchange implements IStrategy {
 
     @Override
     public Result process(Entity entity, Result result) {

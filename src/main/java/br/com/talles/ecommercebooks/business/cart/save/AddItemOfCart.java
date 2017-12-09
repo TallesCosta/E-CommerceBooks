@@ -9,7 +9,7 @@ import br.com.talles.ecommercebooks.domain.sale.Stock;
 
 import javax.servlet.http.HttpSession;
 
-public class CartSession implements IStrategy {
+public class AddItemOfCart implements IStrategy {
 
 	@Override
 	public Result process(Entity entity, Result result) {

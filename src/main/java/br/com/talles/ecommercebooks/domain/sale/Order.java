@@ -18,9 +18,9 @@ public class Order extends Entity {
     private Status status;
     private Delivery delivery;
     private PromotionalCoupon promotionalCoupon;
-    private CreditCard creditCard;
     private Customer customer;
     private Exchange exchange;
+    private List<CreditCard> creditCards;
     private List<ExchangeCoupon> exchangeCoupons;
     private List<SaleItem> saleItems;
 
@@ -28,6 +28,7 @@ public class Order extends Entity {
     public Order() {
         super(true);
 
+        this.creditCards = new ArrayList<>();
         this.saleItems = new ArrayList<>();
         this.exchangeCoupons = new ArrayList<>();
     }
@@ -35,6 +36,7 @@ public class Order extends Entity {
     public Order(long id) {
         super(id, true);
 
+        this.creditCards = new ArrayList<>();
         this.saleItems = new ArrayList<>();
         this.exchangeCoupons = new ArrayList<>();
     }
@@ -42,9 +44,13 @@ public class Order extends Entity {
     public Order(double price, Customer customer) {
         this.price = price;
         this.customer = customer;
+
+        this.creditCards = creditCards;
+        this.saleItems = saleItems;
+        this.exchangeCoupons = exchangeCoupons;
     }
 
-    public Order(String saleNumber, Date date, double price, int totalAmount, Status status, Delivery delivery, PromotionalCoupon promotionalCoupon, CreditCard creditCard, Customer customer, Exchange exchange, List<SaleItem> saleItems, List<ExchangeCoupon> exchangeCoupons) {
+    public Order(String saleNumber, Date date, double price, int totalAmount, Status status, Delivery delivery, PromotionalCoupon promotionalCoupon, Customer customer, Exchange exchange, List<CreditCard> creditCards, List<SaleItem> saleItems, List<ExchangeCoupon> exchangeCoupons) {
         super(true);
         this.saleNumber = saleNumber;
         this.date = date;
@@ -53,10 +59,10 @@ public class Order extends Entity {
         this.status = status;
         this.delivery = delivery;
         this.promotionalCoupon = promotionalCoupon;
-        this.creditCard = creditCard;
         this.customer = customer;
         this.exchange = exchange;
 
+        this.creditCards = creditCards;
         this.saleItems = saleItems;
         this.exchangeCoupons = exchangeCoupons;
     }
@@ -90,8 +96,8 @@ public class Order extends Entity {
         return promotionalCoupon;
     }
 
-    public CreditCard getCreditCard() {
-        return creditCard;
+    public List<CreditCard> getCreditCards() {
+        return creditCards;
     }
 
     public Customer getCustomer() {
@@ -139,8 +145,8 @@ public class Order extends Entity {
         this.promotionalCoupon = promotionalCoupon;
     }
 
-    public void setCreditCard(CreditCard creditCard) {
-        this.creditCard = creditCard;
+    public void setCreditCards(List<CreditCard> creditCards) {
+        this.creditCards = creditCards;
     }
 
     public void setCustomer(Customer customer) {
@@ -162,6 +168,10 @@ public class Order extends Entity {
     // Others methods
     public boolean hasExchangeCoupons() {
         return !this.exchangeCoupons.isEmpty();
+    }
+
+    public boolean hasCreditCards() {
+        return !this.creditCards.isEmpty();
     }
 
 }

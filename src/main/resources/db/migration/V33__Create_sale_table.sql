@@ -15,7 +15,6 @@ CREATE TABLE Sales (
 
 	id_promotionalCoupon INT,
 	id_deliveryAddress INT NOT NULL,
-	id_creditCard INT NOT NULL,
 	id_customer INT NOT NULL,
 	
 	CONSTRAINT PK_Sale PRIMARY KEY (id)
@@ -23,5 +22,4 @@ CREATE TABLE Sales (
 
 ALTER TABLE Sales ADD FOREIGN KEY (id_promotionalCoupon) REFERENCES PromotionalCoupons(id);
 ALTER TABLE Sales ADD FOREIGN KEY (id_deliveryAddress) REFERENCES DeliveryAddresses(id);
-ALTER TABLE Sales ADD FOREIGN KEY (id_creditCard) REFERENCES CreditCards(id);
 ALTER TABLE Sales ADD FOREIGN KEY (id_customer) REFERENCES Customers(id);

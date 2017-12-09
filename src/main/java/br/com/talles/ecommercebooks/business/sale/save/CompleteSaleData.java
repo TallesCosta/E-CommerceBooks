@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class CompleteSale implements IStrategy {
+public class CompleteSaleData implements IStrategy {
 
     @Override
     public Result process(Entity entity, Result result) {

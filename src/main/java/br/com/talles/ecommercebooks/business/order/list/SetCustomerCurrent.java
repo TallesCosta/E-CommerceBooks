@@ -12,7 +12,7 @@ import br.com.talles.ecommercebooks.persistence.dao.customer.CustomerDao;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class ChooseCustomer implements IStrategy {
+public class SetCustomerCurrent implements IStrategy {
 
     @Override
     public Result process(Entity entity, Result result) {
