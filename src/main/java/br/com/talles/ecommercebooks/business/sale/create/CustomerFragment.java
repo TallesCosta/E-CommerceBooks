@@ -5,10 +5,12 @@ import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.customer.*;
 import br.com.talles.ecommercebooks.domain.sale.Delivery;
+import br.com.talles.ecommercebooks.domain.sale.ExchangeCoupon;
 import br.com.talles.ecommercebooks.domain.sale.PromotionalCoupon;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 import br.com.talles.ecommercebooks.persistence.dao.customer.CustomerDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.BaseShippingCostDao;
+import br.com.talles.ecommercebooks.persistence.dao.sale.ExchangeCouponDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.PromotionalCouponDao;
 
 import javax.servlet.http.HttpSession;
@@ -53,7 +55,7 @@ public class CustomerFragment implements IStrategy {
 
         // Get ChargeAddresses that Customer
         List<Entity> caEntities = new ArrayList<>();
-        List<ChargeAddress> chargeAddresses = customer.getChargeAddresses();
+        List<ChargeAddress> chargeAddresses = cas;
         for (ChargeAddress chargeAddress : chargeAddresses) {
             caEntities.add(chargeAddress);
         }
@@ -76,6 +78,10 @@ public class CustomerFragment implements IStrategy {
             daEntities.add(delivery);
         }
         result.addEntities(daEntities);
+
+        // Get ExchangeCoupons that Customer
+        dao = new ExchangeCouponDao();
+        result.addEntities(dao.select(true, new ExchangeCoupon(customer)));
 
         // Get all PromotionalCoupons to possible validates
         dao = new PromotionalCouponDao();

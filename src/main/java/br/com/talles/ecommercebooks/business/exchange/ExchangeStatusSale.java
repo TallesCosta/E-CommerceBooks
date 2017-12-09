@@ -7,8 +7,6 @@ import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.sale.Exchange;
 import br.com.talles.ecommercebooks.domain.sale.Status;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
-import br.com.talles.ecommercebooks.persistence.dao.sale.ExchangeCouponDao;
-import br.com.talles.ecommercebooks.persistence.dao.sale.ExchangeDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.SaleDao;
 
 public class ExchangeStatusSale implements IStrategy {

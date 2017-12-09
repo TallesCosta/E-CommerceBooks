@@ -14,6 +14,20 @@ public class ExchangeCoupon extends Coupon {
         super(id);
     }
 
+    public ExchangeCoupon(Customer customer) {
+        this.customer = customer;
+    }
+
+    public ExchangeCoupon(long id, Double value) {
+        super(id);
+        this.setValue(value);
+    }
+
+    public ExchangeCoupon(long id, Customer customer) {
+        super(id);
+        this.customer = customer;
+    }
+
     public ExchangeCoupon(String code, double value) {
         super(code, value);
     }

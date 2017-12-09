@@ -8,8 +8,10 @@ CREATE TABLE ExchangeCoupons (
 	value DOUBLE NOT NULL,
 
 	id_customer INT NOT NULL,
+	id_sale INT,
 
 	CONSTRAINT PK_ExchangeCoupon PRIMARY KEY (id)
 );
 
 ALTER TABLE ExchangeCoupons ADD FOREIGN KEY (id_customer) REFERENCES Customers(id);
+ALTER TABLE ExchangeCoupons ADD FOREIGN KEY (id_sale) REFERENCES Sales(id);

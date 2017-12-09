@@ -31,7 +31,7 @@ public class CompleteSale implements IStrategy {
         HttpSession session = result.getTransaction().getRequest().getSession();
         Cart cartSession = (Cart) session.getAttribute("cart");
 
-        sale.setPrice(cartSession.getPrice());
+        //sale.setPrice(cartSession.getPrice());
         sale.setTotalAmount(cartSession.getTotalAmount());
         sale.setSaleItems(cartSession.getSaleItems());
 

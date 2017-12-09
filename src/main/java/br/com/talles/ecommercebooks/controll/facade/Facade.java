@@ -23,6 +23,8 @@ import br.com.talles.ecommercebooks.business.exchange.ExchangeStatusSale;
 import br.com.talles.ecommercebooks.business.order.list.ChooseCustomer;
 import br.com.talles.ecommercebooks.business.sale.save.CompleteSale;
 import br.com.talles.ecommercebooks.business.sale.create.CustomerFragment;
+import br.com.talles.ecommercebooks.business.sale.save.DisableExchangeCoupons;
+import br.com.talles.ecommercebooks.business.sale.save.ValidatePayment;
 import br.com.talles.ecommercebooks.business.stock.list.StockSession;
 import br.com.talles.ecommercebooks.business.user.delete.DestroyUser;
 import br.com.talles.ecommercebooks.business.user.list.FoundUser;
@@ -100,6 +102,8 @@ public class Facade implements IFacade {
 	 	IStrategy completeSale = new CompleteSale();
 	 	IStrategy giveBackStock = new GiveBackStock();
 	 	IStrategy destroyCart = new DestroyCart();
+	 	IStrategy disableExchangeCoupons = new DisableExchangeCoupons();
+	 	IStrategy validatePayment = new ValidatePayment();
 	 	// Stock Strategies
 		IStrategy stockSession = new StockSession();
 		// OrderRequest Strategies
@@ -202,7 +206,7 @@ public class Facade implements IFacade {
 
 	 	List<IStrategy> saveSale = new ArrayList();
 	 	saveSale.add(completeSale);
-	 	saveSale.add(giveBackStock);
+	 	saveSale.add(validatePayment);
 
 	 	List<IStrategy> listSale = new ArrayList();
 	 	List<IStrategy> findSale = new ArrayList();
@@ -363,7 +367,9 @@ public class Facade implements IFacade {
 
 		// Sale Requirements Later
 		List<IStrategy> saveSaleLater = new ArrayList();
+		saveSaleLater.add(giveBackStock);
 		saveSaleLater.add(destroyCart);
+        saveSaleLater.add(disableExchangeCoupons);
 
 		List<IStrategy> listSaleLater = new ArrayList();
 

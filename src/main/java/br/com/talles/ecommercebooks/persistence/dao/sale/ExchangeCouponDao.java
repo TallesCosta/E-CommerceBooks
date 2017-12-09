@@ -16,29 +16,32 @@ public class ExchangeCouponDao extends AbstractDao {
 
     @Override
     public List<Entity> select(boolean enabled, Entity entity) {
+        ExchangeCoupon exchangeCoupon = (ExchangeCoupon) entity;
         List<Entity> exchangeCoupons = new ArrayList();
 
         String sql = "SELECT ec.* "
                 + "FROM ExchangeCoupons ec "
-                + "WHERE ec.enabled = ? ";
+                + "INNER JOIN Customers c on ec.id_customer = c.id "
+                + "WHERE ec.enabled = ? AND c.id = ?";
 
         try {
             openConnection();
 
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setBoolean(1, enabled);
+            statement.setLong(2, exchangeCoupon.getCustomer().getId());
 
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                ExchangeCoupon exchangeCoupon = new ExchangeCoupon();
+                ExchangeCoupon ec = new ExchangeCoupon();
 
-                exchangeCoupon.setId(result.getLong("exchangeCoupons.id"));
-                exchangeCoupon.setEnabled(result.getBoolean("exchangeCoupons.enabled"));
-                exchangeCoupon.setCode(result.getString("exchangeCoupons.code"));
-                exchangeCoupon.setValue(result.getDouble("exchangeCoupons.value"));
+                ec.setId(result.getLong("exchangeCoupons.id"));
+                ec.setEnabled(result.getBoolean("exchangeCoupons.enabled"));
+                ec.setCode(result.getString("exchangeCoupons.code"));
+                ec.setValue(result.getDouble("exchangeCoupons.value"));
 
-                exchangeCoupons.add(exchangeCoupon);
+                exchangeCoupons.add(ec);
             }
 
             result.close();
@@ -96,7 +99,7 @@ public class ExchangeCouponDao extends AbstractDao {
         ExchangeCoupon exchangeCoupon = (ExchangeCoupon) entity;
 
         String sql = "UPDATE ExchangeCoupons "
-                + "SET enabled = ?, code = ?, value = ? "
+                + "SET enabled = ?, id_sale = ? "
                 + "WHERE id = ?";
 
         try {
@@ -105,10 +108,9 @@ public class ExchangeCouponDao extends AbstractDao {
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setBoolean(1, exchangeCoupon.isEnabled());
-            statement.setString(2, exchangeCoupon.getCode());
-            statement.setDouble(3, exchangeCoupon.getValue());
+            statement.setLong(2, exchangeCoupon.getCustomer().getSale(0).getId());
 
-            statement.setLong(4, exchangeCoupon.getId());
+            statement.setLong(3, exchangeCoupon.getId());
 
             statement.execute();
             statement.close();

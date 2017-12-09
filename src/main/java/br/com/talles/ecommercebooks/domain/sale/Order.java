@@ -4,6 +4,7 @@ import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.customer.CreditCard;
 import br.com.talles.ecommercebooks.domain.customer.Customer;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,18 +21,25 @@ public class Order extends Entity {
     private CreditCard creditCard;
     private Customer customer;
     private Exchange exchange;
+    private List<ExchangeCoupon> exchangeCoupons;
     private List<SaleItem> saleItems;
 
     // Constructors
     public Order() {
         super(true);
+
+        this.saleItems = new ArrayList<>();
+        this.exchangeCoupons = new ArrayList<>();
     }
 
     public Order(long id) {
         super(id, true);
+
+        this.saleItems = new ArrayList<>();
+        this.exchangeCoupons = new ArrayList<>();
     }
 
-    public Order(String saleNumber, Date date, double price, int totalAmount, Status status, Delivery delivery, PromotionalCoupon promotionalCoupon, CreditCard creditCard, Customer customer, Exchange exchange, List<SaleItem> saleItems) {
+    public Order(String saleNumber, Date date, double price, int totalAmount, Status status, Delivery delivery, PromotionalCoupon promotionalCoupon, CreditCard creditCard, Customer customer, Exchange exchange, List<SaleItem> saleItems, List<ExchangeCoupon> exchangeCoupons) {
         super(true);
         this.saleNumber = saleNumber;
         this.date = date;
@@ -45,6 +53,7 @@ public class Order extends Entity {
         this.exchange = exchange;
 
         this.saleItems = saleItems;
+        this.exchangeCoupons = exchangeCoupons;
     }
 
     // Getters
@@ -92,6 +101,10 @@ public class Order extends Entity {
         return saleItems;
     }
 
+    public List<ExchangeCoupon> getExchangeCoupons() {
+        return exchangeCoupons;
+    }
+
     // Setters
     public void setSaleNumber(String saleNumber) {
         this.saleNumber = saleNumber;
@@ -137,4 +150,7 @@ public class Order extends Entity {
         this.saleItems = saleItems;
     }
 
+    public void setExchangeCoupons(List<ExchangeCoupon> exchangeCoupons) {
+        this.exchangeCoupons = exchangeCoupons;
+    }
 }

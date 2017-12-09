@@ -7,6 +7,9 @@ import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
 import br.com.talles.ecommercebooks.domain.sale.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,6 +55,27 @@ public class SaleVh implements IViewHelper {
 		if (!(idPromotionalCouponS == null || idPromotionalCouponS.equals("")))
 			idPromotionalCoupon = Long.valueOf(idPromotionalCouponS);
 
+		// ExchangeCoupon data
+		List<String> exchangeCouponS = new ArrayList<>();
+		if(request.getParameterValues("exchangeCoupon") != null)
+			exchangeCouponS = Arrays.asList(request.getParameterValues("exchangeCoupon"));
+
+		List<ExchangeCoupon> exchangeCoupons = new ArrayList<>();
+		long idExchangeCoupon = 0L;
+		double exchangeCuopon = 0.0;
+		for(String idExchangeCouponS : exchangeCouponS){
+			if (!(idExchangeCouponS == null || idExchangeCouponS.equals(""))){
+				String[] datas = idExchangeCouponS.split("-");
+				idExchangeCoupon = Long.valueOf(datas[0]);
+				exchangeCuopon = Double.valueOf(datas[1]);
+			}
+			exchangeCoupons.add(new ExchangeCoupon(idExchangeCoupon, exchangeCuopon));
+		}
+
+		if (exchangeCoupons.isEmpty()) {
+			exchangeCoupons.add(new ExchangeCoupon(0L));
+		}
+
 		// Sale
 		Sale sale = new Sale();
 		
@@ -64,6 +88,7 @@ public class SaleVh implements IViewHelper {
 						new DeliveryAddress(idDeliveryAddress)));
 				sale.setCreditCard(new CreditCard(idCreditCard));
 				sale.setPromotionalCoupon(new PromotionalCoupon(idPromotionalCoupon));
+				sale.setExchangeCoupons(exchangeCoupons);
 				sale.setPrice(total);
 				break;
 

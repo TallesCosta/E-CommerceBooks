@@ -22,7 +22,7 @@
         Result result = (Result) request.getAttribute("result");
 
         Order sale = new Order("", new Date(), 0.0, 0, new Status(), new Delivery(), new PromotionalCoupon(),
-                new CreditCard(), new Customer(), new Exchange(), new ArrayList<SaleItem>());
+                new CreditCard(), new Customer(), new Exchange(), new ArrayList<SaleItem>(), new ArrayList<ExchangeCoupon>());
 
         if (result != null) {
             if (result.getKeys().contains(Sale.class.getSimpleName())) {
@@ -48,35 +48,43 @@
                         <select name="idDeliveryAddress" id="idDeliveryAddress">
                             <%
                                 int i = 0;
-                                for (Entity entity : result.getEntities(Delivery.class.getSimpleName())) {
-                                    i++;
-                                    Delivery delivery = (Delivery) entity;
-                                    out.print("<option data-base-shipping-cost='" + delivery.getShippingCost().getBaseValue() + "' data-base-shipping-cost-item='" + delivery.getShippingCost().getBaseAddtionValue() + "' id='da" + i + "' value='" + delivery.getDeliveryAddress().getId() + "'>" + delivery.getDeliveryAddress().getAlias() + "</option>");
+                                if (result.hasEntities() && result.getKeys().contains(Delivery.class.getSimpleName())) {
+                                    for (Entity entity : result.getEntities(Delivery.class.getSimpleName())) {
+                                        i++;
+                                        Delivery delivery = (Delivery) entity;
+                                        out.print("<option data-base-shipping-cost='" + delivery.getShippingCost().getBaseValue() + "' data-base-shipping-cost-item='" + delivery.getShippingCost().getBaseAddtionValue() + "' id='da" + i + "' value='" + delivery.getDeliveryAddress().getId() + "'>" + delivery.getDeliveryAddress().getAlias() + "</option>");
+                                    }
                                 }
                             %>
                         </select>
                         <%
-                            for(Entity entity : result.getEntities(Customer.class.getSimpleName())){
+                            if (result.hasEntities() && result.getKeys().contains(Customer.class.getSimpleName())) {
+                                for(Entity entity : result.getEntities(Customer.class.getSimpleName())){
                         %>
                         <a class="pull-right button" href='<% out.print(request.getContextPath().concat("/delivery-addresses/create?operation=CREATE&idCustomer=" + entity.getId() + "&back=http://localhost:8080/E-CommerceBooks/sales/create?operation=CREATE")); %>'>Novo Endereço de Entrega</a>
                         <%
+                                }
                             }
                         %>
 
                         <label for="idCreditCard">Cartão de Crédito*: </label>
                         <select name="idCreditCard" id="idCreditCard">
                             <%
-                                for(Entity entity : result.getEntities(CreditCard.class.getSimpleName())){
-                                    CreditCard creditCard = (CreditCard) entity;
-                                    out.print("<option value='" + creditCard.getId() + "'>" + creditCard.getNumber() + "</option>");
+                                if (result.hasEntities() && result.getKeys().contains(CreditCard.class.getSimpleName())) {
+                                    for (Entity entity : result.getEntities(CreditCard.class.getSimpleName())) {
+                                        CreditCard creditCard = (CreditCard) entity;
+                                        out.print("<option value='" + creditCard.getId() + "'>" + creditCard.getNumber() + "</option>");
+                                    }
                                 }
                             %>
                         </select>
                         <%
-                            for(Entity entity : result.getEntities(Customer.class.getSimpleName())){
+                            if (result.hasEntities() && result.getKeys().contains(Customer.class.getSimpleName())) {
+                                for(Entity entity : result.getEntities(Customer.class.getSimpleName())){
                         %>
                         <a class="pull-right button" href='<% out.print(request.getContextPath().concat("/credit-cards/create?operation=CREATE&idCustomer=" + entity.getId() + "&back=http://localhost:8080/E-CommerceBooks/sales/create?operation=CREATE")); %>'>Novo Cartão de Crédito</a>
                         <%
+                                }
                             }
                         %>
 
@@ -86,11 +94,26 @@
                         <button id="validateCoupon" type="button">Validar</button>
 
                         <%
-                            for(Entity entity : result.getEntities(PromotionalCoupon.class.getSimpleName())){
-                                PromotionalCoupon promotionalCoupon = (PromotionalCoupon) entity;
-                                out.print("<input type='hidden' id='" + promotionalCoupon.getCode() + "' class='coupons' data-id='" + promotionalCoupon.getId() + "' data-code='" + promotionalCoupon.getCode() + "' data-value='" + promotionalCoupon.getValue() + "' />");
+                            if (result.hasEntities() && result.getKeys().contains(PromotionalCoupon.class.getSimpleName())) {
+                                for (Entity entity : result.getEntities(PromotionalCoupon.class.getSimpleName())) {
+                                    PromotionalCoupon promotionalCoupon = (PromotionalCoupon) entity;
+                                    out.print("<input type='hidden' id='" + promotionalCoupon.getCode() + "' class='coupons' data-id='" + promotionalCoupon.getId() + "' data-code='" + promotionalCoupon.getCode() + "' data-value='" + promotionalCoupon.getValue() + "' />");
+                                }
                             }
                         %>
+
+                        <label for="exchangeCoupon">Cupom de Troca: </label>
+                        <select multiple name="exchangeCoupon" id="exchangeCoupon">
+                            <%
+                                if (result.hasEntities() && result.getKeys().contains(ExchangeCoupon.class.getSimpleName())) {
+                                    int j = 0;
+                                    for (Entity entity : result.getEntities(ExchangeCoupon.class.getSimpleName())) {
+                                        ExchangeCoupon exchangeCoupon = (ExchangeCoupon) entity;
+                                        out.print("<option value='" + exchangeCoupon.getId() + "-" + exchangeCoupon.getValue() + "'>" + "Cupon " + ++j + ": R$ " + exchangeCoupon.getValue() + "</option>");
+                                    }
+                                }
+                            %>
+                        </select>
 
                         <%
                             Cart cart = (Cart) request.getSession().getAttribute("cart");
