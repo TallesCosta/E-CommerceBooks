@@ -21,6 +21,7 @@
             out.println("</p>");
         }
 %>
+<%@include file="../commons/customer/menu-html.jsp"%>
 
 <div class="container">
     <h1 id="list-credit-cart">Novo Cartão de Crédito</h1>
@@ -30,6 +31,7 @@
             <form action="save" method="post">
                 <fieldset>
                     <legend>Cartão de Crédito</legend>
+                    <input type="hidden" name="idCustomer" id="idCustomer" value="<% out.print(id); %>" />
                     <div>
                         <label for="cardNumber">Número*: </label>
                         <input name="cardNumber" id="cardNumber" type="text" >

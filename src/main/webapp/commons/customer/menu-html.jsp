@@ -26,18 +26,28 @@
             }
         %>
         <div class="item">
-            <a class="list-book" href="<% out.print(request.getContextPath().concat("/charge-addresses/list?operation=LIST&idCustomer=" + id)); %>">
-                End. Cobrança
+            <a class="list-order-request" href="<% out.print(request.getContextPath().concat("/orders/list?operation=LIST")); %>">
+                Pedidos
             </a>
         </div>
         <div class="item">
-            <a class="list-shipping" href="<% out.print(request.getContextPath().concat("/delivery-addresses/list?operation=LIST&idCustomer=" + id)); %>">
+            <a class="list-charge-address" href="<% out.print(request.getContextPath().concat("/charge-addresses/list?operation=LIST&idCustomer=" + id)); %>">
+                End. Cobranca
+            </a>
+        </div>
+        <div class="item">
+            <a class="list-delivery-address" href="<% out.print(request.getContextPath().concat("/delivery-addresses/list?operation=LIST&idCustomer=" + id)); %>">
                 End. Entrega
             </a>
         </div>
         <div class="item">
-            <a class="list-cards" href="<% out.print(request.getContextPath().concat("/credit-cards/list?operation=LIST&idCustomer=" + id)); %>">
-                Meus Cartões
+            <a class="list-credit-card" href="<% out.print(request.getContextPath().concat("/credit-cards/list?operation=LIST&idCustomer=" + id)); %>">
+                Meus Cartoes
+            </a>
+        </div>
+        <div class="item">
+            <a class="logout" href="<% out.print(request.getContextPath() + "/log-out?operation=DELETE"); %>">
+                Logout
             </a>
         </div>
     </div>

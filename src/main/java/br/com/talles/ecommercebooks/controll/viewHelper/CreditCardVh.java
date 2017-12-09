@@ -23,11 +23,11 @@ public class CreditCardVh implements IViewHelper {
     public Entity getEntity(HttpServletRequest request) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        String number = request.getParameter("number");
+        String number = request.getParameter("cardNumber");
         String printedName = request.getParameter("printedName");
         String securityCode = request.getParameter("securityCode");
 
-        String idCardCompanyS = request.getParameter("idCardCompany");
+        String idCardCompanyS = request.getParameter("cardCompany");
         long idCardCompany = 0L;
         if (!(idCardCompanyS == null || idCardCompanyS.equals("")))
             idCardCompany = Long.valueOf(idCardCompanyS);
@@ -50,6 +50,7 @@ public class CreditCardVh implements IViewHelper {
 
         switch(request.getParameter("operation")) {
             case "CREATE" :
+                creditCard.setCustomer(new Customer(idCustomer));
                 break;
 
             case "SAVE":
@@ -58,6 +59,7 @@ public class CreditCardVh implements IViewHelper {
                 creditCard.setSecurityCode(securityCode);
                 creditCard.setExpirationDate(expirationDate);
                 creditCard.setCardCompany(new CardCompany(idCardCompany));
+                creditCard.setCustomer(new Customer(idCustomer));
                 break;
 
             case "LIST":
@@ -102,7 +104,8 @@ public class CreditCardVh implements IViewHelper {
                     break;
 
                 case "SAVE":
-                    response.sendRedirect("/E-CommerceBooks/credit-cards/list?operation=LIST");
+                    response.sendRedirect("/E-CommerceBooks/credit-cards/list?operation=LIST" +
+                            "&idCustomer=" + result.getEntities(Customer.class.getSimpleName()).get(0).getId());
                     break;
 
                 case "LIST":

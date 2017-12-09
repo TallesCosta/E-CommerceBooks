@@ -13,6 +13,7 @@ import br.com.talles.ecommercebooks.business.cart.delete.CartWithoutSession;
 import br.com.talles.ecommercebooks.business.cart.save.CartSession;
 import br.com.talles.ecommercebooks.business.cart.save.ValidateAmount;
 import br.com.talles.ecommercebooks.business.cart.save.ValidateCart;
+import br.com.talles.ecommercebooks.business.creditCard.save.RememberCustomer;
 import br.com.talles.ecommercebooks.business.customer.AddressNotBlank;
 import br.com.talles.ecommercebooks.business.customer.CreditCardNotBlank;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
@@ -109,6 +110,7 @@ public class Facade implements IFacade {
 		IStrategy addressNotBlank = new AddressNotBlank();
 		// CreditCard
 		IStrategy creditCardNotBlank = new CreditCardNotBlank();
+        IStrategy rememberCustomer = new RememberCustomer();
 
 		// Book Requirements
 		List<IStrategy> createBook = new ArrayList();
@@ -383,7 +385,9 @@ public class Facade implements IFacade {
 
 		// CreditCard Requiremensts Later
 		List<IStrategy> listCreditCardLater = new ArrayList();
+
 		List<IStrategy> saveCreditCardLater = new ArrayList();
+		saveCreditCardLater.add(rememberCustomer);
 
 		// Requirements Book Later to contexts
         Map<String, List<IStrategy>> contextReqBookLater = new HashMap();

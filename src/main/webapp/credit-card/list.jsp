@@ -80,7 +80,7 @@
                 </tfoot>
             </table>
 
-            <a class="pull-right button" href='<% out.print(request.getContextPath().concat("/credit-cards/create?operation=CREATE")); %>'>Novo Cartão de Crédito</a>
+            <a class="pull-right button" href='<% out.print(request.getContextPath().concat("/credit-cards/create?operation=CREATE&idCustomer=" + id)); %>'>Novo Cartão de Crédito</a>
         </div>
     </div>
     <%

@@ -12,7 +12,7 @@ public class CreditCardNotBlank implements IStrategy {
 		CreditCard creditCard = (CreditCard) entity;
 		
 		if (creditCard.getNumber() == null || creditCard.getNumber().trim().isEmpty()) {
-            result.addMsg("Número do cartão de crédito do endereço é um campo obrigatório!\n");
+            result.addMsg("Número do cartão de crédito é um campo obrigatório!\n");
 		} if (creditCard.getPrintedName() == null || creditCard.getPrintedName().trim().isEmpty()) {
             result.addMsg("Nome impresso no cartão de crédito é um campo obrigatório!\n");
 		} if (creditCard.getSecurityCode() == null || creditCard.getSecurityCode().trim().isEmpty()) {

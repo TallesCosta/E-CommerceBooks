@@ -66,10 +66,6 @@ public class CreditCardDao extends AbstractDao {
 		CreditCard creditCard = (CreditCard) entity;
 		String sql = "INSERT INTO CreditCards (enabled, number, printedName, securityCode, expirationDate, id_cardCompany, id_customer)"
 				+ "VALUES(?, ?, ?, ?, ?, ?, ?)";
-
-		// Find the last book register to get its id
-		IDao custumerDao = new CustomerDao();
-		Customer lastCustomer = (Customer) custumerDao.findLast();
 		
 		try {
 			openConnection();
@@ -83,7 +79,7 @@ public class CreditCardDao extends AbstractDao {
 			statement.setDate(5, new java.sql.Date(creditCard.getExpirationDate().getTime()));
 			
 			statement.setLong(6, creditCard.getCardCompany().getId());
-			statement.setLong(7, lastCustomer.getId());
+			statement.setLong(7, creditCard.getCustomer().getId());
 						
 			statement.execute();
 			statement.close();
