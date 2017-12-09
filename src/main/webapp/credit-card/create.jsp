@@ -20,6 +20,8 @@
                 out.println("<i class='fa fa-times' aria-hidden='true' style='color: #FF0000;'></i> " + msg + "<br/>");
             out.println("</p>");
         }
+
+        String back = (String) request.getAttribute("back");
 %>
 <%@include file="../commons/customer/menu-html.jsp"%>
 
@@ -62,6 +64,7 @@
                     </div>
                 </fieldset>
 
+                <input type="hidden" name="back" id="back" value="<% out.print(back); %>" />
                 <input type="hidden" name="operation" id="operation-credit-card" value="SAVE" />
                 <button type="submit">Salvar</button>
                 <small>Todos os campos marcados com * são obrigatórios.</small>

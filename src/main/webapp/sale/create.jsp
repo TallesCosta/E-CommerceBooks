@@ -55,6 +55,13 @@
                                 }
                             %>
                         </select>
+                        <%
+                            for(Entity entity : result.getEntities(Customer.class.getSimpleName())){
+                        %>
+                        <a class="pull-right button" href='<% out.print(request.getContextPath().concat("/delivery-addresses/create?operation=CREATE&idCustomer=" + entity.getId() + "&back=http://localhost:8080/E-CommerceBooks/sales/create?operation=CREATE")); %>'>Novo Endereço de Entrega</a>
+                        <%
+                            }
+                        %>
 
                         <label for="idCreditCard">Cartão de Crédito*: </label>
                         <select name="idCreditCard" id="idCreditCard">
@@ -65,10 +72,17 @@
                                 }
                             %>
                         </select>
+                        <%
+                            for(Entity entity : result.getEntities(Customer.class.getSimpleName())){
+                        %>
+                        <a class="pull-right button" href='<% out.print(request.getContextPath().concat("/credit-cards/create?operation=CREATE&idCustomer=" + entity.getId() + "&back=http://localhost:8080/E-CommerceBooks/sales/create?operation=CREATE")); %>'>Novo Cartão de Crédito</a>
+                        <%
+                            }
+                        %>
 
                         <label for="promotionalCoupon">Cupom de Descontro: </label>
                         <input type="text" id="promotionalCoupon" name="promotionalCoupon" />
-                         <input type="hidden" id="idPromotionalCoupon" name="idPromotionalCoupon" value="0" />
+                        <input type="hidden" id="idPromotionalCoupon" name="idPromotionalCoupon" value="0" />
                         <button id="validateCoupon" type="button">Validar</button>
 
                         <%
@@ -90,6 +104,7 @@
                     <button type="submit">Concluir</button>
                 </form>
             </div>
+
             <div class="column">
                 <%
                     out.println("<p id='subtotalSale'>Subtotal: " + formatter.format(cart.getPrice()) + "</p>");

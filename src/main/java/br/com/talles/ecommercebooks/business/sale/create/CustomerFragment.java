@@ -25,6 +25,7 @@ public class CustomerFragment implements IStrategy {
         IDao dao = new CustomerDao();
         List<Entity> customers = dao.select(true, new Customer(userSession));
         Customer customer = (Customer) customers.get(0);
+        result.addEntity(customer);
 
         // Remove duplicate registries ChargeAddresses
         List<ChargeAddress> casReapeat = customer.getChargeAddresses();

@@ -100,6 +100,10 @@ public class DeliveryAddressVh implements IViewHelper {
         RequestDispatcher dispatcher;
         request.setAttribute("result", result);
 
+        // For call back to last page
+        String back = request.getParameter("back");
+        request.setAttribute("back", back);
+
         try {
             switch(request.getParameter("operation")) {
                 case "CREATE" :
@@ -108,7 +112,10 @@ public class DeliveryAddressVh implements IViewHelper {
                     break;
 
                 case "SAVE":
-                    response.sendRedirect("/E-CommerceBooks/delivery-addresses/list?operation=LIST" +
+                    if (back != null && back != "")
+                        response.sendRedirect(back);
+                    else
+                        response.sendRedirect("/E-CommerceBooks/delivery-addresses/list?operation=LIST" +
                             "&idCustomer=" + result.getEntities(Customer.class.getSimpleName()).get(0).getId());
                     break;
 
