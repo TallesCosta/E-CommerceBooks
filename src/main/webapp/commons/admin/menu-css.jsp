@@ -42,4 +42,8 @@
     .mr-8 {
         margin-right: 8px
     }
+
+    .tagged-input input {
+        width: 70%;
+    }
 </style>
