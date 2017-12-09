@@ -6,9 +6,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Novo Cartão de Crédito</title>
-    <%@include file="../commons/admin/form-css.jsp"%>
 
-    <%@include file="../commons/admin/menu-css.jsp"%>
+    <%@include file="../commons/customer/menu-css.jsp"%>
 </head>
 <body>
 
@@ -24,7 +23,7 @@
             out.println("</p>");
         }
 %>
-<%@include file="../commons/admin/menu-html.jsp"%>
+<%@include file="../commons/customer/menu-html.jsp"%>
 
 <div class="container">
     <h1 id="list-credit-cart">Novo Cartão de Crédito</h1>
