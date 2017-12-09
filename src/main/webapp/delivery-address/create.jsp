@@ -7,6 +7,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Novo Endereço de Entrega</title>
+
+    <%@include file="../commons/customer/menu-css.jsp"%>
 </head>
 <body>
 

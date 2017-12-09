@@ -39,12 +39,12 @@
         text-align: end;
     }
 
-    .button {
+    button, .button {
         background-color: #27B774;
         border-color: #27B774;
     }
 
-    .button:hover {
+    button:hover, .button:hover {
         background-color: #249157;
         border-color: #249157;
     }

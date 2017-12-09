@@ -142,11 +142,14 @@
 				-->
 
 				<button class="float-right" name="operation" value="LIST" type="submit">Filtrar</button>
+				<a class="mr-8 button button-outline float-right create-customer" href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">Criar Cliente</a>
+				<a class="mr-8 button button-outline float-right list-disable-customer" href="<% out.print(request.getContextPath().concat("/customers/list-disable?operation=LIST-DISABLE")); %>">Listar Inativos</a>
+
 			</form>
 
 			<div class="row">
 				<div class="column">
-					<table class='u-full-width'>
+					<table>
 						<thead>
 						<tr>
 							<td>CPF</td>
@@ -252,9 +255,6 @@
 			}
 		%>
 			</div>
-			
-			<a class="create-customer" href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">Criar Cliente</a>
-			<a class="list-disable-customer" href="<% out.print(request.getContextPath().concat("/customers/list-disable?operation=LIST-DISABLE")); %>">Listar Inativos</a>
 		</div>
 
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"

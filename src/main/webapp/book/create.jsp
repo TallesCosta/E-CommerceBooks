@@ -27,6 +27,9 @@
 			else if (result.getTransaction().getOperation().equals("FIND")) { out.print("Alteração de Livro"); } %>
 		</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<%@include file="../commons/admin/form-css.jsp"%>
+
+		<%@include file="../commons/admin/menu-css.jsp"%>
 	</head>
 	<body>
 		<%
@@ -48,8 +51,9 @@
 				out.print("</p>");
 			}
 		%>
+		<%@include file="../commons/admin/menu-html.jsp"%>
 		
-		<div id="app">
+		<div class="container">
 			<h1 id="create-book">
 				<% if (result.getTransaction().getOperation().equals("CREATE")) { out.print("Criação de Livro"); }
 				else if (result.getTransaction().getOperation().equals("FIND")) { out.print("Alteração de Livro"); } %>

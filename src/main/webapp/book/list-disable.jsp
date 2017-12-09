@@ -14,11 +14,6 @@
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<style>
-			fieldset {
-				display: inline-block;
-			}
-		</style>
 		<%@include file="../commons/admin/form-css.jsp"%>
 
 		<%@include file="../commons/admin/menu-css.jsp"%>
@@ -154,10 +149,12 @@
 								<option value="Y">Ano(s)</option>
 							</select>
 						</fieldset>
-
-						<button name="operation" value="LIST" type="submit">Filtrar</button>
 					</fieldset>
 				</div>
+				<button class="float-right" name="operation" value="LIST" type="submit">Filtrar</button>
+				<a class="mr-8 button button-outline float-right create-book" href="<% out.print(request.getContextPath().concat("/books/create?operation=CREATE")); %>">Criar Livro</a>
+				<a class="mr-8 button button-outline float-right list-book" href="<% out.print(request.getContextPath().concat("/books/list?operation=LIST")); %>">Listar Ativos</a>
+
 			</form>
 			
 			<br><br>
@@ -261,10 +258,7 @@
 					
 				<p><% out.println(i); %> registros encontrados.</p>
 			</div>
-			
-			<a class="create-book" href="<% out.print(request.getContextPath().concat("/books/create?operation=CREATE")); %>">Criar Livro</a>
-			<a class="list-book" href="<% out.print(request.getContextPath().concat("/books/list?operation=LIST")); %>">Listar Ativos</a>
-			
+
 			<br><br><br><br><br>
 			<div id="light-box">
 				<form action="enable" method="POST">
@@ -299,8 +293,6 @@
 			</div>
 			<br><br><br><br><br>
 		</div>
-		
-		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
 		
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"
 			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="

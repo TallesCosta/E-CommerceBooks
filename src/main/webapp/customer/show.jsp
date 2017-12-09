@@ -1,7 +1,6 @@
 <%@page import="java.util.Arrays"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="br.com.talles.ecommercebooks.domain.Entity"%>
 <%@page import="br.com.talles.ecommercebooks.controll.Result"%>
 <%@ page import="br.com.talles.ecommercebooks.domain.customer.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -16,6 +15,7 @@
     <head>
         <title>Histórico do Cliente</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<%@include file="../commons/admin/menu-css.jsp"%>
     </head>
     <body>
 		<%
@@ -38,7 +38,7 @@
 			}
 		%>
 		
-		<div id="app">
+		<div class="container">
 			<h1 id="show-customer">Histórico do Cliente</h1>
 			
 			<fieldset>
