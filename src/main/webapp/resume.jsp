@@ -39,15 +39,15 @@
 		<div class="container">
 			<div class="row">
 				<div class="column">
-					<h1>Bora às compras!</h1>
-					<% out.print("<a href='" + request.getContextPath() + "/cart/list.jsp'>Carrinho</a>"); %>
+					<h1 id="resume">Bora às compras!</h1>
+					<% out.print("<a id='cart' href='" + request.getContextPath() + "/cart/list.jsp'>Carrinho</a><br>"); %>
 					<%
 						User user = (User) request.getSession().getAttribute("user");
 						if (user == null)
-							out.print("<a href='" + request.getContextPath() + "/login.jsp'>Login!</a>");
+							out.print("<a id='login' href='" + request.getContextPath() + "/login.jsp'>Login!</a><br>");
 						else {
-							out.print("<a href='" + request.getContextPath() + "/orders/list?operation=LIST'>Meus pedidos</a>");
-							out.print("<a href='" + request.getContextPath() + "/log-out?operation=DELETE'>Logout!</a>");
+							out.print("<a id='orders' href='" + request.getContextPath() + "/orders/list?operation=LIST'>Meus pedidos</a><br>");
+							out.print("<a id='logout' href='" + request.getContextPath() + "/log-out?operation=DELETE'>Logout!</a>");
 						}
 					%>
 				</div>
@@ -65,8 +65,10 @@
 								out.println("<i class='fa fa-times' aria-hidden='true' style='color: #FF0000;'></i> " + msg + "<br/>");
 							out.println("</p>");
 						} else if (result.hasEntities() && result.getKeys().contains(Stock.class.getSimpleName())) {
+						    int i = 0;
 							for (Entity entity : result.getEntities(Stock.class.getSimpleName())) {
 								Stock stock = (Stock) entity;
+								i++;
 				%>
 				<div class="product column column-20">
 					<img src="http://www.hancock.k12.ky.us/userfiles/92/bookworm.jpg" width="100px" height="100px" />
@@ -79,10 +81,10 @@
 						<% out.println("<input type='hidden' name='id_book' id='id_book' value='" + stock.getBook().getId() + "' />"); %>
 						<% out.println("<input type='hidden' name='title_book' id='title_book' value='" + stock.getBook().getTitle() + "' />"); %>
 						<% out.println("<input type='hidden' name='unitaryPrice' id='unitaryPrice' value='" + stock.getSalePrice() + "' />"); %>
-						<input type="number" name="amount" id="amount" value="1" min="1" />
+						<input type="number" name="amount" id="amount<% out.print(i); %>" value="1" min="1" />
 
 						<input type="hidden" name="operation" id="operation-cart" value="SAVE" />
-						<button class="button button-clear" type="submit">Add-Cart</button>
+						<button id="add-cart<% out.print(i); %>" class="button button-clear" type="submit">Add-Cart</button>
 					</form>
 				</div>
 		<%

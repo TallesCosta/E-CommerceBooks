@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Finalizar Compras!</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
     <link rel="stylesheet" href="https://cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
@@ -61,7 +61,7 @@
                             if (result.hasEntities() && result.getKeys().contains(Customer.class.getSimpleName())) {
                                 for(Entity entity : result.getEntities(Customer.class.getSimpleName())){
                         %>
-                        <a class="pull-right button" href='<% out.print(request.getContextPath().concat("/delivery-addresses/create?operation=CREATE&idCustomer=" + entity.getId() + "&back=http://localhost:8080/E-CommerceBooks/sales/create?operation=CREATE")); %>'>Novo Endereço de Entrega</a>
+                        <a id="delivery-address" class="pull-right button" href='<% out.print(request.getContextPath().concat("/delivery-addresses/create?operation=CREATE&idCustomer=" + entity.getId() + "&back=http://localhost:8080/E-CommerceBooks/sales/create?operation=CREATE")); %>'>Novo Endereço de Entrega</a>
                         <%
                                 }
                             }
@@ -87,7 +87,7 @@
                             if (result.hasEntities() && result.getKeys().contains(Customer.class.getSimpleName())) {
                                 for(Entity entity : result.getEntities(Customer.class.getSimpleName())){
                         %>
-                        <a class="pull-right button" href='<% out.print(request.getContextPath().concat("/credit-cards/create?operation=CREATE&idCustomer=" + entity.getId() + "&back=http://localhost:8080/E-CommerceBooks/sales/create?operation=CREATE")); %>'>Novo Cartão de Crédito</a>
+                        <a id="credit-card" class="pull-right button" href='<% out.print(request.getContextPath().concat("/credit-cards/create?operation=CREATE&idCustomer=" + entity.getId() + "&back=http://localhost:8080/E-CommerceBooks/sales/create?operation=CREATE")); %>'>Novo Cartão de Crédito</a>
                         <%
                                 }
                             }
@@ -124,8 +124,9 @@
                                 if (result.hasEntities() && result.getKeys().contains(ExchangeCoupon.class.getSimpleName())) {
                                     int j = 0;
                                     for (Entity entity : result.getEntities(ExchangeCoupon.class.getSimpleName())) {
+                                        j++;
                                         ExchangeCoupon exchangeCoupon = (ExchangeCoupon) entity;
-                                        out.print("<option value='" + exchangeCoupon.getId() + "-" + exchangeCoupon.getValue() + "'>" + "Cupon " + ++j + ": R$ " + exchangeCoupon.getValue() + "</option>");
+                                        out.print("<option id='exchangeCoupon" + j + "' value='" + exchangeCoupon.getId() + "-" + exchangeCoupon.getValue() + "'>" + "Cupon " + ++j + ": R$ " + exchangeCoupon.getValue() + "</option>");
                                     }
                                 }
                             %>
@@ -140,7 +141,7 @@
                     <input type="hidden" name="shippingCost" id="shippingCost" />
                     <input type="hidden" name="total" id="total" />
                     <input type="hidden" name="operation" id="operation-sale" value="SAVE" />
-                    <button type="submit">Concluir</button>
+                    <button id="finish" type="submit">Concluir</button>
                 </form>
             </div>
 

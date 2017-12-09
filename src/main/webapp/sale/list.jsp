@@ -46,7 +46,7 @@
 
                         <tbody>
                         <%
-                            int i = 0;
+                            int i = 0, k = 1;
                             if(result.hasEntities() && result.getKeys().contains(Sale.class.getSimpleName())){
                                 for(Entity entity : result.getEntities(Sale.class.getSimpleName())){
                                     Sale sale = (Sale) entity;
@@ -57,12 +57,13 @@
                                     out.println("<td>" + sale.getSaleNumber() + "</td>");
                                     out.println("<td>" + formatter.format( sale.getPrice() ) + "</td>");
                                     out.println("<td>"
-                                            + "<a href='" + request.getContextPath() + "/sales/find?operation=FIND&id=" + sale.getId() + "'>"
+                                            + "<a id='show" + k +"' href='" + request.getContextPath() + "/sales/find?operation=FIND&id=" + sale.getId() + "'>"
                                             + "<i class='fa fa-eye' aria-hidden='true'></i>"
                                             + "</a>"
                                             + "</td>");
                                     out.println("</tr>");
                                     i++;
+                                    k++;
                                 }
                             } else {
                                 out.println("<tr>");

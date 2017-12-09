@@ -103,7 +103,7 @@
 
                 <input type="hidden" name="back" id="back" value="<% out.print(back); %>" />
                 <input type="hidden" name="operation" id="operation-delivery-address" value="SAVE" />
-                <button type="submit">Salvar</button>
+                <button id="finish" type="submit">Salvar</button>
                 <small>Todos os campos marcados com * são obrigatórios.</small>
             </form>
         </div>

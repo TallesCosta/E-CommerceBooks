@@ -26,12 +26,12 @@
             </a>
         </div>
         <div class="item">
-            <a class="list-sale" href="<% out.print(request.getContextPath().concat("/sales/list?operation=LIST")); %>">
+            <a id="sales" class="list-sale" href="<% out.print(request.getContextPath().concat("/sales/list?operation=LIST")); %>">
                 Vendas
             </a>
         </div>
         <div class="item">
-            <a class="logout" href="<% out.print(request.getContextPath() + "/log-out?operation=DELETE"); %>">
+            <a id="logout" class="logout" href="<% out.print(request.getContextPath() + "/log-out?operation=DELETE"); %>">
                 Logout
             </a>
         </div>

@@ -60,7 +60,7 @@
             <textarea name="justification" id="justification" maxlength="255"></textarea>
 
             <input type="hidden" name="operation" id="operation-exchange" value="SAVE" />
-            <button type="submit">Solicitar</button>
+            <button id="finish" type="submit">Solicitar</button>
         </form>
     </div>
     <%

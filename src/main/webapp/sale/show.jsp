@@ -52,17 +52,17 @@
                     <%
                         switch (sale.getStatus().getName()) {
                             case "EM PROCESSAMENTO":
-                                out.print("<a class='button update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=APROVADO") + "'>Aprovar</a><br>");
-                                out.print("<a class='button button-outline update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=REPROVADO") + "'>Reprovar</a>");
+                                out.print("<a id='approved' class='button update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=APROVADO") + "'>Aprovar</a><br>");
+                                out.print("<a id='reproved' class='button button-outline update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=REPROVADO") + "'>Reprovar</a>");
                                 break;
                             case "APROVADO":
-                                out.print("<a class='button update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=EM TRANSITO") + "'>Despachar</a>");
+                                out.print("<a id='dispatch' class='button update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=EM TRANSITO") + "'>Despachar</a>");
                                 break;
                             case "TROCA EM ANÁLISE":
                                 out.print("<span>Motivo alegado: " + sale.getExchange().getJustification() + "</span><br>");
-                                out.print("<a class='button update-sale' href='" + request.getContextPath().concat("/exchanges/update?operation=UPDATE&idSale=" + sale.getId() + "&accepted=true&destination=stock") + "'>Aprovar e voltar ao estoque</a><br>");
-                                out.print("<a class='button update-sale' href='" + request.getContextPath().concat("/exchanges/update?operation=UPDATE&idSale=" + sale.getId() + "&accepted=true") + "'>Aprovar e descartar os livros</a><br>");
-                                out.print("<a class='button button-outline update-sale' href='" + request.getContextPath().concat("/exchanges/update?operation=UPDATE&idSale=" + sale.getId() + "&accepted=false") + "'>Reprovar solicitação</a>");
+                                out.print("<a id='changed-stock' class='button update-sale' href='" + request.getContextPath().concat("/exchanges/update?operation=UPDATE&idSale=" + sale.getId() + "&accepted=true&destination=stock") + "'>Aprovar e voltar ao estoque</a><br>");
+                                out.print("<a id='changed' class='button update-sale' href='" + request.getContextPath().concat("/exchanges/update?operation=UPDATE&idSale=" + sale.getId() + "&accepted=true") + "'>Aprovar e descartar os livros</a><br>");
+                                out.print("<a id='not-changed' class='button button-outline update-sale' href='" + request.getContextPath().concat("/exchanges/update?operation=UPDATE&idSale=" + sale.getId() + "&accepted=false") + "'>Reprovar solicitação</a>");
                                 break;
                         }
                     %>

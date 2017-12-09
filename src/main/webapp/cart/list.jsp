@@ -114,8 +114,8 @@
 				</div>
 			</div>
 
-			<% out.print("<a class='finish button' style='float: left;' href='" + request.getContextPath() + "/stocks/list?operation=LIST'>Continuar Comprando</a>"); %>
-			<% out.print("<a class='finish button' href='" + request.getContextPath() + "/sales/create?operation=CREATE'>Finalizar Compras</a>"); %>
+			<% out.print("<a id='left' class='finish button' style='float: left;' href='" + request.getContextPath() + "/stocks/list?operation=LIST'>Continuar Comprando</a>"); %>
+			<% out.print("<a id='finish' class='finish button' href='" + request.getContextPath() + "/sales/create?operation=CREATE'>Finalizar Compras</a>"); %>
 		</div>
 				
 		<script src="https://use.fontawesome.com/51922b6b29.js"></script>

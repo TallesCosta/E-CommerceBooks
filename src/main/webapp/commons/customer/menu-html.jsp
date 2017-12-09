@@ -46,7 +46,7 @@
             </a>
         </div>
         <div class="item">
-            <a class="logout" href="<% out.print(request.getContextPath() + "/log-out?operation=DELETE"); %>">
+            <a id="logout" class="logout" href="<% out.print(request.getContextPath() + "/log-out?operation=DELETE"); %>">
                 Logout
             </a>
         </div>

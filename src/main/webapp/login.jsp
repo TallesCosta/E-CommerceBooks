@@ -55,7 +55,7 @@
 
 						<input type="hidden" name="next" id="next" value="" />
 						<input type="hidden" name="operation" id="operation-custumer" value="LIST" />
-						<button type="submit">Login</button>
+						<button id="login" type="submit">Login</button>
 						<a class="create-customer"
 						   href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">  Cadastre-se</a>
 					</fieldset>

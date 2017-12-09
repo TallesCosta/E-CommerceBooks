@@ -50,10 +50,10 @@
         <%
             switch (orderRequest.getStatus().getName()) {
                 case "EM TRANSITO":
-                    out.print("<a class='update-orderRequest' href='" + request.getContextPath().concat("/orders/update?operation=UPDATE&id=" + orderRequest.getId() + "&status=ENTREGUE") + "'>Recebido</a>");
+                    out.print("<a id='received' class='update-orderRequest' href='" + request.getContextPath().concat("/orders/update?operation=UPDATE&id=" + orderRequest.getId() + "&status=ENTREGUE") + "'>Recebido</a>");
                     break;
                 case "ENTREGUE":
-                    out.print("<a class='update-orderRequest' href='" + request.getContextPath().concat("/exchanges/create?operation=CREATE&idSale=" + orderRequest.getId() + "") + "'>Solicitar Troca</a>");
+                    out.print("<a id='exchange-request' class='update-orderRequest' href='" + request.getContextPath().concat("/exchanges/create?operation=CREATE&idSale=" + orderRequest.getId() + "") + "'>Solicitar Troca</a>");
                     break;
             }
         %>

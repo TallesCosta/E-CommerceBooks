@@ -19,7 +19,7 @@ public abstract class ApplicationTest {
 		
 		System.setProperty("webdriver.chrome.driver", chormePath);
 		
-		index = "http://localhost:8080/E-CommerceBooks/dashboard-admin.jsp";
+		index = "http://localhost:8080/E-CommerceBooks/stocks/list?operation=LIST";
 	}
 	
 	@Before

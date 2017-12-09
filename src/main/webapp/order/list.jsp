@@ -47,7 +47,7 @@
 
                 <tbody>
                 <%
-                    int i = 0;
+                    int i = 0, k = 1;
                     if(result.hasEntities() && result.getKeys().contains(OrderRequest.class.getSimpleName())){
                         for(Entity entity : result.getEntities(OrderRequest.class.getSimpleName())){
                             OrderRequest orderRequest = (OrderRequest) entity;
@@ -58,12 +58,13 @@
                             out.println("<td>" + orderRequest.getSaleNumber() + "</td>");
                             out.println("<td>" + formatter.format( orderRequest.getPrice() ) + "</td>");
                             out.println("<td>"
-                                    + "<a href='" + request.getContextPath() + "/orders/find?operation=FIND&id=" + orderRequest.getId() + "'>"
+                                    + "<a id='show" + k + "' href='" + request.getContextPath() + "/orders/find?operation=FIND&id=" + orderRequest.getId() + "'>"
                                     + "<i class='fa fa-eye' aria-hidden='true'></i>"
                                     + "</a>"
                                     + "</td>");
                             out.println("</tr>");
                             i++;
+                            k++;
                         }
                     } else {
                         out.println("<tr>");
