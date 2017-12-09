@@ -39,6 +39,11 @@ public class Order extends Entity {
         this.exchangeCoupons = new ArrayList<>();
     }
 
+    public Order(double price, Customer customer) {
+        this.price = price;
+        this.customer = customer;
+    }
+
     public Order(String saleNumber, Date date, double price, int totalAmount, Status status, Delivery delivery, PromotionalCoupon promotionalCoupon, CreditCard creditCard, Customer customer, Exchange exchange, List<SaleItem> saleItems, List<ExchangeCoupon> exchangeCoupons) {
         super(true);
         this.saleNumber = saleNumber;
@@ -153,4 +158,10 @@ public class Order extends Entity {
     public void setExchangeCoupons(List<ExchangeCoupon> exchangeCoupons) {
         this.exchangeCoupons = exchangeCoupons;
     }
+
+    // Others methods
+    public boolean hasExchangeCoupons() {
+        return !this.exchangeCoupons.isEmpty();
+    }
+
 }

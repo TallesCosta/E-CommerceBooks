@@ -72,10 +72,6 @@ public class SaleVh implements IViewHelper {
 			exchangeCoupons.add(new ExchangeCoupon(idExchangeCoupon, exchangeCuopon));
 		}
 
-		if (exchangeCoupons.isEmpty()) {
-			exchangeCoupons.add(new ExchangeCoupon(0L));
-		}
-
 		// Sale
 		Sale sale = new Sale();
 		
@@ -140,7 +136,11 @@ public class SaleVh implements IViewHelper {
 					break;
 					
 				case "SAVE":
-					response.sendRedirect("/E-CommerceBooks/stocks/list?operation=LIST");
+					if (result.hasMsg()) {
+						dispatcher = request.getRequestDispatcher("/sale/create.jsp");
+						dispatcher.forward(request, response);
+					} else
+						response.sendRedirect("/E-CommerceBooks/stocks/list?operation=LIST");
 					break;
 
 				case "LIST":
