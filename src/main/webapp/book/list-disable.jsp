@@ -14,11 +14,6 @@
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<style>
-			fieldset {
-				display: inline-block;
-			}
-		</style>
 		<%@include file="../commons/admin/form-css.jsp"%>
 
 		<%@include file="../commons/admin/menu-css.jsp"%>
