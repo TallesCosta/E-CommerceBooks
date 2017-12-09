@@ -2,6 +2,7 @@ package br.com.talles.ecommercebooks.controll.viewHelper;
 
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
+import br.com.talles.ecommercebooks.domain.customer.Country;
 import br.com.talles.ecommercebooks.domain.customer.Customer;
 import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
 import br.com.talles.ecommercebooks.domain.customer.State;
@@ -18,20 +19,25 @@ public class DeliveryAddressVh implements IViewHelper {
 
     @Override
     public Entity getEntity(HttpServletRequest request) {
-        String alias = request.getParameter("alias");
-        String city = request.getParameter("city");
-        String district = request.getParameter("district");
-        String homeType = request.getParameter("homeType");
-        String number = request.getParameter("number");
-        String observation = request.getParameter("observation");
-        String postalCode = request.getParameter("postalCode");
-        String publicPlace = request.getParameter("publicPlace");
-        String publicPlaceType = request.getParameter("publicPlaceType");
+        String alias = request.getParameter("homeAlias");
+        String city = request.getParameter("homeCity");
+        String district = request.getParameter("homeDistrict");
+        String homeType = request.getParameter("homeHomeType");
+        String number = request.getParameter("homeNumber");
+        String observation = request.getParameter("homeObservation");
+        String postalCode = request.getParameter("homePostalCode");
+        String publicPlace = request.getParameter("homePublicPlace");
+        String publicPlaceType = request.getParameter("homePublicPlaceType");
 
-        String idStateS = request.getParameter("idState");
+        String idStateS = request.getParameter("homeState");
         long idState = 0L;
         if (!(idStateS == null || idStateS.equals("")))
             idState = Long.valueOf(idStateS);
+
+        String idCountryS = request.getParameter("homeCountry");
+        long idCountry = 0L;
+        if (!(idCountryS == null || idCountryS.equals("")))
+            idCountry = Long.valueOf(idCountryS);
 
         String idCustomerS = request.getParameter("idCustomer");
         long idCustomer = 0L;
@@ -43,6 +49,7 @@ public class DeliveryAddressVh implements IViewHelper {
 
         switch(request.getParameter("operation")) {
             case "CREATE" :
+                deliveryAddress.setCustomer(new Customer(idCustomer));
                 break;
 
             case "SAVE":
@@ -55,7 +62,8 @@ public class DeliveryAddressVh implements IViewHelper {
                 deliveryAddress.setPostalCode(postalCode);
                 deliveryAddress.setPublicPlace(publicPlace);
                 deliveryAddress.setPublicPlaceType(publicPlaceType);
-                deliveryAddress.setState(new State(idState));
+                deliveryAddress.setState(new State(idState, new Country(idCountry)));
+                deliveryAddress.setCustomer(new Customer(idCustomer));
                 break;
 
             case "LIST":
@@ -100,7 +108,8 @@ public class DeliveryAddressVh implements IViewHelper {
                     break;
 
                 case "SAVE":
-                    response.sendRedirect("/E-CommerceBooks/delivery-addresses/list?operation=LIST");
+                    response.sendRedirect("/E-CommerceBooks/delivery-addresses/list?operation=LIST" +
+                            "&idCustomer=" + result.getEntities(Customer.class.getSimpleName()).get(0).getId());
                     break;
 
                 case "LIST":

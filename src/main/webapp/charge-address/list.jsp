@@ -65,7 +65,9 @@
                             out.println("<td>" + chargeAddress.getState().getName() + "</td>");
                             out.println("<td>" + chargeAddress.getState().getCountry().getName() + "</td>");
                             out.println("<td>" + chargeAddress.getPostalCode() + "</td>");
-                            out.println("<td>" + chargeAddress.getObservation() == null ? "-" : chargeAddress.getObservation() + "</td>");
+                            out.println("<td>");
+                            out.println(chargeAddress.getObservation() == null ? "-" : chargeAddress.getObservation());
+                            out.println("</td>");
                             out.println("</tr>");
                             i++;
                         }
@@ -98,7 +100,7 @@
                 </tfoot>
             </table>
 
-            <a class="pull-right button" href='<% out.print(request.getContextPath().concat("/charge-addresses/create?operation=CREATE")); %>'>Novo Endereços de Cobrança</a>
+            <a class="pull-right button" href='<% out.print(request.getContextPath().concat("/charge-addresses/create?operation=CREATE&idCustomer=" + id)); %>'>Novo Endereços de Cobrança</a>
         </div>
     </div>
     <%

@@ -4,6 +4,7 @@ import br.com.talles.ecommercebooks.business.IStrategy;
 import br.com.talles.ecommercebooks.business.CreateView;
 import br.com.talles.ecommercebooks.business.InsertHistory;
 import br.com.talles.ecommercebooks.business.UpdateHistory;
+import br.com.talles.ecommercebooks.business.address.save.RememberCustomerAddress;
 import br.com.talles.ecommercebooks.business.book.ModifyStatus;
 import br.com.talles.ecommercebooks.business.book.save.BookValidateSave;
 import br.com.talles.ecommercebooks.business.book.update.BookValidateUpdate;
@@ -13,7 +14,7 @@ import br.com.talles.ecommercebooks.business.cart.delete.CartWithoutSession;
 import br.com.talles.ecommercebooks.business.cart.save.CartSession;
 import br.com.talles.ecommercebooks.business.cart.save.ValidateAmount;
 import br.com.talles.ecommercebooks.business.cart.save.ValidateCart;
-import br.com.talles.ecommercebooks.business.creditCard.save.RememberCustomer;
+import br.com.talles.ecommercebooks.business.creditCard.save.RememberCustomerCreditCard;
 import br.com.talles.ecommercebooks.business.customer.AddressNotBlank;
 import br.com.talles.ecommercebooks.business.customer.CreditCardNotBlank;
 import br.com.talles.ecommercebooks.business.customer.FindCustomer;
@@ -108,9 +109,10 @@ public class Facade implements IFacade {
 		IStrategy exchangeStatusSale = new ExchangeStatusSale();
 		// Address
 		IStrategy addressNotBlank = new AddressNotBlank();
+		IStrategy rememberCustomerAddress = new RememberCustomerAddress();
 		// CreditCard
 		IStrategy creditCardNotBlank = new CreditCardNotBlank();
-        IStrategy rememberCustomer = new RememberCustomer();
+        IStrategy rememberCustomer = new RememberCustomerCreditCard();
 
 		// Book Requirements
 		List<IStrategy> createBook = new ArrayList();
@@ -377,11 +379,15 @@ public class Facade implements IFacade {
 
 		// ChargeAddress Requiremensts Later
 		List<IStrategy> listChargeAddressLater = new ArrayList();
+
 		List<IStrategy> saveChargeAddressLater = new ArrayList();
+		saveChargeAddressLater.add(rememberCustomerAddress);
 
 		// DeliveryAddress Requiremensts Later
 		List<IStrategy> listDeliveryAddressLater = new ArrayList();
+
 		List<IStrategy> saveDeliveryAddressLater = new ArrayList();
+		saveDeliveryAddressLater.add(rememberCustomerAddress);
 
 		// CreditCard Requiremensts Later
 		List<IStrategy> listCreditCardLater = new ArrayList();

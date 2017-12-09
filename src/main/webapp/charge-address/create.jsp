@@ -22,6 +22,7 @@
             out.println("</p>");
         }
 %>
+<%@include file="../commons/customer/menu-html.jsp"%>
 
 <div class="container">
     <h1 id="list-credit-cart">Novo Endereço de Cobrança</h1>
@@ -31,7 +32,7 @@
             <form action="save" method="post">
                 <fieldset>
                     <legend>Endereço</legend>
-                    <input type="hidden" name="idHome" id="idHome" >
+                    <input type="hidden" name="idCustomer" id="idCustomer" value="<% out.print(id); %>" />
                     <div>
                         <label for="homeAlias">Apelido*: </label>
                         <input name="homeAlias" id="homeAlias" type="text">

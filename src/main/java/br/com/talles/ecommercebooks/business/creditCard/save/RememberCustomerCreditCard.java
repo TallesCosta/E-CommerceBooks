@@ -5,7 +5,7 @@ import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.customer.CreditCard;
 
-public class RememberCustomer implements IStrategy {
+public class RememberCustomerCreditCard implements IStrategy {
 
     @Override
     public Result process(Entity entity, Result result) {

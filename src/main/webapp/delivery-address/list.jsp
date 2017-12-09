@@ -65,7 +65,9 @@
                             out.println("<td>" + deliveryAddress.getState().getName() + "</td>");
                             out.println("<td>" + deliveryAddress.getState().getCountry().getName() + "</td>");
                             out.println("<td>" + deliveryAddress.getPostalCode() + "</td>");
-                            out.println("<td>" + deliveryAddress.getObservation() == null ? "-" : deliveryAddress.getObservation() + "</td>");
+                            out.println("<td>");
+                            out.println(deliveryAddress.getObservation() == null ? "-" : deliveryAddress.getObservation());
+                            out.println("</td>");
                             out.println("</tr>");
                             i++;
                         }
@@ -98,7 +100,7 @@
                 </tfoot>
             </table>
 
-            <a class="pull-right button" href='<% out.print(request.getContextPath().concat("/delivery-addresses/create?operation=CREATE")); %>'>Novo Endereço de Entrega</a>
+            <a class="pull-right button" href='<% out.print(request.getContextPath().concat("/delivery-addresses/create?operation=CREATE&idCustomer=" + id)); %>'>Novo Endereço de Entrega</a>
         </div>
     </div>
     <%

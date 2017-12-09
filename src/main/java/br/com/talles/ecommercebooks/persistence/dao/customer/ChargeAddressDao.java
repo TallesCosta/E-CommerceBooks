@@ -74,10 +74,6 @@ public class ChargeAddressDao extends AbstractDao {
 
 		String sql = "INSERT INTO ChargeAddresses (enabled, alias, observation, publicPlaceType, publicPlace, number, district, postalCode, homeType, city, id_state, id_customer)"
 					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-		// Find the last customer register to get its id
-		IDao custumerDao = new CustomerDao();
-		Customer lastCustomer = (Customer) custumerDao.findLast();
 		
 		try {
 			openConnection();
@@ -96,7 +92,7 @@ public class ChargeAddressDao extends AbstractDao {
 			statement.setString(10, chargeAddress.getCity());
 			
 			statement.setLong(11, chargeAddress.getState().getId());
-			statement.setLong(12, lastCustomer.getId());
+			statement.setLong(12, chargeAddress.getCustomer().getId());
 						
 			statement.execute();
 			statement.close();

@@ -73,10 +73,6 @@ public class DeliveryAddressDao extends AbstractDao {
         String sql = "INSERT INTO DeliveryAddresses (enabled, alias, observation, publicPlaceType, publicPlace, number, district, postalCode, homeType, city, id_state, id_customer)"
                     + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        // Find the last customer register to get its id
-        IDao custumerDao = new CustomerDao();
-        Customer lastCustomer = (Customer) custumerDao.findLast();
-
         try {
             openConnection();
 
@@ -94,7 +90,7 @@ public class DeliveryAddressDao extends AbstractDao {
             statement.setString(10, deliveryAddress.getCity());
 
             statement.setLong(11, deliveryAddress.getState().getId());
-            statement.setLong(12, lastCustomer.getId());
+            statement.setLong(12, deliveryAddress.getCustomer().getId());
 
             statement.execute();
             statement.close();
