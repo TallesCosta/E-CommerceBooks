@@ -7,6 +7,8 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Exibição de Venda</title>
+
+        <%@include file="../commons/admin/menu-css.jsp"%>
     </head>
     <body>
         <%
@@ -28,57 +30,69 @@
                     out.println("</p>");
                 }
         %>
+        <%@include file="../commons/admin/menu-html.jsp"%>
 
-        <div id="app">
-            <h1 id="show-sale">Exibição de Venda</h1>
+        <div class="container">
+            <div class="row">
+                <div class="column">
 
-            <div>
-                <% out.println("<p>Status: " + sale.getStatus().getName() + "</p>"); %>
-            <%
-                switch (sale.getStatus().getName()) {
-                    case "EM PROCESSAMENTO":
-                        out.print("<a class='update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=APROVADO") + "'>Aprovar</a><br>");
-                        out.print("<a class='update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=REPROVADO") + "'>Reprovar</a>");
-                        break;
-                    case "APROVADO":
-                        out.print("<a class='update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=EM TRANSITO") + "'>Despachar</a>");
-                        break;
-                    case "TROCA EM ANÁLISE":
-                        out.print("<span>Motivo alegado: " + sale.getExchange().getJustification() + "</span><br>");
-                        out.print("<a class='update-sale' href='" + request.getContextPath().concat("/exchanges/update?operation=UPDATE&idSale=" + sale.getId() + "&accepted=true&destination=stock") + "'>Aprovar e voltar ao estoque</a><br>");
-                        out.print("<a class='update-sale' href='" + request.getContextPath().concat("/exchanges/update?operation=UPDATE&idSale=" + sale.getId() + "&accepted=true") + "'>Aprovar e descartar os livros</a><br>");
-                        out.print("<a class='update-sale' href='" + request.getContextPath().concat("/exchanges/update?operation=UPDATE&idSale=" + sale.getId() + "&accepted=false") + "'>Reprovar solicitação</a>");
-                        break;
-                }
-            %>
+                    <h1 id="show-sale">Exibição de Venda</h1>
 
-                <% out.println("<p>Data da Compra: " + sale.getDate().toString().replace("-","/") + "</p>"); %>
-                <% out.println("<p>Previsão de Entrega: " + sale.getDelivery().getDeliveryForecast().toString().replace("-","/") + "</p>"); %>
-                <% out.println("<p>Código: " + sale.getSaleNumber() + "</p>"); %>
-                <% out.println("<p>Cliente: " + sale.getCustomer().getName() + "</p>"); %>
-                <% out.println("<p>Cartão de Crédito: " + sale.getCreditCard().getNumber() + "</p>"); %>
-                <hr>
-            <%
-                for (SaleItem saleItem : sale.getSaleItems()) {
-                    out.println("<dt>" + saleItem.getBook().getTitle() + "</dt>");
-                    out.println("<dd>Preço Unitário: R$ " + saleItem.getUnitaryPrice() + "</dd>");
-                    out.println("<dd>Quantidade: " + saleItem.getAmount() + "</dd>");
-                    out.println("<dd>Subtotal: R$ " + saleItem.getAmount() * saleItem.getUnitaryPrice() + "</dd>");
-                }
-            %>
-                <% out.println("<p>Quantidade total: " + sale.getTotalAmount() + "</p>"); %>
-                <% out.println("<p>Frete R$: " + sale.getDelivery().getShippingCost().getValue() + "</p>"); %>
-                <% out.println("<p>Subtotal Geral R$: " + sale.getPrice() + "</p>"); %>
-                <% out.println("<p>Preço Total R$: " + (sale.getPrice() + sale.getDelivery().getShippingCost().getValue()) + "</p>"); %>
+                    <% out.println("<p>Status: " + sale.getStatus().getName() + "</p>"); %>
+                    <%
+                        switch (sale.getStatus().getName()) {
+                            case "EM PROCESSAMENTO":
+                                out.print("<a class='button update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=APROVADO") + "'>Aprovar</a><br>");
+                                out.print("<a class='button button-outline update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=REPROVADO") + "'>Reprovar</a>");
+                                break;
+                            case "APROVADO":
+                                out.print("<a class='button update-sale' href='" + request.getContextPath().concat("/sales/update?operation=UPDATE&id=" + sale.getId() + "&status=EM TRANSITO") + "'>Despachar</a>");
+                                break;
+                            case "TROCA EM ANÁLISE":
+                                out.print("<span>Motivo alegado: " + sale.getExchange().getJustification() + "</span><br>");
+                                out.print("<a class='button update-sale' href='" + request.getContextPath().concat("/exchanges/update?operation=UPDATE&idSale=" + sale.getId() + "&accepted=true&destination=stock") + "'>Aprovar e voltar ao estoque</a><br>");
+                                out.print("<a class='button update-sale' href='" + request.getContextPath().concat("/exchanges/update?operation=UPDATE&idSale=" + sale.getId() + "&accepted=true") + "'>Aprovar e descartar os livros</a><br>");
+                                out.print("<a class='button button-outline update-sale' href='" + request.getContextPath().concat("/exchanges/update?operation=UPDATE&idSale=" + sale.getId() + "&accepted=false") + "'>Reprovar solicitação</a>");
+                                break;
+                        }
+                    %>
+
+                    <% out.println("<p><b>Data da Compra:</b> " + sale.getDate().toString().replace("-","/") + "</p>"); %>
+                    <% out.println("<p><b>Previsão de Entrega:</b> " + sale.getDelivery().getDeliveryForecast().toString().replace("-","/") + "</p>"); %>
+                    <% out.println("<p><b>Código:</b> " + sale.getSaleNumber() + "</p>"); %>
+                    <% out.println("<p><b>Cliente:</b> " + sale.getCustomer().getName() + "</p>"); %>
+                    <% out.println("<p><b>Cartão de Crédito:</b> " + sale.getCreditCard().getNumber() + "</p>"); %>
+                    <hr>
+                    <table>
+                        <thead>
+                            <th>Título</th>
+                            <th>Valor Unitário</th>
+                            <th>Quantidade</th>
+                            <th>Subtotal</th>
+                        </thead>
+                        <%
+                            for (SaleItem saleItem : sale.getSaleItems()) {
+                                out.println("<tr><td>" + saleItem.getBook().getTitle() + "</td>");
+                                out.println("<td>R$ " + saleItem.getUnitaryPrice() + "</td>");
+                                out.println("<td>" + saleItem.getAmount() + "</td>");
+                                out.println("<td>R$ " + saleItem.getAmount() * saleItem.getUnitaryPrice() + "</td></tr>");
+                            }
+                        %>
+                        <tfoot>
+                            <% out.println("<td><b>Quantidade total:</b> " + sale.getTotalAmount() + "</td>"); %>
+                            <% out.println("<td><b>Frete</b> R$: " + sale.getDelivery().getShippingCost().getValue() + "</td>"); %>
+                            <% out.println("<td><b>Subtotal Geral</b> R$: " + sale.getPrice() + "</td>"); %>
+                            <% out.println("<td><b>Preço Total</b> R$: " + (sale.getPrice() + sale.getDelivery().getShippingCost().getValue()) + "</td>"); %>
+                        </tfoot>
+                    </table>
+                </div>
+                <%
+                    }
+                %>
+
+                <a class="list-sale" href="<% out.print(request.getContextPath().concat("/sales/list?operation=LIST")); %>">Voltar</a>
+                </div>
             </div>
-        <%
-            }
-        %>
-
-            <a class="list-sale" href="<% out.print(request.getContextPath().concat("/sales/list?operation=LIST")); %>">Voltar</a>
         </div>
-
-
-        <script src="https://use.fontawesome.com/51922b6b29.js"></script>
     </body>
 </html>

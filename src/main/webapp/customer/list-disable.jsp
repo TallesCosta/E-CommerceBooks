@@ -35,9 +35,9 @@
 			<h1 id="list-disable-customer">Listagem de Clientes Inativos</h1>
 
 			<div>
-				<form action="" method="POST">
-					<button class="button button-outline" name="" value="">Filtrar</button>
-				</form>
+				<a class="button button-outline create-customer" href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">Criar Cliente</a>
+				<a class="button button-outline list-customer" href="<% out.print(request.getContextPath().concat("/customers/list?operation=LIST")); %>">Listar Ativos</a>
+				<button class="button-outline" name="" value="">Filtrar</button>
 			</div>
 
 			<div class="row">
@@ -137,9 +137,6 @@
 					</table>
 				</div>
 			</div>
-			
-			<a class="create-customer" href="<% out.print(request.getContextPath().concat("/customers/create?operation=CREATE")); %>">Criar Cliente</a>
-			<a class="list-customer" href="<% out.print(request.getContextPath().concat("/customers/list?operation=LIST")); %>">Listar Ativos</a>
 		</div>
 		<%
 			}

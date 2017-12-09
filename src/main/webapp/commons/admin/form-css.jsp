@@ -15,4 +15,8 @@
     .form-container fieldset legend {
         font-size: 1.5rem;
     }
+
+    .button.update-sale {
+        display: inline-block;
+    }
 </style>
