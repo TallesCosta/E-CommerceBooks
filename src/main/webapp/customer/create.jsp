@@ -84,9 +84,9 @@
 							name="gender" id="male" value="Masculino" type="radio">
 						<label class="label-inline" for="male">Masculino</label>
 
-						<input <% if (customer.getGender().getName().equals("Outro")) { out.print("checked"); } %>
-							name="gender" id="other" value="Outro" type="radio">
-						<label class="label-inline" for="other">Outro</label>
+						<input <% if (customer.getGender().getName().equals("Outros")) { out.print("checked"); } %>
+							name="gender" id="other" value="Outros" type="radio">
+						<label class="label-inline" for="other">Outros</label>
 					</div>
 				</fieldset>
 

@@ -1,4 +1,7 @@
 package br.com.talles.ecommercebooks.domain.report;
 
-public class SpecificationQuery {
+public abstract class SpecificationQuery {
+
+
+
 }

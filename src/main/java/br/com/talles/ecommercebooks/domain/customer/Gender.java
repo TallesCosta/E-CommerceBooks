@@ -28,4 +28,15 @@ public class Gender extends Entity {
 		this.name = name;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || !(o instanceof Gender)) return false;
+		Gender gender = (Gender) o;
+		return this.name.equals(gender.name);
+	}
+
+	@Override
+	public int hashCode() {
+		return this.name.hashCode();
+	}
 }

@@ -1,4 +1,6 @@
-package br.com.talles.ecommercebooks.domain.report;
+package br.com.talles.ecommercebooks.domain.report.salesPerGenders;
+
+import br.com.talles.ecommercebooks.domain.report.SpecificationQuery;
 
 import java.util.Date;
 

@@ -21,9 +21,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "Servlet", urlPatterns = {"/log-in", "/log-out", "/books/*", "/customers/*",
-		"/stocks/*", "/carts/*", "/sales/*", "/orders/*", "/exchanges/*",
-		"/delivery-addresses/*", "/charge-addresses/*", "/credit-cards/*"})
+@WebServlet(name = "Servlet", urlPatterns = {"/log-in", "/log-out", "/dashboard-admin/*",
+		"/books/*", "/customers/*", "/stocks/*", "/carts/*", "/sales/*", "/orders/*",
+		"/exchanges/*", "/delivery-addresses/*", "/charge-addresses/*", "/credit-cards/*"})
 public class Servlet extends HttpServlet {
 
 	private Map<String, IViewHelper> viewHelpers;
@@ -31,6 +31,11 @@ public class Servlet extends HttpServlet {
 
 	public Servlet() {
 		viewHelpers = new HashMap();
+		// Users Request
+		viewHelpers.put("/E-CommerceBooks/log-in", new UserVh());
+		viewHelpers.put("/E-CommerceBooks/log-out", new UserVh());
+		// SalesPerGenders Requests
+		viewHelpers.put("/E-CommerceBooks/dashboard-admin/list", new SalesPerGendersVh());
 		// Books Requests
 		viewHelpers.put("/E-CommerceBooks/books/create", new BookVh());
 		viewHelpers.put("/E-CommerceBooks/books/save", new BookVh());
@@ -55,9 +60,6 @@ public class Servlet extends HttpServlet {
 		viewHelpers.put("/E-CommerceBooks/customers/delete", new CustomerVh());
 		// Stocks Request
 		viewHelpers.put("/E-CommerceBooks/stocks/list", new StockVh());
-		// Users Request
-		viewHelpers.put("/E-CommerceBooks/log-in", new UserVh());
-		viewHelpers.put("/E-CommerceBooks/log-out", new UserVh());
 		// Carts Request
 		viewHelpers.put("/E-CommerceBooks/carts/save", new CartVh());
 		viewHelpers.put("/E-CommerceBooks/carts/delete", new CartVh());

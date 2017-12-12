@@ -80,7 +80,7 @@ public class UserVh implements IViewHelper {
 						dispatcher.forward(request, response);
 					} else {
 						if (result.getEntities(User.class.getSimpleName()).get(0).getId() == 1L)
-							response.sendRedirect("/E-CommerceBooks/dashboard-admin.jsp");
+							response.sendRedirect("/E-CommerceBooks/dashboard-admin/list?operation=LIST");
 						else {
 							String next = request.getParameter("next");
 							if (next.equals("/E-CommerceBooks/login.jsp") ||

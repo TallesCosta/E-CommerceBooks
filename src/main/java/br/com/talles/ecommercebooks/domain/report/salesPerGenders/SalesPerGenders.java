@@ -1,10 +1,26 @@
-package br.com.talles.ecommercebooks.domain.report;
+package br.com.talles.ecommercebooks.domain.report.salesPerGenders;
 
-public class SalesPerGender extends Report {
+import br.com.talles.ecommercebooks.domain.report.Report;
+import br.com.talles.ecommercebooks.domain.report.ResultQuery;
+import br.com.talles.ecommercebooks.domain.report.SpecificationQuery;
 
-    public SalesPerGender(SpecificationQuery specificationQuery, ResultQuery resultQuery) {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SalesPerGenders extends Report {
+
+    public SalesPerGenders() {
+        super.setResultsQuery(new ArrayList<ResultQuery>());
+    }
+
+    public SalesPerGenders(SpecificationQuery specificationQuery) {
         super.setSpecificationQuery(specificationQuery);
-        super.setResultQuery(resultQuery);
+        super.setResultsQuery(new ArrayList<ResultQuery>());
+    }
+
+    public SalesPerGenders(SpecificationQuery specificationQuery, List<ResultQuery> resultsQuery) {
+        super.setSpecificationQuery(specificationQuery);
+        super.setResultsQuery(resultsQuery);
     }
 
 }

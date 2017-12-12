@@ -25,6 +25,8 @@ import br.com.talles.ecommercebooks.business.sale.save.CompleteSaleData;
 import br.com.talles.ecommercebooks.business.sale.create.BuildDataForSaleScreen;
 import br.com.talles.ecommercebooks.business.sale.save.DisableUsedExchangeCoupons;
 import br.com.talles.ecommercebooks.business.sale.save.ValidatePayment;
+import br.com.talles.ecommercebooks.business.salesPerGenders.list.BuildSalesPerGendersJsonReport;
+import br.com.talles.ecommercebooks.business.salesPerGenders.list.CompleteReportConsult;
 import br.com.talles.ecommercebooks.business.stock.list.MakeStockSession;
 import br.com.talles.ecommercebooks.business.user.delete.DestroyUser;
 import br.com.talles.ecommercebooks.business.user.list.LoginUser;
@@ -35,11 +37,13 @@ import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.book.Book;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.customer.*;
+import br.com.talles.ecommercebooks.domain.report.salesPerGenders.SalesPerGenders;
 import br.com.talles.ecommercebooks.domain.sale.*;
 import br.com.talles.ecommercebooks.persistence.dao.HistoryDao;
 import br.com.talles.ecommercebooks.persistence.dao.book.BookDao;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 import br.com.talles.ecommercebooks.persistence.dao.customer.*;
+import br.com.talles.ecommercebooks.persistence.dao.report.SalesPerGendersDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.ExchangeDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.SaleDao;
 import br.com.talles.ecommercebooks.persistence.dao.sale.StockDao;
@@ -80,6 +84,7 @@ public class Facade implements IFacade {
         String chargeAddress = ChargeAddress.class.getSimpleName();
 		String deliveryAddress = DeliveryAddress.class.getSimpleName();
 		String creditCard = CreditCard.class.getSimpleName();
+		String salesPerGenders = SalesPerGenders.class.getSimpleName();
 
         // General Strategies
 		IStrategy createView = new CreateView();
@@ -117,6 +122,9 @@ public class Facade implements IFacade {
 		// CreditCard
 		IStrategy creditCardNotBlank = new CreditCardNotBlank();
         IStrategy rememberCustomer = new RememberCustomerCreditCard();
+        // SalesPerGernders
+		IStrategy completeReportConsult = new CompleteReportConsult();
+		IStrategy buildSalesPerGendersJsonReport = new BuildSalesPerGendersJsonReport();
 
 		// Book Requirements
 		List<IStrategy> createBook = new ArrayList();
@@ -254,6 +262,9 @@ public class Facade implements IFacade {
 		List<IStrategy> saveCreditCard = new ArrayList();
 		saveCreditCard.add(creditCardNotBlank);
 
+		// SalesPerGenders Requirements
+		List<IStrategy> listSalesPerGenders = new ArrayList<>();
+
 		// Book Requirements to contexts
         Map<String, List<IStrategy>> contextReqBook = new HashMap();
         contextReqBook.put(CREATE, createBook);
@@ -341,31 +352,34 @@ public class Facade implements IFacade {
         contextReqCreditCard.put(SAVE, saveCreditCard);
         contextReqCreditCard.put(LIST, listCreditCard);
 
+        Map<String, List<IStrategy>> contextReqSalesPerGenders = new HashMap<>();
+        contextReqSalesPerGenders.put(LIST, listSalesPerGenders);
+
 		// Requirements Later
-		// Book Requirements Later
+		// Book Requirements Later to contexts
 		List<IStrategy> saveBookLater = new ArrayList();
 		saveBookLater.add(insertHistory);
 		
 		List<IStrategy> listBookLater = new ArrayList();
 		List<IStrategy> listDisableBookLater = new ArrayList();
 
-		// Customer Requirements Later
+		// Customer Requirements Later to contexts
 		List<IStrategy> saveCustomerLater = new ArrayList();
 		saveCustomerLater.add(insertHistory);
 		
 		List<IStrategy> listCustomerLater = new ArrayList();
 		List<IStrategy> listDisableCustomerLater = new ArrayList();
 
-		// User Requirements Later
+		// User Requirements Later to contexts
 		List<IStrategy> listUserLater = new ArrayList();
 		listUserLater.add(foundUser);
 
-		// Stock Requirements Later
+		// Stock Requirements Later to contexts
 		List<IStrategy> listStockLater = new ArrayList();
 		listStockLater.add(stockSession);
 		//listStockLater.add(new LoginUser()); What? Ctrl + C / Ctrl + V????
 
-		// Sale Requirements Later
+		// Sale Requirements Later to contexts
 		List<IStrategy> saveSaleLater = new ArrayList();
 		saveSaleLater.add(giveBackStock);
 		saveSaleLater.add(destroyCart);
@@ -373,33 +387,38 @@ public class Facade implements IFacade {
 
 		List<IStrategy> listSaleLater = new ArrayList();
 
-		// OrderRequest Requirements Later
+		// OrderRequest Requirements Later to contexts
 		List<IStrategy> listOrderRequestLater = new ArrayList();
 
-		// Exchange Requiremensts Later
+		// Exchange Requirements Later to contexts
         List<IStrategy> saveExchangeLater = new ArrayList();
         saveExchangeLater.add(exchangeStatusSale);
 
 		List<IStrategy> updateExchangeLater = new ArrayList();
 		updateExchangeLater.add(exchangeStatusSale);
 
-		// ChargeAddress Requiremensts Later
+		// ChargeAddress Requirements Later to contexts
 		List<IStrategy> listChargeAddressLater = new ArrayList();
 
 		List<IStrategy> saveChargeAddressLater = new ArrayList();
 		saveChargeAddressLater.add(rememberCustomerAddress);
 
-		// DeliveryAddress Requiremensts Later
+		// DeliveryAddress Requirements Later to contexts
 		List<IStrategy> listDeliveryAddressLater = new ArrayList();
 
 		List<IStrategy> saveDeliveryAddressLater = new ArrayList();
 		saveDeliveryAddressLater.add(rememberCustomerAddress);
 
-		// CreditCard Requiremensts Later
+		// CreditCard Requirements Later to contexts
 		List<IStrategy> listCreditCardLater = new ArrayList();
 
 		List<IStrategy> saveCreditCardLater = new ArrayList();
 		saveCreditCardLater.add(rememberCustomer);
+
+		// SalesPerGenders Requirements to contexts
+		List<IStrategy> listSalesPerGendersLater = new ArrayList<>();
+		listSalesPerGendersLater.add(completeReportConsult);
+		listSalesPerGendersLater.add(buildSalesPerGendersJsonReport);
 
 		// Requirements Book Later to contexts
         Map<String, List<IStrategy>> contextReqBookLater = new HashMap();
@@ -450,6 +469,10 @@ public class Facade implements IFacade {
         contextReqCreditCardLater.put(SAVE, saveCreditCardLater);
         contextReqCreditCardLater.put(LIST, listCreditCardLater);
 
+		// Requirements SalesPerGenders Later to contexts
+		Map<String, List<IStrategy>> contextReqSalesPerGendersLater = new HashMap();
+		contextReqSalesPerGendersLater.put(LIST, listSalesPerGendersLater);
+
 		// Requirements
         requirements = new HashMap<>();
         requirements.put(book, contextReqBook);
@@ -463,6 +486,7 @@ public class Facade implements IFacade {
 		requirements.put(chargeAddress, contextReqChargeAddress);
 		requirements.put(deliveryAddress, contextReqDeliveryAddress);
 		requirements.put(creditCard, contextReqCreditCard);
+		requirements.put(salesPerGenders, contextReqSalesPerGenders);
         
 		// Requirements Later
 		requirementsLater = new HashMap<>();
@@ -476,6 +500,7 @@ public class Facade implements IFacade {
 		requirementsLater.put(chargeAddress, contextReqChargeAddressLater);
 		requirementsLater.put(deliveryAddress, contextReqDeliveryAddressLater);
 		requirementsLater.put(creditCard, contextReqCreditCardLater);
+		requirementsLater.put(salesPerGenders, contextReqSalesPerGendersLater);
 		
 		// All DAOs
 		IDao historyDao = new HistoryDao();
@@ -488,6 +513,7 @@ public class Facade implements IFacade {
 		IDao chargeAddressDao = new ChargeAddressDao();
 		IDao deliveryAddressDao = new DeliveryAddressDao();
 		IDao creditCardDao = new CreditCardDao();
+		IDao salesPerGendersDao = new SalesPerGendersDao();
 		
 		// Book Persistence
 		Map<String, IDao> contextPersBook = new HashMap();
@@ -515,40 +541,44 @@ public class Facade implements IFacade {
 		contextPersCustomer.put(ENABLE, customerDao);
 		contextPersCustomer.put(DELETE, customerDao);
 		
-		// User Persistence 
+		// User Persistence to contexts
 		Map<String, IDao> contextPersUser = new HashMap();
         contextPersUser.put(LIST, userDao);
 		
-		// Stock Persistence 
+		// Stock Persistence to contexts
 		Map<String, IDao> contextPersStock = new HashMap();
         contextPersStock.put(LIST, stockDao);
 		
-		// Order (Sale and OrderRequest) Persistence
+		// Order (Sale and OrderRequest) Persistence to contexts
 		Map<String, IDao> contextPersSale = new HashMap();
         contextPersSale.put(LIST, saleDao);
         contextPersSale.put(SAVE, saleDao);
         contextPersSale.put(FIND, saleDao);
         contextPersSale.put(UPDATE, saleDao);
 
-        // Exchange Persistence
+        // Exchange Persistence to contexts
 		Map<String, IDao> contextPersExchange = new HashMap();
 		contextPersExchange.put(SAVE, exchangeDao);
 		contextPersExchange.put(UPDATE, exchangeDao);
 
-		// ChargeAddress Persistence
+		// ChargeAddress Persistence to contexts
 		Map<String, IDao> contextPersChargeAddress = new HashMap();
 		contextPersChargeAddress.put(SAVE, chargeAddressDao);
 		contextPersChargeAddress.put(LIST, chargeAddressDao);
 
-		// DeliveryAddress Persistence
+		// DeliveryAddress Persistence to contexts
 		Map<String, IDao> contextPersDeliveryAddress = new HashMap();
 		contextPersDeliveryAddress.put(SAVE, deliveryAddressDao);
 		contextPersDeliveryAddress.put(LIST, deliveryAddressDao);
 
-		// CreditCard Persistence
+		// CreditCard Persistence to contexts
 		Map<String, IDao> contextPersCreditCard = new HashMap();
 		contextPersCreditCard.put(SAVE, creditCardDao);
 		contextPersCreditCard.put(LIST, creditCardDao);
+
+		// SalesPerGenders Persistence to contexts
+		Map<String, IDao> contextPersSalesPerGenders = new HashMap<>();
+		contextPersSalesPerGenders.put(LIST, salesPerGendersDao);
 
 		// Persistences
         persistence = new HashMap();
@@ -562,6 +592,7 @@ public class Facade implements IFacade {
 		persistence.put(chargeAddress, contextPersChargeAddress);
 		persistence.put(deliveryAddress, contextPersDeliveryAddress);
 		persistence.put(creditCard, contextPersCreditCard);
+		persistence.put(salesPerGenders, contextPersSalesPerGenders);
 
         this.result = new Result();
     }
