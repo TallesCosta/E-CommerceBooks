@@ -7,6 +7,8 @@ import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
 import br.com.talles.ecommercebooks.domain.sale.*;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,10 +52,12 @@ public class SaleVh implements IViewHelper {
 		if (!(idPromotionalCouponS == null || idPromotionalCouponS.equals("")))
 			idPromotionalCoupon = Long.valueOf(idPromotionalCouponS);
 
+		// CreditCards
 		int k = 1;
 		List<CreditCard> creditCards = new ArrayList<>();
 		while (request.getParameter("creditCard" + k) != null) {
-			double paymentValue = Double.valueOf(request.getParameter("creditCard" + k));
+			double paymentValue = BigDecimal.valueOf(
+					Double.valueOf(request.getParameter("creditCard" + k))).doubleValue();
 
 			if (paymentValue > 0d) {
 				long idCreditCard = Long.valueOf(request.getParameter("idCreditCard" + k));

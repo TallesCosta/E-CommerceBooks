@@ -8,6 +8,8 @@ import br.com.talles.ecommercebooks.domain.customer.CreditCard;
 import br.com.talles.ecommercebooks.domain.sale.ExchangeCoupon;
 import br.com.talles.ecommercebooks.domain.sale.Order;
 
+import java.math.BigDecimal;
+
 public class ValidatePayment implements IStrategy {
 
     @Override
@@ -16,30 +18,30 @@ public class ValidatePayment implements IStrategy {
         double price = order.getPrice();
 
         // Calculate paymentValue to ExchangeCuopon
-        double exchangeCouponsTotalValue = 0.0;
+        BigDecimal exchangeCouponsTotalValue = new BigDecimal(0);
         for (ExchangeCoupon exchangeCoupon : order.getExchangeCoupons()) {
-            exchangeCouponsTotalValue += exchangeCoupon.getValue();
+            exchangeCouponsTotalValue = exchangeCouponsTotalValue.add(BigDecimal.valueOf(exchangeCoupon.getValue()));
         }
 
         // Calculate paymentValue to CreditCard
-        double sumPaymentValue = 0.0;
+        BigDecimal sumPaymentValue = new BigDecimal(0);
         for (CreditCard creditCard : order.getCreditCards()) {
-            sumPaymentValue += creditCard.getPaymentValue();
+            sumPaymentValue = sumPaymentValue.add(BigDecimal.valueOf(creditCard.getPaymentValue()));
         }
 
-        double exchangeCouponPlusCreditCard = exchangeCouponsTotalValue + sumPaymentValue;
+        BigDecimal exchangeCouponPlusCreditCard = exchangeCouponsTotalValue.add(sumPaymentValue);
         IStrategy generateExchangeCoupon = new GenerateExchangeCoupon();
 
         // ExchangeCoupon and CreditCard?
         if (order.hasExchangeCoupons() && order.hasCreditCards()) {
             // Payment greater than price?
-            if (exchangeCouponPlusCreditCard > price) {
+            if (exchangeCouponPlusCreditCard.doubleValue() > price) {
                 // Generates a ExclangeCoupon with the difference
-                double difference = exchangeCouponPlusCreditCard - price;
+                double difference = exchangeCouponPlusCreditCard.doubleValue() - price;
                 generateExchangeCoupon.process(new Order(difference, order.getCustomer()), result);
             }
             // Payment less than price?
-            else if (exchangeCouponPlusCreditCard < price) {
+            else if (exchangeCouponPlusCreditCard.doubleValue() < price) {
                 // Negative answer.
                 result.addMsg("Valor insuficiente para finalizar a compra!");
             }
@@ -47,26 +49,26 @@ public class ValidatePayment implements IStrategy {
         // Only ExchangeCoupon?
         else if (order.hasExchangeCoupons()) {
             // Payment less than price?
-            if (exchangeCouponsTotalValue < price) {
+            if (exchangeCouponsTotalValue.doubleValue() < price) {
                 // Negative answer.
                 result.addMsg("Valor insuficiente para finalizar a compra!");
             }
             // Payment greater than price?
-            else if (exchangeCouponsTotalValue > price) {
+            else if (exchangeCouponsTotalValue.doubleValue() > price) {
                 // Generates a ExclangeCoupon with the difference
-                double difference = exchangeCouponsTotalValue - price;
+                double difference = exchangeCouponsTotalValue.doubleValue() - price;
                 generateExchangeCoupon.process(new Order(difference, order.getCustomer()), result);
             }
         }
         // Only CreditCard?
         else if (order.hasCreditCards()) {
             // Payment less than price?
-            if (sumPaymentValue < price) {
+            if (sumPaymentValue.doubleValue() < price) {
                 // Negative answer.
                 result.addMsg("Valor insuficiente para finalizar a compra!");
             }
             // Payment greater than price?
-            else if (sumPaymentValue > price) {
+            else if (sumPaymentValue.doubleValue() > price) {
                 // Negative answer.
                 result.addMsg("Valor superior ao total da compra!");
             }
