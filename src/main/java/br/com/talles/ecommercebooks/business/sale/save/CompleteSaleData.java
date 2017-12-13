@@ -31,7 +31,7 @@ public class CompleteSaleData implements IStrategy {
         HttpSession session = result.getTransaction().getRequest().getSession();
         Cart cartSession = (Cart) session.getAttribute("cart");
 
-        //sale.setPrice(cartSession.getPrice());
+        ceilDouble(sale.getPrice());
         sale.setTotalAmount(cartSession.getTotalAmount());
         sale.setSaleItems(cartSession.getSaleItems());
 
@@ -44,6 +44,13 @@ public class CompleteSaleData implements IStrategy {
         sale.setStatus(new Status("EM PROCESSAMENTO"));
 
         return result;
+    }
+
+    public double ceilDouble(double ceilNumber) {
+        ceilNumber *= (Math.pow(10, 2));
+        ceilNumber = Math.ceil(ceilNumber);
+        ceilNumber /= (Math.pow(10, 2));
+        return ceilNumber;
     }
 
 }

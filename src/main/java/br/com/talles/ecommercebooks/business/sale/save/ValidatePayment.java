@@ -20,13 +20,17 @@ public class ValidatePayment implements IStrategy {
         // Calculate paymentValue to ExchangeCuopon
         BigDecimal exchangeCouponsTotalValue = new BigDecimal(0);
         for (ExchangeCoupon exchangeCoupon : order.getExchangeCoupons()) {
-            exchangeCouponsTotalValue = exchangeCouponsTotalValue.add(BigDecimal.valueOf(exchangeCoupon.getValue()));
+            double value = exchangeCoupon.getValue();
+            ceilDouble(value);
+            exchangeCouponsTotalValue = exchangeCouponsTotalValue.add(BigDecimal.valueOf(value));
         }
 
         // Calculate paymentValue to CreditCard
         BigDecimal sumPaymentValue = new BigDecimal(0);
         for (CreditCard creditCard : order.getCreditCards()) {
-            sumPaymentValue = sumPaymentValue.add(BigDecimal.valueOf(creditCard.getPaymentValue()));
+            double value = creditCard.getPaymentValue();
+            ceilDouble(value);
+            sumPaymentValue = sumPaymentValue.add(BigDecimal.valueOf(value));
         }
 
         BigDecimal exchangeCouponPlusCreditCard = exchangeCouponsTotalValue.add(sumPaymentValue);
@@ -38,6 +42,7 @@ public class ValidatePayment implements IStrategy {
             if (exchangeCouponPlusCreditCard.doubleValue() > price) {
                 // Generates a ExclangeCoupon with the difference
                 double difference = exchangeCouponPlusCreditCard.doubleValue() - price;
+                ceilDouble(difference);
                 generateExchangeCoupon.process(new Order(difference, order.getCustomer()), result);
             }
             // Payment less than price?
@@ -57,6 +62,7 @@ public class ValidatePayment implements IStrategy {
             else if (exchangeCouponsTotalValue.doubleValue() > price) {
                 // Generates a ExclangeCoupon with the difference
                 double difference = exchangeCouponsTotalValue.doubleValue() - price;
+                ceilDouble(difference);
                 generateExchangeCoupon.process(new Order(difference, order.getCustomer()), result);
             }
         }
@@ -84,6 +90,13 @@ public class ValidatePayment implements IStrategy {
         }
 
         return result;
+    }
+
+    public double ceilDouble(double ceilNumber) {
+        ceilNumber *= (Math.pow(10, 2));
+        ceilNumber = Math.ceil(ceilNumber);
+        ceilNumber /= (Math.pow(10, 2));
+        return ceilNumber;
     }
 
 }
