@@ -140,6 +140,9 @@ public class CustomerDao extends AbstractDao {
 		// Find the last customer register to get its id
 		Customer lastCustomer = (Customer) findLast();
 		customer.setId(lastCustomer.getId());
+		customer.getDeliveryAddress(0).setCustomer(customer);
+		customer.getChargeAddress(0).setCustomer(customer);
+		customer.getCreditCard(0).setCustomer(customer);
 		
 		// Persists the DeliveryAddress
 		IDao deliveryAddressDao = new DeliveryAddressDao();

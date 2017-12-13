@@ -96,6 +96,12 @@ public class SaleVh implements IViewHelper {
 		HttpSession session = request.getSession();
 		User userSession = (User) session.getAttribute("user");
 
+		// Default Admin
+		long userId = 1L;
+		if (userSession != null && userSession.getId() != 0L) {
+			userId = userSession.getId();
+		}
+
 		// Sale
 		Sale sale = new Sale();
 		
@@ -110,7 +116,7 @@ public class SaleVh implements IViewHelper {
 				sale.setExchangeCoupons(exchangeCoupons);
 				sale.setPromotionalCoupon(new PromotionalCoupon(idPromotionalCoupon));
 				sale.setPrice(total);
-				sale.setHistory(new History(new Date(), new User(userSession.getId()), sale));
+				sale.setHistory(new History(new Date(), new User(userId), sale));
 				break;
 
 			case "LIST":
@@ -129,7 +135,7 @@ public class SaleVh implements IViewHelper {
 			case "UPDATE":
 				sale.setId(id);
 				sale.setStatus(new Status(status));
-				sale.setHistory(new History(new Date(), new User(userSession.getId()), sale));
+				sale.setHistory(new History(new Date(), new User(userId), sale));
 				break;
 
 			case "DISABLE":

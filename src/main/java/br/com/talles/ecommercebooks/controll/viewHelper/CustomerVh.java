@@ -112,6 +112,12 @@ public class CustomerVh implements IViewHelper {
 		// History
 		HttpSession session = request.getSession();
 		User userSession = (User) session.getAttribute("user");
+
+		// Default Admin
+		long userId = 1L;
+		if (userSession != null && userSession.getId() != 0L) {
+			userId = userSession.getId();
+		}
 		
 		// Customer
 		Customer customer = new Customer();
@@ -126,7 +132,7 @@ public class CustomerVh implements IViewHelper {
 				customer.setName(name);
 				customer.setBirthDate(birthDate);
 				customer.setGender(new Gender(gender));
-				customer.setHistory(new History(new Date(), new User(userSession.getId()), customer));
+				customer.setHistory(new History(new Date(), new User(userId), customer));
 				// Phone
 				customer.setPhone(new Phone(ddd, phoneNumber, phoneType));
 				// User
@@ -204,7 +210,7 @@ public class CustomerVh implements IViewHelper {
 				customer.setName(name);
 				customer.setBirthDate(birthDate);
 				customer.setGender(new Gender(gender));
-				customer.setHistory(new History(new Date(), new User(userSession.getId())));
+				customer.setHistory(new History(new Date(), new User(userId)));
 				// Phone
 				customer.setPhone(new Phone(ddd, phoneNumber, phoneType, idPhone));
 				// User

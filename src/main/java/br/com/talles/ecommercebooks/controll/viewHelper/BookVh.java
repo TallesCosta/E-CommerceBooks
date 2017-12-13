@@ -163,10 +163,16 @@ public class BookVh implements IViewHelper {
 		long idActivationCategory = 0;
 		if (!(idActivationCategoryS == null || idActivationCategoryS.equals("")))
 			idActivationCategory = Long.valueOf(idActivationCategoryS);
-		
+
 		// History
 		HttpSession session = request.getSession();
 		User userSession = (User) session.getAttribute("user");
+
+		// Default Admin
+		long userId = 1L;
+		if (userSession != null && userSession.getId() != 0L) {
+			userId = userSession.getId();
+		}
 		
 		// Book
 		Book book = new Book();
@@ -181,7 +187,7 @@ public class BookVh implements IViewHelper {
 				book.setEdition(edition);
 				book.setIsbn(isbn);
 				book.setEan13(ean13);
-				book.setHistory(new History(new Date(), new User(userSession.getId()), book));
+				book.setHistory(new History(new Date(), new User(userId), book));
 				// Dimension
 				book.setDimension(new Dimension(height, widht, weight, depth));
 				// Sale Parameterization
@@ -264,7 +270,7 @@ public class BookVh implements IViewHelper {
 				book.setEdition(edition);
 				book.setIsbn(isbn);
 				book.setEan13(ean13);
-				book.setHistory(new History(new Date(), new User(userSession.getId())));
+				book.setHistory(new History(new Date(), new User(userId)));
 				// Dimension
 				book.setDimension(new Dimension(height, widht, weight, depth, idDimension));
 				// Sale Parameterization
