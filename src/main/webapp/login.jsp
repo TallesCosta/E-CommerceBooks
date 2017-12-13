@@ -71,7 +71,11 @@
             // With the page ready, set the next URL
             $(function() {
                 var url = window.location.pathname;
-                if (url !== "/E-CommerceBooks/log-in") {
+                if (url !== "/E-CommerceBooks/login.jsp" || url !== "/E-CommerceBooks/log-in")
+                    $("#next").val(url + window.location.search);
+
+                // TODO: RESOLVER!!!
+                /*if (url !== "/E-CommerceBooks/log-in") {
                     console.log("if url = " + url);
                 	$("#next").val(url + window.location.search);
 				} else {
@@ -79,7 +83,7 @@
                     url = document.referrer;
 					url = url.replace("http://localhost:8080", "");
                     $("#next").val(url);
-				}
+				}*/
             });
 		</script>
     </body>

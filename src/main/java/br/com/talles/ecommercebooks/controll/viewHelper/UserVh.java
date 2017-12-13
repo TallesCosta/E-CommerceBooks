@@ -84,6 +84,7 @@ public class UserVh implements IViewHelper {
 						else {
 							String next = request.getParameter("next");
 							if (next.equals("/E-CommerceBooks/login.jsp") ||
+									next.equals("/E-CommerceBooks/log-in") ||
 									next.equals("/E-CommerceBooks/customers/list?operation=LIST"))
 								response.sendRedirect("/E-CommerceBooks/orders/list?operation=LIST");
 							else
