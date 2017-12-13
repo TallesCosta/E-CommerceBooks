@@ -89,10 +89,6 @@
 					<label for="password">Senha: </label>
 					<span> <% out.print(((Customer) customer.getHistory().getEntity()).getUser().getPassword()); %> </span>
 				</div>
-				<div>
-					<label for="passwordVerify">Confirmaçãoo da Senha: </label>
-					<span> <% out.print(((Customer) customer.getHistory().getEntity()).getUser().getPasswordVerify()); %> </span>
-				</div>
 			</fieldset>
 
 			<a href="javascript:window.history.go(-1)">Voltar</a>
