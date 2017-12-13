@@ -126,7 +126,7 @@
                                     for (Entity entity : result.getEntities(ExchangeCoupon.class.getSimpleName())) {
                                         j++;
                                         ExchangeCoupon exchangeCoupon = (ExchangeCoupon) entity;
-                                        out.print("<option id='exchangeCoupon" + j + "' value='" + exchangeCoupon.getId() + "-" + exchangeCoupon.getValue() + "'>" + "Cupon " + ++j + ": R$ " + exchangeCoupon.getValue() + "</option>");
+                                        out.print("<option id='exchangeCoupon" + j + "' value='" + exchangeCoupon.getId() + "-" + exchangeCoupon.getValue() + "'>" + "Cupom " + j + ": R$ " + exchangeCoupon.getValue() + "</option>");
                                     }
                                 }
                             %>
