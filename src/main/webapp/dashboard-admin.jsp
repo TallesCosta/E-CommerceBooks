@@ -25,7 +25,11 @@
 
 		<br><br>
 
-		<div style="width: 90%; margin: 0 auto;">
+		<div id="not-data">
+			<h2 style="display: none;">Tente um intervalo de meses válido!</h2>
+		</div>
+
+		<div id="graph" style="width: 90%; margin: 0 auto;">
 			<canvas id="line-chart" width="800" height="450"></canvas>
 
 			<form>
@@ -56,10 +60,13 @@
             }
         %>
         var data = <% out.print(data); %>;
-        console.log(data);
         if (data == "") {
-            // TODO: Mostrar informação ao usuário.
-        } else
+            $("#not-data").css('display', 'block');
+            $("#graph").css('display', 'none');
+        } else{
             new Chart(document.getElementById("line-chart"), data);
+            $("#not-data").css('display', 'none');
+            $("#graph").css('display', 'block');
+        }
 	</script>
 </html>
