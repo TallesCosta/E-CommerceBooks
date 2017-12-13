@@ -25,8 +25,19 @@
 
 		<br><br>
 
-		<div style="width: 50%;">
+		<div style="width: 90%; margin: 0 auto;">
 			<canvas id="line-chart" width="800" height="450"></canvas>
+
+			<form>
+				<label for="inicialDate">Data Inicial: </label>
+				<input type="date" name="inicialDate" id="inicialDate" />
+
+				<label for="finalDate">Data Final: </label>
+				<input type="date" name="finalDate" id="finalDate" />
+
+				<input type="hidden" name="operation" id="operation-salesPerGenders" value="LIST" />
+				<button id="login" type="submit">Consultar!</button>
+			</form>
 		</div>
     </body>
 

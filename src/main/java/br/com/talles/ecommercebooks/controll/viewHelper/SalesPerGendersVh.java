@@ -29,10 +29,49 @@ public class SalesPerGendersVh implements IViewHelper {
         String finalDateS = request.getParameter("finalDate");
         Date finalDate = new Date(0L);
         try {
-            //inicialDate = dateFormat.parse(inicialDateS);
-            inicialDate = dateFormat.parse("2016-12-31");
+            //inicialDate = (inicialDate == null ? dateFormat.parse("2016-12-01") : dateFormat.parse(inicialDateS));
+            if (inicialDateS == null || inicialDateS.equals(""))
+                inicialDate = dateFormat.parse("2017-01-01");
+            else {
+                String[] tmp = inicialDateS.split("-");
+                tmp[2] = "01";
+                inicialDateS = tmp[0] + "-" + tmp[1] + "-" + tmp[2];
+                inicialDate = dateFormat.parse(inicialDateS);
+            }
+
+            //finalDate = (inicialDate == null ? dateFormat.parse("2017-12-01") : dateFormat.parse(finalDateS));
+            if (finalDateS == null || inicialDateS.equals(""))
+                finalDate = dateFormat.parse("2017-12-31");
+            else{
+                String[] tmp = finalDateS.split("-");
+
+                switch (tmp[1]){
+                    case "01":
+                    case "03":
+                    case "05":
+                    case "07":
+                    case "08":
+                    case "10":
+                    case "12":
+                        tmp[2] = "31";
+                        break;
+                    case "04":
+                    case "06":
+                    case "09":
+                    case "11":
+                        tmp[2] = "30";
+                        break;
+                    default:
+                        tmp[2] = "27";
+                        break;
+                }
+
+                finalDateS = tmp[0] + "-" + tmp[1] + "-" + tmp[2];
+                finalDate = dateFormat.parse(finalDateS);
+            }
+
             //finalDate = dateFormat.parse(finalDateS);
-            finalDate = dateFormat.parse("2017-12-31");
+            //finalDate = dateFormat.parse("2017-12-31");
         } catch (ParseException | NullPointerException ex) {
             Logger.getLogger(CustomerVh.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -73,17 +73,6 @@
                 var url = window.location.pathname;
                 if (url !== "/E-CommerceBooks/login.jsp" || url !== "/E-CommerceBooks/log-in")
                     $("#next").val(url + window.location.search);
-
-                // TODO: RESOLVER!!!
-                /*if (url !== "/E-CommerceBooks/log-in") {
-                    console.log("if url = " + url);
-                	$("#next").val(url + window.location.search);
-				} else {
-                    console.log("else url = " + url);
-                    url = document.referrer;
-					url = url.replace("http://localhost:8080", "");
-                    $("#next").val(url);
-				}*/
             });
 		</script>
     </body>

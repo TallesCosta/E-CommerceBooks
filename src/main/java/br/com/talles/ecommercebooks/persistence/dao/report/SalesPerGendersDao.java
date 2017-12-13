@@ -23,7 +23,7 @@ public class SalesPerGendersDao extends AbstractDao {
                         + "EXTRACT(MONTH FROM s.DATE) as month, EXTRACT(YEAR FROM s.DATE) as year "
                 + "from sales s "
                 + "inner join customers c on s.ID_CUSTOMER = c.id "
-                + "where s.DATE > ? AND s.DATE < ? "
+                + "where s.DATE >= ? AND s.DATE <= ? "
                 + "group by c.GENDER, EXTRACT(MONTH FROM s.DATE), EXTRACT(YEAR FROM s.DATE) "
                 + "order by year, month, gender";
 
