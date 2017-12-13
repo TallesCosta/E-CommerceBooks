@@ -108,8 +108,13 @@ public class ChargeAddressVh implements IViewHelper {
                     break;
 
                 case "SAVE":
-                    response.sendRedirect("/E-CommerceBooks/charge-addresses/list?operation=LIST" +
-                            "&idCustomer=" + result.getEntities(Customer.class.getSimpleName()).get(0).getId());
+                    if (result.hasMsg()) {
+                        dispatcher = request.getRequestDispatcher("/charge-address/create.jsp");
+                        dispatcher.forward(request, response);
+                    } else {
+                        response.sendRedirect("/E-CommerceBooks/charge-addresses/list?operation=LIST" +
+                                "&idCustomer=" + result.getEntities(Customer.class.getSimpleName()).get(0).getId());
+                    }
                     break;
 
                 case "LIST":

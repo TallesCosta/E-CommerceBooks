@@ -108,11 +108,16 @@ public class CreditCardVh implements IViewHelper {
                     break;
 
                 case "SAVE":
-                    if (back != null && back != "")
-                        response.sendRedirect(back);
-                    else
-                        response.sendRedirect("/E-CommerceBooks/delivery-addresses/list?operation=LIST" +
-                            "&idCustomer=" + result.getEntities(Customer.class.getSimpleName()).get(0).getId());
+                    if (result.hasMsg()) {
+                        dispatcher = request.getRequestDispatcher("/credit-card/create.jsp");
+                        dispatcher.forward(request, response);
+                    } else {
+                        if (back != null && back != "")
+                            response.sendRedirect(back);
+                        else
+                            response.sendRedirect("/E-CommerceBooks/credit-card/list?operation=LIST" +
+                                    "&idCustomer=" + result.getEntities(Customer.class.getSimpleName()).get(0).getId());
+                    }
                     break;
 
                 case "LIST":

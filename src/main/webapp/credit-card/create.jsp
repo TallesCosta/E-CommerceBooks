@@ -15,6 +15,16 @@
     Result result = (Result) request.getAttribute("result");
 
     if (result != null) {
+        String back = (String) request.getAttribute("back");
+        if (back == null)
+            back = "";
+%>
+<%@include file="../commons/customer/menu-html.jsp"%>
+
+<div class="container">
+    <h1 id="list-credit-cart">Novo Cartão de Crédito</h1>
+
+    <%
         if (result.hasMsg()) {
             String[] msgs = result.getMsg().split("\n");
             out.println("<p>");
@@ -22,13 +32,7 @@
                 out.println("<i class='fa fa-times' aria-hidden='true' style='color: #FF0000;'></i> " + msg + "<br/>");
             out.println("</p>");
         }
-
-        String back = (String) request.getAttribute("back");
-%>
-<%@include file="../commons/customer/menu-html.jsp"%>
-
-<div class="container">
-    <h1 id="list-credit-cart">Novo Cartão de Crédito</h1>
+    %>
 
     <div class="row">
         <div class="column">

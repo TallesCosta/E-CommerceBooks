@@ -112,11 +112,16 @@ public class DeliveryAddressVh implements IViewHelper {
                     break;
 
                 case "SAVE":
-                    if (back != null && back != "")
-                        response.sendRedirect(back);
-                    else
-                        response.sendRedirect("/E-CommerceBooks/delivery-addresses/list?operation=LIST" +
-                            "&idCustomer=" + result.getEntities(Customer.class.getSimpleName()).get(0).getId());
+                    if (result.hasMsg()) {
+                        dispatcher = request.getRequestDispatcher("/delivery-address/create.jsp");
+                        dispatcher.forward(request, response);
+                    } else {
+                        if (back != null && back != "")
+                            response.sendRedirect(back);
+                        else
+                            response.sendRedirect("/E-CommerceBooks/delivery-addresses/list?operation=LIST" +
+                                    "&idCustomer=" + result.getEntities(Customer.class.getSimpleName()).get(0).getId());
+                    }
                     break;
 
                 case "LIST":
