@@ -115,7 +115,7 @@ public class CreditCardVh implements IViewHelper {
                         if (back != null && back != "")
                             response.sendRedirect(back);
                         else
-                            response.sendRedirect("/E-CommerceBooks/credit-card/list?operation=LIST" +
+                            response.sendRedirect("/E-CommerceBooks/credit-cards/list?operation=LIST" +
                                     "&idCustomer=" + result.getEntities(Customer.class.getSimpleName()).get(0).getId());
                     }
                     break;
