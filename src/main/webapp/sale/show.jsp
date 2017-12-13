@@ -1,6 +1,7 @@
 <%@ page import="br.com.talles.ecommercebooks.controll.Result" %>
 <%@ page import="br.com.talles.ecommercebooks.domain.sale.Sale" %>
 <%@ page import="br.com.talles.ecommercebooks.domain.sale.SaleItem" %>
+<%@ page import="java.text.DecimalFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -14,6 +15,8 @@
         <%
             Result result = new Result();
             result = (Result) request.getAttribute("result");
+
+            DecimalFormat dformat = new DecimalFormat("#.00");
 
             Sale sale = new Sale();
 
@@ -40,7 +43,7 @@
                     <% out.println("<p><b>Código:</b> " + sale.getSaleNumber() + "</p>"); %>
                     <% out.println("<p><b>Cliente:</b> " + sale.getCustomer().getName() + "</p>"); %>
 
-                    <% out.println("<p><b>Subtotal Geral R$:</b> " + (sale.getPrice() - sale.getDelivery().getShippingCost().getValue()) + "</p>"); %>
+                    <% out.println("<p><b>Subtotal Geral R$:</b> " + dformat.format(sale.getPrice() - sale.getDelivery().getShippingCost().getValue()) + "</p>"); %>
                     <% out.println("<p><b>Frete R$:</b> " + sale.getDelivery().getShippingCost().getValue() + "</p>"); %>
                     <% out.println("<p><b>Preço Total R$:</b> " + sale.getPrice() + "</p>"); %>
                 </div>

@@ -1,6 +1,7 @@
 <%@ page import="br.com.talles.ecommercebooks.controll.Result" %>
 <%@ page import="br.com.talles.ecommercebooks.domain.sale.SaleItem" %>
 <%@ page import="br.com.talles.ecommercebooks.domain.sale.OrderRequest" %>
+<%@ page import="java.text.DecimalFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -12,22 +13,23 @@
 </head>
 <body>
 <%
-  Result result = (Result) request.getAttribute("result");
+    Result result = (Result) request.getAttribute("result");
+    OrderRequest orderRequest = new OrderRequest();
 
-  OrderRequest orderRequest = new OrderRequest();
+    DecimalFormat dformat = new DecimalFormat("#.00");
 
-  if (result != null) {
-    if (result.getKeys().contains(OrderRequest.class.getSimpleName())) {
-      orderRequest = (OrderRequest) result.getEntities(OrderRequest.class.getSimpleName()).get(0);
-    }
+    if (result != null) {
+        if (result.getKeys().contains(OrderRequest.class.getSimpleName())) {
+            orderRequest = (OrderRequest) result.getEntities(OrderRequest.class.getSimpleName()).get(0);
+        }
 
-    if (result.hasMsg()) {
-      String[] msgs = result.getMsg().split("\n");
-      out.println("<p>");
-      for(String msg : msgs)
-        out.println("<i class='fa fa-times' aria-hidden='true' style='color: #FF0000;'></i> " + msg + "<br/>");
-      out.println("</p>");
-    }
+        if (result.hasMsg()) {
+            String[] msgs = result.getMsg().split("\n");
+            out.println("<p>");
+            for(String msg : msgs)
+                out.println("<i class='fa fa-times' aria-hidden='true' style='color: #FF0000;'></i> " + msg + "<br/>");
+            out.println("</p>");
+}
 %>
 <%@include file="../commons/customer/menu-html.jsp"%>
 
@@ -39,7 +41,7 @@
       <% out.println("<p><b>Código:</b> " + orderRequest.getSaleNumber() + "</p>"); %>
       <% out.println("<p><b>Cliente:</b> " + orderRequest.getCustomer().getName() + "</p>"); %>
       <% out.println("<p><b>Quantidade total:<b> " + orderRequest.getTotalAmount() + "</p>"); %>
-      <% out.println("<p><b>Subtotal Geral R$:<b> " + (orderRequest.getPrice() - orderRequest.getDelivery().getShippingCost().getValue()) + "</p>"); %>
+      <% out.println("<p><b>Subtotal Geral R$:<b> " + dformat.format(orderRequest.getPrice() - orderRequest.getDelivery().getShippingCost().getValue()) + "</p>"); %>
       <% out.println("<p><b>Frete R$:<b> " + orderRequest.getDelivery().getShippingCost().getValue() + "</p>"); %>
       <% out.println("<p><b>Preço Total R$:<b> " + orderRequest.getPrice() + "</p>"); %>
     </div>
