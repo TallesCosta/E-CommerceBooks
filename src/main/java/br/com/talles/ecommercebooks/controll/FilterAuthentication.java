@@ -14,7 +14,8 @@ import java.io.IOException;
         urlPatterns = {
         "/customers/list", "/customers/list-disable", "/customers/history", "/customers/find",
         "/customers/update", "/customers/disable", "/customers/enable", "/customers/delete",
-        "/books/*", "/sales/*", "/orders/*", "/exchanges/*" })
+        "/books/*", "/sales/*", "/orders/*", "/exchanges/*", "/charge-addresses/*", "/credit-cards/*",
+        "/delivery-addresses/*", "/dashboard-admin/*" })
 public class FilterAuthentication implements Filter {
 
     @Override
