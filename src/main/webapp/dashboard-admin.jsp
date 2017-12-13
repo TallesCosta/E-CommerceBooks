@@ -63,7 +63,7 @@
         if (data == "") {
             $("#not-data").css('display', 'block');
             $("#graph").css('display', 'none');
-        } else{
+        } else {
             new Chart(document.getElementById("line-chart"), data);
             $("#not-data").css('display', 'none');
             $("#graph").css('display', 'block');

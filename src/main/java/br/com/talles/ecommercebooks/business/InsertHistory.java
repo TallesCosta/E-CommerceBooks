@@ -8,9 +8,7 @@ import br.com.talles.ecommercebooks.persistence.dao.HistoryDao;
 import java.util.Map;
 
 public class InsertHistory implements IStrategy {
-	
-	protected Map<String, IDao> persistence;
-	
+
 	@Override
 	public Result process(Entity entity, Result result) {
 		IDao dao = new HistoryDao();

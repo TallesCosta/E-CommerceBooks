@@ -2,8 +2,10 @@ package br.com.talles.ecommercebooks.controll.viewHelper;
 
 import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
+import br.com.talles.ecommercebooks.domain.History;
 import br.com.talles.ecommercebooks.domain.customer.CreditCard;
 import br.com.talles.ecommercebooks.domain.customer.DeliveryAddress;
+import br.com.talles.ecommercebooks.domain.customer.User;
 import br.com.talles.ecommercebooks.domain.sale.*;
 
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +22,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class SaleVh implements IViewHelper {
 
@@ -88,6 +92,10 @@ public class SaleVh implements IViewHelper {
 			exchangeCoupons.add(new ExchangeCoupon(idExchangeCoupon, exchangeCuopon));
 		}
 
+		// History
+		HttpSession session = request.getSession();
+		User userSession = (User) session.getAttribute("user");
+
 		// Sale
 		Sale sale = new Sale();
 		
@@ -102,6 +110,7 @@ public class SaleVh implements IViewHelper {
 				sale.setExchangeCoupons(exchangeCoupons);
 				sale.setPromotionalCoupon(new PromotionalCoupon(idPromotionalCoupon));
 				sale.setPrice(total);
+				sale.setHistory(new History(new Date(), new User(userSession.getId()), sale));
 				break;
 
 			case "LIST":
@@ -120,6 +129,7 @@ public class SaleVh implements IViewHelper {
 			case "UPDATE":
 				sale.setId(id);
 				sale.setStatus(new Status(status));
+				sale.setHistory(new History(new Date(), new User(userSession.getId()), sale));
 				break;
 
 			case "DISABLE":

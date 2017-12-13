@@ -4,10 +4,12 @@ import br.com.talles.ecommercebooks.controll.Result;
 import br.com.talles.ecommercebooks.domain.Entity;
 import br.com.talles.ecommercebooks.domain.book.Book;
 import br.com.talles.ecommercebooks.domain.customer.Customer;
+import br.com.talles.ecommercebooks.domain.sale.Sale;
 import br.com.talles.ecommercebooks.persistence.dao.IDao;
 import br.com.talles.ecommercebooks.persistence.dao.book.BookDao;
 import br.com.talles.ecommercebooks.persistence.dao.HistoryDao;
 import br.com.talles.ecommercebooks.persistence.dao.customer.CustomerDao;
+import br.com.talles.ecommercebooks.persistence.dao.sale.SaleDao;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,10 +23,12 @@ public class UpdateHistory implements IStrategy {
 	public UpdateHistory() {
 		String book = Book.class.getSimpleName();
 		String customer = Customer.class.getSimpleName();
+		String sale = Sale.class.getSimpleName();
 
 		persistence = new HashMap();
 		persistence.put(book, new BookDao());
 		persistence.put(customer, new CustomerDao());
+		persistence.put(sale, new SaleDao());
 	}
 
 	@Override

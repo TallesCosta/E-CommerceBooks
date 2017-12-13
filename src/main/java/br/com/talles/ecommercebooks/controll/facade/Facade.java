@@ -218,7 +218,9 @@ public class Facade implements IFacade {
 
 	 	List<IStrategy> listSale = new ArrayList();
 	 	List<IStrategy> findSale = new ArrayList();
+
 	 	List<IStrategy> updateSale = new ArrayList();
+		updateSale.add(updateHistory);
 
 	 	// OrderRequests Requirements
 	 	List<IStrategy> listOrderRequest = new ArrayList();
@@ -384,6 +386,7 @@ public class Facade implements IFacade {
 		saveSaleLater.add(giveBackStock);
 		saveSaleLater.add(destroyCart);
         saveSaleLater.add(disableExchangeCoupons);
+		saveSaleLater.add(insertHistory);
 
 		List<IStrategy> listSaleLater = new ArrayList();
 

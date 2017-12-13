@@ -110,11 +110,8 @@ public class CustomerVh implements IViewHelper {
 			idCardCompany = Long.valueOf(cardCompanyS);
 		
 		// History
-		// Fake user - (TEMP)
-		String idUserOnS = "1";
-		long idUserOn = 0;
-		if (!(idUserOnS == null || idUserOnS.equals("")))
-			idUserOn = Long.valueOf(idUserOnS);
+		HttpSession session = request.getSession();
+		User userSession = (User) session.getAttribute("user");
 		
 		// Customer
 		Customer customer = new Customer();
@@ -129,7 +126,7 @@ public class CustomerVh implements IViewHelper {
 				customer.setName(name);
 				customer.setBirthDate(birthDate);
 				customer.setGender(new Gender(gender));
-				customer.setHistory(new History(new Date(), new User(idUserOn), customer));
+				customer.setHistory(new History(new Date(), new User(userSession.getId()), customer));
 				// Phone
 				customer.setPhone(new Phone(ddd, phoneNumber, phoneType));
 				// User
@@ -207,7 +204,7 @@ public class CustomerVh implements IViewHelper {
 				customer.setName(name);
 				customer.setBirthDate(birthDate);
 				customer.setGender(new Gender(gender));
-				customer.setHistory(new History(new Date(), new User(idUserOn)));
+				customer.setHistory(new History(new Date(), new User(userSession.getId())));
 				// Phone
 				customer.setPhone(new Phone(ddd, phoneNumber, phoneType, idPhone));
 				// User

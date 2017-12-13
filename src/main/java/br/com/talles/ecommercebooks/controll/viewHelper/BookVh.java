@@ -165,11 +165,8 @@ public class BookVh implements IViewHelper {
 			idActivationCategory = Long.valueOf(idActivationCategoryS);
 		
 		// History
-		// Fake user - (TEMP)
-		String idUserOnS = "1";
-		long idUserOn = 0;
-		if (!(idUserOnS == null || idUserOnS.equals("")))
-			idUserOn = Long.valueOf(idUserOnS);
+		HttpSession session = request.getSession();
+		User userSession = (User) session.getAttribute("user");
 		
 		// Book
 		Book book = new Book();
@@ -184,7 +181,7 @@ public class BookVh implements IViewHelper {
 				book.setEdition(edition);
 				book.setIsbn(isbn);
 				book.setEan13(ean13);
-				book.setHistory(new History(new Date(), new User(idUserOn), book));
+				book.setHistory(new History(new Date(), new User(userSession.getId()), book));
 				// Dimension
 				book.setDimension(new Dimension(height, widht, weight, depth));
 				// Sale Parameterization
@@ -267,7 +264,7 @@ public class BookVh implements IViewHelper {
 				book.setEdition(edition);
 				book.setIsbn(isbn);
 				book.setEan13(ean13);
-				book.setHistory(new History(new Date(), new User(idUserOn)));
+				book.setHistory(new History(new Date(), new User(userSession.getId())));
 				// Dimension
 				book.setDimension(new Dimension(height, widht, weight, depth, idDimension));
 				// Sale Parameterization
