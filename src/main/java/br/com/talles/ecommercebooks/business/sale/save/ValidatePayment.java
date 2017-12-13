@@ -78,6 +78,9 @@ public class ValidatePayment implements IStrategy {
                     result.addMsg("Compras no cartão devem ter o valor mínimo de R$ 10,00!");
                 }
             }
+        // None payment form
+        } else {
+            result.addMsg("Valor insuficiente para finalizar a compra!");
         }
 
         return result;
