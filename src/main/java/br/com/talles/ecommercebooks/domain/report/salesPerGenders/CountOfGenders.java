@@ -60,4 +60,18 @@ public class CountOfGenders extends ResultQuery {
                 this.year == countOfGenders.year;
     }
 
+    @Override
+    public int compareTo(ResultQuery other) {
+        if(!( other instanceof CountOfGenders ))
+            return -1;
+
+        CountOfGenders otherCount = (CountOfGenders) other;
+
+        return  getYear() < otherCount.getYear() ? -1 :
+                getYear() > otherCount.getYear() ? 1 :
+                    getMonth() < otherCount.getMonth() ? -1 :
+                    getMonth() > otherCount.getMonth() ? 1 :
+                        getGender().getName().compareTo(otherCount.getGender().getName());
+    }
+
 }

@@ -42,12 +42,7 @@ public class CompleteReportConsult implements IStrategy {
         Collections.sort(salesPerGendersReport.getResultsQuery(), new Comparator<ResultQuery>() {
             @Override
             public int compare(ResultQuery o1, ResultQuery o2) {
-                CountOfGenders g1 = (CountOfGenders) o1;
-                CountOfGenders g2 = (CountOfGenders) o2;
-
-                return g1.getYear() < g2.getYear() ? -1 :
-                        g1.getMonth() < g2.getMonth() ? -1 :
-                                g1.getGender().equals(g2.getGender().getName()) ? -1 : 1;
+                return o1.compareTo(o2);
             }
         });
 
