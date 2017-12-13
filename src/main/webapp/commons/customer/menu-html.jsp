@@ -26,6 +26,11 @@
             }
         %>
         <div class="item">
+            <a class="list-stock-request" href="<% out.print(request.getContextPath().concat("/stocks/list?operation=LIST")); %>">
+                Home
+            </a>
+        </div>
+        <div class="item">
             <a class="list-order-request" href="<% out.print(request.getContextPath().concat("/orders/list?operation=LIST")); %>">
                 Pedidos
             </a>
