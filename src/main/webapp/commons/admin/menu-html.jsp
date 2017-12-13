@@ -1,7 +1,7 @@
 <nav>
     <div class="container">
         <div class="item">
-            <a class="list-book" href="<% out.print(request.getContextPath().concat("/dashboard-admin.jsp")); %>">
+            <a class="list-book" href="<% out.print(request.getContextPath().concat("/dashboard-admin/list?operation=LIST")); %>">
                 Dashboard
             </a>
         </div>
