@@ -100,7 +100,8 @@ public class makeSale extends SaleT {
         // Sale
         element = browser.findElement(By.id(elements.SELECT_DELIVERY_ADDRESS));
         select = new Select(element);
-        select.selectByValue("3");
+        //select.selectByValue("3"); ???
+        select.selectByVisibleText("Emprego");
         element = browser.findElement(By.id(elements.INPUT_PROMOTIONAL_COUPON));
         element.sendKeys("VIRADA2017");
         element = browser.findElement(By.id(elements.BUTTON_VALIDATE_COUPON));
@@ -116,7 +117,7 @@ public class makeSale extends SaleT {
         element.sendKeys("44,74");
         element = browser.findElement(By.id(elements.SELECT_EXCHANGE_COUPON));
         select = new Select(element);
-        select.selectByVisibleText("Cupon 2: R$ 69.05");
+        select.selectByVisibleText("Cupom 1: R$ 69.05");
         element = browser.findElement(By.id(elements.BUTTON_FINISH));
         element.click();
 
@@ -171,7 +172,7 @@ public class makeSale extends SaleT {
         element.click();
 
         // Orders
-        element = browser.findElement(By.id(elements.LINK_SHOW_FIRST));
+        element = browser.findElement(By.id(elements.LINK_SHOW_SECOND));
         element.click();
 
         // Show
@@ -179,7 +180,7 @@ public class makeSale extends SaleT {
         element.click();
 
         // Orders
-        element = browser.findElement(By.id(elements.LINK_SHOW_FIRST));
+        element = browser.findElement(By.id(elements.LINK_SHOW_SECOND));
         element.click();
 
         // Show

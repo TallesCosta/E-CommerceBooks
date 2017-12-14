@@ -15,7 +15,8 @@ public class ElementsSale {
 	public final String LINK_DELIVERY_ADDRESS = "delivery-address";
 	public final String LINK_CREDIT_CARD = "credit-card";
 	public final String LINK_SALES = "sales";
-	public final String LINK_SHOW_FIRST = "show1";
+	public final String LINK_SHOW_FIRST = "show49";
+	public final String LINK_SHOW_SECOND = "show25";
 	public final String LINK_APPROVED = "approved";
 	public final String LINK_DISPATCH = "dispatch";
 	public final String LINK_CHANGED_STOCK = "changed-stock";
