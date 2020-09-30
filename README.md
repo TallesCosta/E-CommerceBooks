@@ -1,4 +1,4 @@
-# E-Commerce Books
+# E-Commerce Books for startup
 
 Project idealized as part of evaluation of Software Engineering Lab class at FATEC - Mogi das Cruzes.
 
